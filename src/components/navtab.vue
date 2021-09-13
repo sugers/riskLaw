@@ -1,0 +1,186 @@
+<template>
+    <div class="navtab">
+        <!-- 保险公司平台后台 -->
+        <div>
+            <div class="logopin">
+                <img class="imgs" src="../../static/img/logo.png" alt="LOGO" />
+            </div>
+        </div>
+        <el-scrollbar v-if="taipel" style="height: 90vh" :native="false" :noresize="false" ref="myscrollbar">
+            <el-menu router>
+                <el-menu-item index="/soutable">
+                    <template>
+                        <i class="el-icon-s-home"></i>
+                        首页
+                    </template>
+                </el-menu-item>
+                <el-menu-item index="/insurancetable">
+                    <template>
+                        <i class="el-icon-s-operation"></i>
+                        风险评估
+                    </template>
+                </el-menu-item>
+                <el-menu-item index="/audittable">
+                    <template>
+                        <i class="el-icon-s-custom"></i>
+                        审核绑定
+                    </template>
+                </el-menu-item>
+                <el-menu-item index="">
+                    <template>
+                        <i class="el-icon-notebook-2"></i>
+                        财务对账
+                    </template>
+                </el-menu-item>
+                <el-menu-item index="">
+                    <template>
+                        <i class="el-icon-s-custom"></i>
+                        用户管理
+                    </template>
+                </el-menu-item>
+                <el-menu-item index="">
+                    <template>
+                        <i class="el-icon-s-marketing"></i>
+                        统计分析
+                    </template>
+                </el-menu-item>
+                <el-menu-item index="">
+                    <template>
+                        <i class="el-icon-bell"></i>
+                        消息通知
+                    </template>
+                </el-menu-item>
+            </el-menu>
+        </el-scrollbar>
+
+        <!-- 管理平台后台 -->
+        <el-scrollbar v-if="adminroid" style="height: 90vh" :native="false" :noresize="false" ref="myscrollbar">
+            <el-menu router>
+                <el-menu-item index="/soutable">
+                    <template>
+                        <i class="el-icon-s-home"></i>
+                        首页
+                    </template>
+                </el-menu-item>
+                <el-menu-item index="/usertable">
+                    <template slot="title">
+                        <i class="el-icon-s-operation"></i>
+                        风险评估
+                    </template>
+                </el-menu-item>
+                <!-- <el-submenu index="1">
+                    <template slot="title"><i class="el-icon-menu"></i>保险公司管理</template>
+                    <el-menu-item index="">保险公司信息管理</el-menu-item>
+                    <el-menu-item index="">保险公司用户管理</el-menu-item>
+                </el-submenu> -->
+                <el-menu-item index="/audittable">
+                    <template>
+                        <i class="el-icon-s-custom"></i>
+                        审核绑定
+                    </template>
+                </el-menu-item>
+
+                <el-submenu index="1">
+                    <template slot="title"><i class="el-icon-menu"></i>保险公司管理</template>
+                    <el-menu-item index="/InsuranceCompany">保险公司信息管理</el-menu-item>
+                    <el-menu-item index="/insuranceUser">保险公司用户管理</el-menu-item>
+                </el-submenu>
+                <el-menu-item index="/laywerManage">
+                    <template slot="title">
+                        <i class="el-icon-notebook-2"></i>
+                        律师管理
+                    </template>
+                </el-menu-item>
+                <el-menu-item index="/Financia">
+                    <template>
+                        <i class="el-icon-notebook-2"></i>
+                        财务对账
+                    </template>
+                </el-menu-item>
+                <el-submenu index="" v-if="buytu">
+                    <template slot="title"><i class="el-icon-s-marketing"></i>统计分析</template>
+                    <el-menu-item index="/Statistics">法务人员工作量表</el-menu-item>
+                    <el-menu-item index="">业务发展趋势图</el-menu-item>
+                    <el-menu-item index="">业务发展总览表</el-menu-item>
+                </el-submenu>
+                <!-- <el-menu-item index="/notics">
+                    <template slot="title">
+                        <i class="el-icon-bell"></i>
+                        公告栏
+                    </template>
+                </el-menu-item> -->
+                <el-menu-item index="/usermanager">
+                    <template slot="title">
+                        <i class="el-icon-s-custom"></i>
+                        用户管理
+                    </template>
+                </el-menu-item>
+            </el-menu>
+        </el-scrollbar>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "navtab",
+        data() {
+            return {
+                buytu: true,
+                roleID: "",
+                adminroid: false,
+                taipel: false,
+            };
+        },
+        props: {
+            native: Boolean,
+            noresize: Boolean,
+        },
+        created() {
+            var userinfor = JSON.parse(localStorage.getItem("userinfor"));
+            // console.log("use", userinfor);
+            this.roleID = userinfor.roleID;
+            // console.log("roleid", this.roleID);
+            if (this.roleID == 1001 || this.roleID == 1003 || this.roleID == 1004) {
+                this.adminroid = true;
+                this.taipel = false;
+            } else if (this.roleID == 2001 || this.roleID == 2002) {
+                this.adminroid = false;
+                this.taipel = true;
+            }
+            this.$nextTick(() => {
+                this.$refs["myscrollbar"].wrap.scrollTop =
+                    this.$refs["myscrollbar"].wrap.scrollHeight;
+            });
+        },
+        methods: {},
+    };
+</script>
+
+<style lang="less">
+    .navtab {
+        .logopin {
+            display: flex;
+            justify-content: center;
+            height: 60px;
+
+            .imgs {
+                margin: 10px 0;
+                // width: 180px;
+                height: 35px;
+            }
+        }
+    }
+
+    .el-menu-item {
+        i {
+            color: #d1d1d1 !important;
+            // background-color: rgb(179, 192, 209).7;
+        }
+    }
+
+    .el-submenu {
+        i {
+            color: #d1d1d1 !important;
+        }
+    }
+</style>

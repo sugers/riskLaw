@@ -1,0 +1,86 @@
+{
+  "code": 200,
+  "data": {
+    "list": [
+      {
+        "ID": 7,
+        "CreatedAt": "2021-08-12T15:00:00+08:00",
+        "UpdatedAt": "2021-08-12T15:00:00+08:00",
+        "DeletedAt": null,
+        "name": "渤海财产保险股份有限公司",
+        "status": 1,
+        "contact": "",
+        "contact_tel": "",
+        "proportion": 0
+      },
+      {
+        "ID": 6,
+        "CreatedAt": "2021-08-12T15:00:00+08:00",
+        "UpdatedAt": "2021-08-12T15:00:00+08:00",
+        "DeletedAt": null,
+        "name": "长安责任保险股份有限公司",
+        "status": 1,
+        "contact": "",
+        "contact_tel": "",
+        "proportion": 0
+      },
+      {
+        "ID": 5,
+        "CreatedAt": "2021-08-12T15:00:00+08:00",
+        "UpdatedAt": "2021-08-12T15:00:00+08:00",
+        "DeletedAt": null,
+        "name": "中路财产保险股份有限公司",
+        "status": 1,
+        "contact": "",
+        "contact_tel": "",
+        "proportion": 0
+      },
+      {
+        "ID": 4,
+        "CreatedAt": "2021-08-12T15:00:00+08:00",
+        "UpdatedAt": "2021-08-12T15:00:00+08:00",
+        "DeletedAt": null,
+        "name": "中航安盟财产保险有限公司",
+        "status": 1,
+        "contact": "",
+        "contact_tel": "",
+        "proportion": 0
+      },
+      {
+        "ID": 3,
+        "CreatedAt": "2021-08-12T15:00:00+08:00",
+        "UpdatedAt": "2021-08-12T15:00:00+08:00",
+        "DeletedAt": null,
+        "name": "现代财产保险有限公司",
+        "status": 1,
+        "contact": "",
+        "contact_tel": "",
+        "proportion": 0
+      },
+      {
+        "ID": 2,
+        "CreatedAt": "2021-08-12T15:00:00+08:00",
+        "UpdatedAt": "2021-08-12T15:00:00+08:00",
+        "DeletedAt": null,
+        "name": "中国人寿财产保险股份有限公司",
+        "status": 1,
+        "contact": "",
+        "contact_tel": "",
+        "proportion": 0
+      },
+      {
+        "ID": 1,
+        "CreatedAt": "2021-08-12T15:00:00+08:00",
+        "UpdatedAt": "2021-08-12T15:00:00+08:00",
+        "DeletedAt": null,
+        "name": "测试财险",
+        "status": 1,
+        "contact": "",
+        "contact_tel": "",
+        "proportion": 10
+      }
+    ],
+    "total": 7
+  },
+  "msg": "成功"
+}
