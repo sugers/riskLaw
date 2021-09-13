@@ -43,7 +43,7 @@ if (process.env.NODE_ENV == 'development') {
 }
 
 // 请求超时
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 120000;
 axios.defaults.headers.Authorization = ''
 
 // 默认post请求tou
@@ -93,7 +93,7 @@ export function put(url, params) {
 // DELETE请求
 export function Delete (url, params ) {
   return new Promise((resolve, reject) => {
-      axios.delete(url, { params})
+      axios.delete(url, {params})
       .then(res => {
           resolve(res.data);
       })

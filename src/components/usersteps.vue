@@ -216,7 +216,7 @@ export default {
   justify-content: flex-start;
   padding: 10px 14px;
   .uesrone{
-    min-width: 100px;
+    min-width: 130px;
     height: 90px;
     font-size: 18px;
     font-weight: 600;

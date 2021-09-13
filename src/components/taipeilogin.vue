@@ -2,39 +2,40 @@
   <div class="admin-login">
     <div class="login">
       <div class="logo">
-        <div style="margin-top: 36px;">
+        <div>
         <div class="logo_img">
-          <img src="../../static/img/logo2x.png" alt="">
+          <img src="../../static/img/logo2x.png" alt="" />
         </div>
         <div class="logo_box">
-          <p>诉法律风险评估平台</p>
+          <p class="logo_p">法律风险评估平台</p>
         </div>
         <div class="logo_flex">
-          <img src="../../static/img/rectan.png" alt="">
+          <img src="../../static/img/rectan.png" alt="" />
           <span class="logo_span">简单快捷&nbsp;响应迅速</span>
         </div>
         <div class="logo_flex">
-          <img src="../../static/img/rectan.png" alt="">
+          <img src="../../static/img/rectan.png" alt="" />
           <span class="logo_span">全面覆盖&nbsp;移动互联</span>
         </div>
         <div class="logo_flex">
-          <img src="../../static/img/rectan.png" alt="">
+          <img src="../../static/img/rectan.png" alt="" />
           <span class="logo_span">深度应用&nbsp;提高效率</span>
         </div>
         <div class="logo_flex">
-          <img src="../../static/img/rectan.png" alt="">
+          <img src="../../static/img/rectan.png" alt="" />
           <span class="logo_span">安全可控&nbsp;严格把关</span>
         </div>
         </div>
       </div>
       <div class="gin-from">
         <div class="loging">
+          <div>
           <div class="from-text">
             <p class="texth">Hello！</p>
             <div class="logimg_txt">
               <p class="texts">欢迎您</p>
               <p class="textz">登录</p>
-              <p class="texts">诉法律风险评估平台</p>
+              <p class="texts">法律风险评估平台</p>
             </div>
           </div>
           <div class="login-from">
@@ -54,6 +55,7 @@
                   v-model="password"
                   show-password
                   size="medium"
+                  @keyup.enter.native="login"
                 ></el-input>
               </el-form-item>
             </el-form>
@@ -64,10 +66,11 @@
                 </el-col>
               </el-row>
             </div>
+            <div class="remembers">
+              <el-button type="primary" @click="login">登录</el-button>
+            </div>
           </div>
-          <div class="remember">
-            <el-button type="primary" @click="login">立即登录</el-button>
-          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -76,6 +79,8 @@
 
 <script>
 import { login } from "../api/api";
+// import insurancetableVue from './insurancetable.vue';
+// import "../../static/js/pxinrem";
 
 export default {
   data() {
@@ -87,6 +92,14 @@ export default {
   },
   created() {
     this.mounted();
+
+    // document.onkeydown = function () {
+    //   // console.log('11');
+    //   var key = window.event.keyCode;
+    //   if (key == 13 || key == 100) {
+    //     this.login();
+    //   }
+    // };
   },
   methods: {
     // 登录
@@ -113,6 +126,10 @@ export default {
               "refresh_token",
               res.data.refresh_token
             );
+            window.localStorage.setItem(
+              "expires_in",
+              res.data.expires_in
+            );
             // 登录的用户信息
             let username = {
               roleID: res.data.profile.role,
@@ -124,13 +141,14 @@ export default {
             var userinfor = JSON.stringify(username);
             window.localStorage.setItem("userinfor", userinfor);
             // 路由跳转
-            this.$router.push("/insurancetable");
+            this.$router.push("/usertable");
             // 提示
             this.$message({
               showClose: true,
               message: "登录成功",
               type: "success",
             });
+            this.$root.$emit('websock');
           } else {
             this.$message({
               showClose: true,
@@ -172,140 +190,151 @@ export default {
 </script>
 
 <style lang="less">
-// .admin-login {
-//   width: 100%;
-//   height: 100vh;
-//   // background-color: #d9e6fc;
-//   background: url(../../static/img/backimg.png) no-repeat;
-//   background-size: cover;
-//   .login {
-//     display: flex;
-//     justify-content: center;
-//     position: relative;
-//     top: 24.5%;
-//     .logo {
-//       width: 26.5625rem;
-//       height: 27.25rem;
-//       // border: 1px solid red;
-//       .logo_img{
-//         width: 16.25rem !important;
-//         margin-left: 60px;
-//         img{
-//           width: 10.3125rem;
-//           height: 2.25rem;
-//         }
-//       }
-//       .logo_box{
-//         width: 16.25rem;
-//         margin: 46px 0 52px 60px;
-//         p{
-//           font-size: 1.7rem;
-//           color: #FFFFFF;
-//           font-weight: 600;
-//         }
-//       }
-//       .logo_flex{
-//         width: 16.25rem;
-//         margin-left: 60px;
-//         display: flex;
-//         margin-bottom: 1.3125rem;
-//         img{
-//           width: 1.25rem;
-//           height: 1.25rem;
-//           margin-right: 1.75rem;
-//         }
-//         .logo_span{
-//           font-size: 1rem;
-//           color: #57ACFF;
-//         }
-//       }
-//       // background-size: 390px 485px;
-//     }
-//     .gin-from {
-//       width: 26.5rem;
-//       height: 27.25rem;
-//       // border: 1px solid red;
-//       // background-color: #fff;
-//       display: flex;
-//       justify-content: center;
-//       .loging {
-//         width: 18rem;
-//         margin-top: 40px;
-//         // height: 330px;
-//         // border: 1px solid red;
-//         .from-text {
-//           display: flex;
-//           flex-direction: column;
-//           .texth {
-//             margin: 0;
-//             font-size: 1.425rem;
-//             font-weight: 600;
-//             margin-bottom: 5px;
-//           }
-//           .logimg_txt {
-//             display: flex;
-//             margin-bottom: 5px;
-//             .texts {
-//               font-size: 1.125rem;
-//               color: #9ea2ad;
-//               margin: 12px 0 27px 0;
-//             }
-//             .textz {
-//               font-size: 1rem;
-//               color: #395bb2;
-//               padding: 0 5px;
-//               margin: 12px 0 27px 0;
-//             }
-//           }
-//         }
-//         .login-from {
-//           .el-form {
-//             .el-form-item {
-//               margin-bottom: 24px;
-//               .el-form-item__label {
-//                 width: 40px !important;
-//                 padding: 0;
-//               }
-//               .el-form-item__content {
-//                 margin-left: 40px !important;
-//                 .el-input {
-//                   .el-input__inner {
-//                     border-radius: 5px;
-//                     // height: 30px;
-//                   }
-//                 }
-//               }
-//             }
-//           }
-          
-//         }
-//         .remember {
-//           .el-button {
-//             margin-top: 28px;
-//             margin-bottom: 5px;
-//             width: 100%;
-//             background-color: #395bb2;
-//           }
-//           .el-row {
-//             margin-top: 12px;
-//             font-size: 12px;
-//             .forget {
-//               display: flex;
-//               justify-content: flex-end;
-//               color: #606266;
-//               cursor: pointer;
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// .bg-purple-left {
-//   .bg-img {
-//     img {
-//       width: 289px;
-//     }
-//   }
-// }
+.admin-login {
+  width: 100%;
+  height: 100vh;
+  // background-color: #d9e6fc;
+  background: url(../../static/img/backimg.png) no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .login {
+    // width: 12.26rem;
+    // height: 7.12rem;
+    width: 54.26rem;
+    height: 37.5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .logo {
+      width: 22.25rem;
+      height: 37.5rem;
+      display: flex;
+      align-items: center;
+      // border: 1px solid red;
+      .logo_img {
+        width: 12.65rem;
+        height: 2.73rem;
+        // margin-left: 0.6rem;
+        img {
+          width: 12.65rem;
+          height: 2.73rem;
+        }
+      }
+      .logo_box {
+        min-width: 16.25rem;
+        margin: 40px 0 40px 0;
+        .logo_p {
+          width: 17.22rem;
+          height: 3.34rem;
+          font-size: 1.74rem;
+          color: #ffffff;
+          font-weight: 600;
+          line-height: 3.34rem;
+          margin: 0;
+        }
+      }
+      .logo_flex {
+        width: 16.25rem;
+        // margin-left: 60px;
+        display: flex;
+        margin-bottom: 1.3125rem;
+        img {
+          width: 1.5rem;
+          height: 1.5rem;
+          margin-right: 1.5rem;
+        }
+        .logo_span {
+          min-width: 7.5rem;
+          height: 1.5rem;
+          font-size: 0.98rem;
+          font-weight: 400;
+          color: #57acff;
+          line-height: 1.5rem;
+        }
+      }
+    }
+    .gin-from {
+      min-width: 22.25rem;
+      height: 37.5rem;
+      display: flex;
+      align-items: center;
+      .loging {
+        width: 21.08rem;
+        height: 21.36rem;
+        // margin-top: 0.4rem;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        .from-text {
+          display: flex;
+          flex-direction: column;
+          .texth {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+          }
+          .logimg_txt {
+            display: flex;
+            margin-bottom: 5px;
+            .texts {
+              font-size: 0.98rem;
+              color: #9ea2ad;
+            }
+            .textz {
+              font-size: 0.98rem;
+              color: #395bb2;
+              padding: 0 5px;
+            }
+          }
+        }
+        .login-from {
+          .el-form {
+            .el-form-item {
+              .el-form-item__label {
+                padding: 0;
+              }
+              .el-form-item__content {
+                .el-input {
+                  .el-input__inner {
+                    border-radius: 5px;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .remember {
+          margin-bottom: 32px;
+          .el-row {
+            margin-top: 0.12rem;
+            font-size: 0.12rem;
+            .forget {
+              display: flex;
+              justify-content: flex-end;
+              color: #606266;
+              cursor: pointer;
+            }
+          }
+        }
+        .remembers {
+          .el-button {
+            width: 100%;
+            height: 2.46rem;
+            background-color: #395bb2;
+          }
+        }
+      }
+    }
+  }
+}
+.bg-purple-left {
+  .bg-img {
+    img {
+      width: 289px;
+    }
+  }
+}
 </style>

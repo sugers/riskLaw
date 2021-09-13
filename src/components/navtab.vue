@@ -55,7 +55,7 @@
 
         <!-- 管理平台后台 -->
         <el-scrollbar v-if="adminroid" style="height: 90vh" :native="false" :noresize="false" ref="myscrollbar">
-            <el-menu router>
+            <el-menu router :default-active="this.$route.path">
                 <el-menu-item index="/soutable">
                     <template>
                         <i class="el-icon-s-home"></i>
@@ -68,11 +68,6 @@
                         风险评估
                     </template>
                 </el-menu-item>
-                <!-- <el-submenu index="1">
-                    <template slot="title"><i class="el-icon-menu"></i>保险公司管理</template>
-                    <el-menu-item index="">保险公司信息管理</el-menu-item>
-                    <el-menu-item index="">保险公司用户管理</el-menu-item>
-                </el-submenu> -->
                 <el-menu-item index="/audittable">
                     <template>
                         <i class="el-icon-s-custom"></i>
@@ -80,41 +75,41 @@
                     </template>
                 </el-menu-item>
 
-                <el-submenu index="1">
+                <!-- <el-submenu index="1">
                     <template slot="title"><i class="el-icon-menu"></i>保险公司管理</template>
                     <el-menu-item index="/InsuranceCompany">保险公司信息管理</el-menu-item>
                     <el-menu-item index="/insuranceUser">保险公司用户管理</el-menu-item>
-                </el-submenu>
-                <el-menu-item index="/laywerManage">
+                </el-submenu> -->
+                <!-- <el-menu-item index="/laywerManage">
                     <template slot="title">
                         <i class="el-icon-notebook-2"></i>
                         律师管理
                     </template>
-                </el-menu-item>
-                <el-menu-item index="/Financia">
+                </el-menu-item> -->
+                <!-- <el-menu-item index="/Financia">
                     <template>
                         <i class="el-icon-notebook-2"></i>
                         财务对账
                     </template>
-                </el-menu-item>
-                <el-submenu index="" v-if="buytu">
+                </el-menu-item> -->
+                <!-- <el-submenu index="" v-if="buytu">
                     <template slot="title"><i class="el-icon-s-marketing"></i>统计分析</template>
-                    <el-menu-item index="/Statistics">法务人员工作量表</el-menu-item>
+                    <el-menu-item index="">法务人员工作量表</el-menu-item>
                     <el-menu-item index="">业务发展趋势图</el-menu-item>
                     <el-menu-item index="">业务发展总览表</el-menu-item>
-                </el-submenu>
+                </el-submenu> -->
                 <!-- <el-menu-item index="/notics">
                     <template slot="title">
                         <i class="el-icon-bell"></i>
                         公告栏
                     </template>
                 </el-menu-item> -->
-                <el-menu-item index="/usermanager">
+                <!-- <el-menu-item index="/usermanager">
                     <template slot="title">
                         <i class="el-icon-s-custom"></i>
                         用户管理
                     </template>
-                </el-menu-item>
+                </el-menu-item> -->
             </el-menu>
         </el-scrollbar>
     </div>
@@ -173,14 +168,14 @@
 
     .el-menu-item {
         i {
-            color: #d1d1d1 !important;
+            color: #fff !important;
             // background-color: rgb(179, 192, 209).7;
         }
     }
 
     .el-submenu {
         i {
-            color: #d1d1d1 !important;
+            color: #fff !important;
         }
     }
 </style>

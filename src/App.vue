@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <audio
-      id="audio"
-      controls="controls"
-      style="height: 0; position: absolute; z-index:-10;"
-      src="https://down.ear0.com:3321/preview?soundid=35825&type=mp3"
-    ></audio>
+    <div>
+      <audio
+        id="audio"
+        style="position: absolute; z-index:-10;"
+        src="https://down.ear0.com:3321/preview?soundid=35825&type=mp3"
+      ></audio>
+    </div>
     <router-view />
   </div>
 </template>
@@ -17,18 +18,30 @@ export default {
   data(){
     return{
       websoce: null,
-      reconnectTime:'',
+      // reconnectTime:'',
+
+      lockReconnect: false, // 建立连接
+      timeout: 40000, // 30秒心跳一次
+      timeoutobj: null, // 心跳倒计时
+      serverTimeroutobj: null, // 
+      timeoutunm: null, // 重链
     }
     
+  },
+  beforeDestory(){
+    this.websoce.close();
+    clearTimeout(this.timeoutobj);
+    clearTimeout(this.serverTimeroutobj);
   },
   created() {
     var access_token = window.localStorage.getItem("access_token");
     if(access_token){
-      // this.initwebsocket();
+      this.initwebsocket();
     }
+    this.$root.$on('websock',this.initwebsocket)
   },
   methods: {
-    username(){},
+
     initwebsocket() {
       if ("WebSocket" in window) {
         var access_token = window.localStorage.getItem("access_token");
@@ -59,48 +72,111 @@ export default {
       audio.play();
     },
     websocketonopen() {
-      console.log("链接成功");
-      let fa = this.websoce.readyState;
-      if(fa === 1){
-        this.wsHeartflag = true;
-        this.reconnectTime = 0;
-      }
+      // console.log("链接成功");
+      this.stateout()
+      // let fa = this.websoce.readyState;
+      // if(fa === 1){
+      //   this.wsHeartflag = true;
+      //   this.reconnectTime = 0;
+      // }
     },
-    websocketonerror() {
-      this.wsHeartflag = false;
-      if (this.reconnectTime <= 3) {
-        setTimeout(() => {
-          this.websocketonopen();
-          this.reconnectTime += 1;
-        }, 5000);
-      } else {
-        this.websocketclose();
-      }
+    websocketonerror(e) {
+      console.log('出现错误',e);
+      // 开启链接
+      this.reconnect();
+      // this.wsHeartflag = false;
+      // if (this.reconnectTime <= 3) {
+      //   setTimeout(() => {
+      //     this.websocketonopen();
+      //     this.reconnectTime += 1;
+      //   }, 5000);
+      // } else {
+      //   this.websocketclose();
+      // }
     },
     websocketonmessage(a) {
       var received_msg = a && JSON.parse(a.data);
-      console.log('111');
+      // console.log('111', a);
       if(received_msg.code === 200){
-        this.usertablespi();
+        
         this.$message({
           showClose: true,
           message: "您有新的订单，请查收！",
           type: "success",
         });
+        this.$root.$emit('radio');
         var evt = document.createEvent("Event");
         evt.initEvent("click", true, true);
         document.getElementById("audio").dispatchEvent(evt);
 
         this.audioplay();
-        // this.websocketclose();
+        
       }
+      if (a.code == 10000007 || a.code == 10000006) {
+        this.websoce.close();
+      }
+      this.reset();
       
     },
     websocketclose() {
-      this.wsHeartflag = false;
-      this.websoce && this.websoce.close && this.websoce.close();
-      // 重连
-      // this.initwebsocket()
+      // console.log('关闭了');
+      this.reconnect();
+      // this.wsHeartflag = false;
+      // this.websoce && this.websoce.close && this.websoce.close();
+      // // 重连
+      // var timer = setTimeout(() => {
+      //   this.initwebsocket()
+      //   clearInterval(timer);
+      // }, 8000);
+      
+    },
+    // 重新连接
+    reconnect(){
+      let _that = this
+      if (_that.lockReconnect) {
+        return
+      }
+      _that.lockReconnect = true;
+      // 延迟链接
+      _that.timeoutunm && clearTimeout(_that.timeoutunm);
+      _that.timeoutunm = setTimeout(function(){
+        _that.initwebsocket(); // 新链接
+        _that.lockReconnect = false;
+      },5000)
+    },
+    // 开启心跳
+    stateout(){
+      let that = this
+      that.timeoutobj = setTimeout(function(){
+        // console.log('dd',that.websoce.readyState);
+        // 这里发送一个心跳，后端收到返回一个心跳
+        if (that.websoce.readyState === that.websoce.OPEN) {
+          
+          that.websoce.send(JSON.stringify({
+            data:{
+              messageType: 'heartchean'
+            }
+          }))
+          // console.log('发送成功');
+          
+        }else{
+          that.reconnect()
+        }
+        that.serverTimeroutobj = setTimeout(function(){
+          // 超时关闭
+          that .websoce.close();
+        },that.timeout)
+      },that.timeout)
+      
+    },
+    // 重置心跳
+    reset(){
+      // 清除时间
+      let _self = this
+      clearTimeout(_self.timeoutobj);
+      clearTimeout(_self.serverTimeroutobj);
+      // 开启心跳
+      _self.stateout();
     },
   },
 };

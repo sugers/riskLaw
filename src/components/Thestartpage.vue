@@ -1,17 +1,15 @@
 <template>
   <div class="hello">
     <el-container style="height: 100vh">
-
       <el-aside
         class="hidden-xs-only"
         width="230px"
-        style="background-color: #304156"
+        style="background-color: rgb(25, 26, 35)"
       >
         <navtab></navtab>
       </el-aside>
 
-      <el-container >
-
+      <el-container>
         <el-header>
           <el-row>
             <!-- <el-col :span="12">
@@ -37,11 +35,17 @@
             </el-col>
           </el-row>
         </el-header>
-
-        <el-main>
-          <!-- 子路由出口 -->
-          <pageexport />
-        </el-main>
+        <el-scrollbar
+          style="height: 100vh"
+          :native="false"
+          :noresize="false"
+          ref="myscrollbar"
+        >
+          <el-main>
+            <!-- 子路由出口 -->
+            <pageexport />
+          </el-main>
+        </el-scrollbar>
       </el-container>
     </el-container>
   </div>
@@ -79,7 +83,7 @@ export default {
     },
     // 退出
     useroutquit() {
-      console.log("退出");
+      // console.log("退出");
       window.localStorage.removeItem("access_token");
       window.localStorage.removeItem("refresh_token");
       let userid = JSON.parse(localStorage.getItem("userinfor"));
@@ -114,7 +118,7 @@ export default {
     align-items: center;
     & > img {
       width: 30px;
-    //   height: 30px;
+      //   height: 30px;
       padding: 10px 0;
       margin: 0 10px 0 20px;
     }
@@ -128,9 +132,15 @@ export default {
     }
 
     .el-dropdown {
+      cursor: pointer;
       i {
         font-size: 18px;
         color: #aaaaaa;
+        // transition: 0.4s all ease-out;
+        // transform-origin:30px 30px;
+        // &:hover{
+        //   transform: rotate(180deg);
+        // }
       }
     }
   }
@@ -156,37 +166,39 @@ export default {
   color: #333;
 
   .el-menu {
-    background-color: #304156;
+    background-color: rgb(25, 26, 35);
+    // background-color: #304156;
     border-right: 0;
     .el-menu-item {
-      color: #bfcbd9;
+      color: #fff;
       &:focus,
       &:hover {
-        background-color: #263445 !important;
+        background-color: #4089e5 !important;
       }
       &.is-active {
-        background-color: #263445;
+        background-color: #4089e5;
       }
     }
     .el-submenu {
+      background-color: rgb(25, 26, 35) !important;
       .el-submenu__title {
         &:hover {
-          background-color: #263445 !important;
+          background-color: #4089e5 !important;
         }
       }
       .el-menu-item {
-        background: #1f2d3d;
-        color: #bfcbd9;
+        background-color: rgb(25, 26, 35);
+        color: #fff;
         &:focus,
         :hover {
-          background-color: #001528;
+          background-color: #4089e5;
         }
         &.is-active {
-          background-color: #263445;
+          background-color: #4089e5;
         }
       }
       .el-submenu__title {
-        color: #bfcbd9;
+        color: #fff;
       }
     }
   }

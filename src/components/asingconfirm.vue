@@ -40,7 +40,7 @@
             </div>
             <div class="martexts">
               <p>意向费率：</p>
-              <span>{{ tltle.intent_rate + "%" }}</span>
+              <span>{{ tltle.intent_rate + "‰" }}</span>
             </div>
           </el-col>
         </el-row>
@@ -54,7 +54,7 @@
         </el-row>
       </div>
       <!-- 身份证 -->
-      <div class="admreviewerss" v-if="this.userfilesz != null">
+      <div class="admreviewerss" v-if="this.insured_type == 1">
         <el-row>
           <el-col :span="12">
             <div class="martexts">
@@ -109,7 +109,7 @@
                   </el-upload>
                 </span> -->
               </div>
-              <div class="bgimg" v-if="usersrces">
+              <!-- <div class="bgimg" v-if="usersrces">
                 <el-image
                   :src="srcs"
                   fit="contain"
@@ -120,11 +120,42 @@
                     <i class="el-icon-picture-outline"></i>
                   </div>
                 </el-image>
+              </div> -->
+              <Comimageviewer
+                :visible.sync="showViewer"
+                :url="srcListsurl"
+              ></Comimageviewer>
+              <div v-for="(item, ind) in usernamesfzimg" :key="ind">
+                <div class="tyetext" v-if="usersrces">
+                  <div class="textwen">
+                    <p
+                      class="ptextleis"
+                      :title="item.file_name"
+                      @click="onopensfz(ind)"
+                    >
+                      {{ item.file_name }}
+                    </p>
+                    <div class="btntext">
+                      <a
+                        :href="'https://wx.haobofalv.com/' + item.path"
+                        :download="item.file_name"
+                        >下载</a
+                      >
+                      <div class="shan" @click="deletes(item.id, item.path)">
+                        删除
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <div v-for="(item, ind) in usercaidfile" :key="ind">
                 <div class="tyetext" v-if="filescaid">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p class="ptextlei" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -145,9 +176,9 @@
         </el-row>
       </div>
       <!-- 营业执照 -->
-      <div class="admreviewerss" v-if="this.blicense != null">
+      <div class="admreviewerss" v-if="this.insured_type == 2">
         <el-row>
-          <el-col :span="14">
+          <el-col :span="12">
             <div class="martexts">
               <p>单位名称:</p>
               <span>{{ userblicense.company }}</span>
@@ -227,7 +258,7 @@
               </span>
             </div>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="12">
             <div style="padding-left: 50px">
               <div class="policy">
                 <span>投保人附件:</span>
@@ -254,7 +285,7 @@
                   </el-upload>
                 </span> -->
               </div>
-              <div class="bgimg" v-if="boolblisrcs">
+              <!-- <div class="bgimg" v-if="boolblisrcs">
                 <el-image
                   :src="srcs"
                   fit="contain"
@@ -265,11 +296,42 @@
                     <i class="el-icon-picture-outline"></i>
                   </div>
                 </el-image>
+              </div> -->
+              <Comimageviewer
+                :visible.sync="showViewer"
+                :url="srcListsurl"
+              ></Comimageviewer>
+              <div v-for="(item, inde) in blisrced" :key="inde">
+                <div class="tyetext" v-if="boolblisrcs">
+                  <div class="textwen">
+                    <p
+                      class="ptextleis"
+                      :title="item.file_name"
+                      @click="onPreview(inde)"
+                    >
+                      {{ item.file_name }}
+                    </p>
+                    <div class="btntext">
+                      <a
+                        :href="'https://wx.haobofalv.com/' + item.path"
+                        :download="item.file_name"
+                        >下载</a
+                      >
+                      <div class="shan" @click="deletes(item.id, item.path)">
+                        删除
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <div v-for="(item, ind) in usersfz" :key="ind">
                 <div class="tyetext" v-if="boolblidocx">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p class="ptextlei" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -375,7 +437,7 @@
                   </el-upload>
                 </span> -->
               </div>
-              <div class="bgimg">
+              <!-- <div class="bgimg">
                 <el-image
                   v-if="lasrc"
                   :src="lainsrc"
@@ -387,11 +449,42 @@
                     <i class="el-icon-picture-outline"></i>
                   </div>
                 </el-image>
+              </div> -->
+              <Comimageviewer
+                :visible.sync="plaintiffimg"
+                :url="plaintiffurl"
+              ></Comimageviewer>
+              <div v-for="(item, inst) in plaintiffage" :key="inst">
+                <div class="tyetext" v-if="lasrc">
+                  <div class="textwen">
+                    <p
+                      class="ptextleis"
+                      :title="item.file_name"
+                      @click="qisuopenViewer(inst)"
+                    >
+                      {{ item.file_name }}
+                    </p>
+                    <div class="btntext">
+                      <a
+                        :href="'https://wx.haobofalv.com/' + item.path"
+                        :download="item.file_name"
+                        >下载</a
+                      >
+                      <div class="shan" @click="deletes(item.id, item.path)">
+                        删除
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <div v-for="(item, ind) in complatxt" :key="ind">
                 <div class="tyetext" v-if="txtplay">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p class="ptextlei" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -475,7 +568,7 @@
                   </el-upload>
                 </span> -->
               </div>
-              <div class="bgimg">
+              <!-- <div class="bgimg">
                 <el-image
                   v-if="baosrc"
                   :src="baoinsrc"
@@ -487,11 +580,43 @@
                     <i class="el-icon-picture-outline"></i>
                   </div>
                 </el-image>
+              </div> -->
+
+              <Comimageviewer
+                :visible.sync="preserimg"
+                :url="preserimgurl"
+              ></Comimageviewer>
+              <div v-for="(item, inds) in preserimgs" :key="inds">
+                <div class="tyetext" v-if="baosrc">
+                  <div class="textwen">
+                    <p
+                      class="ptextleis"
+                      :title="item.file_name"
+                      @click="bqopenViewer(inds)"
+                    >
+                      {{ item.file_name }}
+                    </p>
+                    <div class="btntext">
+                      <a
+                        :href="'https://wx.haobofalv.com/' + item.path"
+                        :download="item.file_name"
+                        >下载</a
+                      >
+                      <div class="shan" @click="deletes(item.id, item.path)">
+                        删除
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <div v-for="(item, ind) in complatexts" :key="ind">
                 <div class="tyetext" v-if="btxtop">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p class="ptextlei" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -561,45 +686,43 @@
                     </el-upload>
                   </span> -->
                 </div>
-                <div class="listqiimg">
-                  <span class="imgs" v-if="monyimg">
-                    <div
-                      style="padding: 0 10px"
-                      v-for="(item, ind) in timonsrc"
-                      :key="ind"
-                    >
-                      <el-image
-                        :src="'https://wx.haobofalv.com/' + item.path"
-                        fit="contain"
-                        style="width: 207px; height: 292px"
-                        :preview-src-list="[
-                          'https://wx.haobofalv.com/' + item.path,
-                        ]"
+
+                <div class="listqishu" v-if="monyimg">
+                  <Comimageviewer
+                    :visible.sync="textmonyimg"
+                    :url="testmonyurl"
+                  ></Comimageviewer>
+                  <span
+                    class="imgs"
+                    v-for="(item, dome) in timonsrc"
+                    :key="dome"
+                  >
+                    <p class="ad_imgs_txts" :title="item.file_name" @click="zjopenmony(dome)">
+                      {{ item.file_name }}
+                    </p>
+                    <div class="btntext">
+                      <a
+                        :href="'https://wx.haobofalv.com/' + item.path"
+                        :download="item.file_name"
+                        >下载</a
                       >
-                        <div slot="error" class="image-slot">
-                          <i class="el-icon-picture-outline"></i>
-                        </div>
-                      </el-image>
-                      <div class="btntext" style="width: 207px">
-                        <a
-                          href="javascript:void(0)"
-                          @click="btnclicks(item.path)"
-                          >下载</a
-                        >
-                        <div class="shan" @click="deletes(item.id, item.path)">
-                          删除
-                        </div>
+                      <div class="shan" @click="deletes(item.id, item.path)">
+                        删除
                       </div>
                     </div>
                   </span>
                 </div>
+
                 <div class="listqishu" v-if="monyfile">
                   <span
                     class="imgs"
-                    v-for="(item, ins) in testimony"
+                    v-for="(item, ins) in timonfile"
                     :key="ins"
                   >
-                    <p class="ad_imgs_txt" :title="item.file_name">
+                    <p class="ad_imgs_txt" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -743,12 +866,12 @@
               <el-button type="primary" @click.prevent="through(1)"
                 >确定</el-button
               >
-              <el-button
+              <!-- <el-button
                 type="primary"
                 @click.prevent="through(0)"
                 style="background-color: #bbbbbb"
                 >取消</el-button
-              >
+              > -->
             </div>
           </el-col>
         </el-row>
@@ -771,6 +894,7 @@
 import { getInputValue } from "../../static/js/amountFormat.js";
 import usersteps from "../components/usersteps.vue";
 import "../../static/css/file_policy_style.less";
+import Comimageviewer from "../components/ComImageviewer.vue";
 import axios from "axios";
 
 function csdatesr(res) {
@@ -812,9 +936,11 @@ export default {
   // props: ["taskview", "anyou"],
   components: {
     usersteps,
+    Comimageviewer,
   },
   data() {
     return {
+      insured_type: "",
       number: "",
       // 风险评估id
       evalid: "",
@@ -861,6 +987,7 @@ export default {
       lainsrc: "",
       lasrcs: [],
       lasrc: true,
+      plaintiffage: [],
       // pdf文件
       complatxt: [],
       txtplay: true,
@@ -895,6 +1022,10 @@ export default {
       usercaidfile: "",
       filescaid: true,
       usersrces: true,
+      usernamesfzimg: "",
+      srcListurl: [],
+      srcListsurl: [],
+      showViewer: false,
       // 营业执照
       blicense: "",
       srcs: "",
@@ -902,18 +1033,28 @@ export default {
       usersfz: "",
       boolblidocx: true,
       boolblisrcs: true,
+      blisrcsurl: [],
+      preserimgurl: [],
+      preserimg: false,
 
       tltle: "",
       case_type: "",
       company: "",
       // 起诉状
       plaintiff: [],
+      blisrced: "",
+      plaintiffurl: [],
+      plaintiffimg: false,
       // 保全申请书
       preservation: [],
+      preserimgs: [],
+      testmonyurl: [],
+      testmonyimage:[],
+      textmonyimg: false,
       // 证据材料
       testimony: [],
-      timonsrc:"",
-      monyimg:true,
+      timonsrc: "",
+      monyimg: true,
       timonfile: "",
       monyfile: true,
       // 保单附件
@@ -953,6 +1094,11 @@ export default {
       zjloading: false,
     };
   },
+  destroyed(){
+    window.removeEventListener('beforeunload',e=>{
+      this.beforeClosepage(e)
+    })
+  },
   created() {
     this.$nextTick(() => {
       this.$refs["myscrollbar"].wrap.scrollTop = document.body.scrollTop = 0;
@@ -961,9 +1107,15 @@ export default {
 
     this.reviewapi();
   },
-  watch: {},
-  mounted() {},
+  mounted() {
+    window.addEventListener('beforeunload',e=>{
+      this.beforeClosepage(e)
+    })
+  },
   methods: {
+    beforeClosepage(){
+      window.opener.postData()
+    },
     reviewapi() {
       var data = {
         risk_eval_id: this.$route.query.data,
@@ -998,6 +1150,7 @@ export default {
       this.revname = dat.reviewer;
       this.usertiduy.baoxianRMB = dat.amount;
       this.cty = dat.case_type;
+      this.insured_type = dat.insured_type;
       // 传过来的数据
       // console.log("dat", dat);
       // for (let i = 0; i < this.anyou.length; i++) {
@@ -1017,8 +1170,13 @@ export default {
         for (var t = 0; t < this.userfilesz.length; t++) {
           let caid = this.userfilesz[t];
           let cafi = caid.path.substring(caid.path.lastIndexOf(".") + 1);
-          if (cafi == "jpg" || cafi == "jpeg" || cafi == "png") {
+          if (
+            cafi.toLowerCase() == "jpg" ||
+            cafi.toLowerCase() == "jpeg" ||
+            cafi.toLowerCase() == "png"
+          ) {
             caidsrcs.push(caid);
+            this.srcListurl.push(htts + "/" + caid.path);
           } else {
             caidfile.push(caid);
           }
@@ -1032,6 +1190,7 @@ export default {
         if (caidsrcs.length != 0) {
           this.srcs = htts + "/" + caidsrcs[0].path;
           this.srcLists.push(htts + "/" + caidsrcs[0].path);
+          this.usernamesfzimg = caidsrcs;
           this.usersrces = true;
         } else {
           this.usersrces = false;
@@ -1058,6 +1217,7 @@ export default {
           // console.log('bus',bugt);
           if (bugt == "jpg" || bugt == "jpeg" || bugt == "png") {
             blisrcs.push(use);
+            this.blisrcsurl.push(htts + "/" + blisrcs[h].path);
           } else {
             blidocx.push(use);
           }
@@ -1070,6 +1230,7 @@ export default {
           this.boolblidocx = false;
         }
         if (blisrcs.length != 0) {
+          this.blisrced = blisrcs;
           this.srcs = htts + "/" + blisrcs[0].path;
           this.srcLists.push(htts + "/" + blisrcs[0].path);
           this.boolblisrcs = true;
@@ -1118,6 +1279,7 @@ export default {
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
           if (na == "jpg" || na == "jpeg" || na == "png") {
             k.push(htts + "/" + s.path);
+            this.plaintiffage.push(s);
           } else {
             z.push(s);
           }
@@ -1148,8 +1310,13 @@ export default {
           console.log("path", this.preservation[e].path);
           var st = this.preservation[e];
           var ns = st.path.substring(st.path.lastIndexOf(".") + 1);
-          if (ns == "jpg" || ns == "jpeg" || ns == "png") {
+          if (
+            ns.toLowerCase() == "jpg" ||
+            ns.toLowerCase() == "jpeg" ||
+            ns.toLowerCase() == "png"
+          ) {
             bo.push(htts + "/" + st.path);
+            this.preserimgs.push(st);
           } else {
             u.push(st);
           }
@@ -1183,6 +1350,7 @@ export default {
             fs.toLowerCase() == "png"
           ) {
             tiomonimg.push(hfle);
+            this.testmonyimage.push(htts + "/" + hfle.path);
           } else {
             tiomonfile.push(hfle);
           }
@@ -1216,6 +1384,34 @@ export default {
       }
     },
 
+    onopensfz(ind) {
+      this.srcListsurl = [...this.srcListurl, ind];
+      // console.log(this.srcListsurl);
+      this.showViewer = true;
+    },
+    onPreview(ind) {
+      this.srcListsurl = [...this.blisrcsurl, ind];
+      this.showViewer = true;
+    },
+    qisuopenViewer(ind) {
+      this.plaintiffurl = [...this.lasrcs, ind];
+      this.plaintiffimg = true;
+    },
+    bqopenViewer(ind) {
+      this.preserimgurl = [...this.baosrcs, ind];
+      this.preserimg = true;
+    },
+    zjopenmony(ins) {
+      this.testmonyurl = [...this.testmonyimage, ins];
+      this.textmonyimg = true;
+    },
+    closeViewer() {
+      this.showViewer = false;
+      this.plaintiffimg = false;
+      this.preserimg = false;
+      this.textmonyimg = false;
+    },
+
     anniu(dat) {
       if (dat == 1) {
         this.filesocruse = true;
@@ -1240,6 +1436,16 @@ export default {
       Casefile(data)
         .then((res) => {
           if (res.code == 200) {
+            this.usernamesfzimg = "";
+            this.usercaidfile = "";
+            this.blisrced = "";
+            this.usersfz = "";
+            this.plaintiffage = []
+            this.complatxt = []
+            this.preserimgs = []
+            this.complatexts = []
+            this.timonsrc = "";
+            this.timonfile = "";
             this.reviewapi();
             this.$message({
               showClose: true,
@@ -1373,22 +1579,14 @@ export default {
             this.$router.push({
               path: "/usertable/adminfiedlook",
             });
-            // this.$emit("asity");
-            // this.$emit("funca");
-            // this.$emit("func");
           }
         });
-      } else if (a == 0) {
-        // this.$message({
-        //   showClose: true,
-        //   message: "已取消，未核实",
-        //   type: "error",
-        // });
-        this.$router.push({
-          path: "/usertable",
-        });
-        // this.$emit("func");
-      }
+      } 
+      // else if (a == 0) {
+      //   this.$router.push({
+      //     path: "/usertable",
+      //   });
+      // }
     },
     falbooks() {
       var data = {
@@ -1447,7 +1645,6 @@ export default {
     display: flex;
     justify-content: space-evenly;
     width: 150px;
-    margin-bottom: 10px;
     a:link,
     a:visited,
     a:hover,
@@ -1565,7 +1762,16 @@ export default {
           width: 800px;
           margin-bottom: 20px;
           .ad_imgs_txt {
-            width: 360px;
+            max-width: 300px;
+            margin: 0;
+            color: #000;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .ad_imgs_txts {
+            cursor: pointer;
+            max-width: 300px;
             margin: 0;
             color: #5162f8;
             overflow: hidden;
@@ -1606,7 +1812,6 @@ export default {
           }
         }
       }
-    
     }
     .bgimg {
       display: flex;
@@ -1627,6 +1832,15 @@ export default {
         align-items: center;
         margin-bottom: 20px;
         .ptextlei {
+          max-width: 300px;
+          margin: 0;
+          color: #000;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .ptextleis {
+          cursor: pointer;
           max-width: 300px;
           margin: 0;
           color: #5162f8;

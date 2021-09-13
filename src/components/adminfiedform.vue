@@ -6,8 +6,8 @@
     ref="myscrollbar"
   >
     <div class="aunif">
+      <div></div>
       <usersteps :csteps="csteps" :cstext="cstext" :number="number" />
-
       <div class="fromrevie">
         <el-row>
           <el-col :span="24">
@@ -40,7 +40,7 @@
             </div>
             <div class="martexts">
               <p>意向费率：</p>
-              <span>{{ tltle.intent_rate + "%" }}</span>
+              <span>{{ tltle.intent_rate + "‰" }}</span>
             </div>
           </el-col>
         </el-row>
@@ -54,7 +54,7 @@
         </el-row>
       </div>
       <!-- 身份证 -->
-      <div class="admreviewerss" v-if="this.userfilesz != null">
+      <div class="admreviewerss" v-if="this.insured_type == 1">
         <el-row>
           <el-col :span="12">
             <div class="martexts">
@@ -155,7 +155,7 @@
                 <div class="tyetext" v-if="usersrces">
                   <div class="textwen">
                     <p
-                      class="ptextlei"
+                      class="ptextleis"
                       :title="item.file_name"
                       @click="onopensfz"
                     >
@@ -177,7 +177,18 @@
               <div v-for="(item, index) in usercaidfile" :key="index">
                 <div class="tyetext" v-if="filescaid">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
+                      :title="item.file_name"
+                      @click="btnclicks(item.path)"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -186,7 +197,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div class="shan" @click="deletes(item.id, item.path,1)">
                         删除
                       </div>
                     </div>
@@ -198,7 +209,7 @@
         </el-row>
       </div>
       <!-- 营业执照 -->
-      <div class="admreviewerss" v-if="this.blicense != null">
+      <div class="admreviewerss" v-if="this.insured_type == 2">
         <el-row>
           <el-col :span="12">
             <div class="martexts">
@@ -357,7 +368,7 @@
                       :url-list="srcLists"
                     /> -->
                     <p
-                      class="ptextlei"
+                      class="ptextleis"
                       :title="item.file_name"
                       @click="onPreview(ind)"
                     >
@@ -379,7 +390,18 @@
               <div v-for="(item, index) in usersfz" :key="index">
                 <div class="tyetext">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
+                      :title="item.file_name"
+                      @click="btnclicks(item.path)"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -486,7 +508,7 @@
                         :url-list="plainimage"
                       /> -->
                       <p
-                        class="ptextlei"
+                        class="ptextleis"
                         :title="item.file_name"
                         @click="qisuopenViewer(ind)"
                       >
@@ -505,10 +527,22 @@
                     </div>
                   </div>
                 </div>
+
                 <div v-for="(item, ind) in complatxt" :key="ind">
                   <div class="tyetext" style="padding: 0 10px" v-if="txtplay">
                     <div class="textwen">
-                      <p class="ptextlei" :title="item.file_name">
+                      <p
+                        class="ptextlei"
+                        :style="
+                          item.path
+                            .substring(item.path.lastIndexOf('.') + 1)
+                            .toLowerCase() == 'pdf'
+                            ? 'color: #5162f8;cursor: pointer;'
+                            : 'color:#000'
+                        "
+                        :title="item.file_name"
+                        @click="btnclicks(item.path)"
+                      >
                         {{ item.file_name }}
                       </p>
                       <div class="btntext">
@@ -610,13 +644,8 @@
                 <div v-for="(item, ind) in baosrcs" :key="ind">
                   <div class="tyetext" style="padding: 0 10px" v-if="baosrc">
                     <div class="textwen">
-                      <!-- <el-image-viewer
-                        v-if="preserimg"
-                        :on-close="closeViewer"
-                        :url-list="preserimages"
-                      /> -->
                       <p
-                        class="ptextlei"
+                        class="ptextleis"
                         :title="item.file_name"
                         @click="bqopenViewer(ind)"
                       >
@@ -638,7 +667,18 @@
                 <div v-for="(item, ind) in complatexts" :key="ind">
                   <div class="tyetext" style="padding: 0 10px" v-if="btxtop">
                     <div class="textwen">
-                      <p class="ptextlei" :title="item.file_name">
+                      <p
+                        class="ptextlei"
+                        :style="
+                          item.path
+                            .substring(item.path.lastIndexOf('.') + 1)
+                            .toLowerCase() == 'pdf'
+                            ? 'color: #5162f8;cursor: pointer;'
+                            : 'color:#000'
+                        "
+                        :title="item.file_name"
+                        @click="btnclicks(item.path)"
+                      >
                         {{ item.file_name }}
                       </p>
                       <div class="btntext">
@@ -741,7 +781,7 @@
                   ></Comimageviewer>
                   <span class="imgs" v-for="(item, ins) in timonsrc" :key="ins">
                     <p
-                      class="ad_imgs_txt"
+                      class="ad_imgs_txts"
                       :title="item.file_name"
                       @click="zjopenmony(ins)"
                     >
@@ -766,7 +806,18 @@
                     v-for="(item, inf) in timonfile"
                     :key="inf"
                   >
-                    <p class="ad_imgs_txt" :title="item.file_name">
+                    <p
+                      class="ad_imgs_txt"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
+                      :title="item.file_name"
+                      @click="btnclicks(item.path)"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -833,7 +884,7 @@
                   <div>
                     <div style="margin-bottom: 10px">快速反馈</div>
                     <div>
-                      <el-radio-group v-model="feedback">
+                      <el-radio-group v-model="feedback" @change="numfeedback">
                         <el-radio :label="1">同意承保</el-radio>
                         <el-radio :label="2">拒绝承保</el-radio>
                         <el-radio :label="3">补充材料</el-radio>
@@ -845,11 +896,14 @@
                       <div>备注：</div>
                       <el-input
                         style="width: 550px"
-                        :autosize="{ minRows: 5 }"
+                        :autosize="{ minRows: 4 }"
                         type="textarea"
                         :rows="3"
                         placeholder="请输入内容"
                         v-model="textarea"
+                        maxlength="20"
+                        show-word-limit
+                        resize="none"
                       >
                       </el-input>
                     </div>
@@ -865,12 +919,12 @@
               <el-button type="primary" @click.prevent="through(1)"
                 >确定</el-button
               >
-              <el-button
+              <!-- <el-button
                 type="primary"
                 @click.prevent="through(0)"
                 style="background-color: #bbbbbb"
                 >取消</el-button
-              >
+              > -->
             </div>
           </el-col>
         </el-row>
@@ -882,12 +936,15 @@
         :visible.sync="dialogff"
         :before-close="handle"
         :append-to-body="true"
+        class="eldisalog"
       >
         <div class="fromrevie">
           <el-row>
             <el-col :span="24">
-              <div class="grid-content" v-show="filesauth">身份证</div>
-              <div class="grid-content" v-show="filescate">营业执照</div>
+              <div class="gir-text">
+                <div class="grid-content" v-show="filesauth">身份证</div>
+                <div class="grid-content" v-show="filescate">营业执照</div>
+              </div>
             </el-col>
           </el-row>
         </div>
@@ -1123,6 +1180,7 @@ import { getInputValue } from "../../static/js/amountFormat.js";
 import usersteps from "../components/usersteps.vue";
 import "../../static/css/disaoerss.less";
 import "../../static/css/file_policy_style.less";
+import "../../static/css/el_dising.less"
 import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import Comimageviewer from "../components/ComImageviewer.vue";
 
@@ -1165,6 +1223,7 @@ export default {
   // props: ["taskview", "anyou"],
   data() {
     return {
+      insured_type: "",
       number: "",
       dat: "",
       divtaus: false,
@@ -1213,7 +1272,7 @@ export default {
       boolblisrcs: true,
       indeuserblic: "",
       showViewer: false, // 显示查看器
-      srcListsurl:[],
+      srcListsurl: [],
       tltle: "",
       case_type: "",
       company: "",
@@ -1280,7 +1339,14 @@ export default {
       qisloading: false,
       sqloading: false,
       zjloading: false,
+
+      dioat: "",
     };
+  },
+  destroyed(){
+    window.removeEventListener('beforeunload',e=>{
+      this.beforeClosepage(e)
+    })
   },
   created() {
     this.$nextTick(() => {
@@ -1293,8 +1359,14 @@ export default {
     this.$nextTick(function () {
       this.fromheight = window.innerHeight - 20;
     });
+    window.addEventListener('beforeunload',e=>{
+      this.beforeClosepage(e)
+    })
   },
   methods: {
+    beforeClosepage(){
+      window.opener.postData()
+    },
     // 任务查看api
     reviewapi() {
       var data = {
@@ -1330,6 +1402,10 @@ export default {
       console.log("dat", dat);
       // console.log("an", this.anyou);
       // this.stepss = dat.review_records;
+      this.insured_type = dat.insured_type;
+      if (dat.preserv_amount) {
+        this.from.input = dat.preserv_amount
+      }
 
       let htts = process.env.VUE_APP_API_URL;
       this.https = htts;
@@ -1544,6 +1620,7 @@ export default {
         }
         if (tiomonimg.length != 0) {
           this.timonsrc = tiomonimg;
+          console.log('ee',this.timonsrc);
         } else {
           this.monyimg = false;
         }
@@ -1595,6 +1672,16 @@ export default {
       Casefile(data)
         .then((res) => {
           if (res.code == 200) {
+            this.usernamesfzimg = "";
+            this.usercaidfile = "";
+            this.blisrced = "";
+            this.usersfz = "";
+            this.lasrcs = "";
+            this.complatxt = "";
+            this.baosrcs = "";
+            this.complatexts = "";
+            this.timonsrc = "";
+            this.timonfile = "";
             this.reviewapi();
             this.$message({
               showClose: true,
@@ -1659,20 +1746,15 @@ export default {
       // console.log(this.from.input);
       this.from[name] = getInputValue(el);
     },
+    numfeedback(ind) {
+      console.log(ind);
+      this.dioat = ind;
+      
+    },
     userinputmon() {
-      var timer = setTimeout(() => {
-        let ind = Number(moneyDelete(this.from.input));
-        console.log(ind);
-        if (ind >= 5000000 && this.feedback == 1) {
-          console.log("大于500万");
-          // this.greaterthan = true;
-          this.fus = 4;
-        }else{
-          console.log('不大于');
-          this.fus = '';
-        }
-        clearInterval(timer);
-      }, 500);
+      // var timer = setTimeout(() => {
+      //   clearInterval(timer);
+      // }, 500);
       if (this.from.input) {
         let rmbs = Number(moneyDelete(this.from.input));
         // console.log("中文数字", this.formatRMB(rmbs, "￥").value);
@@ -1754,12 +1836,12 @@ export default {
             });
           }
         }
-      } else if (a == 0) {
-        this.$router.push({
-          path: "/usertable",
-        });
-        // this.$emit("func");
-      }
+      } 
+      // else if (a == 0) {
+      //   this.$router.push({
+      //     path: "/usertable",
+      //   });
+      // }
     },
     alldown(dat) {
       // qisloading: false,
@@ -1815,20 +1897,22 @@ export default {
         });
     },
 
-    btnclicks(dat, name) {
+    btnclicks(dat) {
       // console.log(dat,name);
-      // var tempwindow = window.open("_blank"); // 先打开页面
-      // tempwindow.location = "https://wx.haobofalv.com/" + dat;
-
-      // let daturl = "https://wx.haobofalv.com/" + dat;
-
-      const link = document.createElement("a");
-      link.href = dat;
-      link.download = name;
-      link.click();
-      link.remove();
+      var tempwindow = window.open("_blank"); // 先打开页面
+      tempwindow.location = "https://wx.haobofalv.com/" + dat;
     },
     apidiledfrom() {
+      let numind = Number(moneyDelete(this.from.input));
+      if (numind >= 5000000 && this.feedback == 1) {
+        console.log("上级复审");
+        // console.log(this.feedback);
+        this.fus = 4;
+      } else {
+        console.log("不提交上级");
+        // console.log(this.feedback);
+        this.fus = "";
+      }
       var das = {
         usernamesfz: this.usernamesfz,
         userblicense: this.userblicense,
@@ -1838,7 +1922,7 @@ export default {
       var data = {
         risk_eval_id: this.evalid,
         insured: this.usernamesfz.name || this.userblicense.company,
-        stage: this.fus == 4 ? this.feedback : this.fus,
+        stage: this.fus == 4 ? this.fus : this.feedback,
         amount: Number(moneyDelete(this.from.input)),
         eval_info_json: JSON.stringify(das),
         opinion: this.textarea,
@@ -1859,6 +1943,7 @@ export default {
                   data: this.evalid,
                 },
               });
+              
             } else if (this.feedback == 3) {
               this.$router.push({
                 path: "/usertable/adminfiedlook",
@@ -1866,6 +1951,7 @@ export default {
                   data: this.evalid,
                 },
               });
+              
             }
           }
         })
@@ -1892,11 +1978,12 @@ export default {
   margin-top: 30px;
   margin-bottom: 40px;
   box-shadow: 2px 1px 5px #d1d1d1 !important;
+
   .btntext {
     display: flex;
     justify-content: space-evenly;
     width: 150px;
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
     a:link,
     a:visited,
     a:hover,
@@ -1914,7 +2001,6 @@ export default {
     // margin-left: 300px;
     // margin-right: 300px;
     .grid-content {
-      background-color: #d1e2f8;
       padding: 5px;
       font-size: 18px;
       font-weight: 600;
@@ -2015,7 +2101,16 @@ export default {
           width: 800px;
           margin-bottom: 20px;
           .ad_imgs_txt {
-            width: 360px;
+            max-width: 300px;
+            margin: 0;
+            color: #000;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .ad_imgs_txts {
+            cursor: pointer;
+            max-width: 300px;
             margin: 0;
             color: #5162f8;
             overflow: hidden;
@@ -2067,6 +2162,15 @@ export default {
         align-items: center;
         margin-bottom: 20px;
         .ptextlei {
+          max-width: 300px;
+          margin: 0;
+          color: #000;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .ptextleis {
+          cursor: pointer;
           max-width: 300px;
           margin: 0;
           color: #5162f8;

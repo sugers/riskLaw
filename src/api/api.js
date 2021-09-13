@@ -27,7 +27,7 @@ export const Evallist = data => {
 // 审核绑定
 export const Auditlist = data => {
   return new Promise(function (resolve) {
-    resolve(get('/api/v1/icco/audit_list', data))
+    resolve(get('/api/v1/backend/audit/list', data))
   })
 }
 // 获取当前保险公司地区信息
@@ -39,13 +39,13 @@ export const Areainfo = data => {
 // 修改保险业务员省份
 export const Audit = data => {
   return new Promise(function (resolve) {
-    resolve(put('/api/v1/icco/audit', data))
+    resolve(put('/api/v1/backend/audit', data))
   })
 }
 // 审核保险业务员（保险公司管理员权限）
 export const Iccoaudit = data => {
   return new Promise(function (resolve) {
-    resolve(post('/api/v1/icco/audit', data))
+    resolve(post('/api/v1/backend/audit', data))
   })
 }
 // 获取所有案由类型
@@ -60,6 +60,12 @@ export const Iccoeval = data => {
     resolve(get('/api/v1/icco/eval', data))
   })
 }
+// 批量审核业务员
+export const Audiobatch = data => {
+  return new Promise(function (resolve) {
+    resolve(post('/api/v1/backend/audit/batch', data))
+  })
+}
 // 平台方接口
 // 任务池查看（管理员、初审、复审权限）
 export const Caselist = data => {
@@ -70,7 +76,7 @@ export const Caselist = data => {
 // 查看保险公司地区（管理员权限）
 export const Iccoarea = data => {
   return new Promise(function (resolve) {
-    resolve(get('/api/v1/admin/icco/area', data))
+    resolve(get('/api/v1/backend/icco/area', data))
   })
 }
 // 任务查看（管理员、初审、复审权限）
@@ -94,7 +100,7 @@ export const Feedback = data => {
 // 审核员删除评估素材文件（管理员、初审、复审权限）
 export const Casefile = data => {
   return new Promise(function (resolve) {
-    resolve(Delete('/api/v1/admin/review/case/file', {data}))
+    resolve(Delete('/api/v1/admin/review/case/file', data))
   })
 }
 // 文件上传拿路径
@@ -133,12 +139,6 @@ export const Prereview = data => {
     resolve(post('/api/v1/admin/review/case/pre_review', data))
   })
 }
-// 查看保险公司
-// export const Admniccor = data => {
-//   return new Promise(function (resolve) {
-//     resolve(get('/api/v1/admin/icco', data))
-//   })
-// }
 // 获取所有审核人员信息（所有后台人员权限）
 export const Reivewerinfo = data => {
   return new Promise(function (resolve) {
@@ -268,15 +268,23 @@ export const Editlawyer = data => {
         resolve(put('/api/v1/admin/lawyer', data))
     })
 }
-
-
-
-
-
-
 // 下载全部文件
 // export const Casedownload = data => {
 //   return new Promise(function (resolve) {
 //     resolve(get('/api/v1/admin/review/case/download', data))
 //   })
 // }
+
+// 获取数据看板数据（所有后台人员权限）
+export const Commondashboard = data =>{
+  return new Promise(function (resolve){
+    resolve(get('/api/v1/admin/common/dashboard',data))
+  })
+}
+
+// 删除评估申请
+export const Reviewcasedata = data =>{
+  return new Promise(function (resolve){
+    resolve(Delete('/api/v1/admin/review/case',data))
+  })
+}

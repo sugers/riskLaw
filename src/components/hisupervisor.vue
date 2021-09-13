@@ -44,7 +44,7 @@
             </div>
             <div class="martexts">
               <p>意向费率：</p>
-              <span>{{ tltle.intent_rate + "%" }}</span>
+              <span>{{ tltle.intent_rate + "‰" }}</span>
             </div>
           </el-col>
         </el-row>
@@ -58,7 +58,7 @@
         </el-row>
       </div>
       <!-- 身份证 -->
-      <div class="admreviewerss" v-if="this.userfilesz != null">
+      <div class="admreviewerss" v-if="this.insured_type == 1">
         <el-row>
           <el-col :span="12">
             <div class="martexts">
@@ -157,7 +157,7 @@
                 <div class="tyetext" v-if="usersrces">
                   <div class="textwen">
                     <p
-                      class="ptextlei"
+                      class="ptextleis"
                       :title="item.file_name"
                       @click="onopensfz(indt)"
                     >
@@ -180,7 +180,18 @@
               <div v-for="(item, ind) in usercaidfile" :key="ind">
                 <div class="tyetext" v-if="filescaid">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -201,7 +212,7 @@
         </el-row>
       </div>
       <!-- 营业执照 -->
-      <div class="admreviewerss" v-if="this.blicense != null">
+      <div class="admreviewerss" v-if="this.insured_type == 2">
         <el-row>
           <el-col :span="12">
             <div class="martexts">
@@ -356,7 +367,7 @@
                 <div class="tyetext" v-if="boolblisrcs">
                   <div class="textwen">
                     <p
-                      class="ptextlei"
+                      class="ptextleis"
                       :title="item.file_name"
                       @click="onPreview(index)"
                     >
@@ -379,7 +390,18 @@
               <div v-for="(item, ind) in usersfz" :key="ind">
                 <div class="tyetext" v-if="boolblidocx">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -568,7 +590,11 @@
               <div v-for="(item, ind) in plaintiffage" :key="ind">
                 <div class="tyetext" v-if="slasrc">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name" @click="qisuopenViewer(ind)">
+                    <p
+                      class="ptextleis"
+                      :title="item.file_name"
+                      @click="qisuopenViewer(ind)"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -577,10 +603,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div
-                        class="shan"
-                        @click="deletes(item.id, item.path, ind)"
-                      >
+                      <div class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -591,7 +614,18 @@
               <div v-for="(item, index) in complatxt" :key="index">
                 <div class="tyetext" v-if="txtplay">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -600,10 +634,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div
-                        class="shan"
-                        @click="deletes(item.id, item.path, ind)"
-                      >
+                      <div class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -736,7 +767,11 @@
               <div v-for="(item, index) in preserimgs" :key="index">
                 <div class="tyetext" v-if="baosrc">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name" @click="bqopenViewer(index)">
+                    <p
+                      class="ptextleis"
+                      :title="item.file_name"
+                      @click="bqopenViewer(index)"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -756,7 +791,18 @@
               <div v-for="(item, ind) in complatexts" :key="ind">
                 <div class="tyetext" v-if="btxtop">
                   <div class="textwen">
-                    <p class="ptextlei" :title="item.file_name">
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -772,7 +818,6 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </el-col>
         </el-row>
@@ -852,19 +897,18 @@
                     </div>
                   </span>
                 </div> -->
-                
 
                 <div class="listqishu" v-if="monyimg">
                   <Comimageviewer
                     :visible.sync="textmonyimg"
                     :url="testmonyurl"
                   ></Comimageviewer>
-                  <span
-                    class="imgs"
-                    v-for="(item, ins) in timonsrc"
-                    :key="ins"
-                  >
-                    <p class="ad_imgs_txt" :title="item.file_name" @click="zjopenmony(ins)">
+                  <span class="imgs" v-for="(item, ins) in timonsrc" :key="ins">
+                    <p
+                      class="ad_imgs_txts"
+                      :title="item.file_name"
+                      @click="zjopenmony(ins)"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -886,7 +930,18 @@
                     v-for="(item, ind) in timonfile"
                     :key="ind"
                   >
-                    <p class="ad_imgs_txt" :title="item.file_name">
+                    <p
+                      class="ad_imgs_txt"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
+                      @click="btnclicks(item.path)"
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -901,7 +956,6 @@
                     </div>
                   </span>
                 </div>
-
               </div>
             </div>
           </el-col>
@@ -1005,12 +1059,12 @@
               <el-button type="primary" @click.prevent="through(1)"
                 >确定</el-button
               >
-              <el-button
+              <!-- <el-button
                 type="primary"
                 @click.prevent="through(0)"
                 style="background-color: #bbbbbb"
                 >取消</el-button
-              >
+              > -->
             </div>
           </el-col>
         </el-row>
@@ -1022,15 +1076,20 @@
         :visible.sync="dialogff"
         :before-close="handle"
         :append-to-body="true"
+        class="eldisalog"
       >
         <div>
           <div class="fromrevie">
             <el-row>
               <el-col :span="24">
-                <div class="grid-content" v-show="filesusers">身份证</div>
-                <div class="grid-content" v-show="filesstore">营业执照</div>
-                <div class="grid-content" v-show="filesocruse">起诉状</div>
-                <div class="grid-content" v-show="filesparese">保全申请书</div>
+                <div class="gir-text">
+                  <div class="grid-content" v-show="filesusers">身份证</div>
+                  <div class="grid-content" v-show="filesstore">营业执照</div>
+                  <div class="grid-content" v-show="filesocruse">起诉状</div>
+                  <div class="grid-content" v-show="filesparese">
+                    保全申请书
+                  </div>
+                </div>
               </el-col>
             </el-row>
           </div>
@@ -1479,6 +1538,7 @@ import { getInputValue } from "../../static/js/amountFormat.js";
 import usersteps from "../components/usersteps.vue";
 import "../../static/css/disaoerss.less";
 import "../../static/css/file_policy_style.less";
+import "../../static/css/el_dising.less"
 import Comimageviewer from "../components/ComImageviewer.vue";
 // 图片查看器
 // import ElImageviewer from "element-ui/packages/image/src/image-viewer";
@@ -1528,6 +1588,7 @@ export default {
   },
   data() {
     return {
+      insured_type: "",
       number: "",
       // 风险评估id
       evalid: "",
@@ -1645,7 +1706,7 @@ export default {
       timonfile: "",
       monyimg: false,
       monyfile: true,
-      testmonyimage:[],
+      testmonyimage: [],
       testmonyurl: [],
       textmonyimg: false,
 
@@ -1690,6 +1751,11 @@ export default {
       zjloading: false,
     };
   },
+  destroyed() {
+    window.removeEventListener("beforeunload", (e) => {
+      this.beforeClosepage(e);
+    });
+  },
   created() {
     this.$nextTick(() => {
       this.$refs["myscrollbar"].wrap.scrollTop = document.body.scrollTop = 0;
@@ -1697,8 +1763,15 @@ export default {
     });
     this.reviewapi();
   },
-  watch: {},
+  mounted() {
+    window.addEventListener("beforeunload", (e) => {
+      this.beforeClosepage(e);
+    });
+  },
   methods: {
+    beforeClosepage() {
+      window.opener.postData();
+    },
     mattin() {
       // console.log("ming");
       this.preserveForm.preservebei = this.complaint.fendant;
@@ -1766,6 +1839,7 @@ export default {
       // 风险评估id
       this.evalid = dat.id;
       this.revname = dat.reviewer;
+      this.insured_type = dat.insured_type;
       // 传过来的数据
       console.log("dat", dat);
 
@@ -2086,7 +2160,18 @@ export default {
       Casefile(data)
         .then((res) => {
           if (res.code == 200) {
+            this.usernamesfzimg = "";
+            this.usercaidfile = "";
+            this.blisrced = "";
+            this.usersfz = "";
+            this.plaintiffage = [];
+            this.complatxt = [];
+            this.preserimgs = [];
+            this.complatexts = [];
+            this.timonsrc = "";
+            this.timonfile = "";
             this.reviewapi();
+            // this.taskview();
             this.$message({
               showClose: true,
               message: "删除成功",
@@ -2104,7 +2189,7 @@ export default {
           });
         });
       this.divtaus = false;
-      this.$emit("funcr");
+      // this.$emit("funcr");
     },
     // 删除按钮
     deletes(val, dat) {
@@ -2262,15 +2347,12 @@ export default {
                     data: this.evalid,
                   },
                 });
-                // this.$emit("gues");
-                // this.$emit("funcr");
-                // this.$emit("func");
               } else if (this.feedback == 2) {
                 let data = {
                   risk_eval_id: this.evalid,
                 };
                 Subreview(data).then((res) => {
-                  console.log(res);
+                  // console.log(res);
                   if (res.code == 200) {
                     this.$message({
                       showClose: true,
@@ -2296,17 +2378,12 @@ export default {
             type: "error",
           });
         }
-      } else if (a == 0) {
-        // this.$message({
-        //   showClose: true,
-        //   message: "已取消，未核实",
-        //   type: "error",
-        // });
-        this.$router.push({
-          path: "/usertable",
-        });
-        // this.$emit("func");
       }
+      // else if (a == 0) {
+      //   this.$router.push({
+      //     path: "/usertable",
+      //   });
+      // }
     },
     alldown(dat) {
       if (dat == 3) {
@@ -2354,10 +2431,10 @@ export default {
           this.zjloading = false;
         });
     },
-    // btnclicks(dat) {
-    //   var tempwindow = window.open("_blank"); // 先打开页面
-    //   tempwindow.location = "https://wx.haobofalv.com/" + dat;
-    // },
+    btnclicks(dat) {
+      var tempwindow = window.open("_blank"); // 先打开页面
+      tempwindow.location = "https://wx.haobofalv.com/" + dat;
+    },
     btnnumber(ind) {
       // console.log(ind);
       this.btnnum = ind;
@@ -2373,6 +2450,10 @@ export default {
         Upsecase(data).then((res) => {
           // console.log(res);
           if (res.code == 200) {
+            this.plaintiffage = [];
+            this.complatxt = [];
+            this.preserimgs = [];
+            this.complatexts = [];
             this.reviewapi();
             this.$message({
               showClose: true,
@@ -2402,7 +2483,6 @@ export default {
     display: flex;
     justify-content: space-evenly;
     width: 150px;
-    margin-bottom: 10px;
     a:link,
     a:visited,
     a:hover,
@@ -2510,7 +2590,16 @@ export default {
           width: 800px;
           margin-bottom: 20px;
           .ad_imgs_txt {
-            width: 360px;
+            max-width: 300px;
+            margin: 0;
+            color: #000;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .ad_imgs_txts {
+            cursor: pointer;
+            max-width: 300px;
             margin: 0;
             color: #5162f8;
             overflow: hidden;
@@ -2574,6 +2663,15 @@ export default {
         align-items: center;
         margin-bottom: 20px;
         .ptextlei {
+          max-width: 300px;
+          margin: 0;
+          color: #000;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .ptextleis {
+          cursor: pointer;
           max-width: 300px;
           margin: 0;
           color: #5162f8;

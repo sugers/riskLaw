@@ -58,7 +58,8 @@ import {
     CarouselItem,
     DatePicker,
     Switch,
-    Tooltip
+    Tooltip,
+    Card,
 } from 'element-ui'
 Vue.use(Tooltip)
 Vue.use(Switch)
@@ -103,6 +104,7 @@ Vue.use(TabPane)
 Vue.use(Popover)
 Vue.use(Carousel)
 Vue.use(CarouselItem)
+Vue.use(Card)
 Vue.use(ViewUI);
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;
@@ -114,12 +116,18 @@ Vue.http = Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 
-Vue.directive('focus', {
-    inserted: function (el) {
-        el.focus();
-    }
-})
+// Vue.directive('focus', {
+//     inserted: function (el) {
+//         el.focus();
+//     }
+// })
 
+router.beforeEach((to,from,next)=>{
+    if(to.meta.title){
+        document.title = to.meta.title;
+    }
+    next();
+})
 
 new Vue({
     store,

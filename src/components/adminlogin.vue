@@ -126,7 +126,10 @@ export default {
               "refresh_token",
               res.data.refresh_token
             );
-            localStorage.setItem('expires_in',res.data.expires_in)
+            window.localStorage.setItem(
+              "expires_in",
+              res.data.expires_in
+            );
             // 登录的用户信息
             let username = {
               roleID: res.data.profile.role,
@@ -145,6 +148,7 @@ export default {
               message: "登录成功",
               type: "success",
             });
+            this.$root.$emit('websock');
           } else {
             this.$message({
               showClose: true,
