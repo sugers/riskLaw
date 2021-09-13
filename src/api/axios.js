@@ -22,7 +22,6 @@ function onRrefreshed (token) {
 
 axios.interceptors.request.use(
     function (config) {
-        console.log(isRefreshing)
         // 发送请求之前做什么
         var access_token = window.localStorage.getItem("access_token");
         if (access_token) {
@@ -32,7 +31,6 @@ axios.interceptors.request.use(
             config.headers.Authorization = "Bearer " + access_token;
             if (computedTime()) {
                 if (!isRefreshing) {
-                    console.log(963)
                     isRefreshing = true
                     var refresh_token = window.localStorage.getItem("refresh_token");
 
@@ -40,7 +38,6 @@ axios.interceptors.request.use(
                         access_token: access_token,
                         refresh_token: refresh_token,
                     }
-                    console.log(data)
                     // 重新刷新access_token
                     RefreshToken(data).then((res) => {
                         window.localStorage.setItem("access_token", res.data.access_token);

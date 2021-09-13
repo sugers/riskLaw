@@ -6,9 +6,9 @@
                     <span>头像：</span>
                 </div>
                 <div class="listRight">
-                    <div class="imageList" v-for="(item,index) in avatarUrl" :key="index">
+                    <div class="imageList avatarImg" v-for="(item,index) in avatarUrl" :key="index">
                         <i class="el-icon-circle-close" @click="deleteImg(avatarUrl,index)"></i>
-                        <img class="avatarImg" :src="`${Ip}/${item}`" alt="">
+                        <img  :src="`${Ip}/${item}`" alt="">
                     </div>
                     <el-upload name="files" :action="`${Ip}/api/v1/file/upload`" :show-file-list="false" :limit="1"
                         :on-success="fileSuccess">
@@ -447,7 +447,9 @@
         border-radius: 4px;
         box-shadow: 0px 0px 0px 1px #e5e5e5;
     }
-
+   .listRight .avatarImg{
+       margin-bottom: 0;
+   }
     .listRight .imageList i {
         position: absolute;
         right: 4px;
@@ -464,7 +466,7 @@
         border-radius: 4px;
 
     }
-
+ 
     .listRight input {
         width: 100% !important;
     }
