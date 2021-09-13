@@ -27,7 +27,14 @@
 .el-date-editor .el-range-separator {
     padding: 0;
 }
-
+/* .el-table__body,
+.el-table__footer,
+.el-table__header{
+    width: 100% !important;
+}
+.el-table td.el-table__cell div{
+    width: 100% !important;
+} */
 .vertical-center-modal {
     display: flex;
     align-items: center;
@@ -90,7 +97,8 @@ box-sizing: border-box;
     width: 100px !important;
     height: 28px !important;
 }
-.InsuranceCompany table {
+.InsuranceCompany table,
+.insuranceUser table{
     width: 100% !important;
 }
 
