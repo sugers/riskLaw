@@ -284,7 +284,7 @@
                             item.UpdatedAt = getDateString(item.UpdatedAt)
                             if (item.role == 2001) {
                                 item.roleName = "管理员"
-                            } else if (role == 2002) {
+                            } else if (item.role == 2002) {
                                 item.roleName = "财务"
                             }
                             let areadata = {
