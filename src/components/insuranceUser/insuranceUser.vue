@@ -2,22 +2,33 @@
     <section>
         <div class="insuranceUser">
             <div class="insuranceTop">
-                <div class="radioStatu onlyClass">
-                    <span class="name">角色：</span>
-                    <div>
-                        <el-radio-group v-model="statuVal">
-                            <el-radio-button label="全部"></el-radio-button>
-                            <el-radio-button label="管理员"></el-radio-button>
-                            <el-radio-button label="财务"></el-radio-button>
-                        </el-radio-group>
-                    </div>
-                </div>
+
                 <div class="otherScreen">
+                    <div class="radioStatu onlyClass">
+                        <span class="name">角色：</span>
+                        <div>
+                            <el-radio-group v-model="statuVal">
+                                <el-radio-button label="全部"></el-radio-button>
+                                <el-radio-button label="管理员"></el-radio-button>
+                                <el-radio-button label="财务"></el-radio-button>
+                            </el-radio-group>
+                        </div>
+                    </div>
                     <div class="companySelect onlyClass">
                         <span class="name">保险公司：</span>
                         <div class="selectContent">
-                            <el-select v-model="companyVal" slot="prepend" placeholder="请选择">
+                            <el-select v-model="companyVal" slot="prepend" placeholder="请选择" @change="insuranceSelect">
                                 <el-option v-for="(item,index) in insuranceDta" :key="index" :label="item.name"
+                                    :value="item.code">
+                                </el-option>
+                            </el-select>
+                        </div>
+                    </div>
+                    <div class="companySelect onlyClass">
+                        <span class="name">开通区域：</span>
+                        <div class="selectContent">
+                            <el-select v-model="areaVal" slot="prepend" placeholder="请选择">
+                                <el-option v-for="(item,index) in areaData" :key="index" :label="item.name"
                                     :value="item.code">
                                 </el-option>
                             </el-select>
@@ -30,16 +41,18 @@
                             </el-input>
                         </div>
                     </div>
+                    <!-- 筛选按钮 -->
+                    <div class="screenBtn">
+                        <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索
+                        </el-button>
+                    </div>
                 </div>
-                <!-- 筛选按钮 -->
-                <div class="screenBtn">
-                    <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
-                    <el-button type="primary" icon="el-icon-search" @click="searchClick">筛选</el-button>
-                </div>
+
             </div>
             <div class="insuranceBottom">
                 <div class="bottomBtn">
-                    <el-button  type="primary" icon="el-icon-plus" @click="buttonClick('新增')">新增
+                    <el-button type="primary" icon="el-icon-plus" @click="buttonClick('新增')">新增
                     </el-button>
                     <!-- <el-button type="danger" icon="el-icon-delete">删除</el-button> -->
                 </div>
@@ -64,6 +77,9 @@
                             class-name="grayColor">
                         </el-table-column>
                         <el-table-column prop="ico_name" label="所属保险公司" width="200" align='center' show-overflow-tooltip
+                            class-name="grayColor">
+                        </el-table-column>
+                        <el-table-column prop="area_name" label="开通区域" width="200" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
                         <el-table-column width="60">
@@ -134,13 +150,14 @@
     import userEdit from "./userEdit/userEdit.vue";
     import increaseUser from "./increaseUser/increaseUser.vue";
     import {
-        getDateString
+        getDateString,
     } from '../../../static/js/timeFormat'
-    // import provinces from "../../../static/js/pca-code.json"
+    import provinces from "../../../static/js/pca-code.json"
     import {
         Getuser,
         GetinsuranceList,
-        Deleteuser
+        Deleteuser,
+        GetinsuranceAreaList
     } from '../../api/api.js';
     export default {
         components: {
@@ -149,10 +166,11 @@
         },
         data() {
             return {
-                currenduserRole:'',
+                currenduserRole: '',
                 statuVal: '全部',
                 keyInput: '',
                 companyVal: '',
+                areaVal: '',
                 isshow: 0,
                 currentText: '',
                 isshowindex: false,
@@ -163,6 +181,7 @@
                 isdone: false,
                 tableData: [],
                 insuranceDta: [],
+                areaData: [],
                 page: 1,
                 limit: 10,
                 total: 0,
@@ -173,7 +192,7 @@
             this.total = this.tableData.length;
             this.GetInsurance();
             setTimeout(() => {
-                this.getUserList('', '', 2, 1, 10);
+                this.getUserList('', '', 2, 1, 10, '');
             }, 1000)
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currenduserRole = userInfo.roleID;
@@ -189,7 +208,7 @@
             updateuserData() {
                 this.editModel = false;
                 this.increaseModel = false;
-                this.getUserList(this.companyVal, this.statuVal, 2, this.page, this.limit);
+                this.getUserList(this.companyVal, this.statuVal, 2, this.page, this.limit, this.areaVal);
             },
             canceluser() {
                 this.editModel = false;
@@ -208,12 +227,40 @@
                                 'code': item.ID
                             })
                         });
-                        this.companyVal=this.insuranceDta[0].code
+                        if (res.data.list.length == 1) {
+                            this.companyVal = this.insuranceDta[0].code;
+                            this.insuranceSelect(this.insuranceDta[0].code)
+                        }
+
                     }
 
                 })
             },
-            getUserList(icco_id, role, user_type, page, limit, name) {
+            insuranceSelect(e) {
+                this.areaVal = ''
+                this.areaData = [];
+                let data = {
+                    icco_id: e
+                }
+                GetinsuranceAreaList(data).then(res => {
+                    if (res.code == 200) {
+                        res.data.list.map((childitem) => {
+                            provinces.forEach((areaitem) => {
+                                if (childitem.adcode == areaitem.code) {
+                                    this.areaData.push({
+                                        name: areaitem.name,
+                                        code: childitem.ID
+                                    })
+                                }
+                            })
+                        });
+                        this.areaVal = this.areaData[0].code
+                    }
+
+
+                })
+            },
+            getUserList(icco_id, role, user_type, page, limit, name, area_id) {
                 let currentRole = '';
                 this.isdone = true;
                 if (role == '管理员') {
@@ -222,7 +269,8 @@
                     currentRole = 2002
                 }
                 let data = {
-                    // icco_id: this.currenduserRole==2001?'': icco_id,
+                    icco_id: icco_id,
+                    area_id: area_id,
                     role: currentRole,
                     user_type: user_type,
                     page: page,
@@ -231,7 +279,7 @@
                 }
                 Getuser(data).then((res) => {
                     if (res.code == 200) {
-                        this.isdone = false;
+
                         res.data.accounts.map((item) => {
                             item.UpdatedAt = getDateString(item.UpdatedAt)
                             if (item.role == 2001) {
@@ -239,6 +287,23 @@
                             } else if (role == 2002) {
                                 item.roleName = "财务"
                             }
+                            let areadata = {
+                                icco_id: item.icco_id
+                            }
+                            GetinsuranceAreaList(areadata).then(res => {
+                                if (res.code == 200) {
+                                    res.data.list.map((childitem) => {
+                                        provinces.forEach((areaitem) => {
+                                            if (childitem.adcode == areaitem
+                                                .code) {
+                                                item.area_name = areaitem.name
+                                            }
+                                        })
+                                    });
+                                }
+
+
+                            })
                             this.insuranceDta.forEach((insuranceItem) => {
                                 if (item.icco_id == insuranceItem.code) {
                                     item.ico_name = insuranceItem.name
@@ -246,9 +311,14 @@
                                     item.ico_name = ''
                                 }
                             })
+
                         })
-                        this.tableData = res.data.accounts;
-                        this.total = res.data.total;
+                        setTimeout(() => {
+                            this.isdone = false;
+                            this.tableData = res.data.accounts;
+                            this.total = res.data.total;
+                        }, 1000)
+
                     }
                 })
             },
@@ -275,7 +345,7 @@
                                     if (res.code == 200) {
                                         this.$Message.success('已删除');
                                         this.getUserList(this.companyVal, this.statuVal, 2, this
-                                            .page, this.limit);
+                                            .page, this.limit, this.areaVal);
                                     }
                                 })
                             },
@@ -288,32 +358,24 @@
             },
             SizeChange(currentSize) {
                 this.limit = currentSize;
-                this.getUserList(this.companyVal, this.statuVal, 2, this.page, currentSize);
+                this.getUserList(this.companyVal, this.statuVal, 2, this.page, currentSize, this.areaVal);
             },
             current_change(currentPage) {
                 this.page = currentPage;
-                this.getUserList(this.companyVal, this.statuVal, 2, currentPage, this.limit);
+                this.getUserList(this.companyVal, this.statuVal, 2, currentPage, this.limit, this.areaVal);
             },
             refresh() {
                 this.companyVal = '';
+                this.areaVal = ''
                 this.statuVal = '全部';
             },
             searchClick() {
-                this.getUserList(this.companyVal, this.statuVal, 2, 1, this.limit, this.keyInput);
+                this.getUserList(this.companyVal, this.statuVal, 2, 1, this.limit, this.keyInput, this.areaVal);
             }
         },
     }
 </script>
 <style scoped>
-    .insuranceTop {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #BBBBBB;
-        position: relative;
-    }
-
     .screenBtn {
         margin-left: 30px;
     }
@@ -337,16 +399,16 @@
 
     .otherScreen {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         flex-wrap: wrap;
-        width: 860px;
+        justify-content: flex-start;
     }
 
     .onlyClass {
         display: flex;
         align-items: center;
-        margin-left: 30px;
         margin-bottom: 20px;
+        margin-left: 30px;
     }
 
     .onlyClass span {

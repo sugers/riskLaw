@@ -2,17 +2,17 @@
     <section>
         <div class="InsuranceCompany">
             <div class="insuranceTop">
-                <div class="radioStatu onlyClass">
-                    <span class="name">状态：</span>
-                    <div>
-                        <el-radio-group v-model="statuVal">
-                            <el-radio-button label="全部"></el-radio-button>
-                            <el-radio-button label="启用"></el-radio-button>
-                            <el-radio-button label="禁用"></el-radio-button>
-                        </el-radio-group>
-                    </div>
-                </div>
                 <div class="otherScreen">
+                    <div class="radioStatu onlyClass">
+                        <span class="name">状态：</span>
+                        <div>
+                            <el-radio-group v-model="statuVal">
+                                <el-radio-button label="全部"></el-radio-button>
+                                <el-radio-button label="启用"></el-radio-button>
+                                <el-radio-button label="禁用"></el-radio-button>
+                            </el-radio-group>
+                        </div>
+                    </div>
                     <!-- <div class="companySelect onlyClass">
                         <span class="name">保险公司：</span>
                         <div class="selectContent">
@@ -48,13 +48,14 @@
                             </el-input>
                         </div>
                     </div>
+                    <!-- 筛选按钮 -->
+                    <div class="screenBtn">
+                        <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="searchClick">筛选</el-button>
+                    </div>
                 </div>
 
-                <!-- 筛选按钮 -->
-                <div class="screenBtn">
-                    <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
-                    <el-button type="primary" icon="el-icon-search" @click="searchClick">筛选</el-button>
-                </div>
+
             </div>
             <div class="insuranceBottom">
                 <div class="bottomBtn">
@@ -268,7 +269,7 @@
         },
         data() {
             return {
-                currendRole:'',
+                currendRole: '',
                 fullHeight: 0,
                 currentIndex: 0,
                 statuVal: '全部',
@@ -301,8 +302,8 @@
         mounted() {
             // 获取角色权限
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
-            this.currendRole=userInfo.roleID;
-            this.getinsurance(this.statuVal, this.keyInput, this.page, this.limit,this.currendRole);
+            this.currendRole = userInfo.roleID;
+            this.getinsurance(this.statuVal, this.keyInput, this.page, this.limit, this.currendRole);
         },
         methods: {
             cancelModel() {
@@ -318,7 +319,7 @@
                 that.addModel = false;
                 that.editAreaModel = false;
                 this.addCompanyModel = false;
-                that.getinsurance('全部', '', 1, 10,this.currendRole);
+                that.getinsurance('全部', '', 1, 10, this.currendRole);
             },
             tableRowClassName({
                 row,
@@ -391,7 +392,7 @@
                     }
                 })
             },
-            getinsurance(statu, keywords, page, limit,statusNum) {
+            getinsurance(statu, keywords, page, limit, statusNum) {
                 let that = this;
                 let currentstatus;
                 if (statu == '全部') {
@@ -402,7 +403,7 @@
                     currentstatus = 1
                 }
                 let data = {
-                    status: statusNum==2001?-1:Number(currentstatus),
+                    status: statusNum == 2001 ? -1 : Number(currentstatus),
                     keyword: keywords,
                     page: page,
                     limit: limit
@@ -442,7 +443,7 @@
                                     if (res.code == 200) {
                                         this.$Message.success('删除成功');
                                         this.getinsurance(this.statuVal, this.keyInput, this.page,
-                                            this.limit,this.currendRole);
+                                            this.limit, this.currendRole);
                                     }
                                 })
                             },
@@ -479,7 +480,7 @@
                                     if (res.code == 200) {
                                         this.$Message.success('删除成功');
                                         this.getinsurance(this.statuVal, this.keyInput, this.page,
-                                            this.limit,this.currendRole);
+                                            this.limit, this.currendRole);
                                     }
                                 })
                             },
@@ -494,11 +495,11 @@
             },
             SizeChange(currentSize) {
                 this.limit = currentSize;
-                this.getinsurance(this.statuVal, this.keyInput, this.page, currentSize,this.currendRole);
+                this.getinsurance(this.statuVal, this.keyInput, this.page, currentSize, this.currendRole);
             },
             current_change(currentPage) {
                 this.page = currentPage;
-                this.getinsurance(this.statuVal, this.keyInput, currentPage, this.limit,this.currendRole);
+                this.getinsurance(this.statuVal, this.keyInput, currentPage, this.limit, this.currendRole);
             },
             handleSelectionChange(val) {
                 // multipleSelection
@@ -520,15 +521,6 @@
     }
 </script>
 <style scoped>
-    .insuranceTop {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #BBBBBB;
-        position: relative;
-    }
-
     .screenBtn {
         margin-left: 30px;
     }
@@ -552,9 +544,10 @@
 
     .otherScreen {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         flex-wrap: wrap;
-        width: 860px;
+        justify-content: flex-start;
+        width: 100%;
     }
 
     .onlyClass {

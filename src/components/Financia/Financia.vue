@@ -39,7 +39,7 @@
                 <!-- 筛选按钮 -->
                 <div class="screenBtn">
                     <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
-                    <el-button type="primary" icon="el-icon-search" @click="searchClick">筛选</el-button>
+                    <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
                     <el-button type="primary" icon="el-icon-document" @click="getexport">导出
                     </el-button>
                 </div>
@@ -171,6 +171,7 @@
         },
         methods: {
             GetInsurance() {
+                let that=this;
                 let data = {
                     status: this.currendRole == 2001 ? -1 : -1,
                     keyword: '',
@@ -185,9 +186,12 @@
                         })
 
                         setTimeout(() => {
-                            this.fieldVal = this.insuranceDta[0].code;
-                            this.fieldValName = this.insuranceDta[0].name;
-                            this.insuranceSelect(this.insuranceDta[0].code, 1)
+                            if (res.data.list.length == 1) {
+                                that.fieldVal = that.insuranceDta[0].code;
+                                that.fieldValName = that.insuranceDta[0].name;
+                                that.insuranceSelect(that.insuranceDta[0].code, 1)
+                            }
+
                         }, 200)
                     }
 
@@ -315,11 +319,11 @@
                 this.fieldVal = '';
                 let getDate = new Date();
                 let time =
-                `${getDate.getFullYear()}-${getDate.getMonth()>10?getDate.getMonth():'0'+getDate.getMonth()}-${getDate.getDay()>10?getDate.getDay():'0'+getDate.getDay()} ${getDate.getHours()>10?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>10?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>10?getDate.getSeconds():'0'+getDate.getSeconds()}`
+                    `${getDate.getFullYear()}-${getDate.getMonth()>10?getDate.getMonth():'0'+getDate.getMonth()}-${getDate.getDay()>10?getDate.getDay():'0'+getDate.getDay()} ${getDate.getHours()>10?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>10?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>10?getDate.getSeconds():'0'+getDate.getSeconds()}`
                 this.timeVal = time;
-                this.areaVal='';
-                this.areaData=[];
-                this.insuranceDta=[];
+                this.areaVal = '';
+                this.areaData = [];
+                this.insuranceDta = [];
                 // this.GetReconcilia(start, end, this.fieldVal, this.page, this.limit)
             },
             searchClick() {
@@ -331,14 +335,6 @@
     }
 </script>
 <style scoped>
-    .insuranceTop {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #BBBBBB;
-        position: relative;
-    }
 
     .screenBtn {
         margin-left: 30px;
@@ -365,14 +361,13 @@
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
-        flex-direction: column;
         width: 100%;
+        justify-content: space-evenly;
     }
 
     .onlyClass {
         display: flex;
         align-items: center;
-        margin-left: 30px;
         margin-bottom: 20px;
     }
 
