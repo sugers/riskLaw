@@ -279,7 +279,12 @@
                 }
                 Getuser(data).then((res) => {
                     if (res.code == 200) {
-
+                        if (!res.data.accounts) {
+                            this.isdone = false;
+                            this.tableData = [];
+                            this.total = 0;
+                            return;
+                        }
                         res.data.accounts.map((item) => {
                             item.UpdatedAt = getDateString(item.UpdatedAt)
                             if (item.role == 2001) {
@@ -289,7 +294,7 @@
                             }
                             provinces.forEach((areaitem) => {
                                 if (item.area_name == areaitem
-                                    .code && item.area_name!=0) {
+                                    .code && item.area_name != 0) {
                                     item.areaName = areaitem.name
                                 }
                             })
