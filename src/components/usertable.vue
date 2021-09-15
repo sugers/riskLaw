@@ -1,5 +1,6 @@
 <template>
   <div class="usertable">
+    
     <div class="user_data">
       <div class="radios">
         <div class="radios_sapn">状态：</div>
@@ -44,22 +45,39 @@
         </div>
       </div>
 
-      <div class="radios">
-        <div class="radios_sapn">当前处理人：</div>
-        <el-select
-          v-model="userreivws"
-          @change="userreivewer"
-          placeholder="请选择"
-          clearable
-        >
-          <el-option
-            v-for="item in reivewer"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
+      <div class="bxsdata">
+        <div class="radios" v-if="chulir">
+          <div class="radios_sapn">当前处理人：</div>
+          <el-select
+            v-model="userreivws"
+            @change="userreivewer"
+            placeholder="请选择"
+            clearable
           >
-          </el-option>
-        </el-select>
+            <el-option
+              v-for="item in reivewer"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </div>
+
+        <div class="radios">
+          <span class="radios_sapn">日期：</span>
+          <div class="iniconstatur">
+            <el-date-picker
+              v-model="userDateTime"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="yyyy-MM-dd"
+            >
+            </el-date-picker>
+          </div>
+        </div>
       </div>
 
       <div class="scrbtnb">
@@ -82,7 +100,7 @@
 
     <div class="user_data_btn">
       <div class="user_btnes">
-        <el-button
+        <!-- <el-button
           type="text"
           style="background-color: #409eff"
           @click.prevent="usersbuy"
@@ -90,7 +108,7 @@
           icon="el-icon-refresh"
         >
           刷新
-        </el-button>
+        </el-button> -->
         <el-button
           v-if="userdatabottom"
           type="text"
@@ -98,7 +116,17 @@
           @click.prevent="userdatabtn"
           icon="el-icon-delete"
         >
-          删除
+          批量删除
+        </el-button>
+        <el-button
+          v-if="userdatabottom && radiocyt == 3"
+          type="text"
+          style="background-color: #409eff"
+          @click.prevent="downloadThelaw"
+          icon="el-icon-download"
+          :loading="userdownload"
+        >
+          批量下载法律意见书
         </el-button>
       </div>
       <el-table
@@ -193,7 +221,11 @@
             </el-button>
             <!-- 1.快速反馈 2.填写详细信息 3.上级复审 4.出单确认 -->
             <el-button
-              v-if="scope.row.stage == 1 && scope.row.review_result != 3"
+              v-if="
+                scope.row.stage == 1 &&
+                scope.row.review_result != 3 &&
+                (roleID == 1001 || roleID == 1003 || roleID == 1004)
+              "
               @click.prevent="operation(scope.row)"
               type="text"
               size="small"
@@ -203,7 +235,11 @@
               快速反馈
             </el-button>
             <el-button
-              v-if="scope.row.stage == 2 && scope.row.review_result != 3"
+              v-if="
+                scope.row.stage == 2 &&
+                scope.row.review_result != 3 &&
+                (roleID == 1001 || roleID == 1003 || roleID == 1004)
+              "
               @click.prevent="operation(scope.row)"
               type="text"
               size="small"
@@ -213,7 +249,11 @@
               填写信息
             </el-button>
             <el-button
-              v-if="scope.row.stage == 3 && scope.row.review_result != 3"
+              v-if="
+                scope.row.stage == 3 &&
+                scope.row.review_result != 3 &&
+                (roleID == 1001 || roleID == 1004)
+              "
               @click.prevent="operation(scope.row)"
               type="text"
               size="small"
@@ -226,7 +266,8 @@
               v-if="
                 scope.row.stage == 4 &&
                 scope.row.review_result != 3 &&
-                scope.row.review_result != 2
+                scope.row.review_result != 2 &&
+                (roleID == 1001 || roleID == 1004)
               "
               @click.prevent="operation(scope.row)"
               type="text"
@@ -288,6 +329,7 @@ import {
   // 删除评估申请数据
   Reviewcasedata,
   GetinsuranceAreaList,
+  LawOpinions,
 } from "../api/api";
 export default {
   components: {},
@@ -304,6 +346,8 @@ export default {
       // 按处理人搜索
       userreivws: "",
       provincesid: "",
+      // 按时间搜索
+      userDateTime: [],
       // 案由类型
       anyou: "",
       tableData: [],
@@ -331,11 +375,15 @@ export default {
       // tableheight: 400,
       websoce: null,
       // 刷新
-      usertabless: false,
+      // usertabless: false,
       // 批量删除
       userdatabottom: false,
       // loading
       isdone: false,
+      // 批量下载法律意见书
+      userdownload: false,
+      currendRole: "",
+      chulir: false,
     };
   },
   created() {
@@ -346,20 +394,16 @@ export default {
     this.radiochange();
     this.casetypess();
     this.$root.$on("radio", this.radiochange);
-    
-    // 获取审核人员
-    Reivewerinfo().then((res) => {
-      // console.log("审核人员", res);
-      this.reivewer = res.data;
-    });
-    this.provins = provinces;
-    this.admniccorapi();
+
+    // this.admniccorapi();
     // this.$nextTick(() => {
     //   this.$refs["myscrollbar"].wrap.scrollTop = document.body.scrollTop = 0;
     // });
   },
-  
+
   mounted() {
+    
+    this.admniccorapi();
     // this.$nextTick(function () {
     //   this.tableheight =
     //     window.innerHeight -
@@ -367,27 +411,71 @@ export default {
     //     this.$refs.paginatref.$el.offsetHeight -
     //     25;
     // });
-    window['postData']=()=>{
+    window["postData"] = () => {
       // console.log('66666');
       this.usertableapi(1);
+    };
+
+    let userid = JSON.parse(localStorage.getItem("userinfor"));
+
+    // 获取审核人员
+    if (
+      userid.roleID == 1001 ||
+      userid.roleID == 1002 ||
+      userid.roleID == 1003 ||
+      userid.roleID == 1004
+    ) {
+      Reivewerinfo().then((res) => {
+        // console.log("审核人员", res);
+        this.reivewer = res.data;
+      });
+      this.provins = provinces;
+    }
+
+    // this.currendRole = userid;
+    if (
+      userid.roleID == 1001 ||
+      userid.roleID == 1004 ||
+      userid.roleID == 2001
+    ) {
+      this.userdatabottom = true;
+    } else {
+      this.userdatabottom = false;
+    }
+    this.currendRole = userid.roleID;
+    if (
+      userid.roleID == 1001 ||
+      userid.roleID == 1002 ||
+      userid.roleID == 1003 ||
+      userid.roleID == 1004
+    ) {
+      this.chulir = true;
+    }
+    if (userid.roleID == 1001) {
+      this.shushenhe = false;
     }
   },
   methods: {
     // 筛选
-    btnsearchclick(){
-      this.usertableapi(1)
+    btnsearchclick() {
+      this.usertableapi(1);
     },
     // 重置
-    deledetabdat(){
+    deledetabdat() {
       if (
         this.userreivws != "" ||
         this.suosuo != "" ||
-        this.provincesid != ""
+        this.provincesid != "" ||
+        this.userDateTime.length != 0
       ) {
-        this.userreivws = ""
-        this.suosuo = ""
-        this.provincesid = ""
-        this.usertableapi(1)
+        if (this.currendRole != 2001) {
+          this.suosuo = "";
+          this.provincesid = "";
+        }
+        this.userDateTime = [];
+        this.userreivws = "";
+        
+        this.usertableapi(1);
       }
     },
     // 刷新
@@ -397,85 +485,131 @@ export default {
         this.usertableapi();
         clearInterval(timer);
       }, 2000);
-      
     },
     // 删除
     userdatabtn() {
       // console.log(this.multipleSelection);
-      this.$confirm("是否确定删除？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          for (let j = 0; j < this.multipleSelection.length; j++) {
-            let data = {
-              risk_eval_id: this.multipleSelection[j],
-            };
-            Reviewcasedata(data).then((res) => {
-              // console.log(res.code);
-              if (res.code == 200) {
-                // console.log('进来了');
-                this.usertableapi();
-              }
+      if (this.multipleSelection.length != 0) {
+        this.$confirm("是否确定删除？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
+          .then(() => {
+            for (let j = 0; j < this.multipleSelection.length; j++) {
+              let data = {
+                risk_eval_id: this.multipleSelection[j],
+              };
+              Reviewcasedata(data).then((res) => {
+                // console.log(res.code);
+                if (res.code == 200) {
+                  // console.log('进来了');
+                  this.usertableapi();
+                }
+              });
+            }
+            this.$message({
+              type: "success",
+              message: "删除成功!",
             });
-          }
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
+            // this.multipleSelection = [];
+          })
+          .catch(() => {
+            // console.log("否");
+            this.$message({
+              type: "info",
+              message: "已取消删除",
+            });
           });
+      }
+    },
+    // 批量下载法律意见书
+    downloadThelaw() {
+      this.userdownload = true;
+      console.log("uu", this.multipleSelection);
+      let data = {
+        risk_eval_ids: this.multipleSelection,
+      };
+      LawOpinions(data)
+        .then((res) => {
+          console.log("yy", res);
+          let url = window.URL.createObjectURL(
+            new Blob([res.data], { type: "application/zip" })
+          );
+          let filename = window.decodeURI(
+            res.headers["content-disposition"].split("=")[1],
+            "UTF-8"
+          );
+          let filenames = filename.replace('"', "").replace('"', "");
+          let files = document.createElement("a");
+          files.href = url;
+          files.download = filenames;
+          files.click();
+          if (res.status == 200) {
+            this.userdownload = false;
+          }
         })
         .catch(() => {
-          // console.log("否");
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
+          this.userdownload = false;
         });
     },
     // 查找保险公司
     admniccorapi() {
       let daticcon = [];
       let data = {
-        status: -1,
+        status: this.currendRole == 2001 ? -1 : -1,
       };
       GetinsuranceList(data).then((res) => {
         // console.log("保险公司", res);
-        for(let i=0;i<res.data.list.length;i++){
-          let icco = {
-            id: res.data.list[i].ID,
-            name: res.data.list[i].name,
+        if (res.code == 200) {
+          for (let i = 0; i < res.data.list.length; i++) {
+            let icco = {
+              id: res.data.list[i].ID,
+              name: res.data.list[i].name,
+            };
+            daticcon.push(icco);
           }
-          daticcon.push(icco)
+          if (daticcon.length == 1) {
+            setTimeout(() => {
+              this.suosuo = daticcon[0].id;
+              this.baoselect(this.suosuo);
+            }, 200);
+          }
         }
       });
       // console.log("保险公司",daticcon);
-      this.daticcon = daticcon
+      this.daticcon = daticcon;
     },
-    baoselect(ind){
+    baoselect(ind) {
       // console.log(ind);
-      this.provincesid = []
-      let citydata = []
+      this.provincesid = [];
+      let citydata = [];
       let data = {
-        icco_id: ind
-      }
+        icco_id: ind,
+      };
       // console.log(data);
-      GetinsuranceAreaList(data).then(res=>{
-        console.log('res',res);
-        for(let i=0;i<res.data.list.length;i++){
-          for(let j=0;j<provinces.length;j++){
+      GetinsuranceAreaList(data).then((res) => {
+        // console.log("res", res);
+        for (let i = 0; i < res.data.list.length; i++) {
+          for (let j = 0; j < provinces.length; j++) {
             if (res.data.list[i].adcode == provinces[j].code) {
-              let cl ={
-                id:res.data.list[i].ID,
-                name:provinces[j].name,
-              }
-              citydata.push(cl)
+              let cl = {
+                id: res.data.list[i].ID,
+                name: provinces[j].name,
+              };
+              citydata.push(cl);
             }
           }
         }
-      })
-      this.citydata = citydata
-      console.log('7777',this.citydata);
+        if (citydata.length == 1) {
+          setTimeout(() => {
+            this.provincesid = citydata[0].id;
+          }, 150);
+        }
+      });
+      this.citydata = citydata;
+
+      // console.log("7777", this.citydata);
     },
     // 表格
     headertextAlgin() {
@@ -562,17 +696,6 @@ export default {
       }
       this.multipleSelection = isthid;
       // console.log(this.multipleSelection);
-      let userid = JSON.parse(localStorage.getItem("userinfor"));
-      if (
-        (val.length && userid.roleID == 1001) || 
-        (val.length && userid.roleID == 1004) || 
-        (val.length && userid.roleID == 2001)
-      ) {
-        this.userdatabottom = true;
-      } else {
-        this.userdatabottom = false;
-      }
-      
     },
     tablerowclassname({ rowIndex }) {
       if (rowIndex % 2 === 1) {
@@ -594,9 +717,11 @@ export default {
       this.usertableapi();
     },
     radiochange() {
-      this.userreivws = ""
-      this.suosuo = ""
-      this.provincesid = ""
+      this.userreivws = "";
+      if (this.currendRole != 2001) {
+        this.suosuo = "";
+        this.provincesid = "";
+      }
       // this.currentPage = 1
       this.radclick = true;
       let page = 1;
@@ -617,12 +742,14 @@ export default {
         reviewer: this.userreivws,
         icco_id: this.suosuo,
         area_id: this.provincesid,
+        created_at: this.userDateTime[0],
+        ended_at: this.userDateTime[1],
         limit: this.pagesize,
         page: ind ? ind : this.currentPage,
       };
       // console.log(data);
       Caselist(data).then((res) => {
-        console.log("数据", res);
+        // console.log("数据", res);
         this.isdone = false;
         if (res.data.list) {
           // this.tabsdatas = res.data.list;
@@ -686,17 +813,16 @@ export default {
 .user_data {
   border-bottom: 1px solid #bbbbbb;
   padding-bottom: 20px;
-  .scrbtnb{
+  .scrbtnb {
     margin: 0 0 0 30px;
-    button{
+    button {
       width: 66px;
       height: 30px;
       padding: 0;
-      +button{
+      + button {
         margin-left: 20px;
       }
     }
-    
   }
 }
 
@@ -706,10 +832,10 @@ export default {
   .user_btnes {
     margin: 0 0 15px 30px;
     button {
-      width: 66px;
       height: 30px;
-      padding: 0;
-      +button{
+      padding: 0 8px;
+      font-size: 13px;
+      + button {
         margin-left: 20px;
       }
     }
@@ -717,7 +843,6 @@ export default {
       color: #fff;
     }
   }
-  
 }
 .btnstab {
   padding: 8px 12px;
@@ -775,7 +900,7 @@ export default {
     align-items: center;
   }
 }
-.bxsdata{
+.bxsdata {
   display: flex;
 }
 .usertable {
@@ -791,7 +916,7 @@ export default {
       line-height: 30px;
     }
     .el-select {
-        width: 350px !important;
+      width: 300px !important;
     }
     .el-radio-group {
       .el-radio-button {
@@ -801,7 +926,7 @@ export default {
       }
     }
   }
- 
+
   .el-table {
     .success-row {
       background-color: #f7f7f7;

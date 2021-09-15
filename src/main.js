@@ -60,6 +60,8 @@ import {
     Switch,
     Tooltip,
     Card,
+    Tag,
+    Backtop,
 } from 'element-ui'
 Vue.use(Tooltip)
 Vue.use(Switch)
@@ -105,6 +107,8 @@ Vue.use(Popover)
 Vue.use(Carousel)
 Vue.use(CarouselItem)
 Vue.use(Card)
+Vue.use(Tag)
+Vue.use(Backtop)
 Vue.use(ViewUI);
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;

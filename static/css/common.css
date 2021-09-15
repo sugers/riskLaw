@@ -110,7 +110,9 @@ box-sizing: border-box;
 .InsuranceCompany .has-gutter .gutter {
     display: block !important;
 }
-
+.grayColor div{
+    width: 100% !important;
+}
 .BoldColor {
     color: #409EFF;
 }

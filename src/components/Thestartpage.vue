@@ -22,9 +22,11 @@
                 <img
                   src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
                 />
-                <div class="tab_nv hidden-xs-only">{{ this.username }}</div>
-                <el-dropdown size="medium">
-                  <i class="el-icon-caret-bottom"></i>
+                <el-dropdown size="medium" :hide-timeout="800">
+                  <div>
+                    <span class="tab_nv">{{ this.username }}</span>
+                    <i class="el-icon-caret-bottom"></i>
+                  </div>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item @click.native="useroutquit"
                       >退出</el-dropdown-item
@@ -87,11 +89,12 @@ export default {
       window.localStorage.removeItem("access_token");
       window.localStorage.removeItem("refresh_token");
       let userid = JSON.parse(localStorage.getItem("userinfor"));
-      if (userid.roleID == 2001) {
+      if (userid.roleID == 2001 || userid.roleID == 2002) {
         window.localStorage.removeItem("userinfor");
         this.$router.push("/taipeilogin");
       } else if (
         userid.roleID == 1001 ||
+        userid.roleID == 1002 ||
         userid.roleID == 1003 ||
         userid.roleID == 1004
       ) {
@@ -124,8 +127,8 @@ export default {
     }
     & > .tab_nv {
       padding: 0 10px;
-      display: flex;
-      align-items: center;
+      // display: flex;
+      // align-items: center;
       font-size: 16px;
       font-weight: 600;
       // color: #ffffff;

@@ -118,7 +118,7 @@ export default {
       };
       if (this.userinfrom != "" && this.password != "") {
         login(data).then((res) => {
-          console.log("resgggg", res);
+          // console.log("resgggg", res);
           if (res.code == 200) {
             // 保存token在本地
             window.localStorage.setItem("access_token", res.data.access_token);
@@ -141,7 +141,7 @@ export default {
             var userinfor = JSON.stringify(username);
             window.localStorage.setItem("userinfor", userinfor);
             // 路由跳转
-            this.$router.push("/usertable");
+            this.$router.push("/");
             // 提示
             this.$message({
               showClose: true,

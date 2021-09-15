@@ -1548,7 +1548,7 @@ import { getInputValue } from "../../static/js/amountFormat.js";
 import usersteps from "../components/usersteps.vue";
 import "../../static/css/disaoerss.less";
 import "../../static/css/file_policy_style.less";
-import "../../static/css/el_dising.less"
+import "../../static/css/el_dising.less";
 import Comimageviewer from "../components/ComImageviewer.vue";
 import axios from "axios";
 
@@ -2265,6 +2265,11 @@ export default {
               // console.log(res);
               if (res.code == 200) {
                 if (this.feedback == 1) {
+                  this.$message({
+                    showClose: true,
+                    message: "提交成功",
+                    type: "success",
+                  });
                   this.$router.push({
                     path: "/usertable/asingconfirm",
                     query: {
@@ -2272,6 +2277,11 @@ export default {
                     },
                   });
                 } else if (this.feedback == 2 || this.feedback == 3) {
+                  this.$message({
+                    showClose: true,
+                    message: "提交成功",
+                    type: "success",
+                  });
                   this.$router.push({
                     path: "/usertable/adminfiedlook",
                     query: {

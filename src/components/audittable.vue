@@ -46,28 +46,28 @@
         </div>
       </div>
       <div class="boxdateait">
-      <div class="radios">
-        <span class="radios_sapn">日期：</span>
-        <div class="iniconstatur">
-          <el-date-picker
-            v-model="auditDateTime"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            value-format="yyyy-MM-dd"
-          >
-          </el-date-picker>
+        <div class="radios">
+          <span class="radios_sapn">日期：</span>
+          <div class="iniconstatur">
+            <el-date-picker
+              v-model="auditDateTime"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="yyyy-MM-dd"
+            >
+            </el-date-picker>
+          </div>
         </div>
-      </div>
 
-      <div class="radios">
-        <div class="radios_sapn">关键字：</div>
-        <div class="boxxinput">
-          <el-input placeholder="请输入内容" v-model="keyword" clearable>
-          </el-input>
+        <div class="radios">
+          <div class="radios_sapn">关键字：</div>
+          <div class="boxxinput">
+            <el-input placeholder="请输入内容" v-model="keyword" clearable>
+            </el-input>
+          </div>
         </div>
-      </div>
       </div>
 
       <div class="scrbtnb">
@@ -89,8 +89,8 @@
     </div>
 
     <div class="asiostable">
-      <div class="audibtnes" >
-        <el-button
+      <div class="audibtnes">
+        <!-- <el-button
           type="text"
           style="background-color: #409EFF"
           @click.prevent="auditbtnout"
@@ -98,15 +98,15 @@
           icon="el-icon-refresh"
         >
           刷新
-        </el-button>
+        </el-button> -->
         <el-button
           v-show="shenhebottom"
           type="text"
           size="small"
-          style="background-color: #67C23A"
+          style="background-color: #67c23a"
           @click.prevent="audiobtns(1)"
         >
-          通过
+          批量通过
         </el-button>
         <el-button
           v-show="shenhebottom"
@@ -115,9 +115,8 @@
           style="background-color: #f56c6c"
           @click.prevent="audiobtns(0)"
         >
-          不通过
+          批量拒绝
         </el-button>
-        
       </div>
       <el-table
         ref="autotable"
@@ -138,6 +137,20 @@
         >
         </el-table-column>
         <el-table-column prop="name" label="姓名" min-width="160">
+        </el-table-column>
+        <el-table-column prop="type" label="绑定角色" min-width="160">
+          <template slot-scope="scope">
+            <!-- <div class="typehebao" v-if="scope.row.type == 3001">核保</div>
+            <div class="typeyewuy" v-if="scope.row.type != 3001">保险业务员</div> -->
+            <div slot="reference" class="name-wrapper">
+              <el-tag size="medium" type="danger" v-if="scope.row.type == 3001"
+                >核保</el-tag
+              >
+              <el-tag size="medium" v-if="scope.row.type != 3001"
+                >保险业务员</el-tag
+              >
+            </div>
+          </template>
         </el-table-column>
         <el-table-column prop="phone" label="联系电话" min-width="130">
         </el-table-column>
@@ -177,6 +190,15 @@
               style="background-color: #f56c6c"
             >
               审核
+            </el-button>
+            <el-button
+              v-if="scope.row.status == 2"
+              @click.prevent="auditoutend(scope.row)"
+              type="text"
+              size="small"
+              style="background-color: #f56c6c"
+            >
+              拒绝
             </el-button>
           </template>
         </el-table-column>
@@ -235,6 +257,7 @@
               <div class="auditmartext_y">
                 <p>绑定角色：</p>
                 <span class="spantxt" v-if="titles.type == 1">保险业务员</span>
+                <span class="spantxt" v-if="titles.type == 3001">核保</span>
               </div>
             </div>
           </el-col>
@@ -290,6 +313,7 @@
             <div class="auditmartext">
               <p>绑定角色：</p>
               <span class="spantxt" v-if="titles.type == 1">保险业务员</span>
+              <span class="spantxt" v-if="titles.type == 3001">核保</span>
             </div>
             <div class="auditmartext">
               <p>审批意见：</p>
@@ -338,7 +362,7 @@ import "../../static/css/autdiodialog.less";
 // 引入api
 import {
   Auditlist,
-  Audit,
+  // Audit,
   Iccoaudit,
   // Areainfo,
   Audiobatch,
@@ -389,11 +413,11 @@ export default {
       isdone: false,
 
       audittabless: false,
+      // 角色id
+      userid: "",
     };
   },
-  created() {
-    this.auditiccorapi();
-  },
+  created() {},
   mounted() {
     // this.$nextTick(function () {
     //   this.heighttable =
@@ -402,31 +426,45 @@ export default {
     //     this.$refs.paginatref.$el.offsetHeight -
     //     25;
     // });
+    let userid = JSON.parse(localStorage.getItem("userinfor"));
+    this.userid = userid.roleID;
+    this.auditiccorapi();
     this.radiochange();
   },
   methods: {
-    auditbtnout(){
-      this.audittabless = true;
-      var timer = setTimeout(() => {
-        this.radiochange();
-        clearInterval(timer);
-      }, 2000);
+    // auditbtnout(){
+    //   this.audittabless = true;
+    //   var timer = setTimeout(() => {
+    //     this.radiochange();
+    //     clearInterval(timer);
+    //   }, 2000);
+    // },
+    // 拒绝
+    auditoutend(dat) {
+      var data = {
+        user_id: dat.id,
+        result: 0,
+      };
+      Iccoaudit(data).then(() => {
+        this.Auditlistapi();
+      });
     },
     // 重置
     auditdelclick() {
-      
-      if (this.auditprovin != "" || 
-          this.arrbaosel != "" || 
-          this.auditDateTime.length != 0 || 
-          this.keyword != ""
+      if (
+        this.auditprovin != "" ||
+        this.arrbaosel != "" ||
+        this.auditDateTime.length != 0 ||
+        this.keyword != ""
       ) {
-        this.auditprovin = "";
-        this.arrbaosel = "";
+        if (this.userid != 2001) {
+          this.arrbaosel = "";
+          this.auditprovin = "";
+        }
         this.auditDateTime = [];
         this.keyword = "";
         this.Auditlistapi(1);
       }
-
     },
     // 筛选
     auditdataclick() {
@@ -440,17 +478,22 @@ export default {
       };
       // console.log(data);
       GetinsuranceAreaList(data).then((res) => {
-        console.log('res',res);
+        // console.log("res", res);
         for (let i = 0; i < res.data.list.length; i++) {
           for (let j = 0; j < provinces.length; j++) {
             if (res.data.list[i].adcode == provinces[j].code) {
               let cl = {
                 id: res.data.list[i].ID,
                 name: provinces[j].name,
-              }
+              };
               citydata.push(cl);
             }
           }
+        }
+        if (citydata.length == 1) {
+          setTimeout(() => {
+            this.auditprovin = citydata[0].id;
+          }, 150);
         }
       });
       this.citydata = citydata;
@@ -459,7 +502,7 @@ export default {
     auditiccorapi() {
       let daticcon = [];
       let data = {
-        status: -1,
+        status: this.currendRole == 2001 ? -1 : -1,
       };
       GetinsuranceList(data).then((res) => {
         // console.log("保险公司", res);
@@ -469,6 +512,12 @@ export default {
             name: res.data.list[i].name,
           };
           daticcon.push(icco);
+        }
+        if (daticcon.length == 1) {
+          setTimeout(() => {
+            this.arrbaosel = daticcon[0].id;
+            this.auditbaoclick(this.arrbaosel);
+          }, 200);
         }
       });
       // console.log("保险公司",daticcon);
@@ -496,7 +545,7 @@ export default {
         }
       });
       this.options = diqudata;
-      // console.log(this.options);
+      // console.log('y',this.options);
     },
     // 表格
     headertextAlgin() {
@@ -511,6 +560,7 @@ export default {
         return "text-align: center;";
       }
     },
+
     deleteRows(data) {
       this.dialogVisible = true;
 
@@ -520,15 +570,27 @@ export default {
       this.value = data.iccoarea;
       // this.options = provinces;
       this.salesmanid = data.id;
+      // this.refusingto()
     },
     audiostat(data) {
-      // console.log('拿到数据',data);
+      console.log("拿到数据", data);
+
+      // let didi = null
+      // for(let y=0;y<this.options.length;y++){
+      //   if (this.options[y].name == data.iccoarea) {
+      //     didi = this.options[y].id
+      //   }
+      // }
+
       this.notdialogVisible = true;
       this.titles = data;
-      this.value = data.iccoarea;
+
       this.salesmanid = data.id;
+      // this.saluserid = data.id
       this.icco_id = data.icco_id;
       this.aresintd();
+
+      this.value = data.area_id;
     },
     handleSelectionChange(val) {
       // console.log("val", val);
@@ -539,13 +601,6 @@ export default {
         idarrer.push(select[i].id);
       }
       this.multipleSelection = idarrer;
-      if (this.radiocyt == 2 && val.length) {
-        this.shenhebottom = true;
-        console.log("y");
-      } else {
-        this.shenhebottom = false;
-        console.log("n");
-      }
     },
     tablerowclassname({ rowIndex }) {
       if (rowIndex % 2 === 1) {
@@ -566,13 +621,25 @@ export default {
       this.Auditlistapi();
     },
     radiochange() {
+      if (this.userid != 2001) {
+        this.arrbaosel = "";
+        this.auditprovin = "";
+      }
+      this.auditDateTime = [];
+      this.keyword = "";
       let pagee = 1;
       this.currentPage = pagee;
       this.Auditlistapi(pagee);
+
+      if (this.radiocyt == 2) {
+        this.shenhebottom = true;
+      } else {
+        this.shenhebottom = false;
+      }
     },
     // 表格数据
     Auditlistapi(ind) {
-      this.isdone = true
+      this.isdone = true;
       var data = {
         icco_id: this.arrbaosel,
         area_id: this.auditprovin,
@@ -594,13 +661,14 @@ export default {
             let ts = {
               id: evll[i].id,
               icco_id: evll[i].icco_id,
+              area_id: evll[i].area_id,
               name: evll[i].name,
               phone: evll[i].phone,
               icco: evll[i].icco_name,
               status: evll[i].status,
               iccoarea: pcacode(evll[i].area_name, provinces),
               createdAt: evll[i].created_at,
-              type: "1",
+              type: evll[i].type,
             };
             tab.push(ts);
           }
@@ -608,7 +676,7 @@ export default {
           this.tableData = tab;
           this.audittabless = false;
         } else {
-          console.log("没有数据");
+          // console.log("没有数据");
           this.tableData = [];
         }
       });
@@ -618,54 +686,56 @@ export default {
       this.notdialogVisible = false;
     },
     // 修改省份
-    auditselect(dat) {
-      console.log(dat);
-      console.log("..", this.value);
+    auditselect() {
+      // console.log(dat);
+      // console.log("..", this.value);
     },
     // 审核通过拒绝
-    refusingto(red) {
+    refusingto() {
       // console.log(red);
       // user_id	是	number	保险业务员id
       // result	是	number	审核结果，0.不通过 1.通过
       // reason	是	string	原因
       // console.log("通过", res);
-      let das = {
-        user_id: this.salesmanid,
-        area_id: this.value,
-      };
-      console.log('ggg',das);
-      Audit(das).then((res) => {
-        console.log("修改成功", res);
-      });
-      var data = {
-        user_id: this.salesmanid,
-        result: red,
-        reason: this.textarea,
-      };
-      Iccoaudit(data).then((res) => {
-        console.log(res);
-        this.Auditlistapi();
-        this.notdialogVisible = false;
-      });
+      // let das = {
+      //   user_id: this.salesmanid,
+      //   area_id: this.value,
+      // };
+      // console.log("ggg", das);
+      // Audit(das).then((res) => {
+      //   console.log("修改成功", res);
+      // });
+      // var data = {
+      //   user_id: this.salesmanid,
+      //   result: red,
+      //   reason: this.textarea,
+      // };
+      // Iccoaudit(data).then((res) => {
+      //   console.log(res);
+      //   this.Auditlistapi();
+      //   this.notdialogVisible = false;
+      // });
     },
     // 批量审核
     audiobtns(ind) {
       // console.log(ind);
-      let data = {
-        user_ids: this.multipleSelection,
-        result: ind,
-      };
-      // console.log('l',data);
-      Audiobatch(data).then((res) => {
-        if (res.code == 200) {
-          this.$message({
-            showClose: true,
-            message: "全部审核通过",
-            type: "success",
-          });
-          this.Auditlistapi();
-        }
-      });
+      if (this.multipleSelection.length != 0) {
+        let data = {
+          user_ids: this.multipleSelection,
+          result: ind,
+        };
+        Audiobatch(data).then((res) => {
+          if (res.code == 200) {
+            this.multipleSelection = [];
+            this.$message({
+              showClose: true,
+              message: "全部审核通过",
+              type: "success",
+            });
+            this.Auditlistapi();
+          }
+        });
+      }
     },
   },
 };
@@ -748,13 +818,19 @@ export default {
       width: 66px;
       height: 30px;
       padding: 0;
-      +button{
+      + button {
         margin-left: 20px;
       }
     }
   }
   .boxdateait {
     display: flex;
+    .iniconstatur{
+      .el-input__inner{
+        width: 300px !important;
+        height: 34px !important;
+      }
+    }
   }
 }
 .asiostable {
@@ -763,10 +839,10 @@ export default {
   .audibtnes {
     margin: 0 0 15px 30px;
     button {
-      width: 66px;
       height: 30px;
-      padding: 0;
-      +button{
+      padding: 0 8px;
+      font-size: 13px;
+      + button {
         margin-left: 20px;
       }
     }
@@ -775,9 +851,8 @@ export default {
     }
   }
 }
-
 .tgstatus {
-  color: rgb(103, 194, 58);
+  color: #67c23a;
 }
 .btgstatus {
   color: rgb(245, 108, 108);
@@ -826,7 +901,7 @@ export default {
   //   padding: 6px 20px;
   // }
 }
-.auditmartexts{
+.auditmartexts {
   display: flex;
   justify-content: center;
   margin-bottom: 55px;
@@ -852,13 +927,17 @@ export default {
     }
     .boxxinput {
       .el-input__inner {
-        width: 350px;
+        width: 300px !important;
+        height: 34px !important;
       }
     }
     .el-select {
-      width: 350px !important;
+      width: 300px !important;
+      .el-input__inner{
+        height: 34px !important;
+      }
+      
     }
-
     .el-radio-group {
       .el-radio-button {
         .el-radio-button__inner {

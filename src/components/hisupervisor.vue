@@ -1538,7 +1538,7 @@ import { getInputValue } from "../../static/js/amountFormat.js";
 import usersteps from "../components/usersteps.vue";
 import "../../static/css/disaoerss.less";
 import "../../static/css/file_policy_style.less";
-import "../../static/css/el_dising.less"
+import "../../static/css/el_dising.less";
 import Comimageviewer from "../components/ComImageviewer.vue";
 // 图片查看器
 // import ElImageviewer from "element-ui/packages/image/src/image-viewer";
@@ -1749,6 +1749,8 @@ export default {
       qisloading: false,
       sqloading: false,
       zjloading: false,
+      // 角色id
+      roleID: "",
     };
   },
   destroyed() {
@@ -1757,6 +1759,10 @@ export default {
     });
   },
   created() {
+    // 权限
+    var userinfor = JSON.parse(localStorage.getItem("userinfor"));
+    this.roleID = userinfor.roleID;
+
     this.$nextTick(() => {
       this.$refs["myscrollbar"].wrap.scrollTop = document.body.scrollTop = 0;
       // this.$refs["myscrollbar"].wrap.scrollHeight;
@@ -2340,13 +2346,24 @@ export default {
                       type: "error",
                     });
                   });
-                // 出单核实
-                this.$router.push({
-                  path: "/usertable/asingconfirm",
-                  query: {
-                    data: this.evalid,
-                  },
+                this.$message({
+                  showClose: true,
+                  message: "提交成功",
+                  type: "success",
                 });
+                // 出单核实
+                if (this.roleID != 1003) {
+                  this.$router.push({
+                    path: "/usertable/asingconfirm",
+                    query: {
+                      data: this.evalid,
+                    },
+                  });
+                } else {
+                  this.$router.push({
+                    path: "/usertable/adminfiedlook",
+                  });
+                }
               } else if (this.feedback == 2) {
                 let data = {
                   risk_eval_id: this.evalid,
@@ -2360,12 +2377,18 @@ export default {
                       type: "success",
                     });
                     // 上级复审
-                    this.$router.push({
-                      path: "/usertable/hisupervisores",
-                      query: {
-                        data: this.evalid,
-                      },
-                    });
+                    if (this.roleID != 1003) {
+                      this.$router.push({
+                        path: "/usertable/hisupervisores",
+                        query: {
+                          data: this.evalid,
+                        },
+                      });
+                    } else {
+                      this.$router.push({
+                        path: "/usertable/adminfiedlook",
+                      });
+                    }
                   }
                 });
               }

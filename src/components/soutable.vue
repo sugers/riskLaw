@@ -6,84 +6,153 @@
       </div>
     </div>
 
-    <el-row :gutter="12" class="elrow">
-      <el-col :span="8">
-        <el-card shadow="hover" :body-style="{padding:'10px'}">
-          <div class="databoard">
-            <div class="datatext">
-              <div class="txt">累计评估总量</div>
-              <div class="number pin">{{ risk_eval_review_count }}</div>
-            </div>
-            <img src="../../static/img/pin.png" alt="图标" />
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" :body-style="{padding:'10px'}">
-          <div class="databoard">
-            <div class="datatext">
-              <div class="txt">已合作保险公司总量</div>
-              <div class="number hezuo">{{ icco_count }}</div>
-            </div>
-            <img src="../../static/img/hezuo.png" alt="图标" />
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" :body-style="{padding:'10px'}">
-          <div class="databoard">
-            <div class="datatext">
-              <div class="txt">入驻律师总量</div>
-              <div class="number lvshi">{{ lawyer_count }}</div>
-            </div>
-            <img src="../../static/img/lvshi.png" alt="图标" />
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-
-    <el-row :gutter="12">
-      <el-col :span="8">
-        <el-card shadow="hover" :body-style="{padding:'10px'}">
-          <div class="databoard">
-            <div class="datatext">
-              <div class="txt">累积处理保额</div>
-              <div class="number baoe">
-                ￥{{ preserv_amount_count }}
+    <div v-if="pingtai">
+      <el-row :gutter="12" class="elrow">
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">累计评估总量</div>
+                <div class="number pin">{{ risk_eval_review_count }}</div>
               </div>
+              <img src="../../static/img/pin.png" alt="图标" />
             </div>
-            <img src="../../static/img/baoe.png" alt="图标" />
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" :body-style="{padding:'10px'}">
-          <div class="databoard">
-            <div class="datatext">
-              <div class="txt">累积承保总额</div>
-              <div class="number zonge">￥{{ underwriting_amount_count }}</div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">已合作保险公司总量</div>
+                <div class="number hezuo">{{ icco_count }}</div>
+              </div>
+              <img src="../../static/img/hezuo.png" alt="图标" />
             </div>
-            <img src="../../static/img/zonge.png" alt="图标" />
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="hover" :body-style="{padding:'10px'}">
-          <div class="databoard">
-            <div class="datatext">
-              <div class="txt">累积出单保费总额</div>
-              <div class="number chudan">￥{{ amount_count }}</div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">入驻律师总量</div>
+                <div class="number lvshi">{{ lawyer_count }}</div>
+              </div>
+              <img src="../../static/img/lvshi.png" alt="图标" />
             </div>
-            <img src="../../static/img/chudan.png" alt="图标" />
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
+          </el-card>
+        </el-col>
+      </el-row>
+      <el-row :gutter="12">
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">累积处理保额</div>
+                <div class="number baoe">￥{{ preserv_amount_count }}</div>
+              </div>
+              <img src="../../static/img/baoe.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">累积承保总额</div>
+                <div class="number zonge">
+                  ￥{{ underwriting_amount_count }}
+                </div>
+              </div>
+              <img src="../../static/img/zonge.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">累积出单保费总额</div>
+                <div class="number chudan">￥{{ amount_count }}</div>
+              </div>
+              <img src="../../static/img/chudan.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+
+    <div v-if="baoxingpint">
+      <el-row :gutter="12" class="elrow">
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">保险公司销售业务人数</div>
+                <div class="number pin">{{ risk_eval_review_count }}</div>
+              </div>
+              <img src="../../static/img/pin.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">开通的省份总数量</div>
+                <div class="number hezuo">{{ icco_count }}</div>
+              </div>
+              <img src="../../static/img/hezuo.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月的提交评估量</div>
+                <div class="number lvshi">{{ lawyer_count }}</div>
+              </div>
+              <img src="../../static/img/lvshi.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+      <el-row :gutter="12">
+        <el-col :span="12">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月的评估通过量</div>
+                <div class="number baoe">￥{{ preserv_amount_count }}</div>
+              </div>
+              <img src="../../static/img/pin.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="12">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月的出单量</div>
+                <div class="number zonge">
+                  {{ underwriting_amount_count }}
+                </div>
+              </div>
+              <img src="../../static/img/lvshi.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+    <Spin fix v-show="isdone">
+        <Icon type="ios-loading" size="18" class="demo-spin-icon-load"></Icon>
+        <div>Loading</div>
+      </Spin>
   </div>
 </template>
 
 <script>
-import { Commondashboard } from "../api/api";
+import { Commondashboard,Dashboard } from "../api/api";
 export default {
   name: "soutable",
   data() {
@@ -94,10 +163,30 @@ export default {
       preserv_amount_count: "",
       underwriting_amount_count: "",
       amount_count: "",
+      pingtai: false,
+      baoxingpint: false,
+      // loading
+      isdone: false,
     };
   },
   created() {
-    this.dashboardapi();
+    
+  },
+  mounted(){
+    let userInfo = JSON.parse(localStorage.getItem('userinfor'));
+    if (
+      userInfo.roleID == 1001 ||
+      userInfo.roleID == 1002 ||
+      userInfo.roleID == 1003 ||
+      userInfo.roleID == 1004
+    ) {
+      this.pingtai = true;
+      this.dashboardapi();
+    }
+    if (userInfo.roleID == 2001 || userInfo.roleID == 2002) {
+      this.baoxingpint = true;
+      this.theinsurer();
+    }
   },
   methods: {
     // 看板数据api
@@ -108,8 +197,10 @@ export default {
     // underwriting_amount_count	number	累积承保总额
     // amount_count	number	累积出单保额
     dashboardapi() {
+      this.isdone = true;
       Commondashboard().then((res) => {
-        console.log("看板", res.data.dashboard);
+        this.isdone = false;
+        // console.log("看板", res.data.dashboard);
         this.risk_eval_review_count = res.data.dashboard.risk_eval_review_count;
         this.icco_count = res.data.dashboard.icco_count;
         this.lawyer_count = res.data.dashboard.lawyer_count;
@@ -119,6 +210,26 @@ export default {
         this.amount_count = res.data.dashboard.amount_count;
       });
     },
+
+    // user_count	number	保险公司销售业务人数
+    // area_count	number	一开通的省份总数量
+    // risk_eval_count	number	本月的提交评估量
+    // risk_eval_open_count	number	本月的评估通过量
+    // risk_eval_trade_count	number	本月的出单量
+    theinsurer(){
+      this.isdone = true;
+      Dashboard().then(res=>{
+        this.isdone = false;
+        // console.log('看板',res);
+        this.risk_eval_review_count = res.data.user_count;
+        this.icco_count = res.data.area_count;
+        this.lawyer_count = res.data.risk_eval_count;
+        this.preserv_amount_count = res.data.risk_eval_open_count;
+        this.underwriting_amount_count =
+          res.data.risk_eval_trade_count;
+        
+      })
+    }
   },
 };
 </script>
@@ -142,13 +253,13 @@ export default {
 .chudan {
   color: #34c758;
 }
-.elrow{
+.elrow {
   margin: 0 0 20px 0;
 }
 .headedata {
   // border: 1px solid red;
   .headerboke {
-    width: 100%;
+    // width: 100%;
     height: 43px;
     background-color: #d1e2f8;
     margin-bottom: 29px;
@@ -180,11 +291,14 @@ export default {
       margin-bottom: 15px;
     }
     .number {
-      min-width: 156px;
+      max-width: 200px;
       height: 29px;
       font-size: 20px;
       font-weight: 600;
       margin-top: 15px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
   img {

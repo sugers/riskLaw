@@ -45,6 +45,10 @@ axios.interceptors.request.use(
             if (res.data.refresh_token != '' && res.data.refresh_token != undefined && res.data.refresh_token != null) {
               window.localStorage.setItem("refresh_token", res.data.refresh_token);
             }
+            window.localStorage.setItem(
+              "expires_in",
+              res.data.expires_in
+            );
             onRrefreshed(res.data.access_token);
             refreshSubscribers = []
             isRefreshing = false
@@ -76,7 +80,7 @@ axios.interceptors.response.use(
   function (res) {
     if(!window.localStorage.getItem('expires_in')){
       // console.log('有');
-      this.gotoLogin();
+      gotoLogin();
     }
     return res
   },
@@ -97,13 +101,14 @@ axios.interceptors.response.use(
         message: '密码错误!',
         type: 'warning'
       })
-    } else if (error && error.response) {
-      Message({
-        showClose: true,
-        message: err.data.msg,
-        type: "error",
-      });
-    }
+    } 
+    // else if (error && error.response) {
+    //   Message({
+    //     showClose: true,
+    //     message: err.data.msg,
+    //     type: "error",
+    //   });
+    // }
     return Promise.reject(error);
   }
 )
@@ -112,20 +117,22 @@ axios.interceptors.response.use(
 function gotoLogin() {
   window.localStorage.removeItem("access_token");
   window.localStorage.removeItem("refresh_token");
-  let userid = JSON.parse(localStorage.getItem("userinfor"));
-  if (userid.roleID == 2001) {
-    window.localStorage.removeItem("userinfor");
-    window.location.href = '/taipeilogin'
-    return
-  } else if (
-    userid.roleID == 1001 ||
-    userid.roleID == 1003 ||
-    userid.roleID == 1004
-  ) {
+  window.localStorage.removeItem("expires_in");
+  // let userid = JSON.parse(localStorage.getItem("userinfor"));
+  
+  // if (userid.roleID == 2001) {
+  //   window.localStorage.removeItem("userinfor");
+  //   window.location.href = '/taipeilogin'
+  //   return
+  // } else if (
+  //   userid.roleID == 1001 ||
+  //   userid.roleID == 1003 ||
+  //   userid.roleID == 1004
+  // ) {
     window.localStorage.removeItem("userinfor");
     window.location.href = '/adminLogin'
-    return
-  }
+    // return
+  // }
 }
 
 function computedTime() {

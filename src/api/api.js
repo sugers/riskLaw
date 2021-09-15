@@ -70,7 +70,7 @@ export const Audiobatch = data => {
 // 任务池查看（管理员、初审、复审权限）
 export const Caselist = data => {
   return new Promise(function (resolve) {
-    resolve(get('/api/v1/admin/review/case/list', data))
+    resolve(get('/api/v1/backend/eval/list', data))
   })
 }
 // 查看保险公司地区（管理员权限）
@@ -82,7 +82,7 @@ export const Iccoarea = data => {
 // 任务查看（管理员、初审、复审权限）
 export const Reviewcase = data => {
   return new Promise(function (resolve) {
-    resolve(get('/api/v1/admin/review/case', data))
+    resolve(get('/api/v1/backend/eval', data))
   })
 }
 // 获取案由类型列表(分页) (管理员权限)
@@ -286,5 +286,12 @@ export const Commondashboard = data =>{
 export const Reviewcasedata = data =>{
   return new Promise(function (resolve){
     resolve(Delete('/api/v1/admin/review/case',data))
+  })
+}
+
+// 批量下载法律意见书（管理员权限）
+export const LawOpinions = data =>{
+  return new Promise(function (resolve){
+    resolve(get('/api/v1/backend/eval/download/lawOpinions',data,'blob'))
   })
 }

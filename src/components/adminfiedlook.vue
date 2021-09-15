@@ -125,7 +125,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-show="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -149,7 +149,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-show="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -304,7 +304,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-show="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -327,7 +327,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-show="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -472,7 +472,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-show="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -496,6 +496,7 @@
                         >下载</a
                       >
                       <div
+                        v-show="shancu"
                         class="shan"
                         @click="deletes(item.id, item.path, ind)"
                       >
@@ -608,7 +609,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-show="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -632,6 +633,7 @@
                         >下载</a
                       >
                       <div
+                        v-show="shancu"
                         class="shan"
                         @click="deletes(item.id, item.path, ind)"
                       >
@@ -706,7 +708,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-show="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -731,7 +733,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-show="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -956,6 +958,7 @@ export default {
       https: "",
       // 出单情况
       feedtrade: null,
+      shancu: true,
     };
   },
   destroyed(){
@@ -972,7 +975,11 @@ export default {
   mounted(){
     window.addEventListener('beforeunload',e=>{
       this.beforeClosepage(e)
-    })
+    });
+    var userinfor = JSON.parse(localStorage.getItem("userinfor"));
+    if (userinfor.roleID == 2001) {
+      this.shancu = false
+    }
   },
   methods: {
     beforeClosepage(){

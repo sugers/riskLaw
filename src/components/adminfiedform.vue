@@ -146,18 +146,22 @@
                 </el-image>
               </div> -->
               <!-- 图片 -->
-              <el-image-viewer
+              <!-- <el-image-viewer
                 v-if="showViewer"
                 :on-close="closeViewer"
                 :url-list="srcLists"
-              />
+              /> -->
+              <Comimageviewer
+                :visible.sync="showViewer"
+                :url="srcListsurl"
+              ></Comimageviewer>
               <div v-for="(item, ind) in usernamesfzimg" :key="ind">
                 <div class="tyetext" v-if="usersrces">
                   <div class="textwen">
                     <p
                       class="ptextleis"
                       :title="item.file_name"
-                      @click="onopensfz"
+                      @click="onopensfz(ind)"
                     >
                       {{ item.file_name }}
                     </p>
@@ -1181,7 +1185,7 @@ import usersteps from "../components/usersteps.vue";
 import "../../static/css/disaoerss.less";
 import "../../static/css/file_policy_style.less";
 import "../../static/css/el_dising.less"
-import ElImageViewer from "element-ui/packages/image/src/image-viewer";
+// import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import Comimageviewer from "../components/ComImageviewer.vue";
 
 function csdatesr(res) {
@@ -1217,7 +1221,7 @@ export default {
   name: "adminfiedform",
   components: {
     usersteps,
-    ElImageViewer,
+    // ElImageViewer,
     Comimageviewer,
   },
   // props: ["taskview", "anyou"],
@@ -1262,6 +1266,7 @@ export default {
       filescaid: true,
       usersrces: true,
       indeusername: "",
+      srcListurl: [],
       // 营业执照
       blicense: "",
       srcs: "",
@@ -1425,6 +1430,7 @@ export default {
             cafi.toLowerCase() == "png"
           ) {
             caidsrcs.push(caid);
+            this.srcListurl.push(htts + "/" + caid.path);
           } else {
             caidfile.push(caid);
           }
@@ -1631,7 +1637,8 @@ export default {
         }
       }
     },
-    onopensfz() {
+    onopensfz(ind) {
+      this.srcListsurl = [...this.srcListurl, ind];
       this.showViewer = true;
     },
     onPreview(ind) {
