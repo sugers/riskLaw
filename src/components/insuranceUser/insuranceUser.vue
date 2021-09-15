@@ -64,24 +64,24 @@
                         </el-table-column>
                         <el-table-column label="序号" type="index" width="60" align="center">
                         </el-table-column>
-                        <el-table-column prop="username" label="用户名" width="100" align='center' show-overflow-tooltip
+                        <el-table-column prop="username" label="用户名" width="140" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="name" label="姓名" width="200" align='center' show-overflow-tooltip
+                        <el-table-column prop="name" label="姓名" width="140" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="roleName" label="角色" width="100" align='center' show-overflow-tooltip
+                        <el-table-column prop="roleName" label="角色" width="140" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
                         <el-table-column prop="phone" label="联系电话" width="200" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="ico_name" label="所属保险公司" width="200" align='center' show-overflow-tooltip
-                            class-name="grayColor">
+                        <!-- <el-table-column prop="icco_name" label="所属保险公司" width="200" align='center'
+                            show-overflow-tooltip class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="area_name" label="开通区域" width="200" align='center' show-overflow-tooltip
+                        <el-table-column prop="areaName" label="开通区域" width="200" align='center' show-overflow-tooltip
                             class-name="grayColor">
-                        </el-table-column>
+                        </el-table-column> -->
                         <el-table-column width="60">
                             <template slot="header">
                                 状态
@@ -254,7 +254,10 @@
                                 }
                             })
                         });
-                        this.areaVal = this.areaData[0].code
+                        if(this.areaData.length==0){
+                            this.areaVal = this.areaData[0].code
+                        }
+                        
                     }
 
 
@@ -287,28 +290,10 @@
                             } else if (item.role == 2002) {
                                 item.roleName = "财务"
                             }
-                            let areadata = {
-                                icco_id: item.icco_id
-                            }
-                            GetinsuranceAreaList(areadata).then(res => {
-                                if (res.code == 200) {
-                                    res.data.list.map((childitem) => {
-                                        provinces.forEach((areaitem) => {
-                                            if (childitem.adcode == areaitem
-                                                .code) {
-                                                item.area_name = areaitem.name
-                                            }
-                                        })
-                                    });
-                                }
-
-
-                            })
-                            this.insuranceDta.forEach((insuranceItem) => {
-                                if (item.icco_id == insuranceItem.code) {
-                                    item.ico_name = insuranceItem.name
-                                } else {
-                                    item.ico_name = ''
+                            provinces.forEach((areaitem) => {
+                                if (item.area_name == areaitem
+                                    .code && item.area_name!=0) {
+                                    item.areaName = areaitem.name
                                 }
                             })
 

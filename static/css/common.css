@@ -16,7 +16,9 @@
 .el-range-editor.el-input__inner {
     padding: 0;
 }
-
+.el-table .el-table__cell.is-center{
+    text-align: center;
+}
 .el-radio-button__inner {
     padding: 8px 20px;
 }
