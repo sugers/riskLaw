@@ -38,12 +38,14 @@
                             </el-input>
                         </div>
                     </div>
+                    <!-- 筛选按钮 -->
+                    <div class="screenBtn">
+                        <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索
+                        </el-button>
+                    </div>
                 </div>
-                <!-- 筛选按钮 -->
-                <div class="screenBtn">
-                    <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
-                    <el-button type="primary" icon="el-icon-search" @click="searchClick">筛选</el-button>
-                </div>
+
             </div>
             <div class="insuranceBottom">
                 <div class="bottomBtn">
@@ -105,8 +107,8 @@
             </div>
 
             <!-- 编辑律师弹窗 -->
-            <Modal :footer-hide="true"  title="编辑律师" :mask-closable="false" :scrollable='true'
-                width="800" @on-visible-change="visible" v-model="editModel">
+            <Modal :footer-hide="true" title="编辑律师" :mask-closable="false" :scrollable='true' width="800"
+                @on-visible-change="visible" v-model="editModel">
                 <laywerEdit ref="editLawer" :laywerId="laywerId" @refresData='refresData'
                     @cancelLawyer="cancelLawyer" />
             </Modal>
@@ -158,7 +160,10 @@
         methods: {
             visible(boolean) {
                 if (boolean) {
-                    this.$refs.editLawer.init()
+                    this.$nextTick(() => {
+                        this.$refs.editLawer.init();
+                        this.$refs.editLawer.getEditInfo();
+                    })
                 }
 
             },
@@ -264,15 +269,6 @@
     }
 </script>
 <style scoped>
-    .insuranceTop {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #BBBBBB;
-        position: relative;
-    }
-
     .screenBtn {
         margin-left: 30px;
     }
@@ -296,9 +292,10 @@
 
     .otherScreen {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         flex-wrap: wrap;
         width: 860px;
+        justify-content: flex-start;
     }
 
     .onlyClass {

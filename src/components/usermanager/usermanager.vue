@@ -2,24 +2,25 @@
     <section>
         <div class="insuranceUser">
             <div class="insuranceTop">
-                <div class="radioStatu onlyClass">
-                    <span class="name">角色：</span>
-                    <div v-if="radioSatatu==1">
-                        <el-radio-group v-model="statuVal">
+
+                <div class="otherScreen">
+                    <div class="radioStatu onlyClass">
+                        <span class="name">角色：</span>
+                        <div v-if="radioSatatu==1">
+                            <el-radio-group v-model="statuVal">
+                                <el-radio-button label="全部"></el-radio-button>
+                                <el-radio-button label="管理员"></el-radio-button>
+                                <el-radio-button label="初审人员"></el-radio-button>
+                                <el-radio-button label="复审人员"></el-radio-button>
+                                <el-radio-button label="财务"></el-radio-button>
+                            </el-radio-group>
+                        </div>
+                        <div v-else-if="radioSatatu==2">
                             <el-radio-button label="全部"></el-radio-button>
                             <el-radio-button label="管理员"></el-radio-button>
-                            <el-radio-button label="初审人员"></el-radio-button>
-                            <el-radio-button label="复审人员"></el-radio-button>
                             <el-radio-button label="财务"></el-radio-button>
-                        </el-radio-group>
+                        </div>
                     </div>
-                    <div v-else-if="radioSatatu==2">
-                        <el-radio-button label="全部"></el-radio-button>
-                        <el-radio-button label="管理员"></el-radio-button>
-                        <el-radio-button label="财务"></el-radio-button>
-                    </div>
-                </div>
-                <div class="otherScreen">
                     <div class="keywordSelect onlyClass">
                         <span class="name">关键字：</span>
                         <div class="selectContent">
@@ -27,12 +28,14 @@
                             </el-input>
                         </div>
                     </div>
+                    <!-- 筛选按钮 -->
+                    <div class="screenBtn">
+                        <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索
+                        </el-button>
+                    </div>
                 </div>
-                <!-- 筛选按钮 -->
-                <div class="screenBtn">
-                    <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
-                    <el-button type="primary" icon="el-icon-search" @click="searchClick">筛选</el-button>
-                </div>
+
             </div>
             <div class="insuranceBottom">
                 <div class="bottomBtn">
@@ -147,7 +150,7 @@
         data() {
             return {
                 currendRole: '',
-                radioSatatu:'',
+                radioSatatu: '',
                 statuVal: '全部',
                 keyInput: '',
                 companyVal: '',
@@ -169,9 +172,9 @@
             this.isdone = true;
             // 获取角色权限
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
-            this.currendRole=userInfo.roleID
-            this.radioSatatu=String(userInfo.roleID).substring(0, 1);
-            this.getUserList(0,0, '', this.currendRole, 1, 10);
+            this.currendRole = userInfo.roleID
+            this.radioSatatu = String(userInfo.roleID).substring(0, 1);
+            this.getUserList(0, 0, '', this.currendRole, 1, 10);
         },
         methods: {
 
@@ -184,13 +187,13 @@
             updateuserData() {
                 this.editModel = false;
                 this.increaseModel = false;
-                this.getUserList(0,0, this.statuVal, this.currendRole, this.page, this.limit);
+                this.getUserList(0, 0, this.statuVal, this.currendRole, this.page, this.limit);
             },
             canceluser() {
                 this.editModel = false;
                 this.increaseModel = false
             },
-            getUserList(icco_id,area_id, role, user_type, page, limit, name) {
+            getUserList(icco_id, area_id, role, user_type, page, limit, name) {
                 let currentRole = '';
                 this.isdone = true;
                 if (String(user_type).substring(0, 1) == 1) {
@@ -213,7 +216,7 @@
 
                 let data = {
                     icco_id: icco_id,
-                    area_id:area_id,
+                    area_id: area_id,
                     role: currentRole,
                     user_type: Number(String(user_type).substring(0, 1)),
                     page: page,
@@ -262,7 +265,7 @@
                                 Deleteuser(data).then((res) => {
                                     if (res.code == 200) {
                                         this.$Message.success('已删除');
-                                        this.getUserList(0,0, this.statuVal, this
+                                        this.getUserList(0, 0, this.statuVal, this
                                             .currendRole, this
                                             .page, this.limit);
                                     }
@@ -277,32 +280,23 @@
             },
             SizeChange(currentSize) {
                 this.limit = currentSize;
-                this.getUserList(0,0, this.statuVal, this.currendRole, this.page, currentSize);
+                this.getUserList(0, 0, this.statuVal, this.currendRole, this.page, currentSize);
             },
             current_change(currentPage) {
                 this.page = currentPage;
-                this.getUserList(0,0, this.statuVal, this.currendRole, currentPage, this.limit);
+                this.getUserList(0, 0, this.statuVal, this.currendRole, currentPage, this.limit);
             },
             refresh() {
                 this.companyVal = '';
                 this.statuVal = '全部';
             },
             searchClick() {
-                this.getUserList(0,0, this.statuVal, 1, this.currendRole, this.limit, this.keyInput);
+                this.getUserList(0, 0, this.statuVal, this.currendRole, this.page, this.limit, this.keyInput);
             }
         },
     }
 </script>
 <style scoped>
-    .insuranceTop {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #BBBBBB;
-        position: relative;
-    }
-
     .screenBtn {
         margin-left: 30px;
     }
@@ -326,9 +320,10 @@
 
     .otherScreen {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         flex-wrap: wrap;
-        width: 860px;
+        justify-content: flex-start;
+        width: 100%;
     }
 
     .onlyClass {

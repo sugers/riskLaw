@@ -51,14 +51,14 @@
                     <el-input v-model="dataObj.contactPhonde" placeholder="请输入联系电话"></el-input>
                 </div>
             </div>
-             <div class="editList">
-                 <div class="listLeft Required">
-                     <span>提成比例：</span>
-                 </div>
-                 <div class="listRight">
-                     <el-input v-model="dataObj.commission" placeholder="请输入提成比例"></el-input>
-                 </div>
-             </div>
+            <div class="editList">
+                <div class="listLeft Required">
+                    <span>提成比例：</span>
+                </div>
+                <div class="listRight">
+                    <el-input v-model="dataObj.commission" placeholder="请输入提成比例"></el-input>
+                </div>
+            </div>
             <!-- <div class="editList">
                 <div class="listLeft">
                     <span>官网：</span>
@@ -108,13 +108,15 @@
     </section>
 </template>
 <script>
-     import {EditInsurance} from '../../../api/api.js';
+    import {
+        EditInsurance
+    } from '../../../api/api.js';
     export default {
         props: ['currentText'],
         data() {
             return {
-                dataObj:{
-                    id:'',
+                dataObj: {
+                    id: '',
                     companyName: '',
                     contacts: '',
                     staturadio: 1,
@@ -122,48 +124,61 @@
                     officialWebsite: '',
                     areaVal: '',
                     companyIntroduce: '',
-                    commission:1
+                    commission: 1
                 }
             }
         },
         mounted() {
-            
+
         },
         methods: {
-            saveClick(){
-                let data={
-                    icco_id:Number(this.dataObj.id),
-                    name:this.dataObj.companyName,
-                    status:Number(this.dataObj.staturadio),
-                    contact:this.dataObj.contacts,
-                    contact_tel:this.dataObj.contactPhonde,
-                    proportion:Number(this.dataObj.commission)
+            saveClick() {
+                let data = {
+                    icco_id: Number(this.dataObj.id),
+                    name: this.dataObj.companyName,
+                    status: Number(this.dataObj.staturadio),
+                    contact: this.dataObj.contacts,
+                    contact_tel: this.dataObj.contactPhonde,
+                    proportion: Number(this.dataObj.commission)
                 }
-                EditInsurance(data).then((res)=>{
-                    if(res.code==200){
+                if (!data['name']) {
+                    this.$Message.warning('请填写公司名称');
+                    return;
+                } else if (!data['contact']) {
+                    this.$Message.warning('请填写联系人');
+                    return;
+                } else if (!data['contact_tel']) {
+                    this.$Message.warning('请填写联系电话');
+                    return;
+                } else if (!data['proportion']) {
+                    this.$Message.warning('请填写提成比例');
+                    return;
+                }
+                EditInsurance(data).then((res) => {
+                    if (res.code == 200) {
                         this.$Message.success('信息已更新');
                         this.$emit('updateData')
                     }
                 })
             },
-            cancel(){
-                 this.$emit('cancelModel')
+            cancel() {
+                this.$emit('cancelModel')
             }
 
         },
         watch: {
             currentText(newVal) {
                 let currentData = JSON.parse(newVal);
-                Object.assign(this.dataObj,{
-                     id:currentData.ID,
-                     companyName:currentData.name,
-                     contacts: currentData.contact,
-                     staturadio: currentData.status,
-                     contactPhonde: currentData.contact_tel,
-                     commission:currentData.proportion,
-                     officialWebsite: '',
-                     areaVal: '',
-                     companyIntroduce: ''
+                Object.assign(this.dataObj, {
+                    id: currentData.ID,
+                    companyName: currentData.name,
+                    contacts: currentData.contact,
+                    staturadio: currentData.status,
+                    contactPhonde: currentData.contact_tel,
+                    commission: currentData.proportion,
+                    officialWebsite: '',
+                    areaVal: '',
+                    companyIntroduce: ''
                 })
             }
         },

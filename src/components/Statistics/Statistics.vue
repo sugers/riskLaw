@@ -42,7 +42,7 @@
                 <!-- 筛选按钮 -->
                 <div class="screenBtn">
                     <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
-                    <el-button type="primary" icon="el-icon-search" @click="searchClick">筛选</el-button>
+                    <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
                     <!-- <el-button type="primary" icon="el-icon-document" @click="getexport">导出
                     </el-button> -->
                 </div>
@@ -115,14 +115,6 @@
     }
 </script>
 <style scoped>
-    .insuranceTop {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #BBBBBB;
-        position: relative;
-    }
 
     .screenBtn {
         margin-left: 30px;
@@ -149,14 +141,13 @@
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
-        flex-direction: column;
+        justify-content: space-evenly;
         width: 100%;
     }
 
     .onlyClass {
         display: flex;
         align-items: center;
-        margin-left: 30px;
         margin-bottom: 20px;
     }
 

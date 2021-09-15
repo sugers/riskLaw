@@ -153,6 +153,19 @@
                     contact_tel: this.contactPhonde,
                     proportion: Number(this.commission)
                 }
+                if (!data['name']) {
+                    this.$Message.warning('请填写公司名称');
+                    return;
+                } else if (!data['contact']) {
+                    this.$Message.warning('请填写联系人');
+                    return;
+                } else if (!data['contact_tel']) {
+                    this.$Message.warning('请填写联系电话');
+                    return;
+                } else if (!data['proportion']) {
+                    this.$Message.warning('请填写提成比例');
+                    return;
+                }
                 IncreaseInsurance(data).then((res) => {
                     if (res.code == 200) {
                         this.$Message.success('已新增成功');

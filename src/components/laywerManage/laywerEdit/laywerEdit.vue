@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="editList" style="align-items: flex-start;">
-                <div class="listLeft Required">
+                <div class="listLeft">
                     <span>律师证：</span>
                 </div>
                 <div class="listRight">
@@ -181,6 +181,16 @@
                     </el-input>
                 </div>
             </div>
+            <div class="editList" style="align-items: flex-start;">
+                <div class="listLeft">
+                    <span>兴趣爱好：</span>
+                </div>
+                <div class="listRight">
+                    <el-input type="textarea" resize='none' :autosize="{ minRows: 5, maxRows: 10}" placeholder="请输入兴趣爱好"
+                        v-model="dataObj.hobbie">
+                    </el-input>
+                </div>
+            </div>
             <div class="operatBtn">
                 <el-button type="primary" @click="saveClick">保存</el-button>
                 <el-button type="info" @click="cancel">取消</el-button>
@@ -222,7 +232,8 @@
                     educationBg: '',
                     workExperience: '',
                     article: '',
-                    social: ''
+                    social: '',
+                    hobbie: ''
                 }
             }
         },
@@ -230,13 +241,13 @@
             this.Ip = this.$ip;
             this.init();
             this.getField();
-            
+
         },
         methods: {
             init() {
-                this.srcList=[];
-                this.avatarUrl=[];
-                this.lawyerCard=[];
+                this.srcList = [];
+                this.avatarUrl = [];
+                this.lawyerCard = [];
                 Object.assign(this.dataObj, {
                     fullName: '',
                     phonenumber: '',
@@ -296,12 +307,14 @@
                 arr.splice(index, 1);
             },
             saveClick() {
+
                 let data = {
                     id: this.laywerId,
                     name: this.dataObj.fullName,
                     phone: this.dataObj.phonenumber,
                     email: this.dataObj.email,
                     exp_years: Number(this.dataObj.year),
+                    cert_number: this.dataObj.certCard,
                     adcode: Number(this.dataObj.workCity),
                     law_firm: this.dataObj.workCompany,
                     profile: this.dataObj.personalIntroduce,
@@ -310,9 +323,35 @@
                     work_exp: this.dataObj.workExperience,
                     article: this.dataObj.article,
                     social_duties: this.dataObj.social,
+                    hobbies: this.hobbie,
                     avatar: this.avatarUrl ? this.avatarUrl[0] : `static/default.png`,
                     lawyer_card: this.lawyerCard,
                     field_expertises: this.dataObj.fieldVal
+                }
+                if (!data['name']) {
+                    this.$Message.warning('请填写姓名');
+                    return;
+                } else if (!data['phone']) {
+                    this.$Message.warning('请填写手机号');
+                    return;
+                } else if (!data['email']) {
+                    this.$Message.warning('请填写邮箱地址');
+                    return;
+                } else if (!data['exp_years']) {
+                    this.$Message.warning('请填写从业年限');
+                    return;
+                } else if (!data['adcode']) {
+                    this.$Message.warning('请选择工作城市');
+                    return;
+                } else if (!data['cert_number']) {
+                    this.$Message.warning('请填写执业证号');
+                    return;
+                } else if (!data['field_expertises']) {
+                    this.$Message.warning('请选择擅长领域');
+                    return;
+                } else if (!data['law_firm']) {
+                    this.$Message.warning('请填写任职律所');
+                    return;
                 }
                 Editlawyer(data).then((res) => {
                     if (res.code == 200) {
@@ -323,18 +362,18 @@
                         this.$Message.error(res.mag);
                         this.init();
                     }
-                })
+                });
+
             },
             cancel() {
                 this.$emit('cancelLawyer');
                 this.init();
-            }
-        },
-        watch: {
-            laywerId(newVal) {
-                this.currentId = newVal;
+            },
+            getEditInfo() {
+                this.init()
+                this.currentId = this.laywerId;
                 let data = {
-                    id: newVal
+                    id: this.laywerId
                 }
                 GetlawyerDetail(data).then((res) => {
                     if (res.code == 200) {
@@ -383,11 +422,15 @@
                             educationBg: result.edu_background,
                             workExperience: result.work_exp,
                             article: result.article,
-                            social: result.social_duties
+                            social: result.social_duties,
+                            hobbie: result.hobbies
                         })
                     }
                 })
             },
+        },
+        watch: {
+
         }
     }
 </script>
@@ -447,9 +490,11 @@
         border-radius: 4px;
         box-shadow: 0px 0px 0px 1px #e5e5e5;
     }
-    .listRight .avatarImg{
+
+    .listRight .avatarImg {
         margin-bottom: 0;
     }
+
     .listRight .imageList i {
         position: absolute;
         right: 4px;

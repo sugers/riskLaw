@@ -85,7 +85,7 @@
                 </div>
             </div> -->
             <div class="editList">
-                <div class="listLeft">
+                <div class="listLeft Required">
                     <span>姓名：</span>
                 </div>
                 <div class="listRight">
@@ -113,14 +113,14 @@
         GetinsuranceList,
         Increaseuser,
     } from '../../../api/api.js';
-     import provinces from "../../../../static/js/pca-code.json"
+    import provinces from "../../../../static/js/pca-code.json"
     export default {
         props: ['isshow'],
         data() {
             return {
                 areaVal: '',
                 currendRole: '',
-                radioSatatu:'',
+                radioSatatu: '',
                 fullName: '',
                 userName: '',
                 roleradio: '',
@@ -137,8 +137,8 @@
             this.initFn();
             // 获取角色权限
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
-            this.currendRole=userInfo.roleID;
-            this.radioSatatu=String(userInfo.roleID).substring(0, 1)
+            this.currendRole = userInfo.roleID;
+            this.radioSatatu = String(userInfo.roleID).substring(0, 1)
             if (String(userInfo.roleID).substring(0, 1) == 1) {
                 this.roleradio = 1001;
             } else if (String(userInfo.roleID).substring(0, 1) == 2) {
@@ -178,8 +178,8 @@
                 })
             },
             insuranceSelect(e) {
-                this.areaVal=''
-                this.areaData=[];
+                this.areaVal = ''
+                this.areaData = [];
                 let data = {
                     icco_id: String(this.currendRole).substring(0, 1) == 2 ? '' : e
                 }
@@ -187,7 +187,10 @@
                     res.data.list.map((childitem) => {
                         provinces.forEach((areaitem) => {
                             if (childitem.adcode == areaitem.code) {
-                                this.areaData.push({name:areaitem.name,code:childitem.ID})
+                                this.areaData.push({
+                                    name: areaitem.name,
+                                    code: childitem.ID
+                                })
                             }
                         })
                     })
@@ -201,8 +204,24 @@
                     phone: this.contactPhonde,
                     password: this.passwordval,
                     icco_id: String(this.currendRole).substring(0, 1) == 2 ? this.BelongInsurance : 0,
-                    area_id:String(this.currendRole).substring(0, 1) == 2 ? Number(this.areaVal) : 0,
+                    area_id: String(this.currendRole).substring(0, 1) == 2 ? Number(this.areaVal) : 0,
                     role: Number(this.roleradio)
+                }
+                if (!data['username']) {
+                    this.$Message.warning('请填写用户名');
+                    return;
+                } else if (!data['password']) {
+                    this.$Message.warning('请填写密码');
+                    return;
+                } else if (!data['name']) {
+                    this.$Message.warning('请填写姓名');
+                    return;
+                } else if (!data['icco_id'] && String(this.currendRole).substring(0, 1) == 2) {
+                    this.$Message.warning('请选择所属公司');
+                    return;
+                } else if (!data['area_id'] && String(this.currendRole).substring(0, 1) == 2) {
+                    this.$Message.warning('请选择开通区域');
+                    return;
                 }
                 Increaseuser(data).then((res) => {
                     if (res.code == 200) {

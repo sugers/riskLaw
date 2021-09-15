@@ -145,7 +145,7 @@
             },
             GetInsurance() {
                 let data = {
-                    status:-1,
+                    status: -1,
                     keyword: '',
                 }
                 GetinsuranceList(data).then((res) => {
@@ -164,7 +164,7 @@
                 this.areaVal = ''
                 this.areaData = [];
                 let data = {
-                    icco_id:e
+                    icco_id: e
                 }
                 GetinsuranceAreaList(data).then(res => {
                     res.data.list.map((childitem) => {
@@ -187,8 +187,24 @@
                     phone: this.contactPhonde,
                     password: this.passwordval,
                     icco_id: this.BelongInsurance,
-                    area_id:Number(this.areaVal),
+                    area_id: Number(this.areaVal),
                     role: Number(this.roleradio)
+                }
+                if (!data['username']) {
+                    this.$Message.warning('请填写用户名');
+                    return;
+                } else if (!data['password']) {
+                    this.$Message.warning('请填写密码');
+                    return;
+                } else if (!data['icco_id']) {
+                    this.$Message.warning('请选择所属公司');
+                    return;
+                } else if (!data['area_id']) {
+                    this.$Message.warning('请选择开通区域');
+                    return;
+                } else if (!data['name']) {
+                    this.$Message.warning('请填写姓名');
+                    return;
                 }
                 Increaseuser(data).then((res) => {
                     if (res.code == 200) {
