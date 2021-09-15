@@ -51,7 +51,7 @@
                     <!-- 筛选按钮 -->
                     <div class="screenBtn">
                         <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
-                        <el-button type="primary" icon="el-icon-search" @click="searchClick">筛选</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
                     </div>
                 </div>
 
