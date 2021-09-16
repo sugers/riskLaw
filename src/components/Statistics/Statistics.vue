@@ -6,19 +6,19 @@
                     <div class="timeSelect onlyClass">
                         <span class="name">日期：</span>
                         <div class="selectContent">
-                            <!-- <el-date-picker v-model="timeVal" format="yyyy 年 MM 月" value-format="yyyy-MM-dd HH:hh:mm"
-                                type="month" placeholder="选择月" @change="selectDate">
-                            </el-date-picker> -->
-                            <el-date-picker v-model="timeVal" type="daterange" range-separator="至"
-                                start-placeholder="开始日期" end-placeholder="结束日期">
+                            <el-date-picker v-model="timeVal" format="yyyy 年 MM 月" value-format="yyyy-MM-dd HH:hh:mm"
+                                type="month" placeholder="选择月">
                             </el-date-picker>
+                            <!-- <el-date-picker v-model="timeVal" type="daterange" range-separator="至"
+                                start-placeholder="开始日期" end-placeholder="结束日期">
+                            </el-date-picker> -->
                             <!-- <el-date-picker v-model="timeVal" type="monthrange" range-separator="至"
                                 format="yyyy 年 MM 月" start-placeholder="开始日期" end-placeholder="结束日期"
                                 @change="selectDate">
                             </el-date-picker> -->
                         </div>
                     </div>
-                    <div class="companySelect onlyClass">
+                    <!-- <div class="companySelect onlyClass">
                         <span class="name">保险公司：</span>
                         <div class="selectContent">
                             <el-select v-model="fieldVal" slot="prepend" placeholder="请选择">
@@ -27,64 +27,70 @@
                                 </el-option>
                             </el-select>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="companySelect onlyClass">
                         <span class="name">业务员：</span>
-                        <div class="selectContent">
+                        <!-- <div class="selectContent">
                             <el-select v-model="salesmanVal" slot="prepend" placeholder="请选择">
                                 <el-option v-for="(item,index) in salesmanDta" :key="index" :label="item.name"
                                     :value="item.code">
                                 </el-option>
                             </el-select>
+                        </div> -->
+                        <div class="selectContent">
+                            <el-input placeholder="请输入业务员名字" v-model="salesmanVal" clearable>
+                            </el-input>
                         </div>
                     </div>
-                </div>
-                <!-- 筛选按钮 -->
-                <div class="screenBtn">
-                    <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
-                    <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
-                    <!-- <el-button type="primary" icon="el-icon-document" @click="getexport">导出
+                    <!-- 筛选按钮 -->
+                    <div class="screenBtn">
+                        <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索
+                        </el-button>
+                        <!-- <el-button type="primary" icon="el-icon-document" @click="getexport">导出
                     </el-button> -->
+                    </div>
                 </div>
+
             </div>
             <div class="insuranceBottom">
                 <div class="bottomTable" style="position:relative;">
-                    <el-table ref="filterTable" :data="tableData" style="width: 100%" stripe highlight-current-row
-                        @selection-change="handleSelectionChange"
+                    <el-table ref="filterTable" show-summary :data="tableData" style="width: 100%" stripe
+                        highlight-current-row @selection-change="handleSelectionChange"
                         :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">
                         <el-table-column type="selection" width="60" align="center" fixed="left">
                         </el-table-column>
                         <el-table-column label="序号" type="index" width="60" align="center">
                         </el-table-column>
-                        <el-table-column prop="application_time" label="姓名" width="140" align='center'
-                            show-overflow-tooltip class-name="grayColor">
+                        <el-table-column prop="name" label="姓名" width="140" align='center' show-overflow-tooltip
+                            class-name="grayColor">
                         </el-table-column>
                         <!-- <el-table-column prop="application_time" label="日期" width="140" align='center'
                             show-overflow-tooltip class-name="grayColor">
                         </el-table-column> -->
-                        <el-table-column prop="application_time" label="提交量" width="140" align='center'
+                        <el-table-column prop="submit" label="提交量" width="140" align='center' show-overflow-tooltip
+                            class-name="grayColor">
+                        </el-table-column>
+                        <el-table-column prop="pass" label="通过量" width="140" align='center' show-overflow-tooltip
+                            class-name="grayColor">
+                        </el-table-column>
+                        <el-table-column prop="reject" label="拒绝量" width="140" align='center' show-overflow-tooltip
+                            class-name="grayColor">
+                        </el-table-column>
+                        <el-table-column prop="trade" label="出单量" width="140" align='center' show-overflow-tooltip
+                            class-name="grayColor">
+                        </el-table-column>
+                        <el-table-column prop="preserv_amount" label="保险金额" width="140" align='center'
                             show-overflow-tooltip class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="application_time" label="通过量" width="140" align='center'
-                            show-overflow-tooltip class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column prop="application_time" label="拒绝量" width="140" align='center'
-                            show-overflow-tooltip class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column prop="application_time" label="出单量" width="140" align='center'
-                            show-overflow-tooltip class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column prop="application_time" label="保险金额" width="140" align='center'
-                            show-overflow-tooltip class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column prop="application_time" label="保费金额" width="140" align='center'
-                            show-overflow-tooltip class-name="grayColor">
+                        <el-table-column prop="amount" label="保费金额" width="140" align='center' show-overflow-tooltip
+                            class-name="grayColor">
                         </el-table-column>
 
                     </el-table>
                 </div>
                 <div class="pageDiv">
-                    <el-pagination background layout="total,sizes,prev, pager, next" :total="10" :page-size="10"
+                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="10"
                         :page-sizes="[10, 20, 30, 40,50]" @current-change="current_change" @size-change="SizeChange">
                     </el-pagination>
                 </div>
@@ -97,25 +103,70 @@
     </section>
 </template>
 <script>
+    import {
+        Getstatics
+    } from '../../api/api.js';
     export default {
         data() {
             return {
+                isdone: false,
                 timeVal: '',
                 fieldVal: '',
-                salesmanVal:"",
-                salesmanDta:'',
+                salesmanVal: "",
+                salesmanDta: '',
                 tableData: [],
-                insuranceDta: []
+                insuranceDta: [],
+                total: 0,
+                page: 1,
+                limit: 10
             }
         },
-        mounted() {},
+        mounted() {
+            let getDate = new Date();
+            this.timeVal = getDate;
+            this.getStatistics(getDate, this.salesmanVal, this.page, this.limit)
+        },
         methods: {
-
+            getStatistics(month, name, page, limit) {
+                this.isdone = true;
+                let data = {
+                    month: month,
+                    name: name,
+                    page: page,
+                    limit: limit
+                };
+                Getstatics(data).then(res => {
+                    if (res.code == 200) {
+                        this.isdone = false;
+                        this.tableData = res.data.list;
+                        this.total = res.data.total
+                        console.log(res)
+                    }
+                })
+            },
+            SizeChange(currentSize) {
+                this.limit = currentSize;
+                this.getStatistics(this.timeVal, this.salesmanVal, this.page, currentSize)
+            },
+            current_change(currentPage) {
+                this.page = currentPage;
+                this.getStatistics(this.timeVal, this.salesmanVal, currentPage, this.limit)
+            },
+            refresh() {
+                this.page = 1;
+                this.limit = 10;
+                let getDate = new Date();
+                this.timeVal = getDate;
+                this.salesmanVal = '';
+            },
+            searchClick() {
+                this.getStatistics(this.timeVal, this.salesmanVal, this.page, this.limit)
+            },
+            handleSelectionChange() {}
         },
     }
 </script>
 <style scoped>
-
     .screenBtn {
         margin-left: 30px;
     }
@@ -141,13 +192,14 @@
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        /* justify-content: space-evenly; */
         width: 100%;
     }
 
     .onlyClass {
         display: flex;
         align-items: center;
+        margin-left: 30px;
         margin-bottom: 20px;
     }
 

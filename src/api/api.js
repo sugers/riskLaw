@@ -268,6 +268,12 @@ export const Editlawyer = data => {
         resolve(put('/api/v1/admin/lawyer', data))
     })
 }
+// 获取业务员的业绩表
+export const Getstatics = data => {
+    return new Promise(function (resolve) {
+        resolve(get('/api/v1/icco/admin/performance', data))
+    })
+}
 // 下载全部文件
 // export const Casedownload = data => {
 //   return new Promise(function (resolve) {

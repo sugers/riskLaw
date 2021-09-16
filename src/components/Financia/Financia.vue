@@ -163,9 +163,7 @@
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID;
             let getDate = new Date();
-            let time =
-                `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>9?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${getDate.getDay()>9?getDate.getDay():'0'+getDate.getDay()} ${getDate.getHours()>9?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>9?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>9?getDate.getSeconds():'0'+getDate.getSeconds()}`
-            this.timeVal = time;
+            this.timeVal = getDate;
             this.GetInsurance()
 
         },
@@ -318,9 +316,7 @@
                 this.limit = 10;
                 this.fieldVal = '';
                 let getDate = new Date();
-                let time =
-                    `${getDate.getFullYear()}-${getDate.getMonth()>9?getDate.getMonth():'0'+getDate.getMonth()}-${getDate.getDay()>9?getDate.getDay():'0'+getDate.getDay()} ${getDate.getHours()>9?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>9?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>9?getDate.getSeconds():'0'+getDate.getSeconds()}`
-                this.timeVal = time;
+                this.timeVal = getDate;
                 this.areaVal = '';
                 // this.GetReconcilia(start, end, this.fieldVal, this.page, this.limit)
             },
