@@ -54,7 +54,7 @@
 
             </div>
             <div class="insuranceBottom">
-                <div class="bottomTable" style="position:relative;">
+                <div class="bottomTable statisticsBottom" style="position:relative;">
                     <el-table ref="filterTable" show-summary :data="tableData" style="width: 100%" stripe
                         highlight-current-row @selection-change="handleSelectionChange"
                         :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">

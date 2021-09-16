@@ -312,7 +312,12 @@
     color: #C0C4CC;
     font-size: 14px;
 }
-
+.statisticsBottom .el-table__body-wrapper {
+    padding-bottom: 43px;
+}
+.statisticsBottom  .el-table__footer-wrapper{
+    margin-top: -44px;
+}
 @keyframes ani-demo-spin {
     from {
         transform: rotate(0deg);
