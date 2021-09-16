@@ -55,8 +55,8 @@
             </div>
             <div class="insuranceBottom">
                 <div class="bottomTable statisticsBottom" style="position:relative;">
-                    <el-table ref="filterTable" show-summary :data="tableData" style="width: 100%" stripe
-                        highlight-current-row @selection-change="handleSelectionChange"
+                    <el-table ref="filterTable" show-summary :summary-method="getSummaries" :data="tableData"
+                        style="width: 100%" stripe highlight-current-row @selection-change="handleSelectionChange"
                         :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">
                         <el-table-column type="selection" width="60" align="center" fixed="left">
                         </el-table-column>
@@ -127,6 +127,37 @@
             this.getStatistics(getDate, this.salesmanVal, this.page, this.limit)
         },
         methods: {
+            getSummaries(param) {
+                const {
+                    columns,
+                    data
+                } = param;
+                const sums = [];
+                columns.forEach((column, index) => {
+                    if (index === 0) {
+                        sums[index] = '合计';
+                        return;
+                    }else if(index === 1){
+                        sums[index] = '';
+                        return;
+                    }
+                    const values = data.map(item => Number(item[column.property]));
+                    if (!values.every(value => isNaN(value))) {
+                        sums[index] = values.reduce((prev, curr) => {
+                            const value = Number(curr);
+                            if (!isNaN(value)) {
+                                return prev + curr;
+                            } else {
+                                return prev;
+                            }
+                        }, 0);
+                    } else {
+                        sums[index] = '';
+                    }
+                });
+
+                return sums;
+            },
             getStatistics(month, name, page, limit) {
                 this.isdone = true;
                 let data = {
