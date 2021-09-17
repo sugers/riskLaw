@@ -92,14 +92,6 @@ export default {
   },
   created() {
     this.mounted();
-
-    // document.onkeydown = function () {
-    //   // console.log('11');
-    //   var key = window.event.keyCode;
-    //   if (key == 13 || key == 100) {
-    //     this.login();
-    //   }
-    // };
   },
   methods: {
     // 登录
@@ -137,11 +129,12 @@ export default {
               icco_id: res.data.profile.icco_id,
               name: res.data.profile.name,
               phone: res.data.profile.phone,
+              area_id: res.data.profile.area_id,
             };
             var userinfor = JSON.stringify(username);
             window.localStorage.setItem("userinfor", userinfor);
             // 路由跳转
-            this.$router.push("/");
+            this.$router.push("/soutable");
             // 提示
             this.$message({
               showClose: true,
