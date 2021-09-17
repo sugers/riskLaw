@@ -1,0 +1,339 @@
+.InsuranceCompany .el-input__inner,
+.editList .el-input__inner ,
+.selectContent .el-input__inner {
+    width: 300px !important;
+    height: 34px !important;
+
+}
+.laywerEdit .el-input__inner,
+.laywerEdit .editList .el-input__inner {
+    width: 100% !important;
+}
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner{
+    width: 100% !important;
+}
+.el-range-editor.el-input__inner {
+    padding: 0;
+}
+.el-table .el-table__cell.is-center{
+    text-align: center;
+}
+.el-radio-button__inner {
+    padding: 8px 20px;
+}
+
+.el-pagination {
+    text-align: center;
+}
+
+.el-page-header__content {
+    color: #409EFF;
+    font-size: 16px;
+}
+
+.el-table__fixed-right {
+    height: 100%;
+}
+
+.el-date-editor .el-range-separator {
+    padding: 0;
+    margin: 0 4px;
+    width: 6%;
+}
+
+.grayColor div {
+    width: 100% !important;
+}
+
+.vertical-center-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vertical-center-modal .ivu-modal {
+    top: 0;
+}
+.InsuranceCompany .insuranceTop,
+.insuranceUser .insuranceTop {
+    display: flex;
+    align-items: flex-start;
+    flex-direction:inherit ;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #BBBBBB;
+    position: relative;
+}
+
+.InsuranceCompany .el-input__inner {
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.InsuranceCompany .selectContent {
+    display: flex;
+    align-items: center;
+    width: 300px;
+}
+
+.InsuranceCompany .selectContent .el-select {
+    width: 100%;
+}
+
+.InsuranceCompany .timeSelect .el-input__inner {
+    width: inherit !important;
+    padding: 0 30px;
+}
+
+.bottomTable {
+    position: relative;
+    min-height: 229px;
+    padding-bottom: 80px;
+}
+
+.bottomTable button {
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+.pageDiv {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 100%; */
+    position: fixed;
+    z-index: 4;
+    bottom: 0;
+    /* text-align: center; */
+    /* box-sizing: border-box; */
+    left: 230px;
+    right: 20px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.el-pagination .el-select .el-input {
+    width: inherit;
+}
+
+.pageDiv .el-input__inner {
+    padding-right: 0;
+    width: 100px !important;
+    height: 28px !important;
+}
+
+.InsuranceCompany table,
+.insuranceUser table {
+    width: 100% !important;
+}
+
+.InsuranceCompany .el-table__row td:last-child,
+.InsuranceCompany .has-gutter tr th:last-child {
+    width: 0 !important;
+}
+
+.InsuranceCompany .has-gutter .gutter {
+    display: block !important;
+}
+.grayColor div{
+    width: 100% !important;
+}
+.BoldColor {
+    color: #409EFF;
+}
+
+.diabledColor {
+    color: #F56C6C !important;
+}
+
+.InsuranceCompany .setTablePadding {
+    /* padding-left: 20px !important; */
+}
+
+.InsuranceCompany .grayColor {
+    font-size: 13px;
+    color: #979898;
+}
+
+.demo-table-expand {
+    font-size: 13px;
+    /* margin-left: 150px; */
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.demo-table-expand span {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    /* min-width: 90px;
+      color: #99a9bf; */
+}
+
+.demo-table-expand .el-form-item__content .el-table .cell {
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+.el-table th>.cell {
+    padding-left: 14px;
+}
+
+.el-table .cell i {
+    font-size: 16px;
+}
+
+.InsuranceCompany .el-checkbox {
+    font-weight: 700;
+    color: #2F2E2E;
+}
+
+.InsuranceCompany .el-table td,
+.InsuranceCompany .el-table th {
+    padding: 10px 0;
+}
+
+.childTable .el-table--border::after,
+.childTable .el-table--group::after,
+.childTable .el-table::before {
+    background-color: #fff;
+}
+
+.childTable .el-table__fixed-right::before,
+.childTable .el-table__fixed::before {
+    background-color: #fff;
+}
+
+.childTable .el-table td,
+.childTable .el-table th {
+    border: none !important;
+}
+
+.InsuranceCompany .el-button--small,
+.InsuranceCompany .el-button--small.is-round {
+    padding: 0;
+    width: 48px;
+    height: 28px;
+}
+
+.InsuranceCompany .el-button--small span,
+.InsuranceCompany .el-button--small.is-round span {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.InsuranceCompany .el-button--mini,
+.InsuranceCompany .el-button--small {
+    font-size: 11px;
+}
+
+.InsuranceCompany a {
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.companyEdit .el-select {
+    width: 100%;
+}
+
+.zk-table {
+    border: none;
+}
+
+.zk-table__cell-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.zk-table__cell-inner .icon-page,
+.zk-table__cell-inner .icon-folder {
+    display: none;
+}
+
+.zk-table__cell-inner button {
+    padding: 8px 10px;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.sendBulletin .ivu-icon {
+    font-size: 14px !important;
+}
+
+.ivu-list-vertical .ivu-list-item-extra {
+    display: flex;
+    align-items: center;
+}
+
+.ivu-list-vertical .ivu-list-item-extra li {
+    margin-left: 20px;
+}
+
+.ivu-list-bordered .ivu-list-item {
+    border-bottom: 1px solid #e8eaec !important;
+}
+
+.ivu-list-vertical .ivu-list-item-meta {
+    margin-bottom: 5px;
+}
+
+.ivu-list-vertical .ivu-list-item-meta-title {
+    margin-bottom: 5px;
+}
+
+.ivu-modal-content {
+    /* min-height: 540px; */
+}
+
+.demo-spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+}
+
+.imageList .el-image {
+    width: 70px !important;
+    height: 80px !important;
+    border-radius: 4px;
+}
+
+.ivu-select-arrow {
+    color: #C0C4CC;
+    font-size: 14px;
+}
+.statisticsBottom .el-table__body-wrapper {
+    padding-bottom: 43px;
+}
+.statisticsBottom  .el-table__footer-wrapper{
+    margin-top: -44px;
+}
+@keyframes ani-demo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.demo-spin-col {
+    height: 100px;
+    position: relative;
+    border: 1px solid #eee;
+}
