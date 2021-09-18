@@ -84,7 +84,7 @@
     <div v-if="baoxingpint">
       <el-row :gutter="12" class="elrow">
         <el-col :span="8">
-          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+          <!-- <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
                 <div class="txt">本省业务员总人数</div>
@@ -92,20 +92,7 @@
               </div>
               <img src="../../static/img/pin.png" alt="图标" />
             </div>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card shadow="hover" :body-style="{ padding: '10px' }">
-            <div class="databoard">
-              <div class="datatext">
-                <div class="txt">我司开通省份数</div>
-                <div class="number hezuo">{{ icco_count }}</div>
-              </div>
-              <img src="../../static/img/hezuo.png" alt="图标" />
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="8">
+          </el-card> -->
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
@@ -116,8 +103,41 @@
             </div>
           </el-card>
         </el-col>
+        <el-col :span="8">
+          <!-- <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">我司开通省份数</div>
+                <div class="number hezuo">{{ icco_count }}</div>
+              </div>
+              <img src="../../static/img/hezuo.png" alt="图标" />
+            </div>
+          </el-card> -->
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月提交评估量</div>
+                <div class="number baoe">{{ preserv_amount_count }}</div>
+              </div>
+              <img src="../../static/img/pin.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月评估通过量</div>
+                <div class="number zonge">
+                  {{ underwriting_amount_count }}
+                </div>
+              </div>
+              <img src="../../static/img/lvshi.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
       </el-row>
-      <el-row :gutter="12">
+      <!-- <el-row :gutter="12">
         <el-col :span="12">
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
@@ -142,7 +162,7 @@
             </div>
           </el-card>
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
     <Spin fix v-show="isdone">
         <Icon type="ios-loading" size="18" class="demo-spin-icon-load"></Icon>

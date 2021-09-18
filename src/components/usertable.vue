@@ -270,7 +270,8 @@
                 scope.row.stage == 4 &&
                 scope.row.review_result != 3 &&
                 scope.row.review_result != 2 &&
-                (roleID == 1001 || roleID == 1004)
+                (roleID == 1001 || roleID == 1004 || roleID == 1003
+                )
               "
               @click.prevent="operation(scope.row)"
               type="text"

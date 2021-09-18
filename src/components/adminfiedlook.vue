@@ -997,6 +997,7 @@ export default {
       var data = {
         risk_eval_id: this.$route.query.data,
       };
+      // console.log('传过来的id',data);
       Reviewcase(data).then((res) => {
         // console.log('oo',res.data);
         if (res.code == 200) {
@@ -1029,7 +1030,7 @@ export default {
       this.feedtrade = dat.stage;
       this.insured_type = dat.insured_type;
 
-      // console.log("dat", dat);
+      console.log("dat", dat);
       this.law_opinion_path = dat.law_opinion_path;
       this.csteps = dat.review_records;
       this.cteus = "0";

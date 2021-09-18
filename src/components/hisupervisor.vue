@@ -473,9 +473,9 @@
               </el-form-item> -->
               <el-form-item label="案由类型：" :required="true">
                 <el-input
-                v-model="complaint.casetype"
-                placeholder="请输入内容"
-              ></el-input>
+                  v-model="complaint.casetype"
+                  placeholder="请输入内容"
+                ></el-input>
                 <!-- <el-select v-model="complaint.casetype" placeholder="请选择">
                   <el-option
                     v-for="item in anyou"
@@ -1822,12 +1822,10 @@ export default {
       });
     },
     taskview(dat) {
-      
       this.internalForm.coverage = dat.preserv_amount;
       this.preserveForm.preservename = dat.insured;
       this.complaint.plaintiff = dat.insured;
       if (dat.stage == 2 && dat.review_result == 0) {
-        
         this.feedback = 2;
 
         this.radioff = false;
@@ -1838,20 +1836,21 @@ export default {
       }
 
       this.cty = dat.case_type;
-      
+
       // this.complaint.casetype = dat.case_type;
       // 标题
       this.usertitle = dat.title;
       // 风险评估id
       this.evalid = dat.id;
+      console.log("评估id", dat);
       this.revname = dat.reviewer;
       this.insured_type = dat.insured_type;
       // 传过来的数据
-      console.log("dat", dat);
+      // console.log("dat", dat);
 
       let htts = process.env.VUE_APP_API_URL;
       this.https = htts;
-      
+
       this.tltle = dat;
       // 身份证
       this.userfilesz = dat.files.id_card;
@@ -1879,7 +1878,6 @@ export default {
           this.filescaid = false;
         }
         if (caidsrcs.length != 0) {
-          
           this.usernamesfzimg = caidsrcs;
           this.srcs = htts + "/" + caidsrcs[0].path;
           this.srcLists.push(htts + "/" + caidsrcs[0].path);
@@ -1907,7 +1905,7 @@ export default {
         for (var h = 0; h < this.blicense.length; h++) {
           let use = this.blicense[h];
           let bugt = use.path.substring(use.path.lastIndexOf(".") + 1);
-          
+
           if (
             bugt.toLowerCase() == "jpg" ||
             bugt.toLowerCase() == "jpeg" ||
@@ -1971,11 +1969,10 @@ export default {
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
-          
           var s = this.plaintiff[p];
           this.jpgocr.push(s.ocr);
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
-          
+
           if (
             na.toLowerCase() == "jpg" ||
             na.toLowerCase() == "jpeg" ||
@@ -1987,7 +1984,7 @@ export default {
             z.push(s);
           }
         }
-        
+
         if (k.length != 0) {
           this.lainsrc = k[0];
           this.lasrcs = k;
@@ -2003,13 +2000,12 @@ export default {
           this.txtplay = false;
         }
       }
-      
+
       this.preservation = dat.files.preservation;
       if (this.preservation != null) {
         var bo = [];
         var u = [];
         for (let e = 0; e < this.preservation.length; e++) {
-          
           var st = this.preservation[e];
           this.ocrprease.push(st.ocr);
           var ns = st.path.substring(st.path.lastIndexOf(".") + 1);
@@ -2024,7 +2020,7 @@ export default {
             u.push(st);
           }
         }
-        
+
         if (bo.length != 0) {
           this.baoinsrc = bo[0];
           this.baosrcs = bo;
@@ -2316,7 +2312,8 @@ export default {
             process: this.internalForm.process,
             case_type: this.complaint.casetype,
           };
-          
+          // console.log("参数", data);
+
           Caseinfo(data).then((res) => {
             // console.log(res);
             if (res.code == 200) {
@@ -2340,15 +2337,25 @@ export default {
                 });
                 // 出单核实
                 if (this.roleID != 1003) {
+                  // this.$router.push({
+                  //   path: "/usertable/asingconfirm",
+                  //   query: {
+                  //     data: this.evalid,
+                  //   },
+                  // });
                   this.$router.push({
-                    path: "/usertable/asingconfirm",
+                    path: "/usertable/adminfiedlook",
                     query: {
                       data: this.evalid,
                     },
                   });
+                  
                 } else {
                   this.$router.push({
                     path: "/usertable/adminfiedlook",
+                    query: {
+                      data: this.evalid,
+                    },
                   });
                 }
               } else if (this.feedback == 2) {
@@ -2373,6 +2380,9 @@ export default {
                     } else {
                       this.$router.push({
                         path: "/usertable/adminfiedlook",
+                        query: {
+                          data: this.evalid,
+                        },
                       });
                     }
                   }
