@@ -656,7 +656,7 @@
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload> -->
             <div class="marwers">
-              <p>证据材料：</p>
+              <p class="marwers_p">证据材料：</p>
               <div>
                 <div class="policy">
                   <span class="policy_btn">
@@ -758,7 +758,7 @@
               <span>{{ internalForm.evidence }}</span>
             </div>
             <div class="martexts">
-              <p>法律依据:</p>
+              <p>同意承保法律依据:</p>
               <span>{{ internalForm.basis }}</span>
             </div>
             <div class="martexts">
@@ -857,9 +857,9 @@
                   </div>
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="流程日志" name="second"
-                >暂时什么都没有</el-tab-pane
-              >
+              <!-- <el-tab-pane label="流程日志" name="second"
+                >暂无</el-tab-pane
+              > -->
             </el-tabs>
             <!-- 审核按钮 -->
             <div class="shenhe">
@@ -933,7 +933,6 @@ import {
 
 export default {
   name: "asingconfirm",
-  // props: ["taskview", "anyou"],
   components: {
     usersteps,
     Comimageviewer,
@@ -1274,7 +1273,7 @@ export default {
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
-          console.log("path", this.plaintiff[p].path);
+          
           var s = this.plaintiff[p];
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
           if (na == "jpg" || na == "jpeg" || na == "png") {
@@ -1307,7 +1306,6 @@ export default {
         var bo = [];
         var u = [];
         for (let e = 0; e < this.preservation.length; e++) {
-          console.log("path", this.preservation[e].path);
           var st = this.preservation[e];
           var ns = st.path.substring(st.path.lastIndexOf(".") + 1);
           if (
@@ -1455,8 +1453,8 @@ export default {
           }
           // console.log(res);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          // console.log(err);
           this.$message({
             showClose: true,
             message: "删除失败",
@@ -1561,15 +1559,15 @@ export default {
           risk_eval_id: this.evalid,
           trade: this.feedcudan,
         };
-        Modifytrade(dat).then((res) => {
-          console.log(res);
+        Modifytrade(dat).then(() => {
+          // console.log(res);
         });
 
         var das = {
           risk_eval_id: this.evalid,
         };
         Tradeverify(das).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.code == 200) {
             this.$message({
               showClose: true,
@@ -1593,7 +1591,7 @@ export default {
         risk_eval_id: this.evalid,
       };
       Lawopinion(data).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.data) {
           this.btnclicks(res.data);
         }
@@ -1616,7 +1614,7 @@ export default {
           file: response.data[0],
         };
         Upsecase(data).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.code == 200) {
             this.$emit("sfun");
           }
@@ -1748,8 +1746,8 @@ export default {
     }
     .marwers {
       display: flex;
-      p {
-        width: 115px;
+      .marwers_p {
+        width: 130px;
         margin: 0;
         // margin-right: 35px;
       }

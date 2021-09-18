@@ -129,6 +129,10 @@
     width: 100% !important;
 }
 
+.usermanagerFix .el-table__header {
+    table-layout: inherit !important;
+}
+
 .InsuranceCompany .el-table__row td:last-child,
 .InsuranceCompany .has-gutter tr th:last-child {
     width: 0 !important;
@@ -312,14 +316,22 @@
     color: #C0C4CC;
     font-size: 14px;
 }
-.statisticsBottom .el-table__body-wrapper {
-    padding-bottom: 43px;
+.statisticsBottom .el-table {
+    overflow-x: auto;
 }
-.statisticsBottom  .el-table__footer-wrapper{
-    margin-top: -44px;
+
+.statisticsBottom .el-table__header-wrapper,
+.statisticsBottom .el-table__body-wrapper,
+.statisticsBottom .el-table__footer-wrapper {
+    overflow: visible;
 }
-.userManaFix  .el-table__header{
-    table-layout:inherit !important;
+
+.statisticsBottom .el-table::after {
+    position: relative;
+}
+
+.statisticsBottom .el-table--scrollable-x .el-table__body-wrapper {
+    overflow: visible;
 }
 @keyframes ani-demo-spin {
     from {

@@ -4,7 +4,7 @@
       <audio
         id="audio"
         style="position: absolute; z-index:-10;"
-        src="https://down.ear0.com:3321/preview?soundid=35825&type=mp3"
+        src="https://down.ear0.com:3321/preview?soundid=12855&type=mp3"
       ></audio>
     </div>
     <router-view />
@@ -115,7 +115,7 @@ export default {
       if (a.code == 10000007 || a.code == 10000006) {
         this.websoce.close();
       }
-      this.reset();
+      // this.reset();
       
     },
     websocketclose() {

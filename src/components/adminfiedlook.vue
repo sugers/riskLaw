@@ -369,7 +369,7 @@
             <div class="martexts">
               <p>案由类型:</p>
               <span>
-                <span>{{ case_type }}</span>
+                <span>{{ complaint.casetype }}</span>
               </span>
             </div>
             <div class="martexts">
@@ -659,7 +659,7 @@
         <el-row>
           <el-col :span="24">
             <div class="marwers">
-              <p>证据材料：</p>
+              <p class="marwers_p">证据材料：</p>
               <div>
                 <div class="policy">
                   <span class="policy_btn">
@@ -760,7 +760,7 @@
               <span>{{ internalForm.evidence }}</span>
             </div>
             <div class="martexts">
-              <p>法律依据:</p>
+              <p>同意承保法律依据:</p>
               <span>{{ internalForm.basis }}</span>
             </div>
             <div class="martexts">
@@ -810,7 +810,12 @@ function csdatesr(res) {
 }
 
 // 引入api
-import { Casefile, Lawopinion, Reviewcase, Casetype } from "../api/api";
+import { 
+  Casefile, 
+  // Lawopinion, 
+  Reviewcase, 
+  Casetype 
+  } from "../api/api";
 export default {
   name: "adminfiedlook",
   components: {
@@ -959,6 +964,8 @@ export default {
       // 出单情况
       feedtrade: null,
       shancu: true,
+      // 法律意见书
+      law_opinion_path: "",
     };
   },
   destroyed(){
@@ -1014,6 +1021,7 @@ export default {
       });
     },
     taskview(dat) {
+      // console.log('dat',dat);
       // 风险评估id
       this.evalid = dat.id;
       this.cty = dat.case_type;
@@ -1021,13 +1029,14 @@ export default {
       this.feedtrade = dat.stage;
       this.insured_type = dat.insured_type;
 
-      console.log("dat", dat);
+      // console.log("dat", dat);
+      this.law_opinion_path = dat.law_opinion_path;
       this.csteps = dat.review_records;
       this.cteus = "0";
 
       let htts = process.env.VUE_APP_API_URL;
       this.https = htts;
-      console.log(htts);
+      // console.log(htts);
       this.tltle = dat;
       // 身份证
       this.userfilesz = dat.files.id_card;
@@ -1144,7 +1153,7 @@ export default {
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
-          console.log("path", this.plaintiff[p].path);
+          
           var s = this.plaintiff[p];
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
           if (
@@ -1178,7 +1187,6 @@ export default {
         var bo = [];
         var u = [];
         for (let e = 0; e < this.preservation.length; e++) {
-          console.log("path", this.preservation[e].path);
           var st = this.preservation[e];
           var ns = st.path.substring(st.path.lastIndexOf(".") + 1);
           if (
@@ -1259,15 +1267,8 @@ export default {
     },
     // 出单查看法律意见书
     falbookes() {
-      var data = {
-        risk_eval_id: this.evalid,
-      };
-      Lawopinion(data).then((res) => {
-        console.log(res);
-        if (res.data) {
-          this.btnclicks(res.data);
-        }
-      });
+
+      this.btnclicks(this.law_opinion_path);
     },
 
     onopensfz(ind) {
@@ -1323,8 +1324,8 @@ export default {
             });
           }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          
           this.$message({
             showClose: true,
             message: "删除失败",
@@ -1362,7 +1363,7 @@ export default {
           this.userdeletes();
         })
         .catch(() => {
-          console.log("否");
+          // console.log("否");
           this.$message({
             type: "info",
             message: "已取消删除",
@@ -1496,8 +1497,8 @@ export default {
     }
     .marwers {
       display: flex;
-      p {
-        width: 115px;
+      .marwers_p {
+        width: 130px;
         margin: 0;
         // margin-right: 35px;
       }

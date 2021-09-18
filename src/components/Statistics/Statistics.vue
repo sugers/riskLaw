@@ -147,7 +147,7 @@
               prop="preserv_amount"
               label="出单保险金额"
               width="140"
-              align="right"
+              align="center"
               show-overflow-tooltip
               class-name="grayColor"
             >
@@ -159,7 +159,7 @@
               prop="amount"
               label="出单保费金额"
               width="140"
-              align="right"
+              align="center"
               show-overflow-tooltip
               class-name="grayColor"
             >
@@ -191,7 +191,7 @@
 </template>
 <script>
 import { Getstatics } from "../../api/api.js";
-import {toThousandFilterZero} from '../../../static/js/toThousandFilterZero'
+import {toThousandFilterZero} from '../../../static/js/formatAmount'
 export default {
   data() {
     return {

@@ -35,14 +35,15 @@
                             </el-select>
                         </div>
                     </div>
-                </div>
-                <!-- 筛选按钮 -->
+                                    <!-- 筛选按钮 -->
                 <div class="screenBtn">
                     <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
                     <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
                     <el-button type="primary" icon="el-icon-document" @click="getexport">导出
                     </el-button>
                 </div>
+                </div>
+
             </div>
             <div class="insuranceBottom">
                 <div class="bottomTable" style="position:relative;">
@@ -65,13 +66,13 @@
                         <el-table-column prop="addName" label="省份" width="100" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column> -->
-                        <el-table-column prop="salesman" label="业务员" width="120" align='center' show-overflow-tooltip
+                        <el-table-column prop="salesman" label="业务员" width="100" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="preserv_appl" label="保全申请人" width="120" align='center'
+                        <el-table-column prop="preserv_appl" label="保全申请人" width="200" align='center'
                             show-overflow-tooltip class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="preserv_resp" label="保全被申请人" width="120" align='center'
+                        <el-table-column prop="preserv_resp" label="保全被申请人" width="200" align='center'
                             show-overflow-tooltip class-name="grayColor">
                         </el-table-column>
                         <el-table-column prop="review_result" label="评审结果" width="100" align='center'
@@ -84,20 +85,27 @@
                                 </div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="preserv_amount" label="保险金额" width="100" align='center'
+                        <el-table-column prop="preserv_amount" label="保险金额" width="160" align='right'
                             show-overflow-tooltip class-name="grayColor">
+                            <template slot-scope="scope">
+                                <span>{{scope.row.preserv_amount | currency}}</span>
+                            </template>
                         </el-table-column>
-                        <el-table-column prop="trade" label="是否出单" width="100" align='center' show-overflow-tooltip
+                        <el-table-column prop="trade" label="是否出单" width="100" align='right' show-overflow-tooltip
                             class-name="grayColor">
                             <template slot-scope="scope">
                                 <div>
                                     <span v-if="scope.row.trade==1">是</span>
-                                    <span v-else>否</span>
+                                    <span v-if="scope.row.trade==0">否</span>
+                                    <span v-if="scope.row.trade==2"></span>
                                 </div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="amount" label="保费金额" width="100" align='center' show-overflow-tooltip
+                        <el-table-column prop="amount" label="保费金额" width="160" align='right' show-overflow-tooltip
                             class-name="grayColor">
+                            <template slot-scope="scope">
+                                <span>{{scope.row.amount | currency}}</span>
+                            </template>
                         </el-table-column>
                         <!-- <el-table-column prop="statement" label="事实简要陈述" width="200" align='center'
                             show-overflow-tooltip class-name="grayColor">
@@ -129,6 +137,7 @@
         Exportreconcilia
     } from '../../api/api.js';
     import provinces from "../../../static/js/pca-code.json";
+    // import "../../../static/js/accounting.js";
     import {
         getDateString
     } from '../../../static/js/timeFormat'
@@ -158,12 +167,16 @@
             }
         },
         mounted() {
+            // console.log('iiii',accounting.formatColumn([121222222]));
+            console.log(this.$accounting)
             this.timeVal = ''
             // 获取角色权限
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID;
             let getDate = new Date();
-            this.timeVal = getDate;
+            let time =
+                `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>10?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${getDate.getDay()>10?getDate.getDay():'0'+getDate.getDay()} ${getDate.getHours()>10?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>10?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>10?getDate.getSeconds():'0'+getDate.getSeconds()}`
+            this.timeVal = time;
             this.GetInsurance()
 
         },
@@ -316,8 +329,12 @@
                 this.limit = 10;
                 this.fieldVal = '';
                 let getDate = new Date();
-                this.timeVal = getDate;
+                let time =
+                    `${getDate.getFullYear()}-${getDate.getMonth()>10?getDate.getMonth():'0'+getDate.getMonth()}-${getDate.getDay()>10?getDate.getDay():'0'+getDate.getDay()} ${getDate.getHours()>10?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>10?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>10?getDate.getSeconds():'0'+getDate.getSeconds()}`
+                this.timeVal = time;
                 this.areaVal = '';
+                this.areaData = [];
+                this.insuranceDta = [];
                 // this.GetReconcilia(start, end, this.fieldVal, this.page, this.limit)
             },
             searchClick() {
@@ -356,12 +373,13 @@
         align-items: flex-start;
         flex-wrap: wrap;
         width: 100%;
-        justify-content: space-evenly;
+        justify-content: flex-start;
     }
 
     .onlyClass {
         display: flex;
         align-items: center;
+        margin-left: 30px;
         margin-bottom: 20px;
     }
 

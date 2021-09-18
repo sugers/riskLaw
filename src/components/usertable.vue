@@ -1,6 +1,5 @@
 <template>
   <div class="usertable">
-    
     <div class="user_data">
       <div class="radios">
         <div class="radios_sapn">状态：</div>
@@ -13,70 +12,73 @@
         </el-radio-group>
       </div>
 
-      <div class="bxsdata">
-        <div class="radios">
-          <div class="radios_sapn">保险公司：</div>
-          <el-select v-model="suosuo" placeholder="请选择" @change="baoselect">
-            <el-option
-              v-for="item in daticcon"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-        </div>
-
-        <div class="radios">
-          <div class="radios_sapn">省份：</div>
-          <el-select
-            v-model="provincesid"
-            placeholder="请选择"
-            :popper-append-to-body="false"
+      <div class="radios">
+        <div class="radios_sapn">保险公司：</div>
+        <el-select v-model="suosuo" placeholder="请选择" @change="baoselect">
+          <el-option
+            v-for="item in daticcon"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
           >
-            <el-option
-              v-for="item in citydata"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-        </div>
+          </el-option>
+        </el-select>
       </div>
 
-      <div class="bxsdata">
-        <div class="radios" v-if="chulir">
-          <div class="radios_sapn">当前处理人：</div>
-          <el-select
-            v-model="userreivws"
-            @change="userreivewer"
-            placeholder="请选择"
-            clearable
+      <div class="radios">
+        <div class="radios_sapn">省份：</div>
+        <el-select
+          v-model="provincesid"
+          placeholder="请选择"
+          :popper-append-to-body="false"
+        >
+          <el-option
+            v-for="item in citydata"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
           >
-            <el-option
-              v-for="item in reivewer"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-        </div>
+          </el-option>
+        </el-select>
+      </div>
 
-        <div class="radios">
-          <span class="radios_sapn">日期：</span>
-          <div class="iniconstatur">
-            <el-date-picker
-              v-model="userDateTime"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              value-format="yyyy-MM-dd"
-            >
-            </el-date-picker>
-          </div>
+      <div class="radios" v-if="chulir">
+        <div class="radios_sapn">当前处理人：</div>
+        <el-select
+          v-model="userreivws"
+          @change="userreivewer"
+          placeholder="请选择"
+          clearable
+        >
+          <el-option
+            v-for="item in reivewer"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          >
+          </el-option>
+        </el-select>
+      </div>
+
+      <div class="radios">
+        <span class="radios_sapn">日期：</span>
+        <div class="iniconstatur">
+          <el-date-picker
+            v-model="userDateTime"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
+        </div>
+      </div>
+      <div class="radios">
+        <div class="radios_sapn">关键字：</div>
+        <div class="boxxinput">
+          <el-input placeholder="请输入内容" v-model="userkey">
+          </el-input>
         </div>
       </div>
 
@@ -93,7 +95,7 @@
           @click.prevent="btnsearchclick"
           icon="el-icon-search"
         >
-          筛选
+          搜索
         </el-button>
       </div>
     </div>
@@ -110,7 +112,7 @@
           刷新
         </el-button> -->
         <el-button
-          v-if="userdatabottom"
+          v-if="adminuserbtn"
           type="text"
           style="background-color: #f56c6c"
           @click.prevent="userdatabtn"
@@ -138,7 +140,7 @@
         @selection-change="handleSelectionChange"
         :row-class-name="tablerowclassname"
       >
-        <el-table-column type="selection" width="45"> </el-table-column>
+        <el-table-column fixed="left" type="selection" width="55"> </el-table-column>
         <el-table-column
           type="index"
           :index="indexMethos"
@@ -182,17 +184,18 @@
           min-width="120"
         >
           <template slot-scope="scope">
-            <div v-if="scope.row.review_result == 1">同意承保</div>
-            <div v-if="scope.row.review_result == 2">拒绝承保</div>
-            <div v-if="scope.row.review_result == 3">补充材料</div>
+            <span v-if="scope.row.review_result == 1">同意承保</span>
+            <span v-if="scope.row.review_result == 2">拒绝承保</span>
+            <span v-if="scope.row.review_result == 3">补充材料</span>
           </template>
         </el-table-column>
         <el-table-column prop="review_man" label="当前处理人" min-width="100">
         </el-table-column>
         <el-table-column prop="trade" label="出单情况" min-width="90">
           <template slot-scope="scope">
-            <div style="color: #f56c6c" v-if="scope.row.trade == 0">未出单</div>
-            <div style="color: #67c23a" v-if="scope.row.trade == 1">已出单</div>
+            <el-tag size="medium" type="danger" v-if="scope.row.trade == 0">未出单</el-tag>
+            <el-tag type="success" v-if="scope.row.trade == 1">已出单</el-tag>
+            <span v-if="scope.row.trade == 2"></span>
           </template>
         </el-table-column>
         <el-table-column
@@ -285,7 +288,7 @@
           class="paginastyes"
           ref="paginatref"
           background
-          layout="prev,sizes, pager, next,total"
+          layout="total,prev,sizes, pager, next"
           @size-change="handsizetext"
           @current-change="handsizepage"
           :current-page="currentPage"
@@ -335,6 +338,7 @@ export default {
   components: {},
   data() {
     return {
+      userkey: "",
       // 任务池查看的数据
       taskview: "",
       // 保险公司搜索
@@ -377,6 +381,7 @@ export default {
       // 刷新
       // usertabless: false,
       // 批量删除
+      adminuserbtn: false,
       userdatabottom: false,
       // loading
       isdone: false,
@@ -400,9 +405,14 @@ export default {
     //   this.$refs["myscrollbar"].wrap.scrollTop = document.body.scrollTop = 0;
     // });
   },
-
+  watch:{
+    userDateTime(newval){
+      if (newval == null) {
+        this.userDateTime = [];
+      }
+    }
+  },
   mounted() {
-    
     this.admniccorapi();
     // this.$nextTick(function () {
     //   this.tableheight =
@@ -433,6 +443,9 @@ export default {
     }
 
     // this.currendRole = userid;
+    if (userid.roleID == 1001) {
+      this.adminuserbtn = true;
+    }
     if (
       userid.roleID == 1001 ||
       userid.roleID == 1004 ||
@@ -458,7 +471,15 @@ export default {
   methods: {
     // 筛选
     btnsearchclick() {
-      this.usertableapi(1);
+      if (
+        this.userreivws != "" ||
+        this.suosuo != "" ||
+        this.provincesid != "" ||
+        this.userDateTime.length != 0 ||
+        this.userkey != ""
+      ) {
+        this.usertableapi(1);
+      }
     },
     // 重置
     deledetabdat() {
@@ -466,17 +487,21 @@ export default {
         this.userreivws != "" ||
         this.suosuo != "" ||
         this.provincesid != "" ||
-        this.userDateTime.length != 0
+        this.userDateTime.length != 0 ||
+        this.userkey != ""
       ) {
         if (this.currendRole != 2001) {
           this.suosuo = "";
           this.provincesid = "";
         }
+        this.citydata = [];
         this.userDateTime = [];
         this.userreivws = "";
+        this.userkey = "";
+
         
-        this.usertableapi(1);
       }
+      this.usertableapi(1);
     },
     // 刷新
     usersbuy() {
@@ -526,13 +551,13 @@ export default {
     // 批量下载法律意见书
     downloadThelaw() {
       this.userdownload = true;
-      console.log("uu", this.multipleSelection);
+      // console.log("uu", this.multipleSelection);
       let data = {
         risk_eval_ids: this.multipleSelection,
       };
       LawOpinions(data)
         .then((res) => {
-          console.log("yy", res);
+          // console.log("yy", res);
           let url = window.URL.createObjectURL(
             new Blob([res.data], { type: "application/zip" })
           );
@@ -643,7 +668,7 @@ export default {
     },
     // 表单操作 1.快速反馈 2.填写详细信息 3.上级复审 4.出单确认
     operation(dat) {
-      console.log("ktsc", dat);
+      // console.log("ktsc", dat);
       if (dat.stage == 1) {
         let insutdyd = this.$router.resolve({
           path: "/usertable/adminfiedform",
@@ -745,8 +770,10 @@ export default {
         created_at: this.userDateTime[0],
         ended_at: this.userDateTime[1],
         limit: this.pagesize,
+        keyword: this.userkey,
         page: ind ? ind : this.currentPage,
       };
+      // console.log('data',data);
       // console.log(data);
       Caselist(data).then((res) => {
         // console.log("数据", res);
@@ -813,6 +840,10 @@ export default {
 .user_data {
   border-bottom: 1px solid #bbbbbb;
   padding-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
   .scrbtnb {
     margin: 0 0 0 30px;
     button {
@@ -822,6 +853,14 @@ export default {
       + button {
         margin-left: 20px;
       }
+    }
+  }
+  .iniconstatur {
+    .el-input__inner {
+      width: inherit !important;
+      padding: 0 30px;
+      width: 300px !important;
+      height: 34px !important;
     }
   }
 }
@@ -914,6 +953,12 @@ export default {
       height: 30px;
       font-size: 18px;
       line-height: 30px;
+      .boxxinput {
+        .el-input__inner {
+          width: 300px !important;
+          height: 34px !important;
+        }
+      }
     }
     .el-select {
       width: 300px !important;
@@ -949,6 +994,7 @@ export default {
         .el-select {
           .el-input {
             .el-input__inner {
+              width: 100px !important;
               height: 28px !important;
             }
           }

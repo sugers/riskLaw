@@ -6,6 +6,7 @@ import axios from 'axios'
 import formatRMB from 'format-rmb';
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
+import VueCurrencyFilter from 'vue-currency-filter'
 // 引入公共样式以及js
 import '../static/css/common.css';
 import getIp from '../static/js/common.js';
@@ -110,6 +111,17 @@ Vue.use(Card)
 Vue.use(Tag)
 Vue.use(Backtop)
 Vue.use(ViewUI);
+
+Vue.use(VueCurrencyFilter,{
+    symbol: '',
+    thousandsSeparator: ',',
+    fractionCount: 2,
+    fractionSeparator: '.',
+    symbolPosition: 'front',
+    symbolSpacing: false,
+    avoidEmptyDecimals: '00',
+})
+
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;
 Vue.prototype.formatRMB = formatRMB;

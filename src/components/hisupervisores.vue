@@ -469,11 +469,11 @@
                 ></el-input>
               </el-form-item> -->
               <el-form-item label="案由类型：" :required="true">
-                <!-- <el-input
+                <el-input
                 v-model="complaint.casetype"
                 placeholder="请输入内容"
-              ></el-input> -->
-                <el-select v-model="complaint.casetype" placeholder="请选择">
+              ></el-input>
+                <!-- <el-select v-model="complaint.casetype" placeholder="请选择">
                   <el-option
                     v-for="item in anyou"
                     :key="item.ID"
@@ -481,7 +481,7 @@
                     :value="item.ID"
                   >
                   </el-option>
-                </el-select>
+                </el-select> -->
               </el-form-item>
               <el-form-item label="诉讼请求：" :required="true">
                 <el-input
@@ -830,7 +830,7 @@
         <el-row>
           <el-col :span="24">
             <div class="marwers">
-              <p>证据材料：</p>
+              <p class="marwers_p">证据材料：</p>
               <div>
                 <div class="policy">
                   <span class="policy_btn">
@@ -986,13 +986,13 @@
                 ></el-input>
               </el-form-item>
 
-              <el-form-item label="法律依据：" :required="true">
+              <el-form-item label="同意承保法律依据：" :required="true">
                 <el-input
                   v-model="internalForm.basis"
                   placeholder="请输入内容"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="备注：" :required="true">
+              <el-form-item label="同意承保备注：" :required="true">
                 <el-input
                   type="textarea"
                   :autosize="{ minRows: 3 }"
@@ -1059,9 +1059,9 @@
                   </div>
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="流程日志" name="second"
-                >暂时什么都没有</el-tab-pane
-              >
+              <!-- <el-tab-pane label="流程日志" name="second"
+                >暂无</el-tab-pane
+              > -->
             </el-tabs>
             <!-- 审核按钮 -->
             <div class="shenhe">
@@ -1381,11 +1381,11 @@
                       ></el-input>
                     </el-form-item> -->
                     <el-form-item label="案由类型：" :required="true">
-                      <!-- <el-input
+                      <el-input
                         v-model="complaint.casetype"
                         placeholder="请输入内容"
-                      ></el-input> -->
-                      <el-select
+                      ></el-input>
+                      <!-- <el-select
                         v-model="complaint.casetype"
                         placeholder="请选择"
                       >
@@ -1396,7 +1396,7 @@
                           :value="item.ID"
                         >
                         </el-option>
-                      </el-select>
+                      </el-select> -->
                     </el-form-item>
                     <el-form-item label="诉讼请求：" :required="true">
                       <el-input
@@ -1585,7 +1585,6 @@ import {
 
 export default {
   name: "hisupervisores",
-  // props: ["taskview", "anyou"],
   components: {
     usersteps,
     Comimageviewer,
@@ -1629,7 +1628,7 @@ export default {
         // iffphone: "",
         fendant: "",
         // fendphone: "",
-        casetype: null,
+        casetype: "",
         claims: "",
         amount: "",
         ocrevidence: "",
@@ -1804,15 +1803,11 @@ export default {
       this.revname = dat.reviewer;
       this.insured_type = dat.insured_type;
       // 传过来的数据
-      console.log("dat", dat);
-      // for (let i = 0; i < this.anyou.length; i++) {
-      //   if (dat.case_type == this.anyou[i].ID) {
-      //     this.case_type = this.anyou[i].name;
-      //   }
-      // }
+      // console.log("dat", dat);
+      
       let htts = process.env.VUE_APP_API_URL;
       this.https = htts;
-      // console.log(htts);
+      
       this.tltle = dat;
       // 身份证
       this.userfilesz = dat.files.id_card;
@@ -1866,7 +1861,7 @@ export default {
         for (var h = 0; h < this.blicense.length; h++) {
           let use = this.blicense[h];
           let bugt = use.path.substring(use.path.lastIndexOf(".") + 1);
-          // console.log('bus',bugt);
+         
           if (
             bugt.toLowerCase() == "jpg" ||
             bugt.toLowerCase() == "jpeg" ||
@@ -1930,7 +1925,6 @@ export default {
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
-          console.log("path", this.plaintiff[p].path);
           var s = this.plaintiff[p];
           this.jpgocr.push(s.ocr);
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
@@ -2160,7 +2154,6 @@ export default {
           this.userdeletes();
         })
         .catch(() => {
-          console.log("否");
           this.$message({
             type: "info",
             message: "已取消删除",
@@ -2254,7 +2247,7 @@ export default {
           case_type: this.complaint.casetype,
         };
         Caseinfo(datas).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.code == 200) {
             var data = {
               risk_eval_id: this.evalid,
@@ -2356,8 +2349,7 @@ export default {
 
     // 文件上传
     handlePreview(response) {
-      // console.log(ind);
-      // this.complatexts.push(response.data[0])
+      
       if (response.code == 200) {
         var data = {
           risk_eval_id: this.evalid,
@@ -2365,7 +2357,7 @@ export default {
           file: response.data[0],
         };
         Upsecase(data).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.code == 200) {
             this.plaintiffage = [];
             this.complatxt = [];
@@ -2505,7 +2497,7 @@ export default {
     }
     .marwers {
       display: flex;
-      p {
+      .marwers_p {
         width: 115px;
         margin: 0;
         // margin-right: 35px;

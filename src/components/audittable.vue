@@ -10,63 +10,61 @@
         </el-radio-group>
       </div>
 
-      <div class="boxdateait">
-        <div class="radios">
-          <div class="radios_sapn">保险公司：</div>
-          <el-select
-            v-model="arrbaosel"
-            placeholder="请选择"
-            @change="auditbaoclick"
+      <!-- <div class="boxdateait"> -->
+      <div class="radios">
+        <div class="radios_sapn">保险公司：</div>
+        <el-select
+          v-model="arrbaosel"
+          placeholder="请选择"
+          @change="auditbaoclick"
+        >
+          <el-option
+            v-for="item in auditarray"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
           >
-            <el-option
-              v-for="item in auditarray"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-        </div>
+          </el-option>
+        </el-select>
+      </div>
 
-        <div class="radios">
-          <div class="radios_sapn">省份：</div>
-          <el-select
-            v-model="auditprovin"
-            placeholder="请选择"
-            :popper-append-to-body="false"
+      <div class="radios">
+        <div class="radios_sapn">省份：</div>
+        <el-select
+          v-model="auditprovin"
+          placeholder="请选择"
+          :popper-append-to-body="false"
+        >
+          <el-option
+            v-for="item in citydata"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
           >
-            <el-option
-              v-for="item in citydata"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
+          </el-option>
+        </el-select>
+      </div>
+
+      <div class="radios">
+        <span class="radios_sapn">日期：</span>
+        <div class="iniconstatur">
+          <el-date-picker
+            v-model="auditDateTime"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
+          >
+          </el-date-picker>
         </div>
       </div>
-      <div class="boxdateait">
-        <div class="radios">
-          <span class="radios_sapn">日期：</span>
-          <div class="iniconstatur">
-            <el-date-picker
-              v-model="auditDateTime"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              value-format="yyyy-MM-dd"
-            >
-            </el-date-picker>
-          </div>
-        </div>
 
-        <div class="radios">
-          <div class="radios_sapn">关键字：</div>
-          <div class="boxxinput">
-            <el-input placeholder="请输入内容" v-model="keyword" clearable>
-            </el-input>
-          </div>
+      <div class="radios">
+        <div class="radios_sapn">关键字：</div>
+        <div class="boxxinput">
+          <el-input placeholder="请输入内容" v-model="keyword" clearable>
+          </el-input>
         </div>
       </div>
 
@@ -83,7 +81,7 @@
           @click.prevent="auditdataclick"
           icon="el-icon-search"
         >
-          筛选
+          搜索
         </el-button>
       </div>
     </div>
@@ -99,23 +97,36 @@
         >
           刷新
         </el-button> -->
+
         <el-button
-          v-show="shenhebottom"
+          v-if="shenhebottom"
           type="text"
           size="small"
           style="background-color: #67c23a"
+          icon="el-icon-check"
           @click.prevent="audiobtns(1)"
         >
           批量通过
         </el-button>
         <el-button
-          v-show="shenhebottom"
+          v-if="shenhebottom"
           type="text"
           size="small"
           style="background-color: #f56c6c"
+          icon="el-icon-close"
           @click.prevent="audiobtns(0)"
         >
           批量拒绝
+        </el-button>
+        <el-button
+          v-if="auditsalesman"
+          type="text"
+          size="small"
+          style="background-color: #f56c6c"
+          icon="el-icon-delete"
+          @click.prevent="Removebinding"
+        >
+          删除
         </el-button>
       </div>
       <el-table
@@ -136,12 +147,10 @@
           label="序号"
         >
         </el-table-column>
-        <el-table-column prop="name" label="姓名" min-width="160">
+        <el-table-column prop="name" label="姓名" min-width="100">
         </el-table-column>
-        <el-table-column prop="type" label="绑定角色" min-width="160">
+        <el-table-column prop="type" label="绑定角色" min-width="100">
           <template slot-scope="scope">
-            <!-- <div class="typehebao" v-if="scope.row.type == 3001">核保</div>
-            <div class="typeyewuy" v-if="scope.row.type != 3001">保险业务员</div> -->
             <div slot="reference" class="name-wrapper">
               <el-tag size="medium" type="danger" v-if="scope.row.type == 3001"
                 >核保</el-tag
@@ -154,22 +163,30 @@
         </el-table-column>
         <el-table-column prop="phone" label="联系电话" min-width="130">
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="icco"
           label="保险公司"
           width="160"
           show-overflow-tooltip
           align="center"
         >
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="status" label="状态" min-width="100">
           <template slot-scope="scope">
-            <div class="btgstatus" v-if="scope.row.status == 2">待审核</div>
-            <div class="tgstatus" v-if="scope.row.status == 1">通过</div>
+            <div slot="reference" class="name-wrapper">
+              <el-tag size="medium" type="danger" v-if="scope.row.status == 2"
+                >待审核</el-tag
+              >
+              <el-tag type="success" v-if="scope.row.status == 1"
+                >通过</el-tag
+              >
+            </div>
+            <!-- <div class="btgstatus" v-if="scope.row.status == 2">待审核</div>
+            <div class="tgstatus" v-if="scope.row.status == 1">通过</div> -->
           </template>
         </el-table-column>
-        <el-table-column prop="iccoarea" label="所在省份" min-width="120">
-        </el-table-column>
+        <!-- <el-table-column prop="iccoarea" label="所在省份" min-width="120">
+        </el-table-column> -->
         <el-table-column prop="createdAt" label="提交时间" min-width="170">
         </el-table-column>
         <el-table-column fixed="right" label="操作" min-width="200">
@@ -214,10 +231,11 @@
         class="paginastyes"
         ref="paginatref"
         background
-        layout="prev, pager, next,total"
+        layout="total,prev,sizes, pager, next"
         @size-change="handsizetext"
         @current-change="handsizepage"
         :current-page="currentPage"
+        :page-sizes="[10, 20, 30, 40, 50]"
         :page-size="pagesize"
         :total="total"
       >
@@ -298,7 +316,6 @@
                 <el-select
                   v-model="value"
                   placeholder="请选择"
-                  @change="auditselect"
                 >
                   <el-option
                     v-for="item in options"
@@ -362,12 +379,13 @@ import "../../static/css/autdiodialog.less";
 // 引入api
 import {
   Auditlist,
-  // Audit,
+  Audit,
   Iccoaudit,
   // Areainfo,
   Audiobatch,
   GetinsuranceList,
   GetinsuranceAreaList,
+  Auditunbind,
 } from "../api/api";
 
 export default {
@@ -405,6 +423,7 @@ export default {
 
       icco_id: "",
       shenhebottom: false,
+      auditsalesman: false,
       // 关键字
       keyword: "",
       // 保险公司
@@ -417,7 +436,13 @@ export default {
       userid: "",
     };
   },
-  created() {},
+  watch:{
+    auditDateTime(newval){
+      if (newval == null) {
+        this.auditDateTime = [];
+      }
+    }
+  },
   mounted() {
     // this.$nextTick(function () {
     //   this.heighttable =
@@ -439,6 +464,37 @@ export default {
     //     clearInterval(timer);
     //   }, 2000);
     // },
+    // 业务员解绑
+    Removebinding() {
+      if (this.multipleSelection.length != 0) {
+        this.$confirm("是否确定删除所选业务员？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
+          .then(() => {
+            let data = {
+              user_ids: this.multipleSelection,
+            };
+            Auditunbind(data).then((res) => {
+              if (res.code == 200) {
+                this.multipleSelection = [];
+                this.$message({
+                  showClose: true,
+                  message: "已删除",
+                  type: "success",
+                });
+                this.Auditlistapi();
+              }
+            });
+          }).catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除",
+            });
+          });
+      }
+    },
     // 拒绝
     auditoutend(dat) {
       var data = {
@@ -468,7 +524,14 @@ export default {
     },
     // 筛选
     auditdataclick() {
-      this.Auditlistapi(1);
+      if (
+        this.auditprovin != "" ||
+        this.arrbaosel != "" ||
+        this.auditDateTime.length != 0 ||
+        this.keyword != ""
+      ) {
+        this.Auditlistapi(1);
+      }
     },
     auditbaoclick(ind) {
       this.auditprovin = "";
@@ -478,7 +541,6 @@ export default {
       };
       // console.log(data);
       GetinsuranceAreaList(data).then((res) => {
-        // console.log("res", res);
         for (let i = 0; i < res.data.list.length; i++) {
           for (let j = 0; j < provinces.length; j++) {
             if (res.data.list[i].adcode == provinces[j].code) {
@@ -553,48 +615,30 @@ export default {
     },
     // 表格内容
     celltextAlgin({ columnIndex }) {
-      // console.log('colum',column);
-      // console.log('rowind',rowIndex);
-      // console.log('colummu',columnIndex);
       if (columnIndex != 12) {
         return "text-align: center;";
       }
     },
 
     deleteRows(data) {
-      this.dialogVisible = true;
-
-      //点击拿到数据
-      // console.log("点击拿到的数据", data);
+      this.dialogVisible = true; 
       this.titles = data;
       this.value = data.iccoarea;
       // this.options = provinces;
       this.salesmanid = data.id;
-      // this.refusingto()
     },
     audiostat(data) {
-      console.log("拿到数据", data);
-
-      // let didi = null
-      // for(let y=0;y<this.options.length;y++){
-      //   if (this.options[y].name == data.iccoarea) {
-      //     didi = this.options[y].id
-      //   }
-      // }
 
       this.notdialogVisible = true;
       this.titles = data;
 
       this.salesmanid = data.id;
-      // this.saluserid = data.id
       this.icco_id = data.icco_id;
       this.aresintd();
 
       this.value = data.area_id;
     },
     handleSelectionChange(val) {
-      // console.log("val", val);
-      // console.log('hu',this.radiocyt);
       let idarrer = [];
       let select = val;
       for (let i = 0; i < select.length; i++) {
@@ -613,11 +657,10 @@ export default {
     },
     handsizetext(size) {
       this.pagesize = size;
-      // console.log(size);
+      this.Auditlistapi();
     },
     handsizepage(cur) {
       this.currentPage = cur;
-      // console.log("cur", this.currentPage);
       this.Auditlistapi();
     },
     radiochange() {
@@ -636,6 +679,11 @@ export default {
       } else {
         this.shenhebottom = false;
       }
+      if (this.radiocyt == 1) {
+        this.auditsalesman = true;
+      } else {
+        this.auditsalesman = false;
+      }
     },
     // 表格数据
     Auditlistapi(ind) {
@@ -647,6 +695,7 @@ export default {
         created_at: this.auditDateTime[0],
         ended_at: this.auditDateTime[1],
         status: this.radiocyt,
+        limit: this.pagesize,
         page: ind ? ind : this.currentPage,
       };
       Auditlist(data).then((res) => {
@@ -672,12 +721,11 @@ export default {
             };
             tab.push(ts);
           }
-          // console.log(">", tab);
           this.tableData = tab;
           this.audittabless = false;
         } else {
-          // console.log("没有数据");
           this.tableData = [];
+          this.total = 0;
         }
       });
     },
@@ -685,36 +733,33 @@ export default {
       this.dialogVisible = false;
       this.notdialogVisible = false;
     },
-    // 修改省份
-    auditselect() {
-      // console.log(dat);
-      // console.log("..", this.value);
-    },
     // 审核通过拒绝
-    refusingto() {
-      // console.log(red);
+    refusingto(red) {
       // user_id	是	number	保险业务员id
       // result	是	number	审核结果，0.不通过 1.通过
       // reason	是	string	原因
-      // console.log("通过", res);
-      // let das = {
-      //   user_id: this.salesmanid,
-      //   area_id: this.value,
-      // };
-      // console.log("ggg", das);
-      // Audit(das).then((res) => {
-      //   console.log("修改成功", res);
-      // });
-      // var data = {
-      //   user_id: this.salesmanid,
-      //   result: red,
-      //   reason: this.textarea,
-      // };
-      // Iccoaudit(data).then((res) => {
-      //   console.log(res);
-      //   this.Auditlistapi();
-      //   this.notdialogVisible = false;
-      // });
+      if (red == 1) {
+        let das = {
+          user_id: this.salesmanid,
+          area_id: this.value,
+        };
+        Audit(das).then(() => {
+          // console.log("修改成功", res);
+        });
+      }
+
+      var data = {
+        user_id: this.salesmanid,
+        result: red,
+        reason: this.textarea,
+      };
+      Iccoaudit(data).then((res) => {
+        // console.log(res);
+        if (res.code == 200) {
+          this.Auditlistapi();
+          this.notdialogVisible = false;
+        }
+      });
     },
     // 批量审核
     audiobtns(ind) {
@@ -812,6 +857,10 @@ export default {
 .headeraudio {
   border-bottom: 1px solid #bbbbbb;
   padding-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
   .scrbtnb {
     margin: 0 0 0 30px;
     button {
@@ -823,13 +872,13 @@ export default {
       }
     }
   }
-  .boxdateait {
-    display: flex;
-    .iniconstatur{
-      .el-input__inner{
-        width: 300px !important;
-        height: 34px !important;
-      }
+
+  .iniconstatur {
+    .el-input__inner {
+      width: inherit !important;
+      padding: 0 30px;
+      width: 300px !important;
+      height: 34px !important;
     }
   }
 }
@@ -933,10 +982,9 @@ export default {
     }
     .el-select {
       width: 300px !important;
-      .el-input__inner{
+      .el-input__inner {
         height: 34px !important;
       }
-      
     }
     .el-radio-group {
       .el-radio-button {
@@ -945,11 +993,11 @@ export default {
         }
       }
     }
-    .iniconstatur {
-      .el-input__inner {
-        padding: 0 10px;
-      }
-    }
+    // .iniconstatur {
+    //   .el-input__inner {
+    //     padding: 0 10px;
+    //   }
+    // }
   }
   .el-table {
     .success-row {
@@ -977,6 +1025,7 @@ export default {
         .el-select {
           .el-input {
             .el-input__inner {
+              width: 100px !important;
               height: 28px !important;
             }
           }

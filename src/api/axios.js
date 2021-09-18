@@ -102,13 +102,13 @@ axios.interceptors.response.use(
         type: 'warning'
       })
     } 
-    // else if (error && error.response) {
-    //   Message({
-    //     showClose: true,
-    //     message: err.data.msg,
-    //     type: "error",
-    //   });
-    // }
+    else if (error && error.response) {
+      Message({
+        showClose: true,
+        message: err.data.msg,
+        type: "error",
+      });
+    }
     return Promise.reject(error);
   }
 )

@@ -7,7 +7,7 @@ function toThousandFilterZero(number, decimals, dec_point, thousands_sep) {
    * dec_point：小数点符号
    * thousands_sep：千分位符号
    * */
-  number = (number + '').replace(/[^0-9+-Ee.]/g, '');
+  number = (number+ '').replace(/[^0-9+-Ee.]/g, '');
   var n = !isFinite(+number) ? 0 : +number,
     prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
     sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,

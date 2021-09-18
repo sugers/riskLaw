@@ -6,52 +6,6 @@
         <img class="imgs" src="../../static/img/logo.png" alt="LOGO" />
       </div>
     </div>
-    <!-- <el-scrollbar v-if="taipel" style="height: 90vh" :native="false" :noresize="false" ref="myscrollbar">
-            <el-menu router>
-                <el-menu-item index="/soutable">
-                    <template>
-                        <i class="el-icon-s-home"></i>
-                        首页
-                    </template>
-                </el-menu-item>
-                <el-menu-item index="/insurancetable">
-                    <template>
-                        <i class="el-icon-s-operation"></i>
-                        风险评估
-                    </template>
-                </el-menu-item>
-                <el-menu-item index="/audittable">
-                    <template>
-                        <i class="el-icon-s-custom"></i>
-                        审核绑定
-                    </template>
-                </el-menu-item>
-                <el-menu-item index="">
-                    <template>
-                        <i class="el-icon-notebook-2"></i>
-                        财务对账
-                    </template>
-                </el-menu-item>
-                <el-menu-item index="">
-                    <template>
-                        <i class="el-icon-s-custom"></i>
-                        用户管理
-                    </template>
-                </el-menu-item>
-                <el-menu-item index="">
-                    <template>
-                        <i class="el-icon-s-marketing"></i>
-                        统计分析
-                    </template>
-                </el-menu-item>
-                <el-menu-item index="">
-                    <template>
-                        <i class="el-icon-bell"></i>
-                        消息通知
-                    </template>
-                </el-menu-item>
-            </el-menu>
-        </el-scrollbar> -->
 
     <el-scrollbar
       style="height: 90vh"
@@ -72,13 +26,13 @@
         >
           <template slot="title">
             <i class="el-icon-s-operation"></i>
-            风险评估
+            风险评估详情
           </template>
         </el-menu-item>
         <el-menu-item index="/audittable" v-if="chusheng || baoxtai">
           <template>
             <i class="el-icon-s-custom"></i>
-            审核绑定
+            小程序绑定审核
           </template>
         </el-menu-item>
 
@@ -97,28 +51,33 @@
             律师管理
           </template>
         </el-menu-item>
-        <el-menu-item index="/Financia" v-if="chusheng || baoxtai || baocaiw || pingcaiw">
+        <el-menu-item
+          index="/Financia"
+          v-if="chusheng || baoxtai || baocaiw || pingcaiw"
+        >
           <template>
             <i class="el-icon-notebook-2"></i>
-            财务对账
+            财务月对账单
           </template>
         </el-menu-item>
-        <!-- <el-submenu index="" v-if="buytu">
-                    <template slot="title"><i class="el-icon-s-marketing"></i>统计分析</template>
-                    <el-menu-item index="">法务人员工作量表</el-menu-item>
-                    <el-menu-item index="">业务发展趋势图</el-menu-item>
-                    <el-menu-item index="">业务发展总览表</el-menu-item>
-                </el-submenu> -->
-        <el-menu-item index="/notics" v-if="chusheng || baoxtai">
+        <el-submenu index="" v-if="baoxtai">
+          <template slot="title"
+            ><i class="el-icon-s-marketing"></i>统计分析</template
+          >
+          <el-menu-item index="/Statistics">业务人员业绩表</el-menu-item>
+          <!-- <el-menu-item index="">业务发展趋势图</el-menu-item>
+          <el-menu-item index="">业务发展总览表</el-menu-item> -->
+        </el-submenu>
+        <!-- <el-menu-item index="/notics" v-if="chusheng || baoxtai">
           <template slot="title">
             <i class="el-icon-bell"></i>
             公告栏
           </template>
-        </el-menu-item>
+        </el-menu-item> -->
         <el-menu-item index="/usermanager" v-if="chusheng || baoxtai">
           <template slot="title">
             <i class="el-icon-s-custom"></i>
-            用户管理
+            后台用户管理
           </template>
         </el-menu-item>
       </el-menu>
@@ -134,7 +93,6 @@ export default {
       buytu: true,
       roleID: "",
       adminroid: false,
-      taipel: false,
       chusheng: false,
       baoxtai: false,
       pingtaishen: false,
@@ -148,20 +106,16 @@ export default {
   },
   created() {
     var userinfor = JSON.parse(localStorage.getItem("userinfor"));
-    // console.log("use", userinfor);
+    
     this.roleID = userinfor.roleID;
-    // console.log("roleid", this.roleID);
     if (this.roleID == 1001) {
       this.chusheng = true;
-      // this.taipel = false;
     } else if (this.roleID == 1002) {
       this.pingcaiw == true;
-    }
-    else if (this.roleID == 1003 || this.roleID == 1004) {
+    } else if (this.roleID == 1003 || this.roleID == 1004) {
       this.pingtaishen = true;
     } else if (this.roleID == 2001) {
       this.baoxtai = true;
-      // this.taipel = true;
     } else if (this.roleID == 2002) {
       this.baocaiw = true;
     }

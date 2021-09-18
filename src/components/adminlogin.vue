@@ -92,6 +92,14 @@ export default {
   },
   created() {
     this.mounted();
+
+    // document.onkeydown = function () {
+    //   // console.log('11');
+    //   var key = window.event.keyCode;
+    //   if (key == 13 || key == 100) {
+    //     this.login();
+    //   }
+    // };
   },
   methods: {
     // 登录

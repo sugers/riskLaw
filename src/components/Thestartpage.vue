@@ -1,11 +1,7 @@
 <template>
   <div class="hello">
     <el-container style="height: 100vh">
-      <el-aside
-        class="hidden-xs-only"
-        width="230px"
-        style="background-color: rgb(25, 26, 35)"
-      >
+      <el-aside width="230px" style="background-color: rgb(25, 26, 35)">
         <navtab></navtab>
       </el-aside>
 
@@ -28,9 +24,12 @@
                     <i class="el-icon-caret-bottom"></i>
                   </div>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="useroutquit"
-                      >退出</el-dropdown-item
-                    >
+                    <el-dropdown-item>
+                      <span @click="userpassward">修改密码</span>
+                    </el-dropdown-item>
+                    <el-dropdown-item @click.native="useroutquit">
+                      <span>退出</span>
+                    </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
@@ -50,14 +49,71 @@
         </el-scrollbar>
       </el-container>
     </el-container>
+
+    <el-dialog
+      width="45%"
+      center
+      :visible.sync="dialogheades"
+      :before-close="handleClosepass"
+      class="shendialog"
+    >
+      <div class="gir-text">
+        <div class="grid-content">修改密码</div>
+      </div>
+      <div class="headestpage">
+        <el-row class="rows">
+          <el-col :span="24">
+            <div class="instaheades">
+              <div class="headeditList">
+                <div class="headlistLeft">
+                  <span>旧密码：</span>
+                </div>
+                <div class="headlistRight">
+                  <el-input
+                    class="inputpass"
+                    type="password"
+                    v-model="oldpassword"
+                    placeholder="请输入密码"
+                  ></el-input>
+                </div>
+              </div>
+              <div class="headeditList">
+                <div class="headlistLeft">
+                  <span>新密码：</span>
+                </div>
+                <div class="headlistRight">
+                  <el-input
+                    class="inputpass"
+                    type="password"
+                    v-model="newpassword"
+                    placeholder="请输入密码"
+                  ></el-input>
+                </div>
+              </div>
+            </div>
+
+            <div class="auditmartexts">
+              <el-button type="primary" @click="refusingto">确定</el-button>
+              <el-button
+                type="primary"
+                @click="hearescancel"
+                style="background-color: #d7d7d7"
+                >取消</el-button
+              >
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import pageexport from "./Pageexport.vue";
 import navtab from "./navtab.vue";
+import { Authpassword } from "../api/api";
 // 断点的隐藏类
-import "element-ui/lib/theme-chalk/display.css";
+// import "element-ui/lib/theme-chalk/display.css";
 // 引入less
 import "../../static/css/index.less";
 export default {
@@ -69,7 +125,10 @@ export default {
     return {
       drawer: false,
       username: "",
+      dialogheades: false,
       // sectiom: 600
+      oldpassword: "",
+      newpassword: "",
     };
   },
   created() {
@@ -77,11 +136,34 @@ export default {
     this.username = userinfor.name;
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    refusingto() {
+      if (this.oldpassword!="" && this.newpassword!="") {
+        let data = {
+          old_password: this.oldpassword,
+          password: this.newpassword,
+        }
+        Authpassword(data).then((res)=>{
+          if (res.code == 200) {
+            this.$message({
+              showClose: true,
+              message: "密码修改成功",
+              type: "success",
+            });
+            window.localStorage.removeItem("password")
+            this.useroutquit()
+            this.dialogheades = false;
+          }
+        })
+      }
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    hearescancel() {
+      this.dialogheades = false;
+    },
+    userpassward() {
+      this.dialogheades = true;
+    },
+    handleClosepass() {
+      this.dialogheades = false;
     },
     // 退出
     useroutquit() {
@@ -106,7 +188,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
 .el-header {
   background-color: #ffffff;
@@ -157,6 +238,66 @@ export default {
     }
   }
 }
+
+.shendialog {
+  .el-dialog {
+    border-radius: 6px !important;
+  }
+  .el-dialog__header {
+    padding: 0;
+    .el-dialog__headerbtn {
+      font-size: 22px;
+      top: 8px;
+      right: 15px;
+    }
+  }
+  .el-dialog__body {
+    padding: 0;
+    .gir-text {
+      padding: 14px 16px;
+      border-bottom: 1px solid #e8eaec;
+      .grid-content {
+        width: 100%;
+        height: 20px;
+        line-height: 20px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #17233d;
+      }
+    }
+    .headestpage {
+      .rows {
+        padding: 0 !important;
+        .instaheades {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          margin-top: 28px;
+          .headeditList {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+            justify-content: center;
+            .headlistLeft {
+              width: 110px;
+              font-size: 13px;
+              font-weight: 600;
+            }
+            .headlistRight {
+              display: flex;
+              align-items: center;
+              flex: 1;
+              .inputpass{
+                width: 300px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .el-scrollbar {
   .el-scrollbar__wrap {
     overflow: scroll;

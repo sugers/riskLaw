@@ -18,6 +18,7 @@
 		"style-resources-loader": "^1.4.1",
 		"view-design": "^4.6.1",
 		"vue": "^2.6.11",
+		"vue-currency-filter": "^5.2.0",
 		"vue-router": "^3.2.0",
 		"vue-table-with-tree-grid": "^0.2.4",
 		"vue-table-with-tree-grid-icon": "^1.0.1",

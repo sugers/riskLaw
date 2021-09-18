@@ -436,7 +436,7 @@
         <el-row>
           <el-col :span="24">
             <div class="marwers">
-              <p>起诉状附件：</p>
+              <p class="marwers_p">起诉状附件：</p>
 
               <div>
                 <div class="policy">
@@ -578,7 +578,7 @@
         <el-row>
           <el-col :span="24">
             <div class="marwers">
-              <p>保全申请附件：</p>
+              <p class="marwers_p">保全申请附件：</p>
 
               <div>
                 <div class="policy">
@@ -715,7 +715,7 @@
         <el-row>
           <el-col :span="24">
             <div class="marwers">
-              <p>证据材料：</p>
+              <p class="marwers_p">证据材料：</p>
               <div>
                 <div class="policy">
                   <span class="policy_btn">
@@ -914,9 +914,9 @@
                   </div>
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="流程日志" name="second"
-                >暂时什么都没有</el-tab-pane
-              >
+              <!-- <el-tab-pane label="流程日志" name="second"
+                >暂无</el-tab-pane
+              > -->
             </el-tabs>
             <!-- 审核按钮 -->
             <div class="shenhe">
@@ -1345,6 +1345,8 @@ export default {
       sqloading: false,
       zjloading: false,
 
+      // upzjloading: false,
+
       dioat: "",
     };
   },
@@ -1378,17 +1380,15 @@ export default {
         risk_eval_id: this.$route.query.data,
       };
       Reviewcase(data).then((res) => {
-        // console.log('oo',res.data);
+        
         if (res.code == 200) {
-          // this.dat = res.data
+          
           this.taskview(res.data);
           this.csteps = res.data.review_records;
           this.cstext = "快速反馈";
           this.number = res.data.number;
 
           Casetype().then((res) => {
-            // console.log("案由", res.data);
-
             // this.anyou = res.data;
             for (let i = 0; i < res.data.length; i++) {
               if (this.cty == res.data[i].ID) {
@@ -1404,9 +1404,6 @@ export default {
       // 风险评估id
       this.evalid = dat.id;
       this.cty = dat.case_type;
-      console.log("dat", dat);
-      // console.log("an", this.anyou);
-      // this.stepss = dat.review_records;
       this.insured_type = dat.insured_type;
       if (dat.preserv_amount) {
         this.from.input = dat.preserv_amount
@@ -1532,19 +1529,15 @@ export default {
         let indesbli = { ...this.userblicense };
         this.indeuserblic = indesbli;
       }
-      // let lit = { ...this.userblicense };
-      // console.log(lit);
       // 起诉状图片
       this.plaintiff = dat.files.indictment;
       if (this.plaintiff != null) {
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
-          // console.log("path", this.plaintiff[p].path);
           var s = this.plaintiff[p];
-
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
-          // console.log('na',na);
+      
           if (
             na.toLowerCase() == "jpg" ||
             na.toLowerCase() == "jpeg" ||
@@ -1578,7 +1571,6 @@ export default {
         var bo = [];
         var u = [];
         for (let e = 0; e < this.preservation.length; e++) {
-          // console.log("path", this.preservation[e].path);
           var st = this.preservation[e];
 
           var ns = st.path.substring(st.path.lastIndexOf(".") + 1);
@@ -1593,7 +1585,6 @@ export default {
             u.push(st);
           }
         }
-        // console.log("bo", bo);
         if (bo.length != 0) {
           this.baosrcs = bo;
         } else {
@@ -1626,7 +1617,6 @@ export default {
         }
         if (tiomonimg.length != 0) {
           this.timonsrc = tiomonimg;
-          console.log('ee',this.timonsrc);
         } else {
           this.monyimg = false;
         }
@@ -1696,10 +1686,10 @@ export default {
               type: "success",
             });
           }
-          // console.log(res);
+          
         })
         .catch(() => {
-          // console.log(err);
+          
           this.$message({
             showClose: true,
             message: "删除失败",
@@ -1754,7 +1744,7 @@ export default {
       this.from[name] = getInputValue(el);
     },
     numfeedback(ind) {
-      console.log(ind);
+      
       this.dioat = ind;
       
     },
@@ -1764,7 +1754,6 @@ export default {
       // }, 500);
       if (this.from.input) {
         let rmbs = Number(moneyDelete(this.from.input));
-        // console.log("中文数字", this.formatRMB(rmbs, "￥").value);
         this.fromrmb = this.formatRMB(rmbs, "￥").value;
       } else {
         this.fromrmb = "";
@@ -1773,6 +1762,12 @@ export default {
     btnnumber(ind) {
       // console.log(ind);
       this.btnnum = ind;
+      // switch(ind){
+      //   case 5:
+      //     this.upzjloading = true;
+      //     return;
+      // }
+      
     },
     // 文件上传
     handlePreview(response) {
@@ -1786,6 +1781,7 @@ export default {
           // console.log(res);
           if (res.code == 200) {
             this.reviewapi();
+            // this.upzjloading = false;
             this.$message({
               showClose: true,
               message: "上传成功",
@@ -1801,12 +1797,12 @@ export default {
         if (this.userfilesz != null) {
           if (this.usernamesfz.name != "") {
             if (this.feedback == 1 || this.feedback == 2) {
-              if (this.from.input) {
+              if (!this.from.input || this.from.input != 0) {
                 this.apidiledfrom();
               } else {
                 this.$message({
                   showClose: true,
-                  message: "保险金额不能为空",
+                  message: "保险金额不能为空或者0",
                   type: "error",
                 });
               }
@@ -1863,7 +1859,7 @@ export default {
       if (dat == 5) {
         this.zjloading = true;
       }
-      // console.log('data',data);
+      
       // 3.起诉状；4.保全申请书；5.证据材料
       // axios.Headers.add="Access-Control-Expose-Headers";
       let url = this.https + "/api/v1/admin/review/case/download";
@@ -1878,7 +1874,7 @@ export default {
           responseType: "blob",
         })
         .then((res) => {
-          console.log(res);
+          
           if (res.status == 200) {
             this.qisloading = false;
             this.sqloading = false;
@@ -1912,12 +1908,10 @@ export default {
     apidiledfrom() {
       let numind = Number(moneyDelete(this.from.input));
       if (numind >= 5000000 && this.feedback == 1) {
-        console.log("上级复审");
-        // console.log(this.feedback);
+        
         this.fus = 4;
       } else {
-        console.log("不提交上级");
-        // console.log(this.feedback);
+        
         this.fus = "";
       }
       var das = {
@@ -2094,7 +2088,7 @@ export default {
     }
     .marwers {
       display: flex;
-      p {
+      .marwers_p {
         width: 140px;
         margin: 0;
         // margin-right: 35px;

@@ -472,11 +472,11 @@
                 ></el-input>
               </el-form-item> -->
               <el-form-item label="案由类型：" :required="true">
-                <!-- <el-input
+                <el-input
                 v-model="complaint.casetype"
                 placeholder="请输入内容"
-              ></el-input> -->
-                <el-select v-model="complaint.casetype" placeholder="请选择">
+              ></el-input>
+                <!-- <el-select v-model="complaint.casetype" placeholder="请选择">
                   <el-option
                     v-for="item in anyou"
                     :key="item.ID"
@@ -484,7 +484,7 @@
                     :value="item.ID"
                   >
                   </el-option>
-                </el-select>
+                </el-select> -->
               </el-form-item>
               <el-form-item label="诉讼请求：" :required="true">
                 <el-input
@@ -834,7 +834,7 @@
         <el-row>
           <el-col :span="24">
             <div class="marwers">
-              <p>证据材料：</p>
+              <p class="marwers_p">证据材料：</p>
               <div>
                 <div class="policy">
                   <span class="policy_btn">
@@ -988,13 +988,13 @@
                 ></el-input>
               </el-form-item>
 
-              <el-form-item label="法律依据：" :required="true">
+              <el-form-item label="同意承保法律依据：" :required="true">
                 <el-input
                   v-model="internalForm.basis"
                   placeholder="请输入内容"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="备注：" :required="true">
+              <el-form-item label="同意承保备注：" :required="true">
                 <el-input
                   type="textarea"
                   :autosize="{ minRows: 3 }"
@@ -1050,9 +1050,9 @@
                   </div>
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="流程日志" name="second"
-                >暂时什么都没有</el-tab-pane
-              >
+              <!-- <el-tab-pane label="流程日志" name="second"
+                >暂无</el-tab-pane
+              > -->
             </el-tabs>
             <!-- 审核按钮 -->
             <div class="shenhe">
@@ -1165,11 +1165,11 @@
                       ></el-input>
                     </el-form-item> -->
                     <el-form-item label="案由类型：" :required="true">
-                      <!-- <el-input
+                      <el-input
                         v-model="complaint.casetype"
                         placeholder="请输入内容"
-                      ></el-input> -->
-                      <el-select
+                      ></el-input>
+                      <!-- <el-select
                         v-model="complaint.casetype"
                         placeholder="请选择"
                       >
@@ -1180,7 +1180,7 @@
                           :value="item.ID"
                         >
                         </el-option>
-                      </el-select>
+                      </el-select> -->
                     </el-form-item>
                     <el-form-item label="诉讼请求：" :required="true">
                       <el-input
@@ -1580,7 +1580,6 @@ import {
 
 export default {
   name: "hisupervisor",
-  // props: ["taskview", "anyou"],
   components: {
     usersteps,
     // ElImageviewer,
@@ -1625,7 +1624,7 @@ export default {
         // iffphone: "",
         fendant: "",
         // fendphone: "",
-        casetype: null,
+        casetype: "",
         claims: "",
         amount: "",
         // reason: "",
@@ -1803,6 +1802,7 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               if (this.cty == res.data[i].ID) {
                 this.case_type = res.data[i].name;
+                this.complaint.casetype = res.data[i].name;
                 if (!this.complaint.ocrevidence) {
                   this.complaint.ocrevidence = res.data[i].statement;
                 }
@@ -1815,8 +1815,6 @@ export default {
                 if (!this.internalForm.basis) {
                   this.internalForm.basis = res.data[i].legal_terms;
                 }
-
-                // console.log("类型", this.case_type);
               }
             }
           });
@@ -1824,11 +1822,12 @@ export default {
       });
     },
     taskview(dat) {
+      
       this.internalForm.coverage = dat.preserv_amount;
-      this.preserveForm.preservename = dat.preserv_appl;
-      this.complaint.plaintiff = dat.plaintiff;
+      this.preserveForm.preservename = dat.insured;
+      this.complaint.plaintiff = dat.insured;
       if (dat.stage == 2 && dat.review_result == 0) {
-        // console.log("大于500万");
+        
         this.feedback = 2;
 
         this.radioff = false;
@@ -1839,7 +1838,8 @@ export default {
       }
 
       this.cty = dat.case_type;
-      this.complaint.casetype = dat.case_type;
+      
+      // this.complaint.casetype = dat.case_type;
       // 标题
       this.usertitle = dat.title;
       // 风险评估id
@@ -1851,7 +1851,7 @@ export default {
 
       let htts = process.env.VUE_APP_API_URL;
       this.https = htts;
-      // console.log(htts);
+      
       this.tltle = dat;
       // 身份证
       this.userfilesz = dat.files.id_card;
@@ -1879,7 +1879,7 @@ export default {
           this.filescaid = false;
         }
         if (caidsrcs.length != 0) {
-          // console.log('图片',caidsrcs);
+          
           this.usernamesfzimg = caidsrcs;
           this.srcs = htts + "/" + caidsrcs[0].path;
           this.srcLists.push(htts + "/" + caidsrcs[0].path);
@@ -1907,7 +1907,7 @@ export default {
         for (var h = 0; h < this.blicense.length; h++) {
           let use = this.blicense[h];
           let bugt = use.path.substring(use.path.lastIndexOf(".") + 1);
-          // console.log('bus',bugt);
+          
           if (
             bugt.toLowerCase() == "jpg" ||
             bugt.toLowerCase() == "jpeg" ||
@@ -1971,11 +1971,11 @@ export default {
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
-          // console.log("path", this.plaintiff[p].path);
+          
           var s = this.plaintiff[p];
           this.jpgocr.push(s.ocr);
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
-          // console.log('na',na);
+          
           if (
             na.toLowerCase() == "jpg" ||
             na.toLowerCase() == "jpeg" ||
@@ -1987,7 +1987,7 @@ export default {
             z.push(s);
           }
         }
-        // console.log('k',k);
+        
         if (k.length != 0) {
           this.lainsrc = k[0];
           this.lasrcs = k;
@@ -2002,15 +2002,14 @@ export default {
         } else {
           this.txtplay = false;
         }
-        // console.log("k", k);
       }
-      // if(this.plaintiff){}
+      
       this.preservation = dat.files.preservation;
       if (this.preservation != null) {
         var bo = [];
         var u = [];
         for (let e = 0; e < this.preservation.length; e++) {
-          console.log("path", this.preservation[e].path);
+          
           var st = this.preservation[e];
           this.ocrprease.push(st.ocr);
           var ns = st.path.substring(st.path.lastIndexOf(".") + 1);
@@ -2025,7 +2024,7 @@ export default {
             u.push(st);
           }
         }
-        // console.log("bo", bo);
+        
         if (bo.length != 0) {
           this.baoinsrc = bo[0];
           this.baosrcs = bo;
@@ -2091,7 +2090,6 @@ export default {
 
     onopensfz(ind) {
       this.srcListsurl = [...this.srcListurl, ind];
-      // console.log(this.srcListsurl);
       this.showViewer = true;
     },
     onPreview(ind) {
@@ -2184,10 +2182,9 @@ export default {
               type: "success",
             });
           }
-          console.log(res);
+          // console.log(res);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
           this.$message({
             showClose: true,
             message: "删除失败",
@@ -2195,7 +2192,6 @@ export default {
           });
         });
       this.divtaus = false;
-      // this.$emit("funcr");
     },
     // 删除按钮
     deletes(val, dat) {
@@ -2211,7 +2207,6 @@ export default {
           this.userdeletes();
         })
         .catch(() => {
-          console.log("否");
           this.$message({
             type: "info",
             message: "已取消删除",
@@ -2220,7 +2215,6 @@ export default {
     },
     // 输入失去聚焦给千分位
     inputMoney(el, name) {
-      // console.log(this.from.input);
       this.internalForm[name] = getInputValue(el);
     },
     inputMoneys(el, name) {
@@ -2232,7 +2226,6 @@ export default {
     userinputmon() {
       if (this.internalForm.coverage) {
         let rmbs = Number(moneyDelete(this.internalForm.coverage));
-        // console.log("中文数字", this.formatRMB(rmbs, "￥").value);
         this.fromrmb = this.formatRMB(rmbs, "￥").value;
       } else {
         this.fromrmb = "";
@@ -2323,7 +2316,7 @@ export default {
             process: this.internalForm.process,
             case_type: this.complaint.casetype,
           };
-          // console.log("填写的信息", data);
+          
           Caseinfo(data).then((res) => {
             // console.log(res);
             if (res.code == 200) {
@@ -2332,14 +2325,8 @@ export default {
                   risk_eval_id: this.evalid,
                 };
                 Lawopinion(data)
-                  .then((res) => {
-                    console.log(res);
-                    // var tempwindow = window.open("_blank"); // 先打开页面
-                    // tempwindow.location =
-                    //   "https://wx.haobofalv.com/" + res.data;
-                  })
-                  .catch((err) => {
-                    console.log(err);
+                  .then(() => {})
+                  .catch(() => {
                     this.$message({
                       showClose: true,
                       message: "生成失败",
@@ -2369,7 +2356,6 @@ export default {
                   risk_eval_id: this.evalid,
                 };
                 Subreview(data).then((res) => {
-                  // console.log(res);
                   if (res.code == 200) {
                     this.$message({
                       showClose: true,
@@ -2420,7 +2406,6 @@ export default {
       }
       // console.log('data',data);
       // 3.起诉状；4.保全申请书；5.证据材料
-      // axios.Headers.add="Access-Control-Expose-Headers";
       let url = this.https + "/api/v1/admin/review/case/download";
       let data = {
         risk_eval_id: this.evalid,
@@ -2599,7 +2584,7 @@ export default {
     }
     .marwers {
       display: flex;
-      p {
+      .marwers_p {
         width: 115px;
         margin: 0;
         // margin-right: 35px;

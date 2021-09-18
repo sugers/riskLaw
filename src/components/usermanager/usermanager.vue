@@ -6,34 +6,36 @@
                 <div class="otherScreen">
                     <div class="radioStatu onlyClass">
                         <span class="name">角色：</span>
+                        <el-radio-group v-model="statuVal" @change="usermanager">
                         <div v-if="radioSatatu==1">
-                            <el-radio-group v-model="statuVal">
+                            
                                 <el-radio-button label="全部"></el-radio-button>
                                 <el-radio-button label="管理员"></el-radio-button>
                                 <el-radio-button label="初审人员"></el-radio-button>
                                 <el-radio-button label="复审人员"></el-radio-button>
                                 <el-radio-button label="财务"></el-radio-button>
-                            </el-radio-group>
+                            
                         </div>
                         <div v-else-if="radioSatatu==2">
                             <el-radio-button label="全部"></el-radio-button>
                             <el-radio-button label="管理员"></el-radio-button>
                             <el-radio-button label="财务"></el-radio-button>
                         </div>
+                        </el-radio-group>
                     </div>
-                    <div class="keywordSelect onlyClass">
+                    <!-- <div class="keywordSelect onlyClass">
                         <span class="name">关键字：</span>
                         <div class="selectContent">
                             <el-input placeholder="请输入内容" v-model="keyInput" clearable>
                             </el-input>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- 筛选按钮 -->
-                    <div class="screenBtn">
+                    <!-- <div class="screenBtn">
                         <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
                         <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索
                         </el-button>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
@@ -44,7 +46,7 @@
                     </el-button>
                     <!-- <el-button type="danger" icon="el-icon-delete">删除</el-button> -->
                 </div>
-                <div class="bottomTable userManaFix">
+                <div class="bottomTable usermanagerFix">
                     <el-table ref="filterTable" :data="tableData" style="width: 100%" stripe highlight-current-row
                         :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">
 
@@ -52,16 +54,16 @@
                         </el-table-column>
                         <el-table-column label="序号" type="index" width="60" align="center">
                         </el-table-column>
-                        <el-table-column prop="username" label="用户名" width="140" align='center' show-overflow-tooltip
+                        <el-table-column prop="username" label="用户名" width="100" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="name" label="姓名" width="140" align='center' show-overflow-tooltip
+                        <el-table-column prop="name" label="姓名" width="100" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="roleName" label="角色" width="140" align='center' show-overflow-tooltip
+                        <el-table-column prop="roleName" label="角色" width="100" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="phone" label="联系电话" width="200" align='center' show-overflow-tooltip
+                        <el-table-column prop="phone" label="联系电话" width="160" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
                         <!-- <el-table-column prop="ico_name" label="所属保险公司" width="200" align='center' show-overflow-tooltip
@@ -88,23 +90,7 @@
                             </template>
                         </el-table-column>
                     </el-table>
-                    <!-- <zk-table ref="table" :data="tableData" :columns="columns" :expand-type="isexpand" selection-type
-                        :stripe="isstripe"
-                        :show-index='isshowindex'>
-                        <template slot="statuShow" slot-scope="scope">
-                            <div v-if="scope.row.statu=='启用'">
-                                <el-link type="primary">{{scope.row.statu}}</el-link>
-                            </div>
-                            <div v-else>
-                                <el-link type="danger">{{scope.row.statu}}</el-link>
-                            </div>
-                        </template>
-                        <template slot="operateBtn" slot-scope="scope">
-                            <div v-for="(item,index) in scope.row.operate" :key="index">
-                                <el-button :type="item.type" @click="buttonClick(item.name)">{{item.name}}</el-button>
-                            </div>
-                        </template>
-                    </zk-table> -->
+                    
                 </div>
                 <div class="pageDiv">
                     <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="10"
@@ -195,6 +181,7 @@
             },
             getUserList(icco_id, area_id, role, user_type, page, limit, name) {
                 let currentRole = '';
+                this.tableData=[];
                 this.isdone = true;
                 if (String(user_type).substring(0, 1) == 1) {
                     if (role == '管理员') {
@@ -226,6 +213,10 @@
                 Getuser(data).then((res) => {
                     this.isdone = false;
                     if (res.code == 200) {
+                        if(!res.data.accounts){
+                            this.total = 0;
+                            return;
+                        } 
                         res.data.accounts.map((item) => {
                             item.UpdatedAt = getDateString(item.UpdatedAt)
                             if (item.role == 1001 || item.role == 2001) {
@@ -290,7 +281,7 @@
                 this.companyVal = '';
                 this.statuVal = '全部';
             },
-            searchClick() {
+            usermanager() {
                 this.getUserList(0, 0, this.statuVal, this.currendRole, this.page, this.limit, this.keyInput);
             }
         },

@@ -270,9 +270,9 @@ export const Editlawyer = data => {
 }
 // 获取业务员的业绩表
 export const Getstatics = data => {
-    return new Promise(function (resolve) {
-        resolve(get('/api/v1/icco/admin/performance', data))
-    })
+  return new Promise(function (resolve) {
+      resolve(get('/api/v1/icco/admin/performance', data))
+  })
 }
 // 下载全部文件
 // export const Casedownload = data => {
@@ -299,5 +299,19 @@ export const Reviewcasedata = data =>{
 export const LawOpinions = data =>{
   return new Promise(function (resolve){
     resolve(get('/api/v1/backend/eval/download/lawOpinions',data,'blob'))
+  })
+}
+
+// 取消绑定保险业务员（平台方管理员，保险公司管理员权限）
+export const Auditunbind = data =>{
+  return new Promise(function (resolve){
+    resolve(Delete('/api/v1/backend/audit/unbind',data))
+  })
+}
+
+// 个人修改密码接口
+export const Authpassword = data => {
+  return new Promise(function (resolve) {
+      resolve(put('/api/v1/backend/auth/password', data))
   })
 }

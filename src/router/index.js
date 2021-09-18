@@ -5,7 +5,6 @@ import soutable from '../components/soutable.vue'
 import usertable from '../components/usertable.vue'
 import adminlogin from '../components/adminlogin.vue'
 import taipeilogin from '../components/taipeilogin.vue'
-import insurancetable from '../components/insurancetable.vue'
 import audittable from '../components/audittable.vue'
 import adminfiedform from '../components/adminfiedform.vue'
 import hisupervisor from '../components/hisupervisor.vue'
@@ -118,14 +117,6 @@ const routes = [
         },
       },
       {
-        path: '/insurancetable',
-        name: 'insurancetable',
-        component: insurancetable,
-        meta: {
-          requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-        },
-      },
-      {
         path: '/audittable',
         name: 'audittable',
         component: audittable,
@@ -133,46 +124,6 @@ const routes = [
           requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
         },
       },
-      // {
-      //   path: '/usertable/hisupervisores',
-      //   name: 'hisupervisores',
-      //   component: hisupervisores,
-      //   meta: {
-      //     requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-      //   },
-      // },
-      // {
-      //   path: '/usertable/adminfiedform',
-      //   name: 'adminfiedform',
-      //   component: adminfiedform,
-      //   meta: {
-      //     requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-      //   },
-      // },
-      // {
-      //   path: '/usertable/hisupervisor',
-      //   name: 'hisupervisor',
-      //   component: hisupervisor,
-      //   meta: {
-      //     requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-      //   },
-      // },
-      // {
-      //   path: '/usertable/hisupervisores',
-      //   name: 'hisupervisores',
-      //   component: hisupervisores,
-      //   meta: {
-      //     requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-      //   },
-      // },
-      // {
-      //   path: '/usertable/asingconfirm',
-      //   name: 'asingconfirm',
-      //   component: asingconfirm,
-      //   meta: {
-      //     requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-      //   },
-      // },
         //  平台方管理公司
         {
             path: '/InsuranceCompany',
