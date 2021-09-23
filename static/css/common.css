@@ -41,7 +41,10 @@
     margin: 0 4px;
     width: 6%;
 }
-
+.grayColor{
+    font-size: 12px;
+    color: #555555;
+}
 .grayColor div {
     width: 100% !important;
 }
