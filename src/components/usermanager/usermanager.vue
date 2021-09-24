@@ -46,7 +46,7 @@
                     </el-button>
                     <!-- <el-button type="danger" icon="el-icon-delete">删除</el-button> -->
                 </div>
-                <div class="bottomTable usermanagerFix">
+                <div class="bottomTable">
                     <el-table ref="filterTable" :data="tableData" style="width: 100%" stripe highlight-current-row
                         :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">
 

@@ -177,9 +177,7 @@
               <el-tag size="medium" type="danger" v-if="scope.row.status == 2"
                 >待审核</el-tag
               >
-              <el-tag type="success" v-if="scope.row.status == 1"
-                >通过</el-tag
-              >
+              <el-tag type="success" v-if="scope.row.status == 1">通过</el-tag>
             </div>
             <!-- <div class="btgstatus" v-if="scope.row.status == 2">待审核</div>
             <div class="tgstatus" v-if="scope.row.status == 1">通过</div> -->
@@ -313,10 +311,7 @@
             <div class="auditmartext">
               <p>所在省份：</p>
               <span class="spantxt">
-                <el-select
-                  v-model="value"
-                  placeholder="请选择"
-                >
+                <el-select v-model="value" placeholder="请选择">
                   <el-option
                     v-for="item in options"
                     :key="item.id"
@@ -436,12 +431,12 @@ export default {
       userid: "",
     };
   },
-  watch:{
-    auditDateTime(newval){
+  watch: {
+    auditDateTime(newval) {
       if (newval == null) {
         this.auditDateTime = [];
       }
-    }
+    },
   },
   mounted() {
     // this.$nextTick(function () {
@@ -487,12 +482,19 @@ export default {
                 this.Auditlistapi();
               }
             });
-          }).catch(() => {
+          })
+          .catch(() => {
             this.$message({
               type: "info",
               message: "已取消删除",
             });
           });
+      } else {
+        this.$message({
+          showClose: true,
+          message: "请勾选业务员",
+          type: "info",
+        });
       }
     },
     // 拒绝
@@ -621,14 +623,13 @@ export default {
     },
 
     deleteRows(data) {
-      this.dialogVisible = true; 
+      this.dialogVisible = true;
       this.titles = data;
       this.value = data.iccoarea;
       // this.options = provinces;
       this.salesmanid = data.id;
     },
     audiostat(data) {
-
       this.notdialogVisible = true;
       this.titles = data;
 
@@ -779,6 +780,12 @@ export default {
             });
             this.Auditlistapi();
           }
+        });
+      } else {
+        this.$message({
+          showClose: true,
+          message: "请勾选业务员",
+          type: "info",
         });
       }
     },

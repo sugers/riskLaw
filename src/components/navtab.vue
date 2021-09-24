@@ -25,13 +25,13 @@
           v-if="chusheng || baoxtai || pingtaishen"
         >
           <template slot="title">
-            <i class="el-icon-s-management"></i>
+            <i class="el-icon-s-operation"></i>
             风险评估详情
           </template>
         </el-menu-item>
         <el-menu-item index="/audittable" v-if="chusheng || baoxtai">
           <template>
-            <i class="el-icon-user-solid"></i>
+            <i class="el-icon-s-custom"></i>
             小程序绑定审核
           </template>
         </el-menu-item>
@@ -47,7 +47,7 @@
         </el-submenu>
         <el-menu-item index="/laywerManage" v-if="chusheng">
           <template slot="title">
-            <i class="el-icon-s-cooperation"></i>
+            <i class="el-icon-notebook-2"></i>
             律师管理
           </template>
         </el-menu-item>
@@ -56,7 +56,7 @@
           v-if="chusheng || baoxtai || baocaiw || pingcaiw"
         >
           <template>
-            <i class="el-icon-s-order"></i>
+            <i class="el-icon-notebook-2"></i>
             财务月对账单
           </template>
         </el-menu-item>

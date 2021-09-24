@@ -77,8 +77,7 @@
       <div class="radios">
         <div class="radios_sapn">关键字：</div>
         <div class="boxxinput">
-          <el-input placeholder="请输入内容" v-model="userkey">
-          </el-input>
+          <el-input placeholder="请输入内容" v-model="userkey"> </el-input>
         </div>
       </div>
 
@@ -140,7 +139,8 @@
         @selection-change="handleSelectionChange"
         :row-class-name="tablerowclassname"
       >
-        <el-table-column fixed="left" type="selection" width="55"> </el-table-column>
+        <el-table-column fixed="left" type="selection" width="55">
+        </el-table-column>
         <el-table-column
           type="index"
           :index="indexMethos"
@@ -193,7 +193,9 @@
         </el-table-column>
         <el-table-column prop="trade" label="出单情况" min-width="90">
           <template slot-scope="scope">
-            <el-tag size="medium" type="danger" v-if="scope.row.trade == 0">未出单</el-tag>
+            <el-tag size="medium" type="danger" v-if="scope.row.trade == 0"
+              >未出单</el-tag
+            >
             <el-tag type="success" v-if="scope.row.trade == 1">已出单</el-tag>
             <span v-if="scope.row.trade == 2"></span>
           </template>
@@ -270,8 +272,7 @@
                 scope.row.stage == 4 &&
                 scope.row.review_result != 3 &&
                 scope.row.review_result != 2 &&
-                (roleID == 1001 || roleID == 1004 || roleID == 1003
-                )
+                (roleID == 1001 || roleID == 1004)
               "
               @click.prevent="operation(scope.row)"
               type="text"
@@ -406,12 +407,12 @@ export default {
     //   this.$refs["myscrollbar"].wrap.scrollTop = document.body.scrollTop = 0;
     // });
   },
-  watch:{
-    userDateTime(newval){
+  watch: {
+    userDateTime(newval) {
       if (newval == null) {
         this.userDateTime = [];
       }
-    }
+    },
   },
   mounted() {
     this.admniccorapi();
@@ -424,7 +425,7 @@ export default {
     // });
     window["postData"] = () => {
       // console.log('66666');
-      this.usertableapi(1);
+      this.usertableapi();
     };
 
     let userid = JSON.parse(localStorage.getItem("userinfor"));
@@ -499,8 +500,6 @@ export default {
         this.userDateTime = [];
         this.userreivws = "";
         this.userkey = "";
-
-        
       }
       this.usertableapi(1);
     },
@@ -547,37 +546,52 @@ export default {
               message: "已取消删除",
             });
           });
+      }else{
+        this.$message({
+          showClose: true,
+          type: "info",
+          message: "请勾选订单",
+        });
       }
     },
     // 批量下载法律意见书
     downloadThelaw() {
-      this.userdownload = true;
+      
       // console.log("uu", this.multipleSelection);
-      let data = {
-        risk_eval_ids: this.multipleSelection,
-      };
-      LawOpinions(data)
-        .then((res) => {
-          // console.log("yy", res);
-          let url = window.URL.createObjectURL(
-            new Blob([res.data], { type: "application/zip" })
-          );
-          let filename = window.decodeURI(
-            res.headers["content-disposition"].split("=")[1],
-            "UTF-8"
-          );
-          let filenames = filename.replace('"', "").replace('"', "");
-          let files = document.createElement("a");
-          files.href = url;
-          files.download = filenames;
-          files.click();
-          if (res.status == 200) {
+      if (this.multipleSelection.length) {
+        this.userdownload = true;
+        let data = {
+          risk_eval_ids: this.multipleSelection,
+        };
+        LawOpinions(data)
+          .then((res) => {
+            // console.log("yy", res);
+            let url = window.URL.createObjectURL(
+              new Blob([res.data], { type: "application/zip" })
+            );
+            let filename = window.decodeURI(
+              res.headers["content-disposition"].split("=")[1],
+              "UTF-8"
+            );
+            let filenames = filename.replace('"', "").replace('"', "");
+            let files = document.createElement("a");
+            files.href = url;
+            files.download = filenames;
+            files.click();
+            if (res.status == 200) {
+              this.userdownload = false;
+            }
+          })
+          .catch(() => {
             this.userdownload = false;
-          }
-        })
-        .catch(() => {
-          this.userdownload = false;
+          });
+      } else {
+        this.$message({
+          showClose: true,
+          type: "info",
+          message: "请勾选订单",
         });
+      }
     },
     // 查找保险公司
     admniccorapi() {

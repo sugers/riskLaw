@@ -233,7 +233,7 @@
             </div>
             <div class="martexts">
               <p>经营范围:</p>
-              <span>
+              <span class="textsollc">
                 <span>{{ userblicense.business }}</span>
               </span>
             </div>
@@ -425,7 +425,7 @@
             <div style="padding-left: 50px">
               <div class="policy">
                 <span>起诉状附件:</span>
-                <span class="policy_btn">
+                <span class="policy_btn" v-if="plaintifftf">
                   <el-button
                     class="policy_bton"
                     type="primary"
@@ -562,7 +562,7 @@
             <div style="padding-left: 50px">
               <div class="policy">
                 <span>保全申请书附件:</span>
-                <span class="policy_btn">
+                <span class="policy_btn" v-if="preservationtf">
                   <el-button
                     class="policy_bton"
                     type="primary"
@@ -662,7 +662,7 @@
               <p class="marwers_p">证据材料：</p>
               <div>
                 <div class="policy">
-                  <span class="policy_btn">
+                  <span class="policy_btn" v-if="testimonytf">
                     <el-button
                       class="policy_bton"
                       type="primary"
@@ -781,7 +781,7 @@
                 <span>{{ internalForm.process }}</span>
               </span>
             </div>
-            <div class="martexts" v-if="feedtrade == 4">
+            <div class="martexts" v-if="law_opinion_path != ''">
               <p>附件：</p>
               <el-button type="primary" @click.prevent="falbookes"
                 >查看法律意见书</el-button
@@ -966,6 +966,10 @@ export default {
       shancu: true,
       // 法律意见书
       law_opinion_path: "",
+
+      plaintifftf: false,
+      preservationtf: false,
+      testimonytf: false,
     };
   },
   destroyed(){
@@ -997,7 +1001,6 @@ export default {
       var data = {
         risk_eval_id: this.$route.query.data,
       };
-      // console.log('传过来的id',data);
       Reviewcase(data).then((res) => {
         // console.log('oo',res.data);
         if (res.code == 200) {
@@ -1030,7 +1033,8 @@ export default {
       this.feedtrade = dat.stage;
       this.insured_type = dat.insured_type;
 
-      console.log("dat", dat);
+      // console.log("dat", dat);
+
       this.law_opinion_path = dat.law_opinion_path;
       this.csteps = dat.review_records;
       this.cteus = "0";
@@ -1149,6 +1153,7 @@ export default {
       // 起诉状图片
       if (dat.files.indictment) {
         this.plaintiff = dat.files.indictment;
+        this.plaintifftf = true;
       }
       if (this.plaintiff != null) {
         var k = [];
@@ -1183,6 +1188,7 @@ export default {
 
       if (dat.files.preservation) {
         this.preservation = dat.files.preservation;
+        this.preservationtf = true
       }
       if (this.preservation != null) {
         var bo = [];
@@ -1216,6 +1222,7 @@ export default {
 
       if(dat.files.testimony){
         this.testimony = dat.files.testimony;
+        this.testimonytf = true;
       }
       if (this.testimony != null) {
         var tiomonimg = [];
@@ -1451,10 +1458,17 @@ export default {
         // color: #606266;
       }
       span {
-        width: 300px;
+        width: 400px;
         line-height: 36px;
         font-size: 16px;
         color: #606266;
+      }
+      .textsollc{
+        width: 400px;
+        height: 250px;
+        font-size: 16px;
+        color: #606266;
+        overflow: auto;
       }
       .imgs {
         display: flex;

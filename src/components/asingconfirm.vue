@@ -152,18 +152,10 @@
               <div v-for="(item, ind) in usercaidfile" :key="ind">
                 <div class="tyetext" v-if="filescaid">
                   <div class="textwen">
-                    <p
-                      class="ptextlei"
-                      :style="
-                        item.path
-                          .substring(item.path.lastIndexOf('.') + 1)
-                          .toLowerCase() == 'pdf'
-                          ? 'color: #5162f8;cursor: pointer;'
-                          : 'color:#000'
-                      "
+                    <p class="ptextlei" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
                       @click="btnclicks(item.path)"
-                      :title="item.file_name"
-                    >
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -255,7 +247,7 @@
             </div>
             <div class="martexts">
               <p>经营范围:</p>
-              <span>
+              <span class="textsollc">
                 <span>{{ userblicense.business }}</span>
               </span>
             </div>
@@ -336,18 +328,10 @@
               <div v-for="(item, ind) in usersfz" :key="ind">
                 <div class="tyetext" v-if="boolblidocx">
                   <div class="textwen">
-                    <p
-                      class="ptextlei"
-                      :style="
-                        item.path
-                          .substring(item.path.lastIndexOf('.') + 1)
-                          .toLowerCase() == 'pdf'
-                          ? 'color: #5162f8;cursor: pointer;'
-                          : 'color:#000'
-                      "
+                    <p class="ptextlei" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
                       @click="btnclicks(item.path)"
-                      :title="item.file_name"
-                    >
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -426,7 +410,7 @@
             <div style="padding-left: 50px">
               <div class="policy">
                 <span>起诉状附件:</span>
-                <span class="policy_btn">
+                <span class="policy_btn" v-if="plaintifftf">
                   <el-button
                     class="policy_bton"
                     type="primary"
@@ -497,18 +481,10 @@
               <div v-for="(item, ind) in complatxt" :key="ind">
                 <div class="tyetext" v-if="txtplay">
                   <div class="textwen">
-                    <p
-                      class="ptextlei"
-                      :style="
-                        item.path
-                          .substring(item.path.lastIndexOf('.') + 1)
-                          .toLowerCase() == 'pdf'
-                          ? 'color: #5162f8;cursor: pointer;'
-                          : 'color:#000'
-                      "
+                    <p class="ptextlei" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
                       @click="btnclicks(item.path)"
-                      :title="item.file_name"
-                    >
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -565,7 +541,7 @@
             <div style="padding-left: 50px">
               <div class="policy">
                 <span>保全申请书附件:</span>
-                <span class="policy_btn">
+                <span class="policy_btn" v-if="preservationtf">
                   <el-button
                     class="policy_bton"
                     type="primary"
@@ -637,18 +613,10 @@
               <div v-for="(item, ind) in complatexts" :key="ind">
                 <div class="tyetext" v-if="btxtop">
                   <div class="textwen">
-                    <p
-                      class="ptextlei"
-                      :style="
-                        item.path
-                          .substring(item.path.lastIndexOf('.') + 1)
-                          .toLowerCase() == 'pdf'
-                          ? 'color: #5162f8;cursor: pointer;'
-                          : 'color:#000'
-                      "
+                    <p class="ptextlei" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
                       @click="btnclicks(item.path)"
-                      :title="item.file_name"
-                    >
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -691,7 +659,7 @@
               <p class="marwers_p">证据材料：</p>
               <div>
                 <div class="policy">
-                  <span class="policy_btn">
+                  <span class="policy_btn" v-if="testimonytf">
                     <el-button
                       class="policy_bton"
                       type="primary"
@@ -729,11 +697,7 @@
                     v-for="(item, dome) in timonsrc"
                     :key="dome"
                   >
-                    <p
-                      class="ad_imgs_txts"
-                      :title="item.file_name"
-                      @click="zjopenmony(dome)"
-                    >
+                    <p class="ad_imgs_txts" :title="item.file_name" @click="zjopenmony(dome)">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -755,18 +719,10 @@
                     v-for="(item, ins) in timonfile"
                     :key="ins"
                   >
-                    <p
-                      class="ad_imgs_txt"
-                      :style="
-                        item.path
-                          .substring(item.path.lastIndexOf('.') + 1)
-                          .toLowerCase() == 'pdf'
-                          ? 'color: #5162f8;cursor: pointer;'
-                          : 'color:#000'
-                      "
+                    <p class="ad_imgs_txt" 
+                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
                       @click="btnclicks(item.path)"
-                      :title="item.file_name"
-                    >
+                      :title="item.file_name">
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -844,9 +800,8 @@
           <el-col :span="24">
             <div class="martexts">
               <p>证据材料：</p>
-              <div class="chudlistqishu">
+              <div class="listqishu">
                 <el-radio-group v-model="feedcudan">
-                  <!-- 出单状态 0:未出单 1.已出单 -->
                   <el-radio :label="1">已出单</el-radio>
                   <el-radio :label="0">未出单</el-radio>
                 </el-radio-group>
@@ -1093,7 +1048,7 @@ export default {
       preservation: [],
       preserimgs: [],
       testmonyurl: [],
-      testmonyimage: [],
+      testmonyimage:[],
       textmonyimg: false,
       // 证据材料
       testimony: [],
@@ -1136,12 +1091,16 @@ export default {
       qisloading: false,
       sqloading: false,
       zjloading: false,
+
+      plaintifftf: false,
+      preservationtf: false,
+      testimonytf: false,
     };
   },
-  destroyed() {
-    window.removeEventListener("beforeunload", (e) => {
-      this.beforeClosepage(e);
-    });
+  destroyed(){
+    window.removeEventListener('beforeunload',e=>{
+      this.beforeClosepage(e)
+    })
   },
   created() {
     this.$nextTick(() => {
@@ -1152,13 +1111,13 @@ export default {
     this.reviewapi();
   },
   mounted() {
-    window.addEventListener("beforeunload", (e) => {
-      this.beforeClosepage(e);
-    });
+    window.addEventListener('beforeunload',e=>{
+      this.beforeClosepage(e)
+    })
   },
   methods: {
-    beforeClosepage() {
-      window.opener.postData();
+    beforeClosepage(){
+      window.opener.postData()
     },
     reviewapi() {
       var data = {
@@ -1196,7 +1155,7 @@ export default {
       this.cty = dat.case_type;
       this.insured_type = dat.insured_type;
       // 传过来的数据
-      console.log("dat", dat);
+      // console.log("dat", dat);
       // for (let i = 0; i < this.anyou.length; i++) {
       //   if (dat.case_type == this.anyou[i].ID) {
       //     this.case_type = this.anyou[i].name;
@@ -1315,9 +1274,12 @@ export default {
       // 起诉状
       this.plaintiff = dat.files.indictment;
       if (this.plaintiff != null) {
+        this.plaintifftf = true;
+
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
+          
           var s = this.plaintiff[p];
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
           if (na == "jpg" || na == "jpeg" || na == "png") {
@@ -1347,6 +1309,8 @@ export default {
       // if(this.plaintiff){}
       this.preservation = dat.files.preservation;
       if (this.preservation != null) {
+        this.preservationtf = true;
+
         var bo = [];
         var u = [];
         for (let e = 0; e < this.preservation.length; e++) {
@@ -1381,6 +1345,8 @@ export default {
 
       this.testimony = dat.files.testimony;
       if (this.testimony != null) {
+        
+        this.testimonytf = true;
         var tiomonimg = [];
         var tiomonfile = [];
         for (let f = 0; f < this.testimony.length; f++) {
@@ -1482,10 +1448,10 @@ export default {
             this.usercaidfile = "";
             this.blisrced = "";
             this.usersfz = "";
-            this.plaintiffage = [];
-            this.complatxt = [];
-            this.preserimgs = [];
-            this.complatexts = [];
+            this.plaintiffage = []
+            this.complatxt = []
+            this.preserimgs = []
+            this.complatexts = []
             this.timonsrc = "";
             this.timonfile = "";
             this.reviewapi();
@@ -1602,10 +1568,7 @@ export default {
         var dat = {
           risk_eval_id: this.evalid,
           trade: this.feedcudan,
-          amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
         };
-        console.log("修改出单", dat);
-        // return
         Modifytrade(dat).then(() => {
           // console.log(res);
         });
@@ -1629,7 +1592,7 @@ export default {
             });
           }
         });
-      }
+      } 
       // else if (a == 0) {
       //   this.$router.push({
       //     path: "/usertable",
@@ -1754,6 +1717,13 @@ export default {
         font-size: 16px;
         color: #606266;
       }
+      .textsollc{
+        width: 400px;
+        height: 250px;
+        font-size: 16px;
+        color: #606266;
+        overflow: auto;
+      }
       .imgs {
         display: flex;
         align-items: center;
@@ -1791,11 +1761,6 @@ export default {
       }
       .listqishu {
         display: flex;
-        flex-direction: column;
-      }
-      .chudlistqishu {
-        display: flex;
-        justify-content: center;
         flex-direction: column;
       }
     }

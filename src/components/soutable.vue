@@ -48,7 +48,9 @@
             <div class="databoard">
               <div class="datatext">
                 <div class="txt">累积处理保额</div>
-                <div class="number baoe" :title="preserv_amount_count">￥{{ preserv_amount_count | currency }}</div>
+                <div class="number baoe" :title="preserv_amount_count">
+                  ￥{{ preserv_amount_count | currency }}
+                </div>
               </div>
               <img src="../../static/img/baoe.png" alt="图标" />
             </div>
@@ -96,8 +98,8 @@
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
-                <div class="txt">本月的提交评估量</div>
-                <div class="number lvshi">{{ lawyer_count }}</div>
+                <div class="txt">本月提交评估量</div>
+                <div class="number lvshi">{{ risk_eval_count }}</div>
               </div>
               <img src="../../static/img/lvshi.png" alt="图标" />
             </div>
@@ -116,8 +118,8 @@
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
-                <div class="txt">本月提交评估量</div>
-                <div class="number baoe">{{ preserv_amount_count }}</div>
+                <div class="txt">本月评估通过量</div>
+                <div class="number baoe">{{ risk_eval_open_count }}</div>
               </div>
               <img src="../../static/img/pin.png" alt="图标" />
             </div>
@@ -127,9 +129,9 @@
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
-                <div class="txt">本月评估通过量</div>
+                <div class="txt">本月出单量</div>
                 <div class="number zonge">
-                  {{ underwriting_amount_count }}
+                  {{ risk_eval_trade_count }}
                 </div>
               </div>
               <img src="../../static/img/lvshi.png" alt="图标" />
@@ -137,42 +139,20 @@
           </el-card>
         </el-col>
       </el-row>
-      <!-- <el-row :gutter="12">
-        <el-col :span="12">
-          <el-card shadow="hover" :body-style="{ padding: '10px' }">
-            <div class="databoard">
-              <div class="datatext">
-                <div class="txt">本月提交评估量</div>
-                <div class="number baoe">{{ preserv_amount_count }}</div>
-              </div>
-              <img src="../../static/img/pin.png" alt="图标" />
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="12">
-          <el-card shadow="hover" :body-style="{ padding: '10px' }">
-            <div class="databoard">
-              <div class="datatext">
-                <div class="txt">本月评估通过量</div>
-                <div class="number zonge">
-                  {{ underwriting_amount_count }}
-                </div>
-              </div>
-              <img src="../../static/img/lvshi.png" alt="图标" />
-            </div>
-          </el-card>
-        </el-col>
-      </el-row> -->
+      <el-row :gutter="12">
+        <el-col :span="12"> </el-col>
+        <el-col :span="12"> </el-col>
+      </el-row>
     </div>
     <Spin fix v-show="isdone">
-        <Icon type="ios-loading" size="18" class="demo-spin-icon-load"></Icon>
-        <div>Loading</div>
-      </Spin>
+      <Icon type="ios-loading" size="18" class="demo-spin-icon-load"></Icon>
+      <div>Loading</div>
+    </Spin>
   </div>
 </template>
 
 <script>
-import { Commondashboard,Dashboard } from "../api/api";
+import { Commondashboard, Dashboard } from "../api/api";
 export default {
   name: "soutable",
   data() {
@@ -183,17 +163,20 @@ export default {
       preserv_amount_count: "",
       underwriting_amount_count: "",
       amount_count: "",
+
+      risk_eval_count: "",
+      risk_eval_open_count: "",
+      risk_eval_trade_count: "",
+
       pingtai: false,
       baoxingpint: false,
       // loading
       isdone: false,
     };
   },
-  created() {
-    
-  },
-  mounted(){
-    let userInfo = JSON.parse(localStorage.getItem('userinfor'));
+  created() {},
+  mounted() {
+    let userInfo = JSON.parse(localStorage.getItem("userinfor"));
     if (
       userInfo.roleID == 1001 ||
       userInfo.roleID == 1002 ||
@@ -225,20 +208,18 @@ export default {
       });
     },
 
-    theinsurer(){
+    theinsurer() {
       this.isdone = true;
-      Dashboard().then(res=>{
+      Dashboard().then((res) => {
         this.isdone = false;
         // console.log('看板',res);
-        this.risk_eval_review_count = res.data.user_count;
-        this.icco_count = res.data.area_count;
-        this.lawyer_count = res.data.risk_eval_count;
-        this.preserv_amount_count = res.data.risk_eval_open_count;
-        this.underwriting_amount_count =
-          res.data.risk_eval_trade_count;
-        
-      })
-    }
+        // this.risk_eval_review_count = res.data.user_count;
+        // this.icco_count = res.data.area_count;
+        this.risk_eval_count = res.data.risk_eval_count;
+        this.risk_eval_open_count = res.data.risk_eval_open_count;
+        this.risk_eval_trade_count = res.data.risk_eval_trade_count;
+      });
+    },
   },
 };
 </script>

@@ -41,10 +41,7 @@
     margin: 0 4px;
     width: 6%;
 }
-tbody .grayColor {
-    font-size: 12px !important;
-    color: #555555 !important;
-}
+
 .grayColor div {
     width: 100% !important;
 }
@@ -131,12 +128,9 @@ tbody .grayColor {
 .insuranceUser table {
     width: 100% !important;
 }
-.usermanagerFix .el-table__header,
-.insuranceUserFix .el-table__header {
-    table-layout: auto !important;
-}
-.el-table__fixed-right .el-table__header{
-    table-layout: fixed !important;
+
+.insuranceUser .el-table__header {
+    table-layout: inherit !important;
 }
 
 .InsuranceCompany .el-table__row td:last-child,
