@@ -52,7 +52,7 @@
                         :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">
                         <el-table-column type="selection" width="60" align="center" fixed="left">
                         </el-table-column>
-                        <el-table-column label="序号" type="index" width="60" align="center">
+                        <el-table-column label="序号" type="index" :index="indexMethod" width="60" align="center">
                         </el-table-column>
                         <el-table-column prop="number" label="编号" width="140" align='center' show-overflow-tooltip
                             class-name="grayColor">
@@ -179,6 +179,9 @@
 
         },
         methods: {
+            indexMethod(index){
+                return index + 1 + (this.page - 1) * this.limit
+            },
             GetInsurance() {
                 let that=this;
                 let data = {

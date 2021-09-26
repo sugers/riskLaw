@@ -133,7 +133,7 @@
                             </template>
 
                         </el-table-column>
-                        <el-table-column label="序号" type="index" width="60" align="center">
+                        <el-table-column label="序号" type="index" :index="indexMethod" width="60" align="center">
                         </el-table-column>
                         <el-table-column prop="name" label="公司名称" width="220" align='center' show-overflow-tooltip
                             class-name="grayColor">
@@ -306,6 +306,9 @@
             this.getinsurance(this.statuVal, this.keyInput, this.page, this.limit, this.currendRole);
         },
         methods: {
+            indexMethod(index) {
+                return index + 1 + (this.page - 1) * this.limit
+            },
             cancelModel() {
                 let that = this;
                 that.editModel = false;
@@ -444,8 +447,7 @@
                                     }
                                 })
                             },
-                            onCancel: () => {
-                            }
+                            onCancel: () => {}
                         });
                         return;
                 }
@@ -480,8 +482,7 @@
                                     }
                                 })
                             },
-                            onCancel: () => {
-                            }
+                            onCancel: () => {}
                         });
                         return;
                 }
@@ -516,20 +517,24 @@
     .screenBtn {
         margin-left: 30px;
     }
+
     .screenBtn button {
         padding: 0;
         font-size: 13px;
         width: 66px;
         height: 30px;
     }
+
     .screenBtn button+button {
         margin-left: 20px;
     }
+
     .radioStatu {
         display: flex;
         align-items: center;
         margin-left: 30px;
     }
+
     .otherScreen {
         display: flex;
         align-items: flex-start;
@@ -537,28 +542,33 @@
         justify-content: flex-start;
         width: 100%;
     }
+
     .onlyClass {
         display: flex;
         align-items: center;
         margin-left: 30px;
         margin-bottom: 20px;
     }
+
     .onlyClass span {
         width: 90px;
         text-align: left;
         font-size: 14px;
         font-weight: 600;
     }
+
     .insuranceBottom {
         position: relative;
         padding: 20px 0;
     }
+
     .bottomBtn {
         display: flex;
         align-items: center;
         margin-bottom: 20px;
         margin-left: 30px;
     }
+
     .bottomBtn button {
         height: 30px;
         border: none;
@@ -570,6 +580,7 @@
         margin-right: 20px;
         font-size: 13px;
     }
+
     .bottomBtn button span {
         width: 100%;
         height: 100%;
@@ -577,6 +588,7 @@
         align-items: center;
         justify-content: center;
     }
+
     .bottomBtn button+button {
         padding: 0;
         width: 66px;

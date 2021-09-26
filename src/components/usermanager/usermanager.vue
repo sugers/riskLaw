@@ -7,20 +7,20 @@
                     <div class="radioStatu onlyClass">
                         <span class="name">角色：</span>
                         <el-radio-group v-model="statuVal" @change="usermanager">
-                        <div v-if="radioSatatu==1">
-                            
+                            <div v-if="radioSatatu==1">
+
                                 <el-radio-button label="全部"></el-radio-button>
                                 <el-radio-button label="管理员"></el-radio-button>
                                 <el-radio-button label="初审人员"></el-radio-button>
                                 <el-radio-button label="复审人员"></el-radio-button>
                                 <el-radio-button label="财务"></el-radio-button>
-                            
-                        </div>
-                        <div v-else-if="radioSatatu==2">
-                            <el-radio-button label="全部"></el-radio-button>
-                            <el-radio-button label="管理员"></el-radio-button>
-                            <el-radio-button label="财务"></el-radio-button>
-                        </div>
+
+                            </div>
+                            <div v-else-if="radioSatatu==2">
+                                <el-radio-button label="全部"></el-radio-button>
+                                <el-radio-button label="管理员"></el-radio-button>
+                                <el-radio-button label="财务"></el-radio-button>
+                            </div>
                         </el-radio-group>
                     </div>
                     <!-- <div class="keywordSelect onlyClass">
@@ -52,7 +52,7 @@
 
                         <el-table-column type="selection" width="60">
                         </el-table-column>
-                        <el-table-column label="序号" type="index" width="60" align="center">
+                        <el-table-column label="序号" type="index" :index="indexMethod" width="60" align="center">
                         </el-table-column>
                         <el-table-column prop="username" label="用户名" width="100" align='center' show-overflow-tooltip
                             class-name="grayColor">
@@ -90,7 +90,7 @@
                             </template>
                         </el-table-column>
                     </el-table>
-                    
+
                 </div>
                 <div class="pageDiv">
                     <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="10"
@@ -163,7 +163,9 @@
             this.getUserList(0, 0, '', this.currendRole, 1, 10);
         },
         methods: {
-
+            indexMethod(index) {
+                return index + 1 + (this.page - 1) * this.limit
+            },
             visible(boolean) {
                 if (boolean) {
                     this.$refs.userIncrease.initFn()
@@ -181,7 +183,7 @@
             },
             getUserList(icco_id, area_id, role, user_type, page, limit, name) {
                 let currentRole = '';
-                this.tableData=[];
+                this.tableData = [];
                 this.isdone = true;
                 if (String(user_type).substring(0, 1) == 1) {
                     if (role == '管理员') {
@@ -213,10 +215,10 @@
                 Getuser(data).then((res) => {
                     this.isdone = false;
                     if (res.code == 200) {
-                        if(!res.data.accounts){
+                        if (!res.data.accounts) {
                             this.total = 0;
                             return;
-                        } 
+                        }
                         res.data.accounts.map((item) => {
                             item.UpdatedAt = getDateString(item.UpdatedAt)
                             if (item.role == 1001 || item.role == 2001) {

@@ -61,7 +61,7 @@
 
                         <el-table-column type="selection" width="60">
                         </el-table-column>
-                        <el-table-column label="序号" type="index" width="60" align="center">
+                        <el-table-column label="序号" type="index" :index="indexMethod" width="60" align="center">
                         </el-table-column>
                         <el-table-column prop="law_firm" label="所在律所" width="200" align='center' show-overflow-tooltip
                             class-name="grayColor">
@@ -158,6 +158,9 @@
             this.getlaywer(this.fieldVal, this.keyInput, this.timeVal[0], this.timeVal[1], this.page, this.limit);
         },
         methods: {
+             indexMethod(index) {
+             return index + 1 + (this.page - 1) * this.limit
+             },
             visible(boolean) {
                 if (boolean) {
                     this.$nextTick(() => {
