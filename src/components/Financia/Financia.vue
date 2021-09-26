@@ -167,15 +167,13 @@
             }
         },
         mounted() {
-            // console.log('iiii',accounting.formatColumn([121222222]));
-            console.log(this.$accounting)
             this.timeVal = ''
             // 获取角色权限
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID;
             let getDate = new Date();
             let time =
-                `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>10?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${getDate.getDay()>10?getDate.getDay():'0'+getDate.getDay()} ${getDate.getHours()>10?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>10?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>10?getDate.getSeconds():'0'+getDate.getSeconds()}`
+                `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>9?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${Number(getDate.getDay())+1>9?Number(getDate.getDay())+1:'0'+(Number(getDate.getDay())+1)} ${getDate.getHours()>9?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>9?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>9?getDate.getSeconds():'0'+getDate.getSeconds()}`
             this.timeVal = time;
             this.GetInsurance()
 
@@ -233,7 +231,6 @@
                             })
                             this.total = res.data.total
                             this.tableData = res.data.list
-                            console.log(res)
                         } else {
                             this.tableData = []
                         }
@@ -330,11 +327,10 @@
                 this.fieldVal = '';
                 let getDate = new Date();
                 let time =
-                    `${getDate.getFullYear()}-${getDate.getMonth()>10?getDate.getMonth():'0'+getDate.getMonth()}-${getDate.getDay()>10?getDate.getDay():'0'+getDate.getDay()} ${getDate.getHours()>10?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>10?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>10?getDate.getSeconds():'0'+getDate.getSeconds()}`
+                    `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>9?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${Number(getDate.getDay())+1>9?Number(getDate.getDay())+1:'0'+(Number(getDate.getDay())+1)} ${getDate.getHours()>9?getDate.getHours():'0'+getDate.getHours()}:${getDate.getMinutes()>9?getDate.getMinutes():'0'+getDate.getMinutes()}:${getDate.getSeconds()>9?getDate.getSeconds():'0'+getDate.getSeconds()}`
                 this.timeVal = time;
                 this.areaVal = '';
                 this.areaData = [];
-                this.insuranceDta = [];
                 // this.GetReconcilia(start, end, this.fieldVal, this.page, this.limit)
             },
             searchClick() {

@@ -142,28 +142,6 @@ export default {
         this.elstpen = true;
         this.elsteps = false;
       }
-
-      // var data = {
-      //   username: "",
-      //   stage: this.cstext,
-      //   created_at: "",
-      // }
-      // butiao.push(
-      //   {
-      //   username: "xxxx",
-      //   stage: "填写信息",
-      //   created_at: "2021-08-24 10:38",
-      // },
-      // {
-      //   username: "xxxx",
-      //   stage: "出单确认",
-      //   created_at: "2021-08-24 10:38",
-      // },{
-      //   username: "xxxx",
-      //   stage: "结束",
-      //   created_at: "2021-08-24 10:38",
-      // },
-      // )
       this.butiao = butiao;
       this.numbersteap = this.buzou.length;
 
@@ -178,23 +156,13 @@ export default {
     },
   },
   methods: {
-    // derthine(dat){
-    //   console.log('yy',dat.reverse());
-    // }
+    
   },
 };
 </script>
 
 <style lang="less">
-// .el-steps{
-//   .el-step{
-//     .el-step__main {
-//       .el-step__description{
-//         width: 105px;
-//       }
-//     }
-//   }
-// }
+
 .stepxy {
   width: 1200px;
   white-space: normal;

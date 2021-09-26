@@ -42,7 +42,7 @@
     width: 6%;
 }
 .grayColor{
-    font-size: 12px;
+    font-size: 14px;
     color: #555555;
 }
 .grayColor div {
@@ -132,9 +132,9 @@
     width: 100% !important;
 }
 
-.usermanagerFix .el-table__header {
+/* .usermanagerFix .el-table__header {
     table-layout: inherit !important;
-}
+} */
 
 .InsuranceCompany .el-table__row td:last-child,
 .InsuranceCompany .has-gutter tr th:last-child {
@@ -160,12 +160,11 @@
 }
 
 .InsuranceCompany .grayColor {
-    font-size: 13px;
-    color: #979898;
+    font-size: 14px;
 }
 
 .demo-table-expand {
-    font-size: 13px;
+    font-size: 14px;
     /* margin-left: 150px; */
     display: flex;
     width: 100%;

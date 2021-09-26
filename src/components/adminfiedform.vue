@@ -440,7 +440,7 @@
 
               <div>
                 <div class="policy">
-                  <span class="policy_btn">
+                  <span class="policy_btn" v-if="plaintifftf">
                     <el-button
                       class="policy_bton"
                       :loading="qisloading"
@@ -582,7 +582,7 @@
 
               <div>
                 <div class="policy">
-                  <span class="policy_btn">
+                  <span class="policy_btn" v-if="preservationtf">
                     <el-button
                       class="policy_bton"
                       type="primary"
@@ -718,7 +718,7 @@
               <p class="marwers_p">证据材料：</p>
               <div>
                 <div class="policy">
-                  <span class="policy_btn">
+                  <span class="policy_btn" v-if="testimonytf">
                     <el-button
                       class="policy_bton"
                       type="primary"
@@ -1348,6 +1348,10 @@ export default {
       // upzjloading: false,
 
       dioat: "",
+
+      plaintifftf: false,
+      preservationtf: false,
+      testimonytf: false,
     };
   },
   destroyed(){
@@ -1532,6 +1536,7 @@ export default {
       // 起诉状图片
       this.plaintiff = dat.files.indictment;
       if (this.plaintiff != null) {
+        this.plaintifftf = true;
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
@@ -1568,6 +1573,7 @@ export default {
 
       this.preservation = dat.files.preservation;
       if (this.preservation != null) {
+        this.preservationtf = true;
         var bo = [];
         var u = [];
         for (let e = 0; e < this.preservation.length; e++) {
@@ -1599,6 +1605,7 @@ export default {
       // 证据材料
       this.testimony = dat.files.testimony;
       if (this.testimony != null) {
+        this.testimonytf = true;
         var tiomonimg = [];
         var tiomonfile = [];
         for (let f = 0; f < this.testimony.length; f++) {
