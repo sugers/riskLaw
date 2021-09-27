@@ -48,7 +48,9 @@
 .grayColor div {
     width: 100% !important;
 }
-
+.el-input__icon{
+    line-height: 34px !important;
+}
 .vertical-center-modal {
     display: flex;
     align-items: center;

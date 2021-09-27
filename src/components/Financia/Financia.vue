@@ -167,7 +167,6 @@
             }
         },
         mounted() {
-            this.timeVal = ''
             // 获取角色权限
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID;

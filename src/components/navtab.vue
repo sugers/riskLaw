@@ -65,8 +65,8 @@
             ><i class="el-icon-s-marketing"></i>统计分析</template
           >
           <el-menu-item index="/Statistics">业务人员业绩表</el-menu-item>
-          <!-- <el-menu-item index="">业务发展趋势图</el-menu-item>
-          <el-menu-item index="">业务发展总览表</el-menu-item> -->
+          <el-menu-item index="/TrendChart">业务发展趋势图</el-menu-item>
+          <!-- <el-menu-item index="">业务发展总览表</el-menu-item> -->
         </el-submenu>
         <!-- <el-menu-item index="/notics" v-if="chusheng || baoxtai">
           <template slot="title">
