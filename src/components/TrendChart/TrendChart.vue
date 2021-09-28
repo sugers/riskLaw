@@ -13,7 +13,7 @@
                     <div class="timeSelect onlyClass">
                         <span class="name">月份：</span>
                         <div class="selectContent">
-                            <el-date-picker v-model="monthVal" type="month" placeholder="选择月">
+                            <el-date-picker v-model="monthVal" type="month" placeholder="选择月" @change="monthChange">
                             </el-date-picker>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                 },
                 legend: {
                     data: ['拒绝量', '通过量'],
-                    right:30
+                    right: 30
                 },
                 xAxis: {
                     type: 'category',
@@ -163,7 +163,7 @@
                 },
                 legend: {
                     data: ['出单量'],
-                    right:30
+                    right: 30
                 },
                 xAxis: {
                     data: [],
@@ -173,7 +173,7 @@
                     },
                 },
                 yAxis: {
-                    max:200,
+                    max: 200,
                     type: 'value',
                     // axisLabel: {
                     //     formatter: function (params) {
@@ -211,9 +211,9 @@
                         barWidth: 20,
                         barGap: '-100%',
                         itemStyle: {
-                        normal: {
-                        color: 'rgba(128, 128, 128, 0)'
-                        }
+                            normal: {
+                                color: 'rgba(128, 128, 128, 0)'
+                            }
                         },
                         label: {
                             normal: {
@@ -240,6 +240,23 @@
         methods: {
             yearChange() {
                 this.monthVal = '';
+            },
+            monthChange() {
+                let getDate = new Date();
+                let day = getDate.getDay();
+                let hours = getDate.getHours();
+                let minutes = getDate.getMinutes();
+                let seconds = getDate.getSeconds();
+                let timeval = `${this.monthVal?new Date(this.monthVal).getFullYear():new
+                Date().getFullYear()}-${Number(new
+                Date(this.monthVal).getMonth())+1>9?Number(new
+                Date(this.monthVal).getMonth())+1:'0'+(Number(new
+                Date(this.monthVal).getMonth())+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)}
+                ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                if (this.yearVal) {
+                    this.yearVal = timeval;
+                }
+
             },
             GetInsurance() {
                 let that = this;
@@ -323,16 +340,19 @@
                 if (!this.yearVal) {
                     type = 0
                     timeVal =
-                        `${getDate.getFullYear()}-${Number(month)+1>9?Number(month)+1:'0'+(Number(month)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                        `${new Date(this.monthVal).getFullYear()}-${Number(new
+                        Date(this.monthVal).getMonth())+1>9?Number(new
+                        Date(this.monthVal).getMonth())+1:'0'+(Number(new
+                        Date(this.monthVal).getMonth())+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
 
                 } else if (this.yearVal && this.monthVal) {
-                    this.yearVal = new Date(this.yearVal).getFullYear();
+                    this.yearVal = new Date(this.monthVal).getFullYear();
                     type = 0;
                     timeVal =
-                        `${getDate.getFullYear()}-${Number(new
-Date(this.monthVal).getMonth())+1>9?Number(new
-Date(this.monthVal).getMonth())+1:'0'+(Number(new
-Date(this.monthVal).getMonth())+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                        `${new Date(this.monthVal).getFullYear()}-${Number(new
+                        Date(this.monthVal).getMonth())+1>9?Number(new
+                        Date(this.monthVal).getMonth())+1:'0'+(Number(new
+                        Date(this.monthVal).getMonth())+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
                     this.yearVal = timeVal
                 } else if (this.yearVal && !this.monthVal) {
                     this.yearVal = new Date(this.yearVal).getFullYear()
