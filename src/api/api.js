@@ -286,6 +286,13 @@ export const GetTrendChartOrder = data => {
         resolve(get('/api/v1/icco/admin/trade/dataRange', data))
     })
 }
+// 获取业务员的业务总览表
+
+export const GetOverviewTable = data => {
+    return new Promise(function (resolve) {
+        resolve(get('/api/v1/icco/admin/performance/area', data))
+    })
+}
 // 下载全部文件
 // export const Casedownload = data => {
 //   return new Promise(function (resolve) {
