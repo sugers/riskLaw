@@ -42,7 +42,7 @@
             </div>
             <!-- <div class="editList">
                 <div class="listLeft Required">
-                    <span>开通区域：</span>
+                    <span>省份：</span>
                 </div>
                 <div class="listRight">
                     <el-select v-model="dataObj.areaVal" slot="prepend" placeholder="请选择">

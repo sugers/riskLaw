@@ -42,7 +42,7 @@
             </div>
             <div class="editList">
                 <div class="listLeft Required">
-                    <span>开通区域：</span>
+                    <span>省份：</span>
                 </div>
                 <div class="listRight">
                     <el-select v-model="dataObj.areaVal" slot="prepend" placeholder="请选择">
@@ -130,10 +130,13 @@
         mounted() {
 
             provinces.forEach((item) => {
-                this.provinceData.push({
-                    'name': item.name,
-                    "code": item.code
-                })
+                if (item.name != '总公司') {
+                    this.provinceData.push({
+                        'name': item.name,
+                        "code": item.code
+                    })
+                }
+
             })
         },
         methods: {
@@ -142,7 +145,7 @@
             },
             increaseClick() {
                 if (this.dataObj.areaVal == '') {
-                    this.$Message.error('开通区域未选择');
+                    this.$Message.error('省份未选择');
                     return
                 }
                 let data = {

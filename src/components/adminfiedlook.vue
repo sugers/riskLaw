@@ -790,6 +790,91 @@
           </el-col>
         </el-row>
       </div>
+      <div class="fromrevie">
+        <el-row>
+          <el-col :span="24">
+            <div class="grid-content">出单确认信息</div>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="admreviewerss">
+        <el-row>
+          <el-col :span="24">
+            <div class="sinstate">
+              <p>出单状态：</p>
+              <div class="tag_tag">
+                <!-- <el-radio-group v-model="feedcudan">
+                  <el-radio :label="1">已出单</el-radio>
+                  <el-radio :label="0">未出单</el-radio>
+                </el-radio-group> -->
+                <el-tag type="danger" v-if="feedcudan == 0">未出单</el-tag>
+                <el-tag type="success" v-if="feedcudan == 1">已出单</el-tag>
+                
+              </div>
+            </div>
+            <div class="martexts">
+              <p>保险金额：</p>
+              <span>
+                <span>{{usertiduy.baoxianRMB | currency}}</span>
+              </span>
+            </div>
+            <div class="marwers">
+              <p class="marwers_p">保单附件：</p>
+              <div class="listqishu" v-if="tranboolesrc">
+                <Comimageviewer
+                  :visible.sync="tranconimgs"
+                  :url="tranconurl"
+                ></Comimageviewer>
+                <span
+                  class="imgs"
+                  v-for="(item, insrc) in transrcs"
+                  :key="insrc"
+                >
+                  <p class="ad_imgs_txts" :title="item.file_name" @click="cdtransrcopen(insrc)">
+                    {{ item.file_name }}
+                  </p>
+                  <div class="btntext">
+                    <a
+                      :href="'https://wx.haobofalv.com/' + item.path"
+                      :download="item.file_name"
+                      >下载</a
+                    >
+                    <div class="shan" @click="deletes(item.id, item.path)">
+                      删除
+                    </div>
+                  </div>
+                </span>
+              </div>
+              <div class="listqishu" v-if="tranboolefile">
+                <span
+                  class="imgs"
+                  v-for="(item, ins) in tranfiles"
+                  :key="ins"
+                >
+                  <p class="ad_imgs_txt" 
+                    :title="item.file_name"
+                    :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                    @click="btnclicks(item.path)"
+                  >
+                    {{ item.file_name }}
+                  </p>
+                  <div class="btntext">
+                    <a
+                      :href="'https://wx.haobofalv.com/' + item.path"
+                      :download="item.file_name"
+                      >下载</a
+                    >
+                    <div class="shan" @click="deletes(item.id, item.path)">
+                      删除
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
+            
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </el-scrollbar>
 </template>
@@ -943,6 +1028,15 @@ export default {
       testmonyimage:[],
       testmonyurl: [],
       textmonyimg: false,
+      // 保单附件
+      transaction: [],
+      transrcs: [],
+      tranfiles: [],
+      tranboolesrc: false,
+      tranboolefile: false,
+      tranimggevie: [],
+      tranconurl: [],
+      tranconimgs: false,
       // 保全金额（重点）
       from: {
         input: "",
@@ -966,6 +1060,12 @@ export default {
       shancu: true,
       // 法律意见书
       law_opinion_path: "",
+      // 出单情况
+      feedcudan: null,
+      // 保险金额
+      usertiduy: {
+        baoxianRMB: "",
+      },
 
       plaintifftf: false,
       preservationtf: false,
@@ -1026,14 +1126,16 @@ export default {
     },
     taskview(dat) {
       // console.log('dat',dat);
+      this.feedcudan = dat.trade;
       // 风险评估id
       this.evalid = dat.id;
       this.cty = dat.case_type;
       // 出单情况
       this.feedtrade = dat.stage;
       this.insured_type = dat.insured_type;
+      this.usertiduy.baoxianRMB = dat.amount;
 
-      // console.log("dat", dat);
+      console.log("dat", dat);
 
       this.law_opinion_path = dat.law_opinion_path;
       this.csteps = dat.review_records;
@@ -1255,6 +1357,38 @@ export default {
           this.monyfile = false;
         }
       }
+
+      this.transaction = dat.files.transaction;
+      if(this.transaction != null){
+        let trantimg = []
+        let trantfile = []
+        for (let r = 0; r < this.transaction.length; r++) {
+          let filcanion = this.transaction[r];
+          let ffix = filcanion.path.substring(filcanion.path.lastIndexOf(".") + 1);
+          if(
+            ffix.toLowerCase() == "jpg" ||
+            ffix.toLowerCase() == "jpeg" ||
+            ffix.toLowerCase() == "png" 
+          ){
+            trantimg.push(filcanion)
+            this.tranimggevie.push(htts + "/" + filcanion.path)
+          }else{
+            trantfile.push(filcanion)
+          }
+        }
+        if (trantimg.length != 0) {
+          this.transrcs = trantimg
+          this.tranboolesrc = true;
+        }else{
+          this.tranboolesrc = false;
+        }
+        if (trantfile.length != 0) {
+          this.tranfiles = trantfile
+          this.tranboolefile = true;
+        }else{
+          this.tranboolefile = false;
+        }
+      }
       // 上一步得数据
       let valinfo = dat.eval_info_json;
       if(valinfo.usernamesfz){
@@ -1299,11 +1433,16 @@ export default {
       this.testmonyurl = [...this.testmonyimage, ins];
       this.textmonyimg = true;
     },
+    cdtransrcopen(ind){
+      this.tranconurl = [...this.tranimggevie,ind];
+      this.tranconimgs = true;
+    },
     closeViewer() {
       this.showViewer = false;
       this.plaintiffimg = false;
       this.preserimg = false;
       this.textmonyimg = false;
+      this.tranconimgs = false;
     },
 
     userdeletes() {
@@ -1453,7 +1592,7 @@ export default {
         min-height: 25px;
         line-height: 36px;
         margin: 0;
-        min-width: 140px;
+        min-width: 160px;
         font-size: 15px;
         // color: #606266;
       }
@@ -1510,10 +1649,24 @@ export default {
         flex-direction: column;
       }
     }
+    .sinstate{
+        display: flex;
+        p {
+          min-height: 25px;
+          line-height: 36px;
+          margin: 0;
+          min-width: 140px;
+          font-size: 15px;
+        }
+        .tag_tag{
+          display: flex;
+          align-items: center;
+        }
+      }
     .marwers {
       display: flex;
       .marwers_p {
-        width: 130px;
+        width: 150px;
         margin: 0;
         // margin-right: 35px;
       }

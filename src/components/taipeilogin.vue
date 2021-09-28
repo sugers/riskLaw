@@ -346,26 +346,29 @@
         }
     }
 
-    @media screen and (max-width: 720px){
-        .login{
+    @media screen and (max-width: 720px) {
+        .login {
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
         }
-        .admin-login .login .logo{
+
+        .admin-login .login .logo {
             width: auto;
             height: auto;
         }
-        .admin-login .login .gin-from{
+
+        .admin-login .login .gin-from {
             min-width: inherit;
         }
-        .logo_flex{
+
+        .logo_flex {
             display: none !important;
         }
-        .logo_box{
+
+        .logo_box {
             display: none !important;
         }
     }
-    
 </style>

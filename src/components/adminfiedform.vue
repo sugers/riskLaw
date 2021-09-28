@@ -53,8 +53,25 @@
           </el-col>
         </el-row>
       </div>
+      <div class="admreviewerss">
+        <el-row>
+          <el-col :span="24">
+            <div class="martexts">
+              <!-- 1.自然人 2.企业 -->
+              <p>类型：</p>
+              <div class="listchuadn">
+                <el-radio-group v-model="insuredtypeid">
+                  <el-radio :label="1">自然人</el-radio>
+                  <el-radio :label="2">企业</el-radio>
+                </el-radio-group>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+
       <!-- 身份证 -->
-      <div class="admreviewerss" v-if="this.insured_type == 1">
+      <div class="admreviewerss" v-show="this.insuredtypeid == 1">
         <el-row>
           <el-col :span="12">
             <div class="martexts">
@@ -68,7 +85,7 @@
             <el-form
               ref="cardForm"
               :model="usernamesfz"
-              label-width="auto"
+              
               style="width: 540px"
               size="medium"
             >
@@ -201,7 +218,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path,1)">
+                      <div class="shan" @click="deletes(item.id, item.path, 1)">
                         删除
                       </div>
                     </div>
@@ -213,7 +230,7 @@
         </el-row>
       </div>
       <!-- 营业执照 -->
-      <div class="admreviewerss" v-if="this.insured_type == 2">
+      <div class="admreviewerss" v-show="this.insuredtypeid == 2">
         <el-row>
           <el-col :span="12">
             <div class="martexts">
@@ -228,7 +245,7 @@
             <el-form
               ref="userblicense"
               :model="userblicense"
-              label-width="auto"
+              
               style="width: 540px"
               size="medium"
             >
@@ -856,7 +873,7 @@
               <el-form
                 ref="userblicense"
                 :model="userblicense"
-                label-width="auto"
+                
                 style="width: 800px"
                 size="medium"
               >
@@ -991,7 +1008,7 @@
                 <el-form
                   ref="cardForm"
                   :model="usernamesfz"
-                  label-width="auto"
+                  
                   style="width: 400px"
                   size="medium"
                 >
@@ -1077,7 +1094,7 @@
                 <el-form
                   ref="userblicense"
                   :model="userblicense"
-                  label-width="auto"
+                  
                   style="width: 400px"
                   size="medium"
                 >
@@ -1184,7 +1201,8 @@ import { getInputValue } from "../../static/js/amountFormat.js";
 import usersteps from "../components/usersteps.vue";
 import "../../static/css/disaoerss.less";
 import "../../static/css/file_policy_style.less";
-import "../../static/css/el_dising.less"
+import "../../static/css/el_form.less";
+import "../../static/css/el_dising.less";
 // import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import Comimageviewer from "../components/ComImageviewer.vue";
 
@@ -1214,6 +1232,8 @@ import {
   Feedback,
   Upsecase,
   // Casedownload,
+  Insuredtype,
+  Caserepeat,
 } from "../api/api";
 import axios from "axios";
 
@@ -1233,6 +1253,8 @@ export default {
       divtaus: false,
       // 风险评估id
       evalid: "",
+      // 类型
+      insuredtypeid: "",
       // 身份证信息
       usernamesfz: {
         name: "",
@@ -1352,12 +1374,13 @@ export default {
       plaintifftf: false,
       preservationtf: false,
       testimonytf: false,
+      arrat: [],
     };
   },
-  destroyed(){
-    window.removeEventListener('beforeunload',e=>{
-      this.beforeClosepage(e)
-    })
+  destroyed() {
+    window.removeEventListener("beforeunload", (e) => {
+      this.beforeClosepage(e);
+    });
   },
   created() {
     this.$nextTick(() => {
@@ -1370,23 +1393,50 @@ export default {
     this.$nextTick(function () {
       this.fromheight = window.innerHeight - 20;
     });
-    window.addEventListener('beforeunload',e=>{
-      this.beforeClosepage(e)
-    })
+    window.addEventListener("beforeunload", (e) => {
+      this.beforeClosepage(e);
+    });
+    this.caserepeatapi();
   },
   methods: {
-    beforeClosepage(){
-      window.opener.postData()
+    beforeClosepage() {
+      window.opener.postData();
     },
+    // 相同案件提示
+    caserepeatapi(){
+      let data = {
+        risk_eval_id: this.$route.query.data
+      }
+      Caserepeat(data).then(res=>{
+        if (res.data != null) {
+          console.log(res.data);
+          let tmp = ''
+          res.data.forEach(element => {
+            tmp+=`<span><a href='/#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
+          });
+          
+          console.log(this.$ip);
+          
+          this.$notify({
+              title: '案件相同提醒',
+              dangerouslyUseHTMLString: true,
+              message: tmp,
+              duration: 0,
+              offset: 100,
+              type: 'warning'
+          })
+          
+        }
+      })
+    },
+    
     // 任务查看api
     reviewapi() {
       var data = {
         risk_eval_id: this.$route.query.data,
       };
       Reviewcase(data).then((res) => {
-        
         if (res.code == 200) {
-          
           this.taskview(res.data);
           this.csteps = res.data.review_records;
           this.cstext = "快速反馈";
@@ -1409,8 +1459,10 @@ export default {
       this.evalid = dat.id;
       this.cty = dat.case_type;
       this.insured_type = dat.insured_type;
+      this.insuredtypeid = dat.insured_type;
+
       if (dat.preserv_amount) {
-        this.from.input = dat.preserv_amount
+        this.from.input = dat.preserv_amount;
       }
 
       let htts = process.env.VUE_APP_API_URL;
@@ -1542,7 +1594,7 @@ export default {
         for (let p = 0; p < this.plaintiff.length; p++) {
           var s = this.plaintiff[p];
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
-      
+
           if (
             na.toLowerCase() == "jpg" ||
             na.toLowerCase() == "jpeg" ||
@@ -1693,10 +1745,8 @@ export default {
               type: "success",
             });
           }
-          
         })
         .catch(() => {
-          
           this.$message({
             showClose: true,
             message: "删除失败",
@@ -1751,9 +1801,7 @@ export default {
       this.from[name] = getInputValue(el);
     },
     numfeedback(ind) {
-      
       this.dioat = ind;
-      
     },
     userinputmon() {
       // var timer = setTimeout(() => {
@@ -1774,7 +1822,6 @@ export default {
       //     this.upzjloading = true;
       //     return;
       // }
-      
     },
     // 文件上传
     handlePreview(response) {
@@ -1801,7 +1848,7 @@ export default {
     // 快速反馈按钮
     through(a) {
       if (a == 1) {
-        if (this.userfilesz != null) {
+        if (this.insured_type == 1) {
           if (this.usernamesfz.name != "") {
             if (this.feedback == 1 || this.feedback == 2) {
               if (!this.from.input || this.from.input != 0) {
@@ -1823,7 +1870,7 @@ export default {
               type: "error",
             });
           }
-        } else if (this.blicense != null) {
+        } else if (this.insured_type == 2) {
           if (this.userblicense.company != "") {
             if (this.feedback == 1 || this.feedback == 2) {
               if (this.from.input) {
@@ -1846,7 +1893,7 @@ export default {
             });
           }
         }
-      } 
+      }
       // else if (a == 0) {
       //   this.$router.push({
       //     path: "/usertable",
@@ -1866,7 +1913,7 @@ export default {
       if (dat == 5) {
         this.zjloading = true;
       }
-      
+
       // 3.起诉状；4.保全申请书；5.证据材料
       // axios.Headers.add="Access-Control-Expose-Headers";
       let url = this.https + "/api/v1/admin/review/case/download";
@@ -1881,7 +1928,6 @@ export default {
           responseType: "blob",
         })
         .then((res) => {
-          
           if (res.status == 200) {
             this.qisloading = false;
             this.sqloading = false;
@@ -1915,12 +1961,15 @@ export default {
     apidiledfrom() {
       let numind = Number(moneyDelete(this.from.input));
       if (numind >= 5000000 && this.feedback == 1) {
-        
         this.fus = 4;
       } else {
-        
         this.fus = "";
       }
+      let dats = {
+        insured_type: this.insuredtypeid,
+        risk_eval_id: this.evalid,
+      }
+      Insuredtype(dats).then(()=>{})
       var das = {
         usernamesfz: this.usernamesfz,
         userblicense: this.userblicense,
@@ -1951,7 +2000,6 @@ export default {
                   data: this.evalid,
                 },
               });
-              
             } else if (this.feedback == 3) {
               this.$router.push({
                 path: "/usertable/adminfiedlook",
@@ -1959,7 +2007,6 @@ export default {
                   data: this.evalid,
                 },
               });
-              
             }
           }
         })
@@ -2040,7 +2087,7 @@ export default {
         min-height: 25px;
         line-height: 36px;
         margin: 0;
-        min-width: 140px;
+        min-width: 160px;
         font-size: 15px;
         // color: #606266;
       }
@@ -2090,14 +2137,21 @@ export default {
       }
 
       .tianbtn {
+        margin-bottom: 10px;
+        margin-left: 160px;
         padding: 9px 15px;
+      }
+      .listchuadn{
+        display: flex;
+        align-items: center;
       }
     }
     .marwers {
       display: flex;
       .marwers_p {
-        width: 140px;
+        width: 150px;
         margin: 0;
+        font-size: 15px;
         // margin-right: 35px;
       }
       .listqishu {

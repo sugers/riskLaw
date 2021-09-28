@@ -24,7 +24,7 @@
                         </div>
                     </div> -->
                     <!-- <div class="areaSelect onlyClass">
-                        <span class="name">开通区域：</span>
+                        <span class="name">省份：</span>
                         <div class="selectContent">
                             <el-select v-model="areaVal" slot="prepend" placeholder="请选择">
                                 <el-option label="餐厅名" value="1"></el-option>
@@ -153,7 +153,7 @@
                         <el-table-column prop="contact_tel" label="联系电话" width="140" align='center'
                             show-overflow-tooltip class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="area" label="开通区域" width="100" align='center' show-overflow-tooltip
+                        <el-table-column prop="area" label="省份" width="100" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
                         <!-- <el-table-column prop="website" label="官网" width="200" align='center' show-overflow-tooltip

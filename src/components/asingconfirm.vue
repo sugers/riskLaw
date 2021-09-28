@@ -799,8 +799,8 @@
         <el-row>
           <el-col :span="24">
             <div class="martexts">
-              <p>证据材料：</p>
-              <div class="listqishu">
+              <p>出单状态：</p>
+              <div class="listchuadn">
                 <el-radio-group v-model="feedcudan">
                   <el-radio :label="1">已出单</el-radio>
                   <el-radio :label="0">未出单</el-radio>
@@ -820,15 +820,45 @@
                 元&nbsp;&nbsp;<span style="color: red">{{ usertidrmb }}</span>
               </span>
             </div>
-            <div class="martexts">
-              <p>保单附件：</p>
-              <div class="listqishu">
+            <div class="marwers">
+              <p class="marwers_p">保单附件：</p>
+              <div class="listqishu" v-if="tranboolesrc">
+                <Comimageviewer
+                  :visible.sync="tranconimgs"
+                  :url="tranconurl"
+                ></Comimageviewer>
                 <span
                   class="imgs"
-                  v-for="(item, ins) in transaction"
+                  v-for="(item, insrc) in transrcs"
+                  :key="insrc"
+                >
+                  <p class="ad_imgs_txts" :title="item.file_name" @click="cdtransrcopen(insrc)">
+                    {{ item.file_name }}
+                  </p>
+                  <div class="btntext">
+                    <a
+                      :href="'https://wx.haobofalv.com/' + item.path"
+                      :download="item.file_name"
+                      >下载</a
+                    >
+                    <div class="shan" @click="deletes(item.id, item.path)">
+                      删除
+                    </div>
+                  </div>
+                </span>
+              </div>
+
+              <div class="listqishu" v-if="tranboolefile">
+                <span
+                  class="imgs"
+                  v-for="(item, ins) in tranfiles"
                   :key="ins"
                 >
-                  <p class="ad_imgs_txt" :title="item.file_name">
+                  <p class="ad_imgs_txt" 
+                    :title="item.file_name"
+                    :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                    @click="btnclicks(item.path)"
+                  >
                     {{ item.file_name }}
                   </p>
                   <div class="btntext">
@@ -1058,6 +1088,13 @@ export default {
       monyfile: true,
       // 保单附件
       transaction: [],
+      transrcs: [],
+      tranfiles: [],
+      tranboolesrc: false,
+      tranboolefile: false,
+      tranimggevie: [],
+      tranconurl: [],
+      tranconimgs: false,
       // 标签页
       activeName: "first",
       // 填写信息
@@ -1155,7 +1192,7 @@ export default {
       this.cty = dat.case_type;
       this.insured_type = dat.insured_type;
       // 传过来的数据
-      // console.log("dat", dat);
+      console.log("dat", dat);
       // for (let i = 0; i < this.anyou.length; i++) {
       //   if (dat.case_type == this.anyou[i].ID) {
       //     this.case_type = this.anyou[i].name;
@@ -1378,8 +1415,45 @@ export default {
       }
 
       this.transaction = dat.files.transaction;
+      if(this.transaction != null){
+        let trantimg = []
+        let trantfile = []
+        for (let r = 0; r < this.transaction.length; r++) {
+          let filcanion = this.transaction[r];
+          let ffix = filcanion.path.substring(filcanion.path.lastIndexOf(".") + 1);
+          if(
+            ffix.toLowerCase() == "jpg" ||
+            ffix.toLowerCase() == "jpeg" ||
+            ffix.toLowerCase() == "png" 
+          ){
+            trantimg.push(filcanion)
+            this.tranimggevie.push(htts + "/" + filcanion.path)
+          }else{
+            trantfile.push(filcanion)
+          }
+        }
+        if (trantimg.length != 0) {
+          this.transrcs = trantimg
+          this.tranboolesrc = true;
+        }else{
+          this.tranboolesrc = false;
+        }
+        if (trantfile.length != 0) {
+          this.tranfiles = trantfile
+          this.tranboolefile = true;
+        }else{
+          this.tranboolefile = false;
+        }
+      }
+
       // 上一步得数据
       let valinfo = dat.eval_info_json;
+      if (valinfo.usernamesfz) {
+        this.usernamesfz = valinfo.usernamesfz;
+      }
+      if (valinfo.userblicense) {
+        this.userblicense = valinfo.userblicense;
+      }
 
       if (valinfo.preserveForm) {
         this.preserveForm = valinfo.preserveForm;
@@ -1413,11 +1487,16 @@ export default {
       this.testmonyurl = [...this.testmonyimage, ins];
       this.textmonyimg = true;
     },
+    cdtransrcopen(ind){
+      this.tranconurl = [...this.tranimggevie,ind];
+      this.tranconimgs = true;
+    },
     closeViewer() {
       this.showViewer = false;
       this.plaintiffimg = false;
       this.preserimg = false;
       this.textmonyimg = false;
+      this.tranconimgs = false;
     },
 
     anniu(dat) {
@@ -1707,7 +1786,7 @@ export default {
         min-height: 25px;
         line-height: 36px;
         margin: 0;
-        min-width: 140px;
+        min-width: 160px;
         font-size: 15px;
         // color: #606266;
       }
@@ -1759,6 +1838,11 @@ export default {
           }
         }
       }
+      .listchuadn{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
       .listqishu {
         display: flex;
         flex-direction: column;
@@ -1767,7 +1851,7 @@ export default {
     .marwers {
       display: flex;
       .marwers_p {
-        width: 130px;
+        width: 150px;
         margin: 0;
         // margin-right: 35px;
       }

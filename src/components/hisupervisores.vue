@@ -72,7 +72,7 @@
             <el-form
               ref="cardForm"
               :model="usernamesfz"
-              label-width="auto"
+              
               style="width: 540px"
               size="medium"
             >
@@ -226,7 +226,7 @@
             <el-form
               ref="userblicense"
               :model="userblicense"
-              label-width="auto"
+
               style="width: 540px"
               size="medium"
             >
@@ -433,14 +433,14 @@
         <el-row>
           <el-col :span="12">
             <div class="martexts">
-              <el-button type="primary" @click.prevent="anniu(1)"
+              <el-button class="tianbtn" type="primary" @click.prevent="anniu(1)"
                 >填写核实</el-button
               >
             </div>
             <el-form
               ref="complaint"
               :model="complaint"
-              label-width="auto"
+       
               style="width: 540px"
               size="medium"
             >
@@ -657,14 +657,14 @@
         <el-row>
           <el-col :span="12">
             <div class="martexts">
-              <el-button type="primary" @click.prevent="anniu(2)"
+              <el-button class="tianbtn" type="primary" @click.prevent="anniu(2)"
                 >填写核实</el-button
               >
             </div>
             <el-form
               ref="preserveForm"
               :model="preserveForm"
-              label-width="auto"
+              
               style="width: 540px"
               size="medium"
             >
@@ -975,12 +975,14 @@
             <el-form
               ref="internalForm"
               :model="internalForm"
-              label-width="auto"
+        
               style="width: 540px"
               size="medium"
             >
               <el-form-item label="案件证据：" :required="true">
                 <el-input
+                  type="textarea"
+                  :autosize="{ minRows: 3 }"
                   v-model="internalForm.evidence"
                   placeholder="请输入内容"
                 ></el-input>
@@ -1135,8 +1137,8 @@
                   <el-form
                     ref="cardForm"
                     :model="usernamesfz"
-                    label-width="auto"
-                    style="width: 400px"
+          
+                    style="width: 450px"
                     size="medium"
                   >
                     <el-form-item label="姓名：" :required="true">
@@ -1213,8 +1215,8 @@
                   <el-form
                     ref="userblicense"
                     :model="userblicense"
-                    label-width="auto"
-                    style="width: 400px"
+                 
+                    style="width: 450px"
                     size="medium"
                   >
                     <el-form-item label="单位名称:" :required="true">
@@ -1352,8 +1354,9 @@
                   <el-form
                     ref="complaint"
                     :model="complaint"
-                    label-width="auto"
+           
                     height="650px"
+                    style="width: 450px"
                     size="medium"
                   >
                     <el-form-item label="原告姓名：" :required="true">
@@ -1490,8 +1493,8 @@
                   <el-form
                     ref="preserveForm"
                     :model="preserveForm"
-                    label-width="auto"
-                    style="width: 400px"
+       
+                    style="width: 450px"
                     size="medium"
                   >
                     <el-form-item label="保全申请人：" :required="true">
@@ -2436,6 +2439,11 @@ export default {
         }
       }
     }
+    .tianbtn {
+      margin-bottom: 10px;
+      margin-left: 160px;
+      padding: 9px 15px;
+    }
     .adminiewrss {
       display: flex;
       justify-content: center;
@@ -2450,7 +2458,7 @@ export default {
         min-height: 25px;
         line-height: 36px;
         margin: 0;
-        min-width: 107px;
+        min-width: 160px;
         font-size: 15px;
         // color: #606266;
       }
@@ -2459,7 +2467,6 @@ export default {
         line-height: 36px;
         font-size: 16px;
         color: #606266;
-        padding-left: 16px;
       }
       .imgs {
         display: flex;
@@ -2505,7 +2512,7 @@ export default {
     .marwers {
       display: flex;
       .marwers_p {
-        width: 115px;
+        width: 150px;
         margin: 0;
         // margin-right: 35px;
       }

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="headedata">
+    <!-- <div class="headedata">
       <div class="headerboke">
         <div class="hesde_data">数据看板</div>
       </div>
-    </div>
+    </div> -->
 
     <div v-if="pingtai">
       <el-row :gutter="12" class="elrow">
@@ -139,10 +139,44 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-row :gutter="12">
-        <el-col :span="12"> </el-col>
-        <el-col :span="12"> </el-col>
-      </el-row>
+    </div>
+    <div style="margin-top: 20px">
+      <el-card shadow="hover" :body-style="{ padding: '10px' }">
+        <!-- <div class="homecharts">
+          <div class="homesearch">
+            <span class="homesearch_sapn">年：</span>
+            <div class="homesearch_init">
+              <el-date-picker
+                v-model="yeared"
+                type="year"
+                placeholder="选择年"
+                format="yyyy"
+                :clearable="false"
+              >
+              </el-date-picker>
+            </div>
+          </div>
+          <div class="homesearch">
+            <span class="homesearch_sapn">月：</span>
+            <div class="homesearch_init">
+              <el-date-picker
+                v-model="monthed"
+                type="month"
+                placeholder="选择月"
+                format="yyyy-MM"
+                :clearable="false"
+              >
+              </el-date-picker>
+            </div>
+          </div>
+        </div> -->
+        <EchartsTable :id="'echars1'" :data="chartstable1" />
+      </el-card>
+    </div>
+    <div style="margin-top: 20px">
+      <el-card shadow="hover" :body-style="{ padding: '10px' }">
+        <EchartsTable :id="'echars2'" :data="chartstable2" />
+      </el-card>
     </div>
     <Spin fix v-show="isdone">
       <Icon type="ios-loading" size="18" class="demo-spin-icon-load"></Icon>
@@ -153,8 +187,20 @@
 
 <script>
 import { Commondashboard, Dashboard } from "../api/api";
+import EchartsTable from "./EChartsTable.vue";
+// function getThisMonthDays(days) {
+//   //传天数，返天数数组
+//   var arr = [];
+//   for (var i = 1; i <= days; i++) {
+//     arr.push(i);
+//   }
+//   return arr;
+// }
 export default {
   name: "soutable",
+  components: {
+    EchartsTable,
+  },
   data() {
     return {
       risk_eval_review_count: "",
@@ -167,6 +213,49 @@ export default {
       risk_eval_count: "",
       risk_eval_open_count: "",
       risk_eval_trade_count: "",
+
+      // 表1提交量
+      chartstable1: {
+        textTitle: "提交量",
+        nameArray: "",
+        series: [],
+      },
+      // 表1数据
+      chartsData1: [
+        // {
+        //   name: "通过量",
+        //   type: "bar",
+        //   barWidth: 25,
+        //   stack: "Ad",
+        //   data: [120, 132, 101, 134, 90, 230, 210, 135, 91, 114, 90, 121],
+        // },
+        // {
+        //   name: "拒绝量",
+        //   type: "bar",
+        //   barWidth: 25,
+        //   stack: "Ad",
+        //   data: [12, 32, 10, 34, 20, 13, 10, 35, 11, 14, 10, 16],
+        // },
+      ],
+
+      // 表2出单量
+      chartstable2: {
+        textTitle: "出单量",
+        nameArray: "",
+        series: [],
+      },
+      // 表2数据
+      chartsData2: [
+        // {
+        //   // name: "出单量",
+        //   type: "bar",
+        //   barWidth: 25,
+        //   data: [90, 80, 62, 74, 94, 70, 55, 63, 71, 86, 54, 79],
+        // },
+      ],
+
+      yeared: "",
+      monthed: "",
 
       pingtai: false,
       baoxingpint: false,
@@ -190,8 +279,19 @@ export default {
       this.baoxingpint = true;
       this.theinsurer();
     }
+
+    this.hometimeDate();
+
+    this.chartstable1.series = this.chartsData1;
+    this.chartstable2.series = this.chartsData2;
   },
   methods: {
+    hometimeDate() {
+      let date = new Date();
+      console.log("日期", date.getUTCFullYear());
+      // console.log('月',date.getMonth()+1);
+      this.yeared = date.getUTCFullYear().toString();
+    },
     // 看板数据api
     dashboardapi() {
       this.isdone = true;
@@ -212,12 +312,40 @@ export default {
       this.isdone = true;
       Dashboard().then((res) => {
         this.isdone = false;
-        // console.log('看板',res);
+        console.log("看板", res);
         // this.risk_eval_review_count = res.data.user_count;
         // this.icco_count = res.data.area_count;
         this.risk_eval_count = res.data.risk_eval_count;
         this.risk_eval_open_count = res.data.risk_eval_open_count;
         this.risk_eval_trade_count = res.data.risk_eval_trade_count;
+        console.log("22", res.data.risk_eval_submit_data_range);
+        this.chartstable1.nameArray = res.data.risk_eval_submit_data_range.dates;
+        let success_vals = {
+          name: "通过量",
+          type: "bar",
+          barWidth: 25,
+          stack: "Ad",
+          data: res.data.risk_eval_submit_data_range.success_vals,
+        };
+        let reject_vals = {
+          name: "拒绝量",
+          type: "bar",
+          barWidth: 25,
+          stack: "Ad",
+          data: res.data.risk_eval_submit_data_range.reject_vals,
+        };
+        this.chartsData1.push(success_vals);
+        this.chartsData1.push(reject_vals);
+
+        this.chartstable2.nameArray = res.data.risk_eval_trade_data_range.dates;
+        let counts = {
+            name: "出单",
+            type: "line",
+            data: res.data.risk_eval_trade_data_range.counts,
+        }
+        
+        this.chartsData2.push(counts);
+
       });
     },
   },
@@ -295,6 +423,35 @@ export default {
   img {
     width: 50px;
     height: 50px;
+  }
+}
+.homecharts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  .homesearch {
+    display: flex;
+    align-items: center;
+    margin: 0 0 20px 30px;
+    .homesearch_sapn {
+      width: 50px;
+      height: 30px;
+      font-size: 18px;
+      line-height: 30px;
+    }
+    .homesearch_init {
+      .el-input__inner {
+        // width: inherit !important;
+        padding: 0 30px;
+        width: 120px !important;
+        height: 34px !important;
+      }
+      .el-input__prefix,
+      .el-input__suffix {
+        top: -3px;
+      }
+    }
   }
 }
 </style>

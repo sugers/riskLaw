@@ -130,7 +130,7 @@ function gotoLogin() {
   //   userid.roleID == 1004
   // ) {
     window.localStorage.removeItem("userinfor");
-    window.location.href = '/adminLogin'
+    window.location.href = '/#/adminLogin'
     // return
   // }
 }

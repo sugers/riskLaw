@@ -55,8 +55,8 @@
                 </div>
             </div>
             <div class="editList">
-                <div class="listLeft Required">
-                    <span>开通区域：</span>
+                <div class="listLeft">
+                    <span>省份：</span>
                 </div>
                 <div class="listRight">
                     <el-select v-model="areaVal" slot="prepend" placeholder="请选择">
@@ -77,7 +77,7 @@
                 </div>
             </div> -->
             <div class="editList">
-                <div class="listLeft">
+                <div class="listLeft Required">
                     <span>姓名：</span>
                 </div>
                 <div class="listRight">
@@ -110,6 +110,7 @@
         props: ['isshow'],
         data() {
             return {
+                currendAreaId:'',
                 currendRole: '',
                 fullName: '',
                 userName: '',
@@ -129,6 +130,7 @@
             // 获取角色权限
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID;
+            this.currendAreaId = userInfo.area_id;
             this.GetInsurance()
         },
         methods: {
@@ -187,7 +189,7 @@
                     phone: this.contactPhonde,
                     password: this.passwordval,
                     icco_id: this.BelongInsurance,
-                    area_id: Number(this.areaVal),
+                    area_id: this.areaVal ? Number(this.areaVal) : 0,
                     role: Number(this.roleradio)
                 }
                 if (!data['username']) {
@@ -199,10 +201,7 @@
                 } else if (!data['icco_id']) {
                     this.$Message.warning('请选择所属公司');
                     return;
-                } else if (!data['area_id']) {
-                    this.$Message.warning('请选择开通区域');
-                    return;
-                } else if (!data['name']) {
+                }else if (!data['name']) {
                     this.$Message.warning('请填写姓名');
                     return;
                 }

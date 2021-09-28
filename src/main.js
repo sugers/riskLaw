@@ -5,6 +5,7 @@ import router from './router'
 import axios from 'axios'
 import formatRMB from 'format-rmb';
 import ViewUI from 'view-design';
+import * as echarts from 'echarts';
 import 'view-design/dist/styles/iview.css';
 import VueCurrencyFilter from 'vue-currency-filter'
 // 引入公共样式以及js
@@ -63,6 +64,7 @@ import {
     Card,
     Tag,
     Backtop,
+    Notification,
 } from 'element-ui'
 Vue.use(Tooltip)
 Vue.use(Switch)
@@ -124,7 +126,9 @@ Vue.use(VueCurrencyFilter,{
 
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;
+Vue.prototype.$notify = Notification;
 Vue.prototype.formatRMB = formatRMB;
+Vue.prototype.$echarts = echarts;
 
 Vue.prototype.$axios = axios
 

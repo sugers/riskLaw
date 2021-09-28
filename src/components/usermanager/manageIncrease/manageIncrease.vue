@@ -63,8 +63,8 @@
                 </div>
             </div>
             <div class="editList" v-if="currendRole==2001">
-                <div class="listLeft Required">
-                    <span>开通区域：</span>
+                <div class="listLeft">
+                    <span>省份：</span>
                 </div>
                 <div class="listRight">
                     <el-select v-model="areaVal" slot="prepend" placeholder="请选择">
@@ -120,6 +120,7 @@
             return {
                 areaVal: '',
                 currendRole: '',
+                currendAreaId: '',
                 radioSatatu: '',
                 fullName: '',
                 userName: '',
@@ -138,6 +139,7 @@
             // 获取角色权限
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID;
+            this.currendAreaId = userInfo.area_id;
             this.radioSatatu = String(userInfo.roleID).substring(0, 1)
             if (String(userInfo.roleID).substring(0, 1) == 1) {
                 this.roleradio = 1001;
@@ -203,8 +205,9 @@
                     username: this.userName,
                     phone: this.contactPhonde,
                     password: this.passwordval,
-                    icco_id: String(this.currendRole).substring(0, 1) == 2 ? this.BelongInsurance : 0,
-                    area_id: String(this.currendRole).substring(0, 1) == 2 ? Number(this.areaVal) : 0,
+                    icco_id: this.BelongInsurance ? this.BelongInsurance : 0,
+                    area_id: this.areaVal ? Number(this.areaVal) :
+                    0,
                     role: Number(this.roleradio)
                 }
                 if (!data['username']) {
@@ -218,9 +221,6 @@
                     return;
                 } else if (!data['icco_id'] && String(this.currendRole).substring(0, 1) == 2) {
                     this.$Message.warning('请选择所属公司');
-                    return;
-                } else if (!data['area_id'] && String(this.currendRole).substring(0, 1) == 2) {
-                    this.$Message.warning('请选择开通区域');
                     return;
                 }
                 Increaseuser(data).then((res) => {

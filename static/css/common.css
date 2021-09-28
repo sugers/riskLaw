@@ -1,24 +1,29 @@
 .InsuranceCompany .el-input__inner,
-.editList .el-input__inner ,
+.editList .el-input__inner,
 .selectContent .el-input__inner {
     width: 300px !important;
     height: 34px !important;
 
 }
+
 .laywerEdit .el-input__inner,
 .laywerEdit .editList .el-input__inner {
     width: 100% !important;
 }
+
 .el-date-editor.el-input,
-.el-date-editor.el-input__inner{
+.el-date-editor.el-input__inner {
     width: 100% !important;
 }
+
 .el-range-editor.el-input__inner {
     padding: 0;
 }
-.el-table .el-table__cell.is-center{
+
+.el-table .el-table__cell.is-center {
     text-align: center;
 }
+
 .el-radio-button__inner {
     padding: 8px 20px;
 }
@@ -41,16 +46,20 @@
     margin: 0 4px;
     width: 6%;
 }
-.grayColor{
+
+.grayColor {
     font-size: 14px;
     color: #555555;
 }
+
 .grayColor div {
     width: 100% !important;
 }
-.el-input__icon{
+
+.el-input__icon {
     line-height: 34px !important;
 }
+
 .vertical-center-modal {
     display: flex;
     align-items: center;
@@ -60,11 +69,12 @@
 .vertical-center-modal .ivu-modal {
     top: 0;
 }
+
 .InsuranceCompany .insuranceTop,
 .insuranceUser .insuranceTop {
     display: flex;
     align-items: flex-start;
-    flex-direction:inherit ;
+    flex-direction: inherit;
     flex-wrap: wrap;
     padding-bottom: 20px;
     border-bottom: 1px solid #BBBBBB;
@@ -146,9 +156,11 @@
 .InsuranceCompany .has-gutter .gutter {
     display: block !important;
 }
-.grayColor div{
+
+.grayColor div {
     width: 100% !important;
 }
+
 .BoldColor {
     color: #409EFF;
 }
@@ -320,6 +332,7 @@
     color: #C0C4CC;
     font-size: 14px;
 }
+
 .statisticsBottom .el-table {
     overflow-x: auto;
 }
@@ -337,6 +350,7 @@
 .statisticsBottom .el-table--scrollable-x .el-table__body-wrapper {
     overflow: visible;
 }
+
 @keyframes ani-demo-spin {
     from {
         transform: rotate(0deg);

@@ -72,7 +72,7 @@
             <el-form
               ref="cardForm"
               :model="usernamesfz"
-              label-width="auto"
+     
               style="width: 540px"
               size="medium"
             >
@@ -226,7 +226,7 @@
             <el-form
               ref="userblicense"
               :model="userblicense"
-              label-width="auto"
+       
               style="width: 540px"
               size="medium"
             >
@@ -442,7 +442,7 @@
             <el-form
               ref="complaint"
               :model="complaint"
-              label-width="auto"
+    
               style="width: 540px"
               size="medium"
             >
@@ -666,7 +666,7 @@
             <el-form
               ref="preserveForm"
               :model="preserveForm"
-              label-width="auto"
+     
               style="width: 540px"
               size="medium"
             >
@@ -975,7 +975,7 @@
             <el-form
               ref="internalForm"
               :model="internalForm"
-              label-width="auto"
+          
               style="width: 540px"
               size="medium"
             >
@@ -1136,8 +1136,8 @@
                   <el-form
                     ref="complaint"
                     :model="complaint"
-                    label-width="auto"
-                    style="width: 400px"
+             
+                    style="width: 450px"
                     size="medium"
                   >
                     <el-form-item label="原告姓名：" :required="true">
@@ -1275,7 +1275,7 @@
                   <el-form
                     ref="preserveForm"
                     :model="preserveForm"
-                    label-width="auto"
+                    style="width: 450px"
                     size="medium"
                   >
                     <el-form-item label="保全申请人：" :required="true">
@@ -1353,8 +1353,8 @@
                   <el-form
                     ref="cardForm"
                     :model="usernamesfz"
-                    label-width="auto"
-                    style="width: 400px"
+                    
+                    style="width: 450px"
                     size="medium"
                   >
                     <el-form-item label="姓名：" :required="true">
@@ -1431,8 +1431,8 @@
                   <el-form
                     ref="userblicense"
                     :model="userblicense"
-                    label-width="auto"
-                    style="width: 400px"
+                    
+                    style="width: 450px"
                     size="medium"
                   >
                     <el-form-item label="单位名称:" :required="true">
@@ -1539,6 +1539,7 @@ import usersteps from "../components/usersteps.vue";
 import "../../static/css/disaoerss.less";
 import "../../static/css/file_policy_style.less";
 import "../../static/css/el_dising.less";
+import "../../static/css/el_form.less";
 import Comimageviewer from "../components/ComImageviewer.vue";
 // 图片查看器
 // import ElImageviewer from "element-ui/packages/image/src/image-viewer";
@@ -2538,6 +2539,8 @@ export default {
     }
     margin-top: 10px;
     .tianbtn {
+      margin-bottom: 10px;
+      margin-left: 160px;
       padding: 9px 15px;
     }
     .el-row {
@@ -2568,7 +2571,7 @@ export default {
         min-height: 25px;
         line-height: 36px;
         margin: 0;
-        min-width: 107px;
+        min-width: 160px !important;
         font-size: 15px;
         // color: #606266;
       }
@@ -2576,7 +2579,6 @@ export default {
         width: 350px;
         line-height: 36px;
         color: #606266;
-        padding-left: 16px;
       }
       .imgs {
         display: flex;
@@ -2594,7 +2596,7 @@ export default {
     .marwers {
       display: flex;
       .marwers_p {
-        width: 115px;
+        width: 150px;
         margin: 0;
         // margin-right: 35px;
       }

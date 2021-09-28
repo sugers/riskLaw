@@ -212,7 +212,7 @@
           fixed="right"
           prop="stage"
           label="操作"
-          min-width="200"
+          min-width="160"
         >
           <template slot-scope="scope">
             <el-button
@@ -222,7 +222,7 @@
               class="btnstab"
               style="background-color: rgb(64, 137, 229)"
             >
-              查看
+              详情
             </el-button>
             <!-- 1.快速反馈 2.填写详细信息 3.上级复审 4.出单确认 -->
             <el-button
@@ -471,6 +471,7 @@ export default {
     }
   },
   methods: {
+    
     // 筛选
     btnsearchclick() {
       if (
@@ -659,7 +660,7 @@ export default {
     },
     // 表格内容
     celltextAlgin({ columnIndex }) {
-      if (columnIndex != 12) {
+      if (columnIndex != 13) {
         return "text-align: center;";
       }
     },

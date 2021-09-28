@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="companySelect onlyClass">
-                        <span class="name">开通区域：</span>
+                        <span class="name">省份：</span>
                         <div class="selectContent">
                             <el-select v-model="areaVal" slot="prepend" placeholder="请选择">
                                 <el-option v-for="(item, index) in areaData" :key="index" :label="item.name"
@@ -79,7 +79,7 @@
                         <!-- <el-table-column prop="icco_name" label="所属保险公司" width="200" align='center'
                             show-overflow-tooltip class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="areaName" label="开通区域" width="200" align='center' show-overflow-tooltip
+                        <el-table-column prop="areaName" label="省份" width="200" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column> -->
                         <el-table-column width="60">

@@ -21,7 +21,6 @@ import bulletinBoard from '../components/notics/bulletinBoard/bulletinBoard.vue'
 import usermanager from '../components/usermanager/usermanager.vue'
 import Statistics from '../components/Statistics/Statistics.vue'
 import TrendChart from '../components/TrendChart/TrendChart.vue'
-
 // import Layout from '../layout'
 import store from '../store/store/index'
 
@@ -215,7 +214,6 @@ const routes = [
                 requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
             },
         }
-        
 
     ]
   },

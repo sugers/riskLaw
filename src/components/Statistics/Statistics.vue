@@ -42,6 +42,17 @@
                             </el-input>
                         </div>
                     </div>
+                    <div class="companySelect onlyClass" v-if="areaides">
+                        <span class="name">保险地区：</span>
+                        <div class="selectContent">
+                            <el-select v-model="areaidVal" slot="prepend" placeholder="请选择">
+                                <el-option v-for="(item,index) in salesmanDta" :key="index" :label="item.name"
+                                :value="item.code"
+                                >
+                                </el-option>
+                            </el-select>
+                        </div>
+                    </div>
                     <!-- 筛选按钮 -->
                     <div class="screenBtn">
                         <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
@@ -112,19 +123,23 @@
 </template>
 <script>
     import {
-        Getstatics
+        Getstatics,
+        GetinsuranceAreaList,
     } from "../../api/api.js";
     import {
         toThousandFilterZero
     } from '../../../static/js/formatAmount'
+    import provinces from "../../../static/js/pca-code.json";
     export default {
         data() {
             return {
                 isdone: false,
+                areaides: false,
                 timeVal: "",
                 fieldVal: "",
                 salesmanVal: "",
                 salesmanDta: "",
+                areaidVal: '',
                 tableData: [],
                 insuranceDta: [],
                 total: 0,
@@ -136,10 +151,45 @@
             let getDate = new Date();
             this.timeVal = getDate;
             this.getStatistics(getDate, this.salesmanVal, this.page, this.limit);
+            let userinfor = JSON.parse(localStorage.getItem("userinfor"));
+            console.log('444',userinfor.area_id);
+            this.insuranceSelect(userinfor.area_id)
+            if(userinfor.area_id == 0){
+                this.areaides = true;
+            }
+
         },
         methods: {
             indexMethod(index) {
                 return index + 1 + (this.page - 1) * this.limit
+            },
+            insuranceSelect(e) {
+                this.areaidVal = ''
+                this.salesmanDta = [];
+                let data = {
+                    icco_id: e
+                }
+                this.insuranceDta.map((item) => {
+                    if (item.code == e) {
+                        this.fieldValName = item.name
+                    }
+                })
+                GetinsuranceAreaList(data).then(res => {
+                    res.data.list.map((childitem) => {
+                        provinces.forEach((areaitem) => {
+                            if (childitem.adcode == areaitem.code) {
+                                this.salesmanDta.push({
+                                    name: areaitem.name,
+                                    code: childitem.ID
+                                });
+                            }
+                        })
+                    })
+
+                });
+                setTimeout(() => {
+                    this.areaidVal = this.salesmanDta[0].code;
+                }, 200)
             },
             getSummaries(param) {
                 const {
