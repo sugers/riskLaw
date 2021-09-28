@@ -23,7 +23,10 @@ import Statistics from '../components/Statistics/Statistics.vue'
 import TrendChart from '../components/TrendChart/TrendChart.vue'
 // import Layout from '../layout'
 import store from '../store/store/index'
-
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (location) {
+    return originalPush.call(this, location).catch(err => err)
+}
 Vue.use(VueRouter)
 
 const routes = [
@@ -238,7 +241,7 @@ const router = new VueRouter({
 
 // 路由守卫
 router.beforeEach((to,from,next)=>{
-  store.state.token = localStorage.getItem("access_token");
+    store.state.token = localStorage.getItem("access_token");
   // 判断路由是否需要登录权限
   if(to.meta.requireAuth){
     
@@ -246,10 +249,12 @@ router.beforeEach((to,from,next)=>{
       // document.body.scrollTop = 0;
 
       next();
-    }else{
+    } else {
       next({
-        path:'/adminLogin',
-        query:{redirect: to.fullPath}
+          path: '/adminLogin'
+        //   ,
+        // query:{redirect: to.fullPath}
+        
       })
     }
   }else{

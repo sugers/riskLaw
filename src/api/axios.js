@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { MessageBox, Message } from 'element-ui';
 import { RefreshToken } from './api';
-
+import router from '../router/index';
 // 拿到 access_token 和 refresh_token
 
 // 是否正在刷新的标记
@@ -130,7 +130,8 @@ function gotoLogin() {
   //   userid.roleID == 1004
   // ) {
     window.localStorage.removeItem("userinfor");
-    window.location.href = '/#/adminLogin'
+    // window.location.href = '/#/adminLogin'
+    router.push('/adminLogin')
     // return
   // }
 }
