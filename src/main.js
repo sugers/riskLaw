@@ -65,6 +65,7 @@ import {
     Tag,
     Backtop,
     Notification,
+    Progress,
 } from 'element-ui'
 Vue.use(Tooltip)
 Vue.use(Switch)
@@ -112,6 +113,7 @@ Vue.use(CarouselItem)
 Vue.use(Card)
 Vue.use(Tag)
 Vue.use(Backtop)
+Vue.use(Progress)
 Vue.use(ViewUI);
 
 Vue.use(VueCurrencyFilter,{

@@ -438,7 +438,7 @@ export default {
       userid.roleID == 1004
     ) {
       Reivewerinfo().then((res) => {
-        // console.log("审核人员", res);
+        
         this.reivewer = res.data;
       });
       this.provins = provinces;

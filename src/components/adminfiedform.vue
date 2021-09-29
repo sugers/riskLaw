@@ -60,7 +60,7 @@
               <!-- 1.自然人 2.企业 -->
               <p>类型：</p>
               <div class="listchuadn">
-                <el-radio-group v-model="insuredtypeid">
+                <el-radio-group v-model="insuredtypeid" @change="insuredid">
                   <el-radio :label="1">自然人</el-radio>
                   <el-radio :label="2">企业</el-radio>
                 </el-radio-group>
@@ -1414,8 +1414,7 @@ export default {
           res.data.forEach(element => {
             tmp+=`<span><a href='/#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
           });
-          
-          console.log(this.$ip);
+          this.$notify.close();
           
           this.$notify({
               title: '案件相同提醒',
@@ -1429,7 +1428,13 @@ export default {
         }
       })
     },
-    
+    insuredid(){
+      let dats = {
+        insured_type: this.insuredtypeid,
+        risk_eval_id: this.evalid,
+      }
+      Insuredtype(dats).then(()=>{})
+    },
     // 任务查看api
     reviewapi() {
       var data = {
@@ -1965,11 +1970,7 @@ export default {
       } else {
         this.fus = "";
       }
-      let dats = {
-        insured_type: this.insuredtypeid,
-        risk_eval_id: this.evalid,
-      }
-      Insuredtype(dats).then(()=>{})
+      
       var das = {
         usernamesfz: this.usernamesfz,
         userblicense: this.userblicense,

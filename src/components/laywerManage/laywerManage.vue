@@ -223,7 +223,11 @@
                             this.tableData = res.data.list;
                             this.total = res.data.total;
                         }, 1000)
+                    }else{
+                         this.isdone=false;
                     }
+                }).catch(()=>{
+                     this.isdone=false;
                 })
             },
 

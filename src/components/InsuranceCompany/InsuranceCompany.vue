@@ -422,7 +422,11 @@
                             that.isdone = false;
                             that.tableData = result;
                         }, 1000)
+                    }else{
+                         this.isdone=false;
                     }
+                }).catch(()=>{
+                     this.isdone=false;
                 })
             },
             areaClick(name, id, data) {

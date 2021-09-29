@@ -959,6 +959,7 @@ import {
   Modifytrade,
   // 生成意见书
   Lawopinion,
+  Caserepeat,
 } from "../api/api";
 
 export default {
@@ -1151,8 +1152,35 @@ export default {
     window.addEventListener('beforeunload',e=>{
       this.beforeClosepage(e)
     })
+    this.caserepeatapi();
   },
   methods: {
+    // 相同案件提示
+    caserepeatapi(){
+      let data = {
+        risk_eval_id: this.$route.query.data
+      }
+      Caserepeat(data).then(res=>{
+        if (res.data != null) {
+          console.log(res.data);
+          let tmp = ''
+          res.data.forEach(element => {
+            tmp+=`<span><a href='/#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
+          });
+          this.$notify.close();
+          
+          this.$notify({
+              title: '案件相同提醒',
+              dangerouslyUseHTMLString: true,
+              message: tmp,
+              duration: 0,
+              offset: 100,
+              type: 'warning'
+          })
+          
+        }
+      })
+    },
     beforeClosepage(){
       window.opener.postData()
     },

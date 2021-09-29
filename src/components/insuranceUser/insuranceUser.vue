@@ -302,7 +302,11 @@
                             this.tableData = res.data.accounts;
                             this.total = res.data.total;
                         }, 1000);
+                    }else{
+                        this.isdone=false;
                     }
+                }).catch(()=>{
+                     this.isdone=false;
                 });
             },
             buttonClick(name, text) {

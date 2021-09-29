@@ -3,20 +3,7 @@
         <div class="InsuranceCompany">
             <div class="insuranceTop">
                 <div class="otherScreen">
-                    <div class="timeSelect onlyClass">
-                        <span class="name">年份：</span>
-                        <div class="selectContent">
-                            <el-date-picker v-model="yearVal" type="year" placeholder="选择年" @change="yearChange">
-                            </el-date-picker>
-                        </div>
-                    </div>
-                    <div class="timeSelect onlyClass">
-                        <span class="name">月份：</span>
-                        <div class="selectContent">
-                            <el-date-picker v-model="monthVal" type="month" placeholder="选择月" @change="monthChange">
-                            </el-date-picker>
-                        </div>
-                    </div>
+
                     <div class="companySelect onlyClass">
                         <span class="name">保险公司：</span>
                         <div class="selectContent">
@@ -37,6 +24,21 @@
                             </el-select>
                         </div>
                     </div>
+                    <div class="timeSelect onlyClass">
+                        <span class="name">月份：</span>
+                        <div class="selectContent">
+                            <el-date-picker v-model="monthVal" type="month" placeholder="选择月" @change="monthChange">
+                            </el-date-picker>
+                        </div>
+                    </div>
+                    <div class="timeSelect onlyClass">
+                        <span class="name">年份：</span>
+                        <div class="selectContent">
+                            <el-date-picker v-model="yearVal" type="year" placeholder="选择年" @change="yearChange">
+                            </el-date-picker>
+                        </div>
+                    </div>
+
                     <!-- 筛选按钮 -->
                     <div class="screenBtn">
                         <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
@@ -47,9 +49,13 @@
                     </div>
                 </div>
             </div>
-            <div class="insuranceBottom">
+            <div class="insuranceBottom" stype="position:relative;">
                 <div id="submitChart" style="width: 100%;height:400px;"></div>
                 <div id="tradChart" style="width: 100%;height:400px;"></div>
+                  <Spin fix v-show="isdone">
+                      <Icon type="ios-loading" size="18" class="demo-spin-icon-load"></Icon>
+                      <div>Loading</div>
+                  </Spin>
             </div>
         </div>
     </section>
@@ -66,6 +72,7 @@
     export default {
         data() {
             return {
+                isdone:false,
                 currendRole: '',
                 yearVal: '',
                 monthVal: '',
@@ -74,15 +81,15 @@
                 areaData: [],
                 insuranceDta: [],
                 submitChart: null,
-                tradChart: null
+                tradChart: null,
             }
         },
         mounted() {
             // 获取角色权限
+            this.isdone=true;
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID;
             let getDate = new Date();
-            // this.yearVal= `${getDate.getFullYear()}`;
 
             this.monthVal =
                 `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>9?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${Number(getDate.getDay())+1>9?Number(getDate.getDay())+1:'0'+(Number(getDate.getDay())+1)}`
@@ -98,6 +105,7 @@
                 tooltip: {
                     trigger: 'axis',
                 },
+                color: ['#409EFF', '#F4AA43'],
                 legend: {
                     data: ['拒绝量', '通过量'],
                     right: 30
@@ -140,13 +148,14 @@
                         },
                     },
                     {
-                        name: '拒绝量',
+                        name: '通过量',
                         type: 'bar',
                         data: [],
                         stack: 'submit',
+
                     },
                     {
-                        name: '通过量',
+                        name: '拒绝量',
                         type: 'bar',
                         data: [],
                         stack: 'submit',
@@ -161,6 +170,7 @@
                 tooltip: {
                     trigger: 'axis',
                 },
+                color: ['#409EFF'],
                 legend: {
                     data: ['出单量'],
                     right: 30
@@ -173,7 +183,7 @@
                     },
                 },
                 yAxis: {
-                    max: 200,
+                    // max: 200,
                     type: 'value',
                     // axisLabel: {
                     //     formatter: function (params) {
@@ -238,6 +248,10 @@
             this.GetInsurance()
         },
         methods: {
+            // arrMax(arr){
+            //     arr.sort();
+            //     return arr[arr.length-1]
+            // },
             yearChange() {
                 this.monthVal = '';
             },
@@ -247,12 +261,10 @@
                 let hours = getDate.getHours();
                 let minutes = getDate.getMinutes();
                 let seconds = getDate.getSeconds();
-                let timeval = `${this.monthVal?new Date(this.monthVal).getFullYear():new
-                Date().getFullYear()}-${Number(new
-                Date(this.monthVal).getMonth())+1>9?Number(new
-                Date(this.monthVal).getMonth())+1:'0'+(Number(new
-                Date(this.monthVal).getMonth())+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)}
-                ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                let monthValYear=new Date(this.monthVal).getFullYear();
+                let monthValMonth=new Date(this.monthVal).getMonth();
+                let timeval = `${this.monthVal?monthValYear:new
+                Date().getFullYear()}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
                 if (this.yearVal) {
                     this.yearVal = timeval;
                 }
@@ -285,7 +297,7 @@
 
                 })
             },
-            insuranceSelect(e, num) {
+            insuranceSelect(e) {
                 this.areaVal = ''
                 this.areaData = [];
                 let data = {
@@ -311,12 +323,13 @@
 
                 });
                 setTimeout(() => {
-                    this.areaVal = this.areaData[0].code;
-                    this.areaValName = this.areaData[0].name;
 
-                    if (num == 1) {
-                        this.getListFn();
+
+                    if (this.areaData.length == 1) {
+                        this.areaVal = this.areaData[0].code;
+                        this.areaValName = this.areaData[0].name;
                     }
+                    this.getListFn();
 
                 }, 500)
             },
@@ -336,23 +349,20 @@
                 let hours = getDate.getHours();
                 let minutes = getDate.getMinutes();
                 let seconds = getDate.getSeconds();
-
+                let monthValYear=new Date(this.monthVal).getFullYear();
+                let monthValMonth=new Date(this.monthVal).getMonth();
+                
                 if (!this.yearVal) {
                     type = 0
                     timeVal =
-                        `${new Date(this.monthVal).getFullYear()}-${Number(new
-                        Date(this.monthVal).getMonth())+1>9?Number(new
-                        Date(this.monthVal).getMonth())+1:'0'+(Number(new
-                        Date(this.monthVal).getMonth())+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                        `${monthValYear}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
 
                 } else if (this.yearVal && this.monthVal) {
-                    this.yearVal = new Date(this.monthVal).getFullYear();
+                    this.yearVal = monthValYear;
                     type = 0;
                     timeVal =
-                        `${new Date(this.monthVal).getFullYear()}-${Number(new
-                        Date(this.monthVal).getMonth())+1>9?Number(new
-                        Date(this.monthVal).getMonth())+1:'0'+(Number(new
-                        Date(this.monthVal).getMonth())+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                        `${new
+                        Date(this.monthVal).getFullYear()}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
                     this.yearVal = timeVal
                 } else if (this.yearVal && !this.monthVal) {
                     this.yearVal = new Date(this.yearVal).getFullYear()
@@ -364,13 +374,14 @@
                     this.yearVal = timeVal
                 }
 
-                this.getSubmitChart(this.fieldVal, this.areaVal, this.yearVal, timeVal, type, this
+                this.getSubmitChart(this.fieldVal, this.areaVal ? this.areaVal : 0, this.yearVal, timeVal, type, this
                     .submitChart)
 
-                this.getTradChart(this.fieldVal, this.areaVal, this.yearVal, timeVal, type, this
+                this.getTradChart(this.fieldVal, this.areaVal ? this.areaVal : 0, this.yearVal, timeVal, type, this
                     .tradChart)
             },
             getSubmitChart(icco_id, area_id, year, month, type, myChart) {
+                
                 let sumNum = [];
                 let data = {
                     icco_id: icco_id,
@@ -381,6 +392,7 @@
                 }
                 GetTrendChart(data).then((res) => {
                     if (res.code == 200) {
+                        
                         res.data.reject_vals.map((item, index) => {
                             sumNum.push(Number(item) + Number(res.data.success_vals[index]))
                         })
@@ -402,7 +414,145 @@
                                 }
                             ]
                         });
+                        myChart.off('legendselectchanged');
+                        myChart.on('legendselectchanged', function (params) {
+
+                            let rejectStatu = params.selected['拒绝量'];
+                            let paddStatu = params.selected['通过量'];
+                            if (rejectStatu && paddStatu) {
+                                myChart.setOption({
+                                    series: [{
+                                            name: '拒绝量',
+                                            data: res.data.reject_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '通过量',
+                                            data: res.data.success_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '总数',
+                                            data: sumNum,
+                                            type: 'bar',
+                                            barGap: '-100%',
+                                            itemStyle: {
+                                                normal: {
+                                                    color: 'rgba(128, 128, 128, 0)'
+                                                }
+                                            },
+                                            label: {
+                                                normal: {
+                                                    show: true, //显示数值
+                                                    formatter: function (params) {
+                                                        if (params.value > 0) {
+                                                            return params.value;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    },
+                                                }
+                                            },
+                                        }
+                                    ]
+                                });
+                            } else if (rejectStatu && !paddStatu) {
+                                myChart.setOption({
+                                    series: [{
+                                            name: '拒绝量',
+                                            data: res.data.reject_vals,
+                                            label: {
+                                                normal: {
+                                                    show: true, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                    formatter: function (params) {
+                                                        if (params.value > 0) {
+                                                            return params.value;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    },
+                                                }
+                                            },
+
+                                        },
+                                        {
+                                            name: '通过量',
+                                            data: res.data.success_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '总数',
+                                            data: sumNum,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                }
+                                            },
+                                        }
+                                    ]
+                                });
+                            } else if (!rejectStatu && paddStatu) {
+                                myChart.setOption({
+                                    series: [{
+                                            name: '拒绝量',
+                                            data: res.data.reject_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '通过量',
+                                            data: res.data.success_vals,
+                                            label: {
+                                                normal: {
+                                                    show: true, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                    formatter: function (params) {
+                                                        if (params.value > 0) {
+                                                            return params.value;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    },
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '总数',
+                                            data: sumNum,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                }
+                                            },
+                                        }
+                                    ]
+                                });
+                            }
+
+                        });
+                        this.isdone=false;
                     }
+                }).catch(()=>{
+                    this.isdone=false;
                 })
             },
             getTradChart(icco_id, area_id, year, month, type, myChart) {
@@ -415,7 +565,12 @@
                 }
                 GetTrendChartOrder(data).then((res) => {
                     if (res.code == 200) {
+                        let currentMaxVal = Math.max(...res.data.counts)
+                        // console.log(currentMaxVal)
                         myChart.setOption({
+                            yAxis: {
+                                max: currentMaxVal * 2,
+                            },
                             xAxis: {
                                 data: res.data.dates
                             },
@@ -428,16 +583,16 @@
                             }, ]
                         });
                     }
+                }).catch(()=>{
+                this.isdone=false;
                 })
             },
             refresh() {
                 this.yearVal = '';
-                if (this.insuranceDta.lengt > 1) {
-                    this.areaVal = '';
-                    this.fieldVal = '';
-                }
+                this.areaVal = '';
             },
             searchClick() {
+                this.isdone=true;
                 this.getListFn();
             }
         }

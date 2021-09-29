@@ -57,7 +57,7 @@ export default {
     // textTitle 标题
     // nameArray x轴数据
     // series series数据
-    drawLinde({textTitle='',nameArray=[],series=[]} = {}) {
+    drawLinde({textTitle='',legends=[],yaxis='',nameArray=[],series=[]} = {}) {
 
       let Myechart = this.$echarts.init(document.getElementById(this.id));
       Myechart.clear();
@@ -67,36 +67,23 @@ export default {
         },
         tooltip: {
           trigger: "axis",
-          // axisPointer: {
-          //   type: "cross",
-          //   crossStyle:{
-          //     color: "#999"
-          //   }
-          // }
         },
-        // toolbox:{
-        //   feature: {
-        //     magicType:{show:true,type:['line','bar']},
-        //     restore:{show:true},
-        //   },
-        // },
         legend: {
-          right:0
-        },
-        grid: {
-          left: "2%",
-          right: "2%",
-          bottom: "3%",
-          containLabel: true,
+          data: legends,
+          right: 30,
         },
         xAxis: [
           {
             type: "category",
+            axisTick: {
+              alignWithLabel: true
+            },
             data: nameArray,
           },
         ],
         yAxis: [
           {
+            max: yaxis,
             type: "value",
           },
         ],
@@ -115,7 +102,7 @@ export default {
   
 <style lang="less">
   .ecthrts{
-    width: 100%;
+    width: 89%;
     height: 25rem;
   }
 </style>

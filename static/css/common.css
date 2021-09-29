@@ -46,7 +46,9 @@
     margin: 0 4px;
     width: 6%;
 }
-
+.el-table__empty-block{
+    width: 100% !important  ;
+}
 .grayColor {
     font-size: 14px;
     color: #555555;

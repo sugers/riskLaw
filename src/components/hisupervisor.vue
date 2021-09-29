@@ -1407,7 +1407,7 @@
                         <div
                           style="width: 470px"
                           fit="contain"
-                          v-for="(item, ind) in userblicense"
+                          v-for="(item, ind) in indeuserblic"
                           :key="ind"
                         >
                           {{ item }}<br />
@@ -1577,6 +1577,7 @@ import {
   Lawopinion,
   // 提交上级复核
   Subreview,
+  Caserepeat,
 } from "../api/api";
 
 export default {
@@ -1755,6 +1756,7 @@ export default {
       plaintifftf: false,
       preservationtf: false,
       testimonytf: false,
+      indeuserblic: ""
     };
   },
   destroyed() {
@@ -1777,8 +1779,35 @@ export default {
     window.addEventListener("beforeunload", (e) => {
       this.beforeClosepage(e);
     });
+    this.caserepeatapi();
   },
   methods: {
+    // 相同案件提示
+    caserepeatapi(){
+      let data = {
+        risk_eval_id: this.$route.query.data
+      }
+      Caserepeat(data).then(res=>{
+        if (res.data != null) {
+          console.log(res.data);
+          let tmp = ''
+          res.data.forEach(element => {
+            tmp+=`<span><a href='/#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
+          });
+          this.$notify.close();
+          
+          this.$notify({
+              title: '案件相同提醒',
+              dangerouslyUseHTMLString: true,
+              message: tmp,
+              duration: 0,
+              offset: 100,
+              type: 'warning'
+          })
+          
+        }
+      })
+    },
     beforeClosepage() {
       window.opener.postData();
     },
@@ -1966,6 +1995,9 @@ export default {
           this.blicense[0].ocr.words_result.经营范围.words;
         this.userblicense.ficate =
           this.blicense[0].ocr.words_result.证件编号.words;
+
+        let indesbli = { ...this.userblicense };
+        this.indeuserblic = indesbli;
       }
       // 起诉状
       this.plaintiff = dat.files.indictment;

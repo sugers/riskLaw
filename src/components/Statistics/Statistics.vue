@@ -1,24 +1,10 @@
 <template>
     <section>
-        <div class="InsuranceCompany">
+        <div class="insuranceUser">
             <div class="insuranceTop">
                 <div class="otherScreen">
-                    <div class="timeSelect onlyClass">
-                        <span class="name">日期：</span>
-                        <div class="selectContent">
-                            <el-date-picker v-model="timeVal" format="yyyy 年 MM 月" value-format="yyyy-MM-dd HH:hh:mm"
-                                type="month" placeholder="选择月">
-                            </el-date-picker>
-                            <!-- <el-date-picker v-model="timeVal" type="daterange" range-separator="至"
-                                start-placeholder="开始日期" end-placeholder="结束日期">
-                            </el-date-picker> -->
-                            <!-- <el-date-picker v-model="timeVal" type="monthrange" range-separator="至"
-                                format="yyyy 年 MM 月" start-placeholder="开始日期" end-placeholder="结束日期"
-                                @change="selectDate">
-                            </el-date-picker> -->
-                        </div>
-                    </div>
-                    <!-- <div class="companySelect onlyClass">
+
+                    <div class="companySelect onlyClass">
                         <span class="name">保险公司：</span>
                         <div class="selectContent">
                             <el-select v-model="fieldVal" slot="prepend" placeholder="请选择">
@@ -27,30 +13,36 @@
                                 </el-option>
                             </el-select>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="companySelect onlyClass">
-                        <span class="name">业务员：</span>
-                        <!-- <div class="selectContent">
-                            <el-select v-model="salesmanVal" slot="prepend" placeholder="请选择">
-                                <el-option v-for="(item,index) in salesmanDta" :key="index" :label="item.name"
+                        <span class="name">省份：</span>
+                        <div class="selectContent">
+                            <el-select v-model="areaidVal" slot="prepend" placeholder="请选择">
+                                <el-option v-for="(item, index) in salesmanDta" :key="index" :label="item.name"
                                     :value="item.code">
                                 </el-option>
                             </el-select>
-                        </div> -->
+                        </div>
+                    </div>
+                    <div class="companySelect onlyClass">
+                        <span class="name">业务员：</span>
                         <div class="selectContent">
                             <el-input placeholder="请输入业务员名字" v-model="salesmanVal" clearable>
                             </el-input>
                         </div>
                     </div>
-                    <div class="companySelect onlyClass" v-if="areaides">
-                        <span class="name">保险地区：</span>
+                    <div class="timeSelect onlyClass">
+                        <span class="name">月份：</span>
                         <div class="selectContent">
-                            <el-select v-model="areaidVal" slot="prepend" placeholder="请选择">
-                                <el-option v-for="(item,index) in salesmanDta" :key="index" :label="item.name"
-                                :value="item.code"
-                                >
-                                </el-option>
-                            </el-select>
+                            <el-date-picker v-model="monthVal" @change="monthChange" type="month" placeholder="选择月">
+                            </el-date-picker>
+                        </div>
+                    </div>
+                    <div class="timeSelect onlyClass">
+                        <span class="name">年份：</span>
+                        <div class="selectContent">
+                            <el-date-picker v-model="yearVal" type="year" placeholder="选择年" @change="yearChange">
+                            </el-date-picker>
                         </div>
                     </div>
                     <!-- 筛选按钮 -->
@@ -64,17 +56,16 @@
                 </div>
             </div>
             <div class="insuranceBottom">
-                <div class="bottomTable statisticsBottom" style="position: relative">
+                <div class="bottomTable usermanagerFix" style="position: relative">
                     <el-table ref="filterTable" show-summary :summary-method="getSummaries" :data="tableData"
-                        style="width: 100%" stripe highlight-current-row @selection-change="handleSelectionChange"
-                        :header-cell-style="{
-              background: '#F7F7F7',
-              color: '#2F2E2E',
-              'font-size': '14px',
-            }">
-                        <el-table-column type="selection" width="60" align="center" fixed="left">
+                        style="width: 100%"
+                        stripe highlight-current-row
+                        :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}"
+                        @selection-change="handleSelectionChange">
+                        <el-table-column type="selection" width="60" align="center">
                         </el-table-column>
-                        <el-table-column label="序号" type="index" :index="indexMethod" width="40" align="center">
+                        <el-table-column label="序号" type="index" :index="indexMethod" width="40" align="center"
+                            class-name="grayColor">
                         </el-table-column>
                         <el-table-column prop="name" label="姓名" width="80" align="center" show-overflow-tooltip
                             class-name="grayColor">
@@ -97,13 +88,13 @@
                         <el-table-column prop="preserv_amount" label="出单保险金额" width="140" align="center"
                             show-overflow-tooltip class-name="grayColor">
                             <template slot-scope="scope">
-                                <span>{{scope.row.preserv_amount | currency}}</span>
+                                <span>{{ scope.row.preserv_amount | currency }}</span>
                             </template>
                         </el-table-column>
                         <el-table-column prop="amount" label="出单保费金额" width="140" align="center" show-overflow-tooltip
                             class-name="grayColor">
                             <template slot-scope="scope">
-                                <span>{{scope.row.amount | currency}}</span>
+                                <span>{{ scope.row.amount | currency }}</span>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -124,6 +115,7 @@
 <script>
     import {
         Getstatics,
+        GetinsuranceList,
         GetinsuranceAreaList,
     } from "../../api/api.js";
     import {
@@ -136,6 +128,8 @@
                 isdone: false,
                 areaides: false,
                 timeVal: "",
+                yearVal: '',
+                monthVal: '',
                 fieldVal: "",
                 salesmanVal: "",
                 salesmanDta: "",
@@ -148,20 +142,70 @@
             };
         },
         mounted() {
+            this.isdone=true;
             let getDate = new Date();
             this.timeVal = getDate;
-            this.getStatistics(getDate, this.salesmanVal, this.page, this.limit);
-            let userinfor = JSON.parse(localStorage.getItem("userinfor"));
-            console.log('444',userinfor.area_id);
-            this.insuranceSelect(userinfor.area_id)
-            if(userinfor.area_id == 0){
-                this.areaides = true;
-            }
+            this.monthVal =
+                `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>9?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${Number(getDate.getDay())+1>9?Number(getDate.getDay())+1:'0'+(Number(getDate.getDay())+1)}`
+            // let userinfor = JSON.parse(localStorage.getItem("userinfor"));
+            this.GetInsurance();
+            // this.insuranceSelect(userinfor.area_id)
+            // if (userinfor.area_id == 0) {
+            //     this.areaides = true;
+            // }
 
         },
         methods: {
             indexMethod(index) {
                 return index + 1 + (this.page - 1) * this.limit
+            },
+            yearChange() {
+                this.monthVal = '';
+            },
+            monthChange() {
+                let getDate = new Date();
+                let day = getDate.getDay();
+                let hours = getDate.getHours();
+                let minutes = getDate.getMinutes();
+                let seconds = getDate.getSeconds();
+                let monthValYear = new Date(this.monthVal).getFullYear();
+                let monthValMonth = new Date(this.monthVal).getMonth();
+                let monthVal =
+                    `${monthValYear}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)}`
+                let timeval =
+                    `${monthVal} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                this.monthVal = monthVal
+                if (this.yearVal) {
+                    this.yearVal = timeval;
+                }
+
+            },
+            GetInsurance() {
+                let that = this;
+                let data = {
+                    status: -1,
+                    keyword: '',
+                }
+                GetinsuranceList(data).then((res) => {
+                    if (res.code == 200) {
+                        res.data.list.map((item) => {
+                            this.insuranceDta.push({
+                                'name': item.name,
+                                'code': item.ID
+                            })
+                        })
+
+                        setTimeout(() => {
+                            if (res.data.list.length == 1) {
+                                that.fieldVal = that.insuranceDta[0].code;
+                                that.fieldValName = that.insuranceDta[0].name;
+                                that.insuranceSelect(that.insuranceDta[0].code, 1)
+                            }
+
+                        }, 200)
+                    }
+
+                })
             },
             insuranceSelect(e) {
                 this.areaidVal = ''
@@ -180,7 +224,7 @@
                             if (childitem.adcode == areaitem.code) {
                                 this.salesmanDta.push({
                                     name: areaitem.name,
-                                    code: childitem.ID
+                                    code: childitem.adcode
                                 });
                             }
                         })
@@ -188,10 +232,15 @@
 
                 });
                 setTimeout(() => {
+                    // if (this.salesmanDta.length == 1) {
                     this.areaidVal = this.salesmanDta[0].code;
-                }, 200)
+                    // }
+                   this.getListFn();
+                }, 500)
+                 
             },
             getSummaries(param) {
+
                 const {
                     columns,
                     data
@@ -205,6 +254,7 @@
                         sums[index] = "";
                         return;
                     }
+                    if (!data) return
                     const values = data.map((item) => Number(item[column.property]));
                     if (!values.every((value) => isNaN(value))) {
                         sums[index] = values.reduce((prev, curr) => {
@@ -226,40 +276,69 @@
 
                 return sums;
             },
-            getStatistics(month, name, page, limit) {
+            getStatistics(month,year, name, page, limit, adcode) {
                 this.isdone = true;
                 let data = {
                     month: month,
+                    year:year,
                     name: name,
                     page: page,
                     limit: limit,
+                    adcode: adcode ? adcode : 0
                 };
                 Getstatics(data).then((res) => {
                     if (res.code == 200) {
                         this.isdone = false;
                         this.tableData = res.data.list;
                         this.total = res.data.total;
-                        console.log(res);
+                    }else{
+                         this.isdone=false;
                     }
+                }).catch(()=>{
+                    this.isdone=false;
                 });
+            },
+            getListFn() {
+                let timeVal = null;
+                let getDate = new Date();
+                let month = getDate.getMonth();
+                let day = getDate.getDay();
+                let hours = getDate.getHours();
+                let minutes = getDate.getMinutes();
+                let seconds = getDate.getSeconds();
+                let monthValYear = new Date(this.monthVal).getFullYear();
+                let monthValMonth = new Date(this.monthVal).getMonth();
+                if (!this.yearVal) {
+                    timeVal =
+                        `${monthValYear}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+
+                } else if (this.yearVal && this.monthVal) {
+                    this.yearVal = monthValYear;
+                    timeVal =
+                        `${monthValYear}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                    this.yearVal = timeVal
+                } else if (this.yearVal && !this.monthVal) {
+                    this.yearVal = new Date(this.yearVal).getFullYear()
+                    this.monthVal = ''
+                    timeVal
+                        =
+                        `${this.yearVal}-${Number(month)+1>9?Number(month)+1:'0'+(Number(month)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                    this.yearVal = timeVal
+                }
+                if (this.yearVal) {
+                    this.getStatistics('', this.yearVal, this.salesmanVal,this.page, this.limit,this.areaidVal)
+                } else {
+                    this.getStatistics(timeVal, '',this.salesmanVal, this.page, this.limit,this.areaidVal)
+                }
+
             },
             SizeChange(currentSize) {
                 this.limit = currentSize;
-                this.getStatistics(
-                    this.timeVal,
-                    this.salesmanVal,
-                    this.page,
-                    currentSize
-                );
+                this.getListFn();
             },
             current_change(currentPage) {
                 this.page = currentPage;
-                this.getStatistics(
-                    this.timeVal,
-                    this.salesmanVal,
-                    currentPage,
-                    this.limit
-                );
+                this.getListFn();
             },
             refresh() {
                 this.page = 1;
@@ -267,9 +346,10 @@
                 let getDate = new Date();
                 this.timeVal = getDate;
                 this.salesmanVal = "";
+                this.areaidVal = "";
             },
             searchClick() {
-                this.getStatistics(this.timeVal, this.salesmanVal, this.page, this.limit);
+                this.getListFn();
             },
             handleSelectionChange() {},
         },
@@ -301,7 +381,7 @@
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
-        /* justify-content: space-evenly; */
+        justify-content: flex-start;
         width: 100%;
     }
 
@@ -335,9 +415,10 @@
         padding: 0;
         border: none;
         outline: none;
-        width: 100px;
+        width: 66px;
         height: 30px;
         border-radius: 4px;
+        background-color: #409EFF;
         color: #fff;
         margin-right: 20px;
         font-size: 13px;
@@ -352,12 +433,7 @@
     }
 
     .bottomBtn button+button {
-        margin-left: 0;
-    }
-
-    .bottomBtn .deleteBtn {
-        width: 66px;
-        background-color: #f56c6c;
+        background-color: #F56C6C;
         margin: 0;
     }
 </style>

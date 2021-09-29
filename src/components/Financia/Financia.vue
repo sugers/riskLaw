@@ -3,18 +3,7 @@
         <div class="InsuranceCompany">
             <div class="insuranceTop">
                 <div class="otherScreen">
-                    <div class="timeSelect onlyClass">
-                        <span class="name">日期：</span>
-                        <div class="selectContent">
-                            <el-date-picker v-model="timeVal" format="yyyy 年 MM 月" value-format="yyyy-MM-dd HH:hh:mm"
-                                type="month" placeholder="选择月">
-                            </el-date-picker>
-                            <!-- <el-date-picker v-model="timeVal" type="monthrange" range-separator="至"
-                                format="yyyy 年 MM 月" start-placeholder="开始日期" end-placeholder="结束日期"
-                                @change="selectDate">
-                            </el-date-picker> -->
-                        </div>
-                    </div>
+
                     <div class="companySelect onlyClass">
                         <span class="name">保险公司：</span>
                         <div class="selectContent">
@@ -35,20 +24,31 @@
                             </el-select>
                         </div>
                     </div>
-                                    <!-- 筛选按钮 -->
-                <div class="screenBtn">
-                    <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
-                    <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
-                    <el-button type="primary" icon="el-icon-document" @click="getexport">导出
-                    </el-button>
-                </div>
+                    <div class="timeSelect onlyClass">
+                        <span class="name">日期：</span>
+                        <div class="selectContent">
+                            <el-date-picker v-model="timeVal" format="yyyy 年 MM 月" value-format="yyyy-MM-dd HH:hh:mm"
+                                type="month" placeholder="选择月">
+                            </el-date-picker>
+                            <!-- <el-date-picker v-model="timeVal" type="monthrange" range-separator="至"
+                                format="yyyy 年 MM 月" start-placeholder="开始日期" end-placeholder="结束日期"
+                                @change="selectDate">
+                            </el-date-picker> -->
+                        </div>
+                    </div>
+                    <!-- 筛选按钮 -->
+                    <div class="screenBtn">
+                        <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
+                        <el-button type="primary" icon="el-icon-document" @click="getexport">导出
+                        </el-button>
+                    </div>
                 </div>
 
             </div>
             <div class="insuranceBottom">
                 <div class="bottomTable" style="position:relative;">
                     <el-table ref="filterTable" :data="tableData" style="width: 100%" stripe highlight-current-row
-                        @selection-change="handleSelectionChange"
                         :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">
                         <el-table-column type="selection" width="60" align="center" fixed="left">
                         </el-table-column>
@@ -179,11 +179,11 @@
 
         },
         methods: {
-            indexMethod(index){
+            indexMethod(index) {
                 return index + 1 + (this.page - 1) * this.limit
             },
             GetInsurance() {
-                let that=this;
+                let that = this;
                 let data = {
                     status: this.currendRole == 2001 ? -1 : -1,
                     keyword: '',
@@ -204,7 +204,7 @@
                                 that.insuranceSelect(that.insuranceDta[0].code, 1)
                             }
 
-                        }, 200)
+                        }, 500)
                     }
 
                 })
@@ -238,7 +238,11 @@
                             this.tableData = []
                         }
 
+                    }else{
+                         this.isdone=false;
                     }
+                }).catch(()=>{
+                     this.isdone=false;
                 })
             },
             insuranceSelect(e, num) {
@@ -323,7 +327,6 @@
                     currentPage,
                     this.limit)
             },
-            handleSelectionChange() {},
             refresh() {
                 this.page = 1;
                 this.limit = 10;
@@ -345,7 +348,6 @@
     }
 </script>
 <style scoped>
-
     .screenBtn {
         margin-left: 30px;
     }

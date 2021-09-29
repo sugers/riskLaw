@@ -3,74 +3,77 @@
     <div class="login">
       <div class="logo">
         <div>
-        <div class="logo_img">
-          <img src="../../static/img/logo2x.png" alt="" />
-        </div>
-        <div class="logo_box">
-          <p class="logo_p">法律风险评估平台</p>
-        </div>
-        <div class="logo_flex">
-          <img src="../../static/img/rectan.png" alt="" />
-          <span class="logo_span">简单快捷&nbsp;响应迅速</span>
-        </div>
-        <div class="logo_flex">
-          <img src="../../static/img/rectan.png" alt="" />
-          <span class="logo_span">全面覆盖&nbsp;移动互联</span>
-        </div>
-        <div class="logo_flex">
-          <img src="../../static/img/rectan.png" alt="" />
-          <span class="logo_span">深度应用&nbsp;提高效率</span>
-        </div>
-        <div class="logo_flex">
-          <img src="../../static/img/rectan.png" alt="" />
-          <span class="logo_span">安全可控&nbsp;严格把关</span>
-        </div>
+          <div class="logo_img">
+            <img src="../../static/img/logo2x.png" alt="" />
+          </div>
+          <div class="logo_box">
+            <p class="logo_p">法律风险评估平台</p>
+          </div>
+          <div class="logo_flex">
+            <img src="../../static/img/rectan.png" alt="" />
+            <span class="logo_span">简单快捷&nbsp;响应迅速</span>
+          </div>
+          <div class="logo_flex">
+            <img src="../../static/img/rectan.png" alt="" />
+            <span class="logo_span">全面覆盖&nbsp;移动互联</span>
+          </div>
+          <div class="logo_flex">
+            <img src="../../static/img/rectan.png" alt="" />
+            <span class="logo_span">深度应用&nbsp;提高效率</span>
+          </div>
+          <div class="logo_flex">
+            <img src="../../static/img/rectan.png" alt="" />
+            <span class="logo_span">安全可控&nbsp;严格把关</span>
+          </div>
         </div>
       </div>
       <div class="gin-from">
         <div class="loging">
           <div>
-          <div class="from-text">
-            <p class="texth">Hello！</p>
-            <div class="logimg_txt">
-              <p class="texts">欢迎您</p>
-              <p class="textz">登录</p>
-              <p class="texts">法律风险评估平台</p>
+            <div class="from-text">
+              <p class="texth">Hello！</p>
+              <div class="logimg_txt">
+                <p class="texts">欢迎您</p>
+                <p class="textz">登录</p>
+                <p class="texts">法律风险评估平台</p>
+              </div>
+            </div>
+            <div class="login-from">
+              <div class="loginind">
+                <div class="login-input">
+                  <el-input
+                    placeholder="请输入账号"
+                    type="text"
+                    v-model="userinfrom"
+                    prefix-icon="el-icon-user-solid"
+                    size="medium"
+                  ></el-input>
+                </div>
+                <div class="login-input">
+                  <el-input
+                    placeholder="请输入密码"
+                    type="password"
+                    v-model="password"
+                    show-password
+                    size="medium"
+                    prefix-icon="el-icon-key"
+                    @keyup.enter.native="login"
+                  ></el-input>
+                </div>
+              </div>
+
+              <div class="remember">
+                <el-row>
+                  <el-col :span="12">
+                    <el-checkbox v-model="checked">记住密码</el-checkbox>
+                  </el-col>
+                </el-row>
+              </div>
+              <div class="remembers">
+                <el-button type="primary" @click="login">登录</el-button>
+              </div>
             </div>
           </div>
-          <div class="login-from">
-            <el-form label-position="left" label-width="80px">
-              <el-form-item label="账号:">
-                <el-input
-                  placeholder="请输入账号"
-                  type="text"
-                  v-model="userinfrom"
-                  size="medium"
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="密码:">
-                <el-input
-                  placeholder="请输入密码"
-                  type="password"
-                  v-model="password"
-                  show-password
-                  size="medium"
-                  @keyup.enter.native="login"
-                ></el-input>
-              </el-form-item>
-            </el-form>
-            <div class="remember">
-              <el-row>
-                <el-col :span="12">
-                  <el-checkbox v-model="checked">记住密码</el-checkbox>
-                </el-col>
-              </el-row>
-            </div>
-            <div class="remembers">
-              <el-button type="primary" @click="login">登录</el-button>
-            </div>
-          </div>
-        </div>
         </div>
       </div>
     </div>
@@ -126,10 +129,7 @@ export default {
               "refresh_token",
               res.data.refresh_token
             );
-            window.localStorage.setItem(
-              "expires_in",
-              res.data.expires_in
-            );
+            window.localStorage.setItem("expires_in", res.data.expires_in);
             // 登录的用户信息
             let username = {
               roleID: res.data.profile.role,
@@ -149,7 +149,7 @@ export default {
               message: "登录成功",
               type: "success",
             });
-            this.$root.$emit('websock');
+            this.$root.$emit("websock");
           } else {
             this.$message({
               showClose: true,
@@ -266,7 +266,7 @@ export default {
         height: 21.36rem;
         // margin-top: 0.4rem;
         background-color: #fff;
-        padding: 20px;
+        padding: 20px 40px;
         border-radius: 10px;
         .from-text {
           display: flex;
@@ -292,18 +292,11 @@ export default {
           }
         }
         .login-from {
-          .el-form {
-            .el-form-item {
-              .el-form-item__label {
-                padding: 0;
-              }
-              .el-form-item__content {
-                .el-input {
-                  .el-input__inner {
-                    border-radius: 5px;
-                  }
-                }
-              }
+          .loginind{
+            width: 100%;
+            // padding: 15px 20px;
+            .login-input{
+              margin-bottom: 15px;
             }
           }
         }
