@@ -83,50 +83,48 @@
       </el-row>
     </div>
 
-    
-      
-        <div v-if="baoxingpint">
-          <el-row :gutter="12" class="elrow">
-            <el-col :span="8">
-              <el-card shadow="hover" :body-style="{ padding: '10px' }">
-                <div class="databoard">
-                  <div class="datatext">
-                    <div class="txt">本月提交评估量</div>
-                    <div class="number lvshi">{{ risk_eval_count }}</div>
-                  </div>
-                  <!-- <img src="../../static/img/lvshi.png" alt="图标" /> -->
+    <div v-if="baoxingpint">
+      <el-row :gutter="12" class="elrow">
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月提交评估量</div>
+                <div class="number lvshi">{{ risk_eval_count }}</div>
+              </div>
+              <img src="../../static/img/lvshi.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月评估通过量</div>
+                <div class="number baoe">{{ risk_eval_open_count }}</div>
+              </div>
+              <img src="../../static/img/pin.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月出单量</div>
+                <div class="number zonge">
+                  {{ risk_eval_trade_count }}
                 </div>
-              </el-card>
-            </el-col>
-            <el-col :span="8">
-              <el-card shadow="hover" :body-style="{ padding: '10px' }">
-                <div class="databoard">
-                  <div class="datatext">
-                    <div class="txt">本月评估通过量</div>
-                    <div class="number baoe">{{ risk_eval_open_count }}</div>
-                  </div>
-                  <!-- <img src="../../static/img/pin.png" alt="图标" /> -->
-                </div>
-              </el-card>
-            </el-col>
-            <el-col :span="8">
-              <el-card shadow="hover" :body-style="{ padding: '10px' }">
-                <div class="databoard">
-                  <div class="datatext">
-                    <div class="txt">本月出单量</div>
-                    <div class="number zonge">
-                      {{ risk_eval_trade_count }}
-                    </div>
-                  </div>
-                  <!-- <img src="../../static/img/lvshi.png" alt="图标" /> -->
-                </div>
-              </el-card>
-            </el-col>
-          </el-row>
-        </div>
-      <div class="headdata">
-      <div style="flex:1;">
-        <div v-if="baoxingpint">
+              </div>
+              <img src="../../static/img/hezuo.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="headdata" v-if="baoxingpint">
+      <div style="flex: 1">
+        <div>
           <div style="margin-top: 20px">
             <el-card shadow="hover" :body-style="{ padding: '10px' }">
               <EchartsTable :id="'echars1'" :data="chartstable1" />
@@ -143,15 +141,29 @@
         <el-card shadow="hover" :body-style="{ padding: '10px' }">
           <div>
             <div class="paiming">
-              <span>销售业务人员单量排名</span>
+              <span>销售业务人员通过量排名</span>
             </div>
-            <div class="progress" v-for="(item,index) in usert" :key="index">
-              <span :class="index+1 == 1 ? 'nunberred': index+1 == 2?'nunberorgin': index+1 == 3?'nunbergerrn':'nunber'">{{index+1}}</span>
-              <span class="sumname">{{item.name}}</span>
+            <div class="progress" v-for="(item, index) in usert" :key="index">
+              <span
+                :class="
+                  index + 1 == 1
+                    ? 'nunberred'
+                    : index + 1 == 2
+                    ? 'nunberorgin'
+                    : index + 1 == 3
+                    ? 'nunbergerrn'
+                    : 'nunber'
+                "
+                >{{ index + 1 }}</span
+              >
+              <span class="sumname">{{ item.name }}</span>
               <div class="gress">
-                <el-progress :percentage="item.totalpercent" :show-text="false"></el-progress>
+                <el-progress
+                  :percentage="item.totalpercent"
+                  :show-text="false"
+                ></el-progress>
               </div>
-              <span class="snum">{{item.total}}</span>
+              <span class="snum">{{ item.total }}</span>
             </div>
           </div>
         </el-card>
@@ -190,6 +202,7 @@ export default {
       chartstable1: {
         textTitle: "提交量",
         nameArray: "",
+        colors: ['#409EFF', '#F4AA43'],
         legends: "",
         yaxis: "",
         series: [],
@@ -201,6 +214,7 @@ export default {
       chartstable2: {
         textTitle: "出单量",
         nameArray: "",
+        colors: ['#409EFF'],
         legends: "",
         yaxis: "",
         series: [],
@@ -235,23 +249,11 @@ export default {
       this.baoxingpint = true;
       this.theinsurer();
     }
-
-    this.hometimeDate();
-
     this.chartstable1.series = this.chartsData1;
     this.chartstable2.series = this.chartsData2;
   },
   methods: {
-    // arrMax(arr){
-    //             arr.sort();
-    //             return arr[arr.length-1]
-    //         },
-    hometimeDate() {
-      let date = new Date();
-      console.log("日期", date.getUTCFullYear());
-      // console.log('月',date.getMonth()+1);
-      this.yeared = date.getUTCFullYear().toString();
-    },
+    
     // 看板数据api
     dashboardapi() {
       this.isdone = true;
@@ -273,7 +275,7 @@ export default {
       this.isdone = true;
       Dashboard().then((res) => {
         this.isdone = false;
-        
+
         // console.log("看板", res);
         // this.risk_eval_review_count = res.data.user_count;
         // this.icco_count = res.data.area_count;
@@ -284,7 +286,7 @@ export default {
         this.chartstable1.nameArray =
           res.data.risk_eval_submit_data_range.dates;
         this.chartstable1.legends = ["通过量", "拒绝量"];
-        
+
         let reject = res.data.risk_eval_submit_data_range.reject_vals;
         let success = res.data.risk_eval_submit_data_range.success_vals;
         reject.map((item, index) => {
@@ -297,6 +299,19 @@ export default {
           // barWidth: 20,
           stack: "Ad",
           data: res.data.risk_eval_submit_data_range.success_vals,
+          label:{
+            normal:{
+              show: false,
+              position: "top",
+              formatter: function (params) {
+                if (params.value > 0) {
+                  return params.value;
+                } else {
+                  return "";
+                }
+              },
+            }
+          }
         };
         let sun = {
           name: "总数",
@@ -332,6 +347,19 @@ export default {
           // barWidth: 20,
           stack: "Ad",
           data: res.data.risk_eval_submit_data_range.reject_vals,
+          label:{
+            normal:{
+              show: false,
+              position: "top",
+              formatter: function (params) {
+                if (params.value > 0) {
+                  return params.value;
+                } else {
+                  return "";
+                }
+              },
+            }
+          }
         };
         this.chartsData1.push(sun);
         this.chartsData1.push(success_vals);
@@ -342,11 +370,24 @@ export default {
         this.chartstable2.legends = ["出单量"];
         let countarr = res.data.risk_eval_trade_data_range.counts;
         // let arrmaxs = this.arrMax(countarr);
-        this.chartstable2.yaxis = Math.max(...countarr) *2;
+        this.chartstable2.yaxis = Math.max(...countarr) * 2;
         let counts = {
           name: "出单量",
           type: "line",
           data: res.data.risk_eval_trade_data_range.counts,
+          label:{
+            normal:{
+              show: true,
+              position: "top",
+              formatter: function (params) {
+                if (params.value > 0) {
+                  return params.value;
+                } else {
+                  return "";
+                }
+              },
+            }
+          }
         };
         let amounts = {
           name: "保费金额",
@@ -363,9 +404,11 @@ export default {
 
         // 排名
         this.usert = res.data.mini_app_user_top10;
-        this.usert.map((item)=>{
-          item.totalpercent=(item.total/10000)*100
-        })
+        // console.log('pai',this.usert);
+        let painum = this.usert[0].total
+        this.usert.map((item) => {
+          item.totalpercent = (item.total / (painum+20)) * 100;
+        });
       });
     },
   },
@@ -394,29 +437,29 @@ export default {
 .elrow {
   margin: 0 0 20px 0;
 }
-.headdata{
+.headdata {
   display: flex;
 }
-.care{
+.care {
   margin-top: 20px;
   margin-left: 20px;
 }
 // 排名
-.paiming{
+.paiming {
   font-size: 14px;
   font-weight: 600;
   height: 30px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #C7C7CC;
+  border-bottom: 1px solid #c7c7cc;
   padding-bottom: 10px;
 }
-.progress{
+.progress {
   display: flex;
   align-items: center;
   height: 40px;
-  border-bottom: 1px solid #C7C7CC;
-  .nunber{
+  border-bottom: 1px solid #c7c7cc;
+  .nunber {
     display: flex;
     background-color: #909399;
     align-items: center;
@@ -424,26 +467,39 @@ export default {
     width: 15px;
     height: 15px;
     font-size: 12px;
-    padding: 10px;
+    padding: 9px;
     // border: 1px solid #ff3a30;
     border-radius: 10px;
     line-height: 20px;
     color: #fff;
   }
-  .nunberred{
+  .nunberred {
     display: flex;
-    background-color: #F56C6C;
+    background-color: #f56c6c;
     align-items: center;
     justify-content: center;
     width: 15px;
     height: 15px;
     font-size: 12px;
-    padding: 10px;
+    padding: 9px;
     border-radius: 10px;
     line-height: 20px;
     color: #fff;
   }
-  .nunberorgin{
+  .nunberorgin {
+    display: flex;
+    background-color: #409EFF;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    font-size: 12px;
+    padding: 9px;
+    border-radius: 10px;
+    line-height: 20px;
+    color: #fff;
+  }
+  .nunbergerrn {
     display: flex;
     background-color: #E6A23C;
     align-items: center;
@@ -451,31 +507,18 @@ export default {
     width: 15px;
     height: 15px;
     font-size: 12px;
-    padding: 10px;
+    padding: 9px;
     border-radius: 10px;
     line-height: 20px;
     color: #fff;
   }
-  .nunbergerrn{
-    display: flex;
-    background-color: #67C23A;
-    align-items: center;
-    justify-content: center;
-    width: 15px;
-    height: 15px;
-    font-size: 12px;
-    padding: 10px;
-    border-radius: 10px;
-    line-height: 20px;
-    color: #fff;
-  }
-  .sumname{
+  .sumname {
     width: 71px;
     font-size: 12px;
     color: #101010;
     margin: 0 0 0 15px;
   }
-  .gress{
+  .gress {
     width: 100px;
     margin-right: 10px;
   }

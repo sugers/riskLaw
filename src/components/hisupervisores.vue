@@ -1787,7 +1787,7 @@ export default {
           console.log(res.data);
           let tmp = ''
           res.data.forEach(element => {
-            tmp+=`<span><a href='/#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
+            tmp+=`<span><a href='/admin/index.html#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
           });
           this.$notify.close();
           

@@ -68,6 +68,12 @@
           <el-menu-item index="/TrendChart">业务发展趋势图</el-menu-item>
           <el-menu-item index="/OverviewTable">分公司排名表</el-menu-item>
         </el-submenu>
+        <el-submenu index="111">
+            <template slot="title"><i class="el-icon-s-marketing"></i>统计分析</template>
+            <el-menu-item index="/laywerWorkload">法务人员工作量表</el-menu-item>
+            <!-- <el-menu-item index="/laywerChart">业务发展趋势图</el-menu-item> -->
+            <el-menu-item index="/layweroverTable">业务发展总览表</el-menu-item>
+        </el-submenu>
         <!-- <el-menu-item index="/notics" v-if="chusheng || baoxtai">
           <template slot="title">
             <i class="el-icon-bell"></i>

@@ -1,54 +1,26 @@
 <template>
-  
-  <div :id=id ref="data" class="ecthrts"></div>
-  
+  <div :id="id" ref="data" class="ecthrts"></div>
 </template>
 
 <script>
-// function getDaysOfEveryMonth(){//返回天数
-//   var baseMonthsDay = [31,28,31,30,31,30,31,31,30,31,30,31];//各月天数
-//   var thisYear = new Date().getFullYear();//今年
-//   var thisMonth = new Date().getMonth();//今月
-//   var thisMonthDays = [];//这个月有多少天,用于返回echarts用
-//   //判断是闰年吗？闰年2月29天
-//   function isRunYear(fullYear){
-//     return (fullYear % 4 == 0 && (fullYear % 100 != 0 || fullYear % 400 == 0));
-//   }
-
-//   function getThisMonthDays(days){//传天数，返天数数组
-//     var arr = [];
-//     for(var i=1;i <= days;i++){
-//       arr.push(i);
-//     }
-//     return arr;
-//   }
-
-//   if(isRunYear(thisYear) && thisMonth == 1){//闰年2月29天
-//     thisMonthDays = getThisMonthDays(baseMonthsDay[thisMonth] + 1);
-//   }else{
-//     thisMonthDays = getThisMonthDays(baseMonthsDay[thisMonth]);
-//   }
-//   return thisMonthDays;
-// }
-
 export default {
   name: "EchartsTable",
-  props:["id","data"],
+  props: ["id", "data"],
   data() {
     return {
-      Myechart:null,
+      Myechart: null,
     };
   },
-  beforeDestroy(){
+  beforeDestroy() {
     this.drawLinde.dispose();
   },
-  watch:{
-    data:{
-      handler(value){
-        this.drawLinde(value)
+  watch: {
+    data: {
+      handler(value) {
+        this.drawLinde(value);
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   mounted() {
     this.drawLinde(this.data);
@@ -57,17 +29,53 @@ export default {
     // textTitle 标题
     // nameArray x轴数据
     // series series数据
-    drawLinde({textTitle='',legends=[],yaxis='',nameArray=[],series=[]} = {}) {
-
+    // yaxis y轴最大值
+    drawLinde({
+      textTitle = "",
+      colors = [],
+      legends = [],
+      yaxis = "",
+      nameArray = [],
+      series = [],
+    } = {}) {
       let Myechart = this.$echarts.init(document.getElementById(this.id));
-      Myechart.clear();
+      
+      // Myechart.clear();
+      if (this.id == "echars1") {
+        Myechart.off("legendselectchanged");
+        // 图例开关的行为只会触发 legendselectchanged 事件
+        Myechart.on("legendselectchanged", function (params) {
+          // 获取点击图例的选中状态
+          // var isSelected = params.selected[params.name];
+          var isSelecteds = params.selected["通过量"];
+          var isSelectedt = params.selected["拒绝量"];
+          // 打印所有图例的状态
+          console.log('3',series);
+          let seried = series;
+          if (isSelecteds && isSelectedt) {
+            seried[0].label.normal.show = true;
+            seried[1].label.normal.show = false;
+            seried[2].label.normal.show = false;
+          } else if (!isSelecteds && isSelectedt) {
+            seried[0].label.normal.show = false;
+            seried[1].label.normal.show = false;
+            seried[2].label.normal.show = true;
+          } else if (isSelecteds && !isSelectedt) {
+            seried[0].label.normal.show = false;
+            seried[1].label.normal.show = true;
+            seried[2].label.normal.show = false;
+          }
+        });
+      }
+
       Myechart.setOption({
         title: {
-          text: textTitle
+          text: textTitle,
         },
         tooltip: {
           trigger: "axis",
         },
+        color: colors,
         legend: {
           data: legends,
           right: 30,
@@ -76,7 +84,7 @@ export default {
           {
             type: "category",
             axisTick: {
-              alignWithLabel: true
+              alignWithLabel: true,
             },
             data: nameArray,
           },
@@ -89,9 +97,9 @@ export default {
         ],
         series: series,
       });
-      window.onresize = function(){
+      window.onresize = function () {
         Myechart.resize();
-      }
+      };
       // window.addEventListener("resize",function(){
       //   Myechart.resize();
       // })
@@ -101,8 +109,8 @@ export default {
 </script>
   
 <style lang="less">
-  .ecthrts{
-    width: 89%;
-    height: 25rem;
-  }
+.ecthrts {
+  width: 89%;
+  height: 25rem;
+}
 </style>

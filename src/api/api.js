@@ -293,6 +293,18 @@ export const GetOverviewTable = data => {
         resolve(get('/api/v1/icco/admin/performance/area', data))
     })
 }
+// 获取法务人员业绩表
+export const GetlaywerWork = data => {
+    return new Promise(function (resolve) {
+        resolve(get('/api/v1/admin/performance/preReviewer', data))
+    })
+}
+// 获取业务发展总览表
+export const GetlaywerOverTable = data => {
+    return new Promise(function (resolve) {
+        resolve(get('/api/v1/admin/performance/icco_data', data))
+    })
+}
 // 下载全部文件
 // export const Casedownload = data => {
 //   return new Promise(function (resolve) {
@@ -346,5 +358,12 @@ export const Insuredtype = data => {
 export const Caserepeat = data =>{
   return new Promise(function (resolve){
     resolve(get('/api/v1/admin/review/case/repeat',data))
+  })
+}
+
+// 出单确认 (保险公司管理员权限）
+export const Evaltrade = data => {
+  return new Promise(function (resolve) {
+      resolve(put('/api/v1/icco/eval/trade', data))
   })
 }

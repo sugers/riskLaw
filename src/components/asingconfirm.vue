@@ -141,7 +141,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -152,10 +156,18 @@
               <div v-for="(item, ind) in usercaidfile" :key="ind">
                 <div class="tyetext" v-if="filescaid">
                   <div class="textwen">
-                    <p class="ptextlei" 
-                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
                       @click="btnclicks(item.path)"
-                      :title="item.file_name">
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -164,7 +176,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -317,7 +333,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -328,10 +348,18 @@
               <div v-for="(item, ind) in usersfz" :key="ind">
                 <div class="tyetext" v-if="boolblidocx">
                   <div class="textwen">
-                    <p class="ptextlei" 
-                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
                       @click="btnclicks(item.path)"
-                      :title="item.file_name">
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -340,7 +368,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -470,7 +502,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -481,10 +517,18 @@
               <div v-for="(item, ind) in complatxt" :key="ind">
                 <div class="tyetext" v-if="txtplay">
                   <div class="textwen">
-                    <p class="ptextlei" 
-                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
                       @click="btnclicks(item.path)"
-                      :title="item.file_name">
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -493,7 +537,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -602,7 +650,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -613,10 +665,18 @@
               <div v-for="(item, ind) in complatexts" :key="ind">
                 <div class="tyetext" v-if="btxtop">
                   <div class="textwen">
-                    <p class="ptextlei" 
-                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                    <p
+                      class="ptextlei"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
                       @click="btnclicks(item.path)"
-                      :title="item.file_name">
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -625,7 +685,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -697,7 +761,11 @@
                     v-for="(item, dome) in timonsrc"
                     :key="dome"
                   >
-                    <p class="ad_imgs_txts" :title="item.file_name" @click="zjopenmony(dome)">
+                    <p
+                      class="ad_imgs_txts"
+                      :title="item.file_name"
+                      @click="zjopenmony(dome)"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -706,7 +774,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -719,10 +791,18 @@
                     v-for="(item, ins) in timonfile"
                     :key="ins"
                   >
-                    <p class="ad_imgs_txt" 
-                      :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
+                    <p
+                      class="ad_imgs_txt"
+                      :style="
+                        item.path
+                          .substring(item.path.lastIndexOf('.') + 1)
+                          .toLowerCase() == 'pdf'
+                          ? 'color: #5162f8;cursor: pointer;'
+                          : 'color:#000'
+                      "
                       @click="btnclicks(item.path)"
-                      :title="item.file_name">
+                      :title="item.file_name"
+                    >
                       {{ item.file_name }}
                     </p>
                     <div class="btntext">
@@ -731,7 +811,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -770,7 +854,7 @@
             <div class="martexts">
               <p>保险保额:</p>
               <span>
-                <span>{{ internalForm.coverage }}</span>
+                <span>{{ internalForm.coverage | currency }}</span>
               </span>
             </div>
             <div class="martexts">
@@ -801,80 +885,155 @@
             <div class="martexts">
               <p>出单状态：</p>
               <div class="listchuadn">
-                <el-radio-group v-model="feedcudan">
+                <el-radio-group v-model="feedcudan" @change="rouderind">
                   <el-radio :label="1">已出单</el-radio>
                   <el-radio :label="0">未出单</el-radio>
                 </el-radio-group>
               </div>
             </div>
-            <div class="martexts">
-              <p>保险金额：</p>
-              <span style="width: 800px">
-                <el-input
-                  style="width: 200px"
-                  v-model="usertiduy.baoxianRMB"
-                  @blur="inputMoneyss($event, 'baoxianRMB')"
-                  @input="userinputmon"
-                  size="medium"
-                ></el-input>
-                元&nbsp;&nbsp;<span style="color: red">{{ usertidrmb }}</span>
-              </span>
-            </div>
-            <div class="marwers">
-              <p class="marwers_p">保单附件：</p>
-              <div class="listqishu" v-if="tranboolesrc">
-                <Comimageviewer
-                  :visible.sync="tranconimgs"
-                  :url="tranconurl"
-                ></Comimageviewer>
-                <span
-                  class="imgs"
-                  v-for="(item, insrc) in transrcs"
-                  :key="insrc"
-                >
-                  <p class="ad_imgs_txts" :title="item.file_name" @click="cdtransrcopen(insrc)">
-                    {{ item.file_name }}
-                  </p>
-                  <div class="btntext">
-                    <a
-                      :href="'https://wx.haobofalv.com/' + item.path"
-                      :download="item.file_name"
-                      >下载</a
-                    >
-                    <div class="shan" @click="deletes(item.id, item.path)">
-                      删除
-                    </div>
-                  </div>
+            <div v-if="feedcudan == 1">
+              <div class="martexts">
+                <p>保险金额：</p>
+                <span style="width: 800px">
+                  <el-input
+                    style="width: 200px"
+                    v-model="usertiduy.baoxianRMB"
+                    @blur="inputMoneyss($event, 'baoxianRMB')"
+                    @input="userinputmon"
+                    size="medium"
+                  ></el-input>
+                  元&nbsp;&nbsp;<span style="color: red">{{ usertidrmb }}</span>
                 </span>
               </div>
+              <div class="marwers_a">
+                <p class="marwers_b">保单附件：</p>
+                <div>
+                  <div class="listqishu">
+                    <el-upload
+                      style="margin-bottom: 10px"
+                      v-if="UserID != 2001"
+                      name="files"
+                      :show-file-list="false"
+                      :on-success="handlePreviewbaox"
+                      action="https://wx.haobofalv.com/api/v1/file/upload"
+                      class="elupload"
+                    >
+                      <el-button
+                        class="elupload_bton"
+                        size="small"
+                        type="primary"
+                        @click.prevent="btnnumber(6)"
+                        >点击上传</el-button
+                      >
+                    </el-upload>
+                    <el-upload
+                      v-else
+                      style="margin-bottom: 10px"
+                      name="files"
+                      :show-file-list="false"
+                      :on-success="handlePreview"
+                      action="https://wx.haobofalv.com/api/v1/file/upload"
+                      class="elupload"
+                    >
+                      <el-button
+                        class="elupload_bton"
+                        size="small"
+                        type="primary"
+                        >点击上传</el-button
+                      >
+                    </el-upload>
+                  </div>
+                  <div class="listqishu" v-if="tranboolesrc">
+                    <Comimageviewer
+                      :visible.sync="tranconimgs"
+                      :url="tranconurl"
+                    ></Comimageviewer>
+                    <span
+                      class="imgs"
+                      v-for="(item, insrc) in transrcs"
+                      :key="insrc"
+                    >
+                      <p
+                        class="ad_imgs_txts"
+                        :title="item.file_name"
+                        @click="cdtransrcopen(insrc)"
+                      >
+                        {{ item.file_name }}
+                      </p>
+                      <div class="btntext">
+                        <a
+                          :href="'https://wx.haobofalv.com/' + item.path"
+                          :download="item.file_name"
+                          >下载</a
+                        >
+                        <div
+                          v-if="shancu"
+                          class="shan"
+                          @click="deletes(item.id, item.path)"
+                        >
+                          删除
+                        </div>
+                      </div>
+                    </span>
+                  </div>
 
-              <div class="listqishu" v-if="tranboolefile">
-                <span
-                  class="imgs"
-                  v-for="(item, ins) in tranfiles"
-                  :key="ins"
-                >
-                  <p class="ad_imgs_txt" 
-                    :title="item.file_name"
-                    :style="item.path.substring(item.path.lastIndexOf('.') + 1).toLowerCase() == 'pdf' ?  'color: #5162f8;cursor: pointer;' : 'color:#000'"
-                    @click="btnclicks(item.path)"
-                  >
-                    {{ item.file_name }}
-                  </p>
-                  <div class="btntext">
-                    <a
-                      :href="'https://wx.haobofalv.com/' + item.path"
-                      :download="item.file_name"
-                      >下载</a
+                  <div class="listqishu" v-if="tranboolefile">
+                    <span
+                      class="imgs"
+                      v-for="(item, ins) in tranfiles"
+                      :key="ins"
                     >
-                    <div class="shan" @click="deletes(item.id, item.path)">
-                      删除
-                    </div>
+                      <p
+                        class="ad_imgs_txt"
+                        :title="item.file_name"
+                        :style="
+                          item.path
+                            .substring(item.path.lastIndexOf('.') + 1)
+                            .toLowerCase() == 'pdf'
+                            ? 'color: #5162f8;cursor: pointer;'
+                            : 'color:#000'
+                        "
+                        @click="btnclicks(item.path)"
+                      >
+                        {{ item.file_name }}
+                      </p>
+                      <div class="btntext">
+                        <a
+                          :href="'https://wx.haobofalv.com/' + item.path"
+                          :download="item.file_name"
+                          >下载</a
+                        >
+                        <div
+                          v-if="shancu"
+                          class="shan"
+                          @click="deletes(item.id, item.path)"
+                        >
+                          删除
+                        </div>
+                      </div>
+                    </span>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="feedcudan == 0">
+              <div class="martexts">
+                <p>未出单原因：</p>
+                <span>
+                  <el-input
+                    style="width: 550px"
+                    v-model="nosinglereason"
+                    :autosize="{ minRows: 4 }"
+                    type="textarea"
+                    :rows="3"
+                    @blur="singlereason"
+                    placeholder="请输入内容"
+                    show-word-limit
+                  ></el-input>
                 </span>
               </div>
             </div>
-            <el-tabs v-model="activeName">
+            <el-tabs v-if="UserID != 2001" v-model="activeName">
               <el-tab-pane label="流程操作" name="first">
                 <div class="tabpane">
                   <div>
@@ -893,9 +1052,20 @@
             </el-tabs>
             <!-- 审核按钮 -->
             <div class="shenhe">
-              <el-button type="primary" @click.prevent="through(1)"
+              <el-button
+                v-if="UserID != 2001"
+                type="primary"
+                @click.prevent="through(1)"
                 >确定</el-button
               >
+              <el-button
+                class="shenhebton"
+                v-else
+                type="primary"
+                @click.prevent="through(0)"
+                >确定</el-button
+              >
+
               <!-- <el-button
                 type="primary"
                 @click.prevent="through(0)"
@@ -949,10 +1119,10 @@ function moneyDelete(num) {
 import {
   Reviewcase,
   Casetype,
+  // 上传文件
+  Upsecase,
   // 删除文件
   Casefile,
-  // 上传文件
-  Upsecase, //起诉状.3 保全申请.4 证据材料.5
   // 核实
   Tradeverify,
   // 修改出单
@@ -960,6 +1130,8 @@ import {
   // 生成意见书
   Lawopinion,
   Caserepeat,
+  // 保险费出单修改
+  Evaltrade,
 } from "../api/api";
 
 export default {
@@ -970,6 +1142,7 @@ export default {
   },
   data() {
     return {
+      UserID: "",
       insured_type: "",
       number: "",
       // 风险评估id
@@ -1079,7 +1252,7 @@ export default {
       preservation: [],
       preserimgs: [],
       testmonyurl: [],
-      testmonyimage:[],
+      testmonyimage: [],
       textmonyimg: false,
       // 证据材料
       testimony: [],
@@ -1133,12 +1306,18 @@ export default {
       plaintifftf: false,
       preservationtf: false,
       testimonytf: false,
+      // 未出单原因
+      nosinglereason: "",
+      shancu: true,
+      // 保单路径
+      thepath: [],
+      codeid: "",
     };
   },
-  destroyed(){
-    window.removeEventListener('beforeunload',e=>{
-      this.beforeClosepage(e)
-    })
+  destroyed() {
+    window.removeEventListener("beforeunload", (e) => {
+      this.beforeClosepage(e);
+    });
   },
   created() {
     this.$nextTick(() => {
@@ -1149,40 +1328,55 @@ export default {
     this.reviewapi();
   },
   mounted() {
-    window.addEventListener('beforeunload',e=>{
-      this.beforeClosepage(e)
-    })
-    this.caserepeatapi();
+    window.addEventListener("beforeunload", (e) => {
+      this.beforeClosepage(e);
+    });
+    var userinfor = JSON.parse(localStorage.getItem("userinfor"));
+    this.UserID = userinfor.roleID;
+    if (userinfor.roleID == 2001) {
+      this.shancu = false;
+    }
+    if (
+      userinfor.roleID == 1001 ||
+      userinfor.roleID == 1003 ||
+      userinfor.roleID == 1004
+    ) {
+      this.caserepeatapi();
+    }
   },
   methods: {
     // 相同案件提示
-    caserepeatapi(){
+    caserepeatapi() {
       let data = {
-        risk_eval_id: this.$route.query.data
-      }
-      Caserepeat(data).then(res=>{
+        risk_eval_id: this.$route.query.data,
+      };
+      Caserepeat(data).then((res) => {
         if (res.data != null) {
           console.log(res.data);
-          let tmp = ''
-          res.data.forEach(element => {
-            tmp+=`<span><a href='/#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
+          let tmp = "";
+          res.data.forEach((element) => {
+            tmp +=
+              `<span><a href='/admin/index.html#/usertable/adminfiedlook?data=` +
+              element.id +
+              `' target='_blank'>` +
+              element.number +
+              `</a></span><br>`;
           });
           this.$notify.close();
-          
+
           this.$notify({
-              title: '案件相同提醒',
-              dangerouslyUseHTMLString: true,
-              message: tmp,
-              duration: 0,
-              offset: 100,
-              type: 'warning'
-          })
-          
+            title: "案件相同提醒",
+            dangerouslyUseHTMLString: true,
+            message: tmp,
+            duration: 0,
+            offset: 100,
+            type: "warning",
+          });
         }
-      })
+      });
     },
-    beforeClosepage(){
-      window.opener.postData()
+    beforeClosepage() {
+      window.opener.postData();
     },
     reviewapi() {
       var data = {
@@ -1344,7 +1538,6 @@ export default {
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
-          
           var s = this.plaintiff[p];
           var na = s.path.substring(s.path.lastIndexOf(".") + 1);
           if (na == "jpg" || na == "jpeg" || na == "png") {
@@ -1410,7 +1603,6 @@ export default {
 
       this.testimony = dat.files.testimony;
       if (this.testimony != null) {
-        
         this.testimonytf = true;
         var tiomonimg = [];
         var tiomonfile = [];
@@ -1443,33 +1635,36 @@ export default {
       }
 
       this.transaction = dat.files.transaction;
-      if(this.transaction != null){
-        let trantimg = []
-        let trantfile = []
+      if (this.transaction != null) {
+        this.thepath.push(dat.files.transaction[0].path);
+        let trantimg = [];
+        let trantfile = [];
         for (let r = 0; r < this.transaction.length; r++) {
           let filcanion = this.transaction[r];
-          let ffix = filcanion.path.substring(filcanion.path.lastIndexOf(".") + 1);
-          if(
+          let ffix = filcanion.path.substring(
+            filcanion.path.lastIndexOf(".") + 1
+          );
+          if (
             ffix.toLowerCase() == "jpg" ||
             ffix.toLowerCase() == "jpeg" ||
-            ffix.toLowerCase() == "png" 
-          ){
-            trantimg.push(filcanion)
-            this.tranimggevie.push(htts + "/" + filcanion.path)
-          }else{
-            trantfile.push(filcanion)
+            ffix.toLowerCase() == "png"
+          ) {
+            trantimg.push(filcanion);
+            this.tranimggevie.push(htts + "/" + filcanion.path);
+          } else {
+            trantfile.push(filcanion);
           }
         }
         if (trantimg.length != 0) {
-          this.transrcs = trantimg
+          this.transrcs = trantimg;
           this.tranboolesrc = true;
-        }else{
+        } else {
           this.tranboolesrc = false;
         }
         if (trantfile.length != 0) {
-          this.tranfiles = trantfile
+          this.tranfiles = trantfile;
           this.tranboolefile = true;
-        }else{
+        } else {
           this.tranboolefile = false;
         }
       }
@@ -1515,8 +1710,8 @@ export default {
       this.testmonyurl = [...this.testmonyimage, ins];
       this.textmonyimg = true;
     },
-    cdtransrcopen(ind){
-      this.tranconurl = [...this.tranimggevie,ind];
+    cdtransrcopen(ind) {
+      this.tranconurl = [...this.tranimggevie, ind];
       this.tranconimgs = true;
     },
     closeViewer() {
@@ -1555,10 +1750,10 @@ export default {
             this.usercaidfile = "";
             this.blisrced = "";
             this.usersfz = "";
-            this.plaintiffage = []
-            this.complatxt = []
-            this.preserimgs = []
-            this.complatexts = []
+            this.plaintiffage = [];
+            this.complatxt = [];
+            this.preserimgs = [];
+            this.complatexts = [];
             this.timonsrc = "";
             this.timonfile = "";
             this.reviewapi();
@@ -1667,6 +1862,59 @@ export default {
     },
     inputMoneyss(el, name) {
       this.usertiduy[name] = getInputValue(el);
+      var dat = {
+          risk_eval_id: this.evalid,
+          trade: this.feedcudan,
+          amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
+          untrade_res: this.nosinglereason,
+        };
+        Modifytrade(dat).then((res) => {
+          // console.log(res);
+          if (res.code == 200) {
+            this.$message({
+              showClose: true,
+              message: "修改成功",
+              type: "sueccss",
+            });
+          }
+        });
+    },
+    singlereason(){
+      var dat = {
+          risk_eval_id: this.evalid,
+          trade: this.feedcudan,
+          amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
+          untrade_res: this.nosinglereason,
+        };
+        Modifytrade(dat).then((res) => {
+          // console.log(res);
+          if (res.code == 200) {
+            this.$message({
+              showClose: true,
+              message: "修改成功",
+              type: "sueccss",
+            });
+          }
+        });
+    },
+    rouderind(){
+      // 修改出单
+        var dat = {
+          risk_eval_id: this.evalid,
+          trade: this.feedcudan,
+          amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
+          untrade_res: this.nosinglereason,
+        };
+        Modifytrade(dat).then((res) => {
+          // console.log(res);
+          if (res.code == 200) {
+            this.$message({
+              showClose: true,
+              message: "修改成功",
+              type: "sueccss",
+            });
+          }
+        });
     },
     // 快速反馈按钮
     through(a) {
@@ -1675,9 +1923,12 @@ export default {
         var dat = {
           risk_eval_id: this.evalid,
           trade: this.feedcudan,
+          amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
+          untrade_res: this.nosinglereason,
         };
         Modifytrade(dat).then(() => {
           // console.log(res);
+          
         });
 
         var das = {
@@ -1699,12 +1950,79 @@ export default {
             });
           }
         });
-      } 
-      // else if (a == 0) {
-      //   this.$router.push({
-      //     path: "/usertable",
-      //   });
-      // }
+      } else if (a == 0) {
+        if (this.feedcudan == 1) {
+          if (this.usertiduy.baoxianRMB && this.transaction) {
+            this.evaltradeapi(
+              this.evalid,
+              this.feedcudan,
+              this.thepath,
+              Number(moneyDelete(this.usertiduy.baoxianRMB)),
+              this.nosinglereason
+            );
+
+            this.$router.push({
+              path: "/usertable/adminfiedlook",
+              query: {
+                data: this.evalid,
+              },
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: "保险金额和保单附件不能为空",
+              type: "error",
+            });
+          }
+        } else if (this.feedcudan == 0) {
+          if (this.nosinglereason) {
+            this.evaltradeapi(
+              this.evalid,
+              this.feedcudan,
+              this.thepath,
+              Number(moneyDelete(this.usertiduy.baoxianRMB)),
+              this.nosinglereason
+            );
+
+            this.$router.push({
+              path: "/usertable/adminfiedlook",
+              query: {
+                data: this.evalid,
+              },
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: "未出单原因不能为空",
+              type: "error",
+            });
+          }
+        }
+        // risk_eval_id	是	number	评估申请id
+        // trade	是	number	0:未出单 1:已出单
+        // files	是	array	出单文件,当trade=1时,必填
+        // amount	否	number	保费金额,当trade=1时,必填
+        // untrade_res	否	number	未出单原因,当trade=0时必填
+        // Evaltrade(data).then(res=>{})
+      }
+    },
+    // 修改出单api
+    evaltradeapi(riskid, trade, files, amount, untraderes) {
+      let data = {
+        risk_eval_id: riskid,
+        trade: trade,
+        files: files,
+        amount: amount,
+        untrade_res: untraderes,
+      };
+      // console.log("yyy", data);
+      Evaltrade(data).then((res) => {
+        // console.log('yyy',res);
+        this.codeid = res.code;
+        if (res.code == 200) {
+          this.reviewapi();
+        }
+      });
     },
     falbooks() {
       var data = {
@@ -1721,28 +2039,44 @@ export default {
       var tempwindow = window.open("_blank"); // 先打开页面
       tempwindow.location = "https://wx.haobofalv.com/" + dat;
     },
+    // 平台方保单附件上传
     btnnumber(ind) {
-      // console.log(ind);
       this.btnnum = ind;
     },
-    // 文件上传
-    handlePreview(response) {
+    handlePreviewbaox(response) {
       if (response.code == 200) {
         var data = {
           risk_eval_id: this.evalid,
-          type: 5,
+          type: this.btnnum,
           file: response.data[0],
         };
         Upsecase(data).then((res) => {
           // console.log(res);
           if (res.code == 200) {
-            this.$emit("sfun");
+            this.plaintiffage = [];
+            this.complatxt = [];
+            this.preserimgs = [];
+            this.complatexts = [];
+            this.reviewapi();
+            // this.$message({
+            //   showClose: true,
+            //   message: "上传成功",
+            //   type: "success",
+            // });
           }
         });
       }
-      // Filecase().then(res=>{
-      //   console.log(res);
-      // })
+    },
+    // 保险费方保单附件上传
+    handlePreview(response) {
+      // console.log(response.data);
+      this.evaltradeapi(
+        this.evalid,
+        this.feedcudan,
+        response.data,
+        Number(moneyDelete(this.usertiduy.baoxianRMB)),
+        this.nosinglereason
+      );
     },
     // 起诉状上传
     // handlePrev(response){
@@ -1802,6 +2136,11 @@ export default {
           margin: 10px 30px;
           padding: 9px 20px;
         }
+        .shenhebton {
+          border: 0;
+          margin: 25px 0 10px 140px;
+          padding: 9px 20px;
+        }
       }
     }
     .adminiewrss {
@@ -1824,7 +2163,7 @@ export default {
         font-size: 16px;
         color: #606266;
       }
-      .textsollc{
+      .textsollc {
         width: 400px;
         height: 250px;
         font-size: 16px;
@@ -1866,7 +2205,7 @@ export default {
           }
         }
       }
-      .listchuadn{
+      .listchuadn {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1882,6 +2221,81 @@ export default {
         width: 150px;
         margin: 0;
         // margin-right: 35px;
+      }
+      .marwers_b {
+        width: 150px;
+        margin: 0;
+        display: flex;
+        align-items: center;
+      }
+      .listqishu {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px;
+        .imgs {
+          display: flex;
+          width: 800px;
+          margin-bottom: 20px;
+          .ad_imgs_txt {
+            max-width: 300px;
+            margin: 0;
+            color: #000;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .ad_imgs_txts {
+            cursor: pointer;
+            max-width: 300px;
+            margin: 0;
+            color: #5162f8;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .btntext {
+            display: flex;
+            justify-content: space-evenly;
+            width: 150px;
+
+            a:link,
+            a:visited,
+            a:hover,
+            a:active {
+              text-decoration: none;
+              color: #5162f8;
+            }
+            .shan {
+              cursor: pointer;
+              color: #f03333;
+            }
+          }
+        }
+      }
+      .listqiimg {
+        display: flex;
+        margin-bottom: 20px;
+        .imgs {
+          display: flex;
+          width: 74vw;
+          flex-wrap: wrap;
+          .el-image {
+            display: flex;
+            background-color: #bbbbbb;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+    .marwers_a {
+      display: flex;
+      margin: 15px 0 0 0;
+      .marwers_b {
+        width: 150px;
+        margin: 0;
+        display: flex;
+        // align-items: center;
       }
       .listqishu {
         display: flex;

@@ -3,38 +3,10 @@
         <div class="insuranceUser">
             <div class="insuranceTop">
                 <div class="otherScreen">
-
-                    <div class="companySelect onlyClass">
-                        <span class="name">保险公司：</span>
-                        <div class="selectContent">
-                            <el-select v-model="fieldVal" slot="prepend" placeholder="请选择">
-                                <el-option v-for="(item,index) in insuranceDta" :key="index" :label="item.name"
-                                    :value="item.code">
-                                </el-option>
-                            </el-select>
-                        </div>
-                    </div>
-                    <div class="companySelect onlyClass">
-                        <span class="name">省份：</span>
-                        <div class="selectContent">
-                            <el-select v-model="areaidVal" slot="prepend" placeholder="请选择">
-                                <el-option v-for="(item, index) in salesmanDta" :key="index" :label="item.name"
-                                    :value="item.code">
-                                </el-option>
-                            </el-select>
-                        </div>
-                    </div>
-                    <div class="companySelect onlyClass">
-                        <span class="name">业务员：</span>
-                        <div class="selectContent">
-                            <el-input placeholder="请输入业务员名字" v-model="salesmanVal" clearable>
-                            </el-input>
-                        </div>
-                    </div>
                     <div class="timeSelect onlyClass">
                         <span class="name">月份：</span>
                         <div class="selectContent">
-                            <el-date-picker v-model="monthVal" @change="monthChange" type="month" placeholder="选择月">
+                            <el-date-picker v-model="monthVal" type="month" placeholder="选择月" @change="monthChange">
                             </el-date-picker>
                         </div>
                     </div>
@@ -58,44 +30,54 @@
             <div class="insuranceBottom">
                 <div class="bottomTable usermanagerFix" style="position: relative">
                     <el-table ref="filterTable" show-summary :summary-method="getSummaries" :data="tableData"
-                        style="width: 100%"
-                        stripe highlight-current-row
-                        :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}"
-                        @selection-change="handleSelectionChange">
+                        style="width: 100%" stripe highlight-current-row
+                        :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">
                         <el-table-column type="selection" width="60" align="center">
                         </el-table-column>
-                        <el-table-column label="序号" type="index" :index="indexMethod" width="40" align="center"
+                        <el-table-column label="序号" type="index" :index="indexMethod" width="60" align="center"
                             class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="name" label="姓名" width="80" align="center" show-overflow-tooltip
+                        <el-table-column prop="name" label="法务人员" width="80" align="center" show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
                         <!-- <el-table-column prop="application_time" label="日期" width="140" align='center'
                             show-overflow-tooltip class-name="grayColor">
                         </el-table-column> -->
-                        <el-table-column prop="submit" label="提交量" width="80" align="center" show-overflow-tooltip
+                        <el-table-column prop="total" label="评估总数量" width="100" align="center" show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="pass" label="通过量" width="80" align="center" show-overflow-tooltip
-                            class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column prop="reject" label="拒绝量" width="80" align="center" show-overflow-tooltip
-                            class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column prop="trade" label="出单量" width="80" align="center" show-overflow-tooltip
-                            class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column prop="preserv_amount" label="出单保险金额" width="140" align="center"
+                        <el-table-column prop="preserv_amount" label="评估总保额" width="140" align="center"
                             show-overflow-tooltip class-name="grayColor">
                             <template slot-scope="scope">
                                 <span>{{ scope.row.preserv_amount | currency }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="amount" label="出单保费金额" width="140" align="center" show-overflow-tooltip
+                        <el-table-column prop="pass" label="同意数量" width="80" align="center" show-overflow-tooltip
                             class-name="grayColor">
+                        </el-table-column>
+                        <el-table-column prop="pass_amount" label="同意保额" width="140" align="center"
+                            show-overflow-tooltip class-name="grayColor">
                             <template slot-scope="scope">
-                                <span>{{ scope.row.amount | currency }}</span>
+                                <span>{{ scope.row.pass_amount | currency }}</span>
                             </template>
+                        </el-table-column>
+                        <el-table-column prop="reject" label="拒绝数量" width="80" align="center" show-overflow-tooltip
+                            class-name="grayColor">
+                        </el-table-column>
+                        <el-table-column prop="reject_amount" label="拒绝保额" width="140" align="center"
+                            show-overflow-tooltip class-name="grayColor">
+                             <template slot-scope="scope">
+                                 <span>{{ scope.row.reject_amount | currency }}</span>
+                             </template>
+                        </el-table-column>
+                        <el-table-column prop="trade" label="出单数量" width="80" align="center" show-overflow-tooltip
+                            class-name="grayColor">
+                        </el-table-column>
+                        <el-table-column prop="trade_amount" label="出单保额" width="140" align="center"
+                            show-overflow-tooltip class-name="grayColor">
+                             <template slot-scope="scope">
+                                 <span>{{ scope.row.trade_amount | currency }}</span>
+                             </template>
                         </el-table-column>
                     </el-table>
                 </div>
@@ -114,46 +96,29 @@
 </template>
 <script>
     import {
-        Getstatics,
-        GetinsuranceList,
-        GetinsuranceAreaList,
-    } from "../../api/api.js";
+        GetlaywerWork
+    } from "../../../api/api.js";
     import {
         toThousandFilterZero
-    } from '../../../static/js/formatAmount'
-    import provinces from "../../../static/js/pca-code.json";
+    } from '../../../../static/js/formatAmount';
     export default {
         data() {
             return {
                 isdone: false,
-                areaides: false,
-                timeVal: "",
-                yearVal: '',
                 monthVal: '',
-                fieldVal: "",
-                salesmanVal: "",
-                salesmanDta: "",
-                areaidVal: '',
+                yearVal: '',
                 tableData: [],
-                insuranceDta: [],
                 total: 0,
                 page: 1,
                 limit: 10,
             };
         },
         mounted() {
-            this.isdone=true;
             let getDate = new Date();
-            this.timeVal = getDate;
+            this.isdone = true;
             this.monthVal =
                 `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>9?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${Number(getDate.getDay())+1>9?Number(getDate.getDay())+1:'0'+(Number(getDate.getDay())+1)}`
-            // let userinfor = JSON.parse(localStorage.getItem("userinfor"));
-            this.GetInsurance();
-            // this.insuranceSelect(userinfor.area_id)
-            // if (userinfor.area_id == 0) {
-            //     this.areaides = true;
-            // }
-
+            this.getListFn()
         },
         methods: {
             indexMethod(index) {
@@ -179,65 +144,6 @@
                     this.yearVal = timeval;
                 }
 
-            },
-            GetInsurance() {
-                let that = this;
-                let data = {
-                    status: -1,
-                    keyword: '',
-                }
-                GetinsuranceList(data).then((res) => {
-                    if (res.code == 200) {
-                        res.data.list.map((item) => {
-                            this.insuranceDta.push({
-                                'name': item.name,
-                                'code': item.ID
-                            })
-                        })
-
-                        setTimeout(() => {
-                            if (res.data.list.length == 1) {
-                                that.fieldVal = that.insuranceDta[0].code;
-                                that.fieldValName = that.insuranceDta[0].name;
-                                that.insuranceSelect(that.insuranceDta[0].code, 1)
-                            }
-
-                        }, 200)
-                    }
-
-                })
-            },
-            insuranceSelect(e) {
-                this.areaidVal = ''
-                this.salesmanDta = [];
-                let data = {
-                    icco_id: e
-                }
-                this.insuranceDta.map((item) => {
-                    if (item.code == e) {
-                        this.fieldValName = item.name
-                    }
-                })
-                GetinsuranceAreaList(data).then(res => {
-                    res.data.list.map((childitem) => {
-                        provinces.forEach((areaitem) => {
-                            if (childitem.adcode == areaitem.code) {
-                                this.salesmanDta.push({
-                                    name: areaitem.name,
-                                    code: childitem.adcode
-                                });
-                            }
-                        })
-                    })
-
-                });
-                setTimeout(() => {
-                    // if (this.salesmanDta.length == 1) {
-                    this.areaidVal = this.salesmanDta[0].code;
-                    // }
-                   this.getListFn();
-                }, 500)
-                 
             },
             getSummaries(param) {
 
@@ -271,32 +177,32 @@
                         sums[index] = "";
                     }
                 });
-
-                sums.splice(7, 8, toThousandFilterZero(sums[7]), toThousandFilterZero(sums[8]))
+                sums.forEach((val, index) => {
+                    if (index == 4 || index == 6 || index == 8 || index == 10) {
+                        sums.splice(index, 1, toThousandFilterZero(sums[index]));
+                    }
+                })
 
                 return sums;
             },
-            getStatistics(month,year, name, page, limit, adcode) {
-                this.isdone = true;
+            getlaywerWork(year, month, page, limit) {
                 let data = {
+                    year: year,
                     month: month,
-                    year:year,
-                    name: name,
                     page: page,
-                    limit: limit,
-                    adcode: adcode ? adcode : 0
+                    limit: limit
                 };
-                Getstatics(data).then((res) => {
+                GetlaywerWork(data).then((res) => {
                     if (res.code == 200) {
-                        this.isdone = false;
                         this.tableData = res.data.list;
                         this.total = res.data.total;
-                    }else{
-                         this.isdone=false;
+                        this.isdone = false
+                    } else {
+                        this.isdone = false;
                     }
-                }).catch(()=>{
-                    this.isdone=false;
-                });
+                }).catch(() => {
+                    this.isdone = false;
+                })
             },
             getListFn() {
                 let timeVal = null;
@@ -311,7 +217,6 @@
                 if (!this.yearVal) {
                     timeVal =
                         `${monthValYear}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
-
                 } else if (this.yearVal && this.monthVal) {
                     this.yearVal = monthValYear;
                     timeVal =
@@ -321,14 +226,13 @@
                     this.yearVal = new Date(this.yearVal).getFullYear()
                     this.monthVal = ''
                     timeVal
-                        =
-                        `${this.yearVal}-${Number(month)+1>9?Number(month)+1:'0'+(Number(month)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
+                        =`${this.yearVal}-${Number(month)+1>9?Number(month)+1:'0'+(Number(month)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
                     this.yearVal = timeVal
                 }
                 if (this.yearVal) {
-                    this.getStatistics('', this.yearVal, this.salesmanVal,this.page, this.limit,this.areaidVal)
+                    this.getlaywerWork( this.yearVal,'', this.page, this.limit)
                 } else {
-                    this.getStatistics(timeVal, '',this.salesmanVal, this.page, this.limit,this.areaidVal)
+                    this.getlaywerWork( '',timeVal,this.page, this.limit)
                 }
 
             },
@@ -338,7 +242,7 @@
             },
             current_change(currentPage) {
                 this.page = currentPage;
-                this.getListFn();
+                this.getListFn()
             },
             refresh() {
                 this.page = 1;
@@ -347,12 +251,12 @@
                 this.monthVal = getDate;
                 this.salesmanVal = "";
                 this.areaidVal = "";
-                this.yearVal=""
+                this.yearVal = ''
             },
             searchClick() {
+                this.isdone=true;
                 this.getListFn();
             },
-            handleSelectionChange() {},
         },
     };
 </script>

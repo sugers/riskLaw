@@ -282,6 +282,19 @@
             >
               出单确认
             </el-button>
+            <el-button
+              v-if="
+                scope.row.stage == 4 &&
+                roleID == 2001 && scope.row.state != 3
+              "
+              @click.prevent="operation(scope.row)"
+              type="text"
+              size="small"
+              class="btnstab"
+              style="background-color: rgb(52, 199, 88)"
+            >
+              出单确认
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -496,8 +509,9 @@ export default {
         if (this.currendRole != 2001) {
           this.suosuo = "";
           this.provincesid = "";
+          this.citydata = [];
         }
-        this.citydata = [];
+        
         this.userDateTime = [];
         this.userreivws = "";
         this.userkey = "";
@@ -652,7 +666,6 @@ export default {
       });
       this.citydata = citydata;
 
-      // console.log("7777", this.citydata);
     },
     // 表格
     headertextAlgin() {
@@ -828,6 +841,7 @@ export default {
               review_time: evll[i].review_time,
               // 操作
               stage: evll[i].stage,
+              state: evll[i].state,
             };
             tab.push(ts);
           }

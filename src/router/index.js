@@ -22,7 +22,9 @@ import usermanager from '../components/usermanager/usermanager.vue'
 import Statistics from '../components/Statistics/Statistics.vue'
 import TrendChart from '../components/TrendChart/TrendChart.vue'
 import OverviewTable from '../components/OverviewTable/OverviewTable.vue'
-
+import laywerChart from '../components/laywerStatistics/laywerChart/laywerChart.vue'
+import layweroverTable from '../components/laywerStatistics/layweroverTable/layweroverTable.vue'
+import laywerWorkload from '../components/laywerStatistics/laywerWorkload/laywerWorkload.vue'
 // import Layout from '../layout'
 import store from '../store/store/index'
 const originalPush = VueRouter.prototype.push
@@ -223,6 +225,31 @@ const routes = [
                 path: '/OverviewTable',
                 name: 'OverviewTable',
                 component: OverviewTable,
+                meta: {
+                    requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                },
+            },
+            // 律师统计
+            {
+                path: '/laywerChart',
+                name: 'laywerChart',
+                component: laywerChart,
+                meta: {
+                    requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                },
+            },
+            {
+                path: '/layweroverTable',
+                name: 'layweroverTable',
+                component: layweroverTable,
+                meta: {
+                    requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                },
+            },
+            {
+                path: '/laywerWorkload',
+                name: 'laywerWorkload',
+                component: laywerWorkload,
                 meta: {
                     requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
                 },

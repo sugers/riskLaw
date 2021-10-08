@@ -772,7 +772,7 @@
             <div class="martexts">
               <p>保险保额:</p>
               <span>
-                <span>{{ internalForm.coverage }}</span>
+                <span>{{ internalForm.coverage | currency }}</span>
               </span>
             </div>
             <div class="martexts">
@@ -801,7 +801,7 @@
         <el-row>
           <el-col :span="24">
             <div class="sinstate">
-              <p>出单状态：</p>
+              <p >出单状态：</p>
               <div class="tag_tag">
                 <!-- <el-radio-group v-model="feedcudan">
                   <el-radio :label="1">已出单</el-radio>
@@ -809,7 +809,6 @@
                 </el-radio-group> -->
                 <el-tag type="danger" v-if="feedcudan == 0">未出单</el-tag>
                 <el-tag type="success" v-if="feedcudan == 1">已出单</el-tag>
-                
               </div>
             </div>
             <div class="martexts">
@@ -1092,7 +1091,10 @@ export default {
     if (userinfor.roleID == 2001) {
       this.shancu = false
     }
-    this.caserepeatapi()
+    if(userinfor.roleID == 1001 ||userinfor.roleID == 1003 ||userinfor.roleID == 1004){
+      this.caserepeatapi()
+    }
+    
   },
   methods: {
     // 相同案件提示
@@ -1105,7 +1107,7 @@ export default {
           console.log(res.data);
           let tmp = ''
           res.data.forEach(element => {
-            tmp+=`<span><a href='/#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
+            tmp+=`<span><a href='/admin/index.html#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
           });
           this.$notify.close();
           
@@ -1163,7 +1165,7 @@ export default {
       this.insured_type = dat.insured_type;
       this.usertiduy.baoxianRMB = dat.amount;
 
-      console.log("dat", dat);
+      // console.log("dat", dat);
 
       this.law_opinion_path = dat.law_opinion_path;
       this.csteps = dat.review_records;
@@ -1683,7 +1685,7 @@ export default {
           min-height: 25px;
           line-height: 36px;
           margin: 0;
-          min-width: 140px;
+          min-width: 160px;
           font-size: 15px;
         }
         .tag_tag{

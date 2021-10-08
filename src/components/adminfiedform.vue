@@ -1375,6 +1375,7 @@ export default {
       preservationtf: false,
       testimonytf: false,
       arrat: [],
+      insuredt: "",
     };
   },
   destroyed() {
@@ -1409,10 +1410,17 @@ export default {
       }
       Caserepeat(data).then(res=>{
         if (res.data != null) {
-          console.log(res.data);
+          // const h = this.$createElement;
           let tmp = ''
           res.data.forEach(element => {
-            tmp+=`<span><a href='/#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
+            tmp+=`<span><a href='/admin/index.html#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
+            // tmp = h('div',{},[
+            //   h('span',{
+            //     on:{
+            //       click:this.tocreate
+            //     }
+            //   },`案件编号:`+element.number+``)
+            // ])
           });
           this.$notify.close();
           
@@ -1428,12 +1436,27 @@ export default {
         }
       })
     },
+
     insuredid(){
       let dats = {
         insured_type: this.insuredtypeid,
         risk_eval_id: this.evalid,
       }
-      Insuredtype(dats).then(()=>{})
+      if(this.insuredtypeid == 1){
+        this.insuredt = `<span>已修改至自然人</span>`;
+      }else if(this.insuredtypeid == 2){
+        this.insuredt = `<span>已修改至企业</span>`;
+      }
+      Insuredtype(dats).then((res)=>{
+        if(res.code == 200){
+          this.$message({
+              showClose: true,
+              dangerouslyUseHTMLString: true,
+              message: this.insuredt,
+              type: "success",
+            });
+        }
+      })
     },
     // 任务查看api
     reviewapi() {

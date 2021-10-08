@@ -10711,4 +10711,26 @@
 			"name": "胡杨河市"
 		}]
 	}]
+},
+{
+	"code": "4403",
+	"name": "深圳市",
+	"children": []
+},
+{ "code": "3702", "name": "青岛市", "children": [] },
+{ "code": "3502", "name": "厦门市", "children": [] },
+{
+	"code": "3302",
+	"name": "宁波市",
+	"children": []
+},
+{
+	"code": "2102",
+	"name": "大连市",
+	"children": []
+},
+{
+	"code": "3205",
+	"name": "苏州市",
+	"children": []
 }]
