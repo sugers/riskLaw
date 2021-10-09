@@ -50,7 +50,6 @@ export default {
           var isSelecteds = params.selected["通过量"];
           var isSelectedt = params.selected["拒绝量"];
           // 打印所有图例的状态
-          console.log('3',series);
           let seried = series;
           if (isSelecteds && isSelectedt) {
             seried[0].label.normal.show = true;

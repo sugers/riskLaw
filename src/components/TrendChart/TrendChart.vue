@@ -52,10 +52,10 @@
             <div class="insuranceBottom" stype="position:relative;">
                 <div id="submitChart" style="width: 100%;height:400px;"></div>
                 <div id="tradChart" style="width: 100%;height:400px;"></div>
-                  <Spin fix v-show="isdone">
-                      <Icon type="ios-loading" size="18" class="demo-spin-icon-load"></Icon>
-                      <div>Loading</div>
-                  </Spin>
+                <Spin fix v-show="isdone">
+                    <Icon type="ios-loading" size="18" class="demo-spin-icon-load"></Icon>
+                    <div>Loading</div>
+                </Spin>
             </div>
         </div>
     </section>
@@ -72,7 +72,7 @@
     export default {
         data() {
             return {
-                isdone:false,
+                isdone: false,
                 currendRole: '',
                 yearVal: '',
                 monthVal: '',
@@ -86,7 +86,7 @@
         },
         mounted() {
             // 获取角色权限
-            this.isdone=true;
+            this.isdone = true;
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID;
             let getDate = new Date();
@@ -170,64 +170,74 @@
                 tooltip: {
                     trigger: 'axis',
                 },
-                color: ['#409EFF'],
+                color: ['#F4AA43', '#409EFF'],
                 legend: {
-                    data: ['出单量'],
+                    data: ['出单量', '出单保费金额'],
                     right: 30
                 },
                 xAxis: {
+                    type: 'category',
                     data: [],
-                    boundaryGap: false,
-                    axisTick: {
-                        alignWithLabel: true
-                    },
-                },
-                yAxis: {
-                    // max: 200,
-                    type: 'value',
-                    // axisLabel: {
-                    //     formatter: function (params) {
-                    //         console.log(params)
-                    //         return params;
-                    //     }
+                    // boundaryGap: false,
+                    // axisTick: {
+                    //     alignWithLabel: true
                     // },
                 },
+                yAxis: [{
+                        type: 'value',
+                        name: '出单量',
+                        min: 0,
+                        max: 10,
+                        splitLine: { //网格线
+                            show: true
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '出单保费金额',
+                        min: 0,
+                        max: 1000,
+                        splitLine: { //网格线
+                            show: false
+                        }
+                    }
+                ],
                 series: [{
                         name: '出单量',
                         type: 'line',
                         data: [],
-                        barWidth: 20,
-                        label: {
-                            normal: {
-                                show: true, //显示数值
-                                position: 'top', // 位置设为top
-                                formatter: function (params) {
-                                    if (params.value > 0) {
-                                        return params.value;
-                                    } else {
-                                        return '';
-                                    }
-                                },
-                                textStyle: {
-                                    color: '#000'
-                                }
-                            }
-                        }
+                        // barWidth: 20,
+                        // label: {
+                        //     normal: {
+                        //         show: true, //显示数值
+                        //         position: 'top', // 位置设为top
+                        //         formatter: function (params) {
+                        //             if (params.value > 0) {
+                        //                 return params.value;
+                        //             } else {
+                        //                 return '';
+                        //             }
+                        //         },
+                        //         textStyle: {
+                        //             color: '#000'
+                        //         }
+                        //     }
+                        // }
                     },
                     {
                         name: '出单保费金额',
-                        type: 'line',
+                        type: 'bar',
                         data: [],
-                        barWidth: 20,
-                        barGap: '-100%',
-                        itemStyle: {
-                            normal: {
-                                color: 'rgba(128, 128, 128, 0)'
-                            }
-                        },
+                        // barWidth: 20,
+                        // barGap: '-100%',
+                        // itemStyle: {
+                        //     normal: {
+                        //         color: 'rgba(128, 128, 128, 0)'
+                        //     }
+                        // },
                         label: {
                             normal: {
-                                show: false, //显示数值
+                                show: true, //显示数值
                                 position: 'top', // 位置设为top
                                 formatter: function (params) {
                                     if (params.value > 0) {
@@ -261,9 +271,10 @@
                 let hours = getDate.getHours();
                 let minutes = getDate.getMinutes();
                 let seconds = getDate.getSeconds();
-                let monthValYear=new Date(this.monthVal).getFullYear();
-                let monthValMonth=new Date(this.monthVal).getMonth();
-                let timeval = `${this.monthVal?monthValYear:new
+                let monthValYear = new Date(this.monthVal).getFullYear();
+                let monthValMonth = new Date(this.monthVal).getMonth();
+                let timeval =
+                    `${this.monthVal?monthValYear:new
                 Date().getFullYear()}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
                 if (this.yearVal) {
                     this.yearVal = timeval;
@@ -349,9 +360,9 @@
                 let hours = getDate.getHours();
                 let minutes = getDate.getMinutes();
                 let seconds = getDate.getSeconds();
-                let monthValYear=new Date(this.monthVal).getFullYear();
-                let monthValMonth=new Date(this.monthVal).getMonth();
-                
+                let monthValYear = new Date(this.monthVal).getFullYear();
+                let monthValMonth = new Date(this.monthVal).getMonth();
+
                 if (!this.yearVal) {
                     type = 0
                     timeVal =
@@ -381,18 +392,18 @@
                     .tradChart)
             },
             getSubmitChart(icco_id, area_id, year, month, type, myChart) {
-                
+
                 let sumNum = [];
                 let data = {
                     icco_id: icco_id,
-                    area_id: area_id,
+                    area_id: area_id?area_id:0,
                     year: year,
                     month: month,
                     type: type
                 }
                 GetTrendChart(data).then((res) => {
                     if (res.code == 200) {
-                        
+
                         res.data.reject_vals.map((item, index) => {
                             sumNum.push(Number(item) + Number(res.data.success_vals[index]))
                         })
@@ -549,10 +560,10 @@
                             }
 
                         });
-                        this.isdone=false;
+                        this.isdone = false;
                     }
-                }).catch(()=>{
-                    this.isdone=false;
+                }).catch(() => {
+                    this.isdone = false;
                 })
             },
             getTradChart(icco_id, area_id, year, month, type, myChart) {
@@ -565,26 +576,174 @@
                 }
                 GetTrendChartOrder(data).then((res) => {
                     if (res.code == 200) {
-                        let currentMaxVal = Math.max(...res.data.counts)
+                        let currentMaxVal = Math.max(...res.data.counts) * 2
                         // console.log(currentMaxVal)
+                        console.log(res.data.counts)
                         myChart.setOption({
-                            yAxis: {
-                                max: currentMaxVal * 2,
-                            },
+                            yAxis: [{
+                                    type: 'value',
+                                    name: '出单量',
+                                    min: 0,
+                                    max: currentMaxVal ? currentMaxVal : 10,
+                                    splitLine: { //网格线
+                                        show: true
+                                    }
+                                },
+                                {
+                                    type: 'value',
+                                    name: '出单保费金额',
+                                    min: 0,
+                                    max: Math.max(...res.data.amounts) ? Math.max(
+                                        ...res.data.amounts) + 1000 : 1000,
+                                    splitLine: { //网格线
+                                        show: false
+                                    }
+
+                                }
+                            ],
                             xAxis: {
+                                type: 'category',
                                 data: res.data.dates
                             },
                             series: [{
                                 name: '出单量',
+                                type: 'line',
                                 data: res.data.counts
                             }, {
                                 name: '出单保费金额',
+                                type: 'bar',
+                                yAxisIndex: 1,
                                 data: res.data.amounts
                             }, ]
                         });
+                        myChart.off('legendselectchanged');
+                        myChart.on('legendselectchanged', function (params) {
+                            let rejectStatu = params.selected['出单量'];
+                            let paddStatu = params.selected['出单保费金额'];
+                            console.log(rejectStatu, paddStatu)
+                            if (rejectStatu && paddStatu) {
+                                myChart.setOption({
+                                    yAxis: [{
+                                            type: 'value',
+                                            name: '出单量',
+                                            show: true,
+                                            min: 0,
+                                            max: currentMaxVal ? currentMaxVal : 10,
+                                            splitLine: { //网格线
+                                                show: true
+                                            }
+                                        },
+                                        {
+                                            type: 'value',
+                                            name: '出单保费金额',
+                                            show:true,
+                                            min: 0,
+                                            max: Math.max(...res.data.amounts) ? Math.max(
+                                                ...res.data.amounts) + 1000 : 1000,
+                                            splitLine: { //网格线
+                                                show: false
+                                            }
+
+                                        }
+                                    ],
+                                    xAxis: {
+                                        type: 'category',
+                                        data: res.data.dates
+                                    },
+                                    series: [{
+                                        name: '出单量',
+                                        type: 'line',
+                                        data: res.data.counts
+                                    }, {
+                                        name: '出单保费金额',
+                                        type: 'bar',
+                                        yAxisIndex: 1,
+                                        data: res.data.amounts
+                                    }, ]
+                                });
+                            } else if (!rejectStatu && paddStatu) {
+                                myChart.setOption({
+                                    yAxis: [{
+                                            type: 'value',
+                                            name: '出单量',
+                                            show: false,
+                                            min: 0,
+                                            max: currentMaxVal ? currentMaxVal : 10,
+                                            splitLine: { //网格线
+                                                show: false
+                                            }
+                                        },
+                                        {
+                                            type: 'value',
+                                            name: '出单保费金额',
+                                            min: 0,
+                                            max: Math.max(...res.data.amounts) ? Math.max(
+                                                ...res.data.amounts) + 1000 : 1000,
+                                            splitLine: { //网格线
+                                                show: true
+                                            }
+                                        }
+                                    ],
+                                    xAxis: {
+                                        type: 'category',
+                                        data: res.data.dates
+                                    },
+                                    series: [{
+                                        name: '出单量',
+                                        type: 'line',
+                                        data: res.data.counts
+                                    }, {
+                                        name: '出单保费金额',
+                                        type: 'bar',
+                                        yAxisIndex: 1,
+                                        data: res.data.amounts
+                                    }, ]
+                                });
+                            } else if (rejectStatu && !paddStatu) {
+                                myChart.setOption({
+                                    yAxis: [{
+                                            type: 'value',
+                                            name: '出单量',
+                                            show: true,
+                                            min: 0,
+                                            max: currentMaxVal ? currentMaxVal : 10,
+                                            splitLine: { //网格线
+                                                show: true
+                                            }
+                                        },
+                                        {
+                                            type: 'value',
+                                            name: '出单保费金额',
+                                            show: false,
+                                            min: 0,
+                                            max: Math.max(...res.data.amounts) ? Math.max(
+                                                ...res.data.amounts) + 1000 : 1000,
+                                            splitLine: { //网格线
+                                                show: false
+                                            }
+                                        }
+                                    ],
+                                    xAxis: {
+                                        type: 'category',
+                                        data: res.data.dates
+                                    },
+                                    series: [{
+                                        name: '出单量',
+                                        type: 'line',
+                                        data: res.data.counts
+                                    }, {
+                                        name: '出单保费金额',
+                                        type: 'bar',
+                                        yAxisIndex: 1,
+                                        data: res.data.amounts
+                                    }, ]
+                                });
+                            }
+                        })
+
                     }
-                }).catch(()=>{
-                this.isdone=false;
+                }).catch(() => {
+                    this.isdone = false;
                 })
             },
             refresh() {
@@ -592,7 +751,7 @@
                 this.areaVal = '';
             },
             searchClick() {
-                this.isdone=true;
+                this.isdone = true;
                 this.getListFn();
             }
         }

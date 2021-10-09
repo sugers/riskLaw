@@ -97,15 +97,16 @@
                                                 </el-tooltip>
                                             </template>
                                         </el-table-column>
+                                        <el-table-column prop="area" width="100" align='center' show-overflow-tooltip
+                                            class-name="grayColor">
+                                        </el-table-column>
                                         <el-table-column prop="contact" width="140" align='center' show-overflow-tooltip
                                             class-name="grayColor">
                                         </el-table-column>
                                         <el-table-column prop="contact_tel" width="140" align='center'
                                             show-overflow-tooltip class-name="grayColor">
                                         </el-table-column>
-                                        <el-table-column prop="area" width="100" align='center' show-overflow-tooltip
-                                            class-name="grayColor">
-                                        </el-table-column>
+
                                         <el-table-column prop="CreatedAt" width="200" align='center'
                                             show-overflow-tooltip class-name="grayColor">
                                         </el-table-column>
@@ -147,15 +148,16 @@
                                     {{scope.row.status ===1?'启用':'禁用'}}</div>
                             </template>
                         </el-table-column>
+                        <el-table-column prop="area" label="省份" width="100" align='center' show-overflow-tooltip
+                            class-name="grayColor">
+                        </el-table-column>
                         <el-table-column prop="contact" label="联系人" width="140" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column>
                         <el-table-column prop="contact_tel" label="联系电话" width="140" align='center'
                             show-overflow-tooltip class-name="grayColor">
                         </el-table-column>
-                        <el-table-column prop="area" label="省份" width="100" align='center' show-overflow-tooltip
-                            class-name="grayColor">
-                        </el-table-column>
+
                         <!-- <el-table-column prop="website" label="官网" width="200" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column> -->
@@ -422,11 +424,11 @@
                             that.isdone = false;
                             that.tableData = result;
                         }, 1000)
-                    }else{
-                         this.isdone=false;
+                    } else {
+                        this.isdone = false;
                     }
-                }).catch(()=>{
-                     this.isdone=false;
+                }).catch(() => {
+                    this.isdone = false;
                 })
             },
             areaClick(name, id, data) {

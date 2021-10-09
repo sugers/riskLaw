@@ -277,13 +277,13 @@ export const Getstatics = data => {
 // 获取业务员的提交量趋势表
 export const GetTrendChart = data => {
     return new Promise(function (resolve) {
-        resolve(get('/api/v1/icco/admin/submit/dataRange', data))
+        resolve(get('/api/v1/backend/performance/submit/dataRange', data))
     })
 }
 // 获取业务员的出单量趋势表
 export const GetTrendChartOrder = data => {
     return new Promise(function (resolve) {
-        resolve(get('/api/v1/icco/admin/trade/dataRange', data))
+        resolve(get('/api/v1/backend/performance/trade/dataRange', data))
     })
 }
 // 获取业务员的业务总览表
