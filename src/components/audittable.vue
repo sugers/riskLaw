@@ -667,10 +667,10 @@ export default {
       this.Auditlistapi();
     },
     radiochange() {
-      if (this.userid != 2001) {
-        this.arrbaosel = "";
-        this.auditprovin = "";
-      }
+      // if (this.userid != 2001) {
+      //   this.arrbaosel = "";
+      //   this.auditprovin = "";
+      // }
       this.auditDateTime = [];
       this.keyword = "";
       let pagee = 1;

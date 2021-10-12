@@ -129,6 +129,22 @@
         >
           批量下载法律意见书
         </el-button>
+        <el-upload
+          v-if="andfinance && radiocyt == 3"
+          name="file"
+          :show-file-list="false"
+          :on-success="batchsheetxlxsfile"
+          action="https://wx.haobofalv.com/api/v1/admin/review/case/batch_modify_trade"
+          :headers="access"
+          class="andfinance"
+        >
+          <el-button
+            
+            type="primary"
+            icon="el-icon-upload"
+            >批量出单</el-button
+          >
+        </el-upload>
       </div>
       <el-table
         ref="tableref"
@@ -284,8 +300,7 @@
             </el-button>
             <el-button
               v-if="
-                scope.row.stage == 4 &&
-                roleID == 2001 && scope.row.state != 3
+                scope.row.stage == 4 && roleID == 2001 && scope.row.state != 3
               "
               @click.prevent="operation(scope.row)"
               type="text"
@@ -353,6 +368,7 @@ export default {
   components: {},
   data() {
     return {
+      access: "",
       userkey: "",
       // 任务池查看的数据
       taskview: "",
@@ -398,6 +414,8 @@ export default {
       // 批量删除
       adminuserbtn: false,
       userdatabottom: false,
+      // 批量审核
+      andfinance: false,
       // loading
       isdone: false,
       // 批量下载法律意见书
@@ -440,7 +458,10 @@ export default {
       // console.log('66666');
       this.usertableapi();
     };
-
+    let access_token = window.localStorage.getItem("access_token");
+    this.access = {
+      Authorization:'Bearer '+access_token
+    }
     let userid = JSON.parse(localStorage.getItem("userinfor"));
 
     // 获取审核人员
@@ -451,7 +472,6 @@ export default {
       userid.roleID == 1004
     ) {
       Reivewerinfo().then((res) => {
-        
         this.reivewer = res.data;
       });
       this.provins = provinces;
@@ -470,6 +490,11 @@ export default {
     } else {
       this.userdatabottom = false;
     }
+    if (userid.roleID == 1001 || userid.roleID == 1002) {
+      this.andfinance = true;
+    } else {
+      this.andfinance = false;
+    }
     this.currendRole = userid.roleID;
     if (
       userid.roleID == 1001 ||
@@ -484,7 +509,6 @@ export default {
     }
   },
   methods: {
-    
     // 筛选
     btnsearchclick() {
       if (
@@ -511,7 +535,7 @@ export default {
           this.provincesid = "";
           this.citydata = [];
         }
-        
+
         this.userDateTime = [];
         this.userreivws = "";
         this.userkey = "";
@@ -563,7 +587,7 @@ export default {
               message: "已取消删除",
             });
           });
-      }else{
+      } else {
         this.$message({
           showClose: true,
           type: "info",
@@ -573,7 +597,6 @@ export default {
     },
     // 批量下载法律意见书
     downloadThelaw() {
-      
       // console.log("uu", this.multipleSelection);
       if (this.multipleSelection.length) {
         this.userdownload = true;
@@ -609,6 +632,10 @@ export default {
           message: "请勾选订单",
         });
       }
+    },
+    // 批量出单
+    batchsheetxlxsfile(response){
+      console.log('批量出单',response);
     },
     // 查找保险公司
     admniccorapi() {
@@ -665,7 +692,6 @@ export default {
         }
       });
       this.citydata = citydata;
-
     },
     // 表格
     headertextAlgin() {
@@ -912,6 +938,10 @@ export default {
     }
     .el-button--text {
       color: #fff;
+    }
+    .andfinance{
+      display: inline-block;
+      margin-left: 20px;
     }
   }
 }

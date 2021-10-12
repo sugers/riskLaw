@@ -6,7 +6,7 @@
                     <div class="companySelect onlyClass">
                         <span class="name">保险公司：</span>
                         <div class="selectContent">
-                            <el-select v-model="fieldVal" slot="prepend" placeholder="请选择">
+                            <el-select v-model="fieldVal" slot="prepend" placeholder="请选择" @change="insuranceSelect">
                                 <el-option v-for="(item,index) in insuranceDta" :key="index" :label="item.name"
                                     :value="item.code">
                                 </el-option>
@@ -49,8 +49,8 @@
             </div>
             <div class="insuranceBottom">
                 <div class="bottomTable usermanagerFix" style="position: relative">
-                    <el-table ref="filterTable" show-summary :summary-method="getSummaries" :data="tableData"
-                        stripe highlight-current-row
+                    <el-table ref="filterTable" show-summary :summary-method="getSummaries" :data="tableData" stripe
+                        highlight-current-row
                         :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}"
                         style="width: 100%" @selection-change="handleSelectionChange">
                         <el-table-column type="selection" width="60" align="center">
@@ -109,6 +109,7 @@
         GetinsuranceAreaList,
         GetinsuranceList,
         GetOverviewTable,
+        GetOverviewTablePlateForm
     } from "../../api/api.js";
     import {
         toThousandFilterZero
@@ -137,7 +138,9 @@
         },
         mounted() {
             let getDate = new Date();
-            this.isdone=true;
+            this.isdone = true;
+            let userInfo = JSON.parse(localStorage.getItem('userinfor'));
+            this.currendRole = userInfo.roleID;
             this.monthVal =
                 `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>9?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${Number(getDate.getDay())+1>9?Number(getDate.getDay())+1:'0'+(Number(getDate.getDay())+1)}`
             this.GetInsurance();
@@ -156,10 +159,10 @@
                 let hours = getDate.getHours();
                 let minutes = getDate.getMinutes();
                 let seconds = getDate.getSeconds();
-                let monthValYear=new Date(this.monthVal).getFullYear();
-                let monthValMonth=new Date(this.monthVal).getMonth();
+                let monthValYear = new Date(this.monthVal).getFullYear();
+                let monthValMonth = new Date(this.monthVal).getMonth();
                 let monthVal =
-                `${monthValYear}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)}`
+                    `${monthValYear}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)}`
                 let timeval =
                     `${monthVal} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
                 this.monthVal = monthVal
@@ -171,7 +174,7 @@
             GetInsurance() {
                 let that = this;
                 let data = {
-                    status: this.currendRole == 2001 ? -1 : -1,
+                    status: -1,
                     keyword: '',
                 }
                 GetinsuranceList(data).then((res) => {
@@ -184,18 +187,15 @@
                         })
 
                         setTimeout(() => {
-                            if (res.data.list.length == 1) {
-                                that.fieldVal = that.insuranceDta[0].code;
-                                that.fieldValName = that.insuranceDta[0].name;
-                                that.insuranceSelect(that.insuranceDta[0].code, 1)
-                            }
-
+                            that.fieldVal = that.insuranceDta[0].code;
+                            that.fieldValName = that.insuranceDta[0].name;
+                            that.insuranceSelect(that.insuranceDta[0].code, 1)
                         }, 200)
                     }
 
                 })
             },
-            insuranceSelect(e) {
+            insuranceSelect(e, num) {
                 this.areaVal = ''
                 this.areaData = [];
                 let data = {
@@ -210,10 +210,18 @@
                     res.data.list.map((childitem) => {
                         provinces.forEach((areaitem) => {
                             if (childitem.adcode == areaitem.code) {
-                                this.areaData.push({
-                                    name: areaitem.name,
-                                    code: childitem.adcode
-                                });
+                                if (this.currendRole == '1001' || this.currendRole == '1002') {
+                                    this.areaData.push({
+                                        name: areaitem.name,
+                                        code: childitem.ID
+                                    });
+                                } else {
+                                    this.areaData.push({
+                                        name: areaitem.name,
+                                        code: childitem.adcode
+                                    });
+                                }
+
 
                             }
                         })
@@ -221,11 +229,14 @@
 
                 });
                 setTimeout(() => {
-                    if (this.areaData.length == 1) {
+                    if (this.insuranceDta.length == 1) {
                         this.areaVal = this.areaData[0].code;
                         this.areaValName = this.areaData[0].name;
                     }
-                    this.getListFn();
+
+                    if (num == 1) {
+                        this.getListFn();
+                    }
 
                 }, 500)
             },
@@ -264,15 +275,45 @@
 
                 return sums;
             },
-            getStatistics(month, year,adcode, page, limit) {
+            getStatistics(month, year, icco_id, adcode, page, limit) {
                 this.isdone = true;
                 let data = {
                     month: month,
                     year: year,
-                    adcode:adcode?adcode:0,
+                    adcode: adcode,
                     page: page,
                     limit: limit,
                 };
+                if (this.currendRole == '1001' || this.currendRole == '1002') {
+                    let data = {
+                        month: month,
+                        year: year,
+                        icco_id: icco_id,
+                        area_id: adcode,
+                        page: page,
+                        limit: limit,
+                    };
+                    GetOverviewTablePlateForm(data).then((res) => {
+                        if (res.code == 200) {
+                            this.isdone = false;
+                            res.data.list.map((item) => {
+                                item.month = getDateString(item.month)
+                                provinces.forEach((provinceItem) => {
+                                    if (item.adcode == provinceItem.code) {
+                                        item.adName = provinceItem.name
+                                    }
+                                })
+                            })
+                            this.tableData = res.data.list;
+                            this.total = res.data.total;
+                        } else {
+                            this.isdone = false;
+                        }
+                    }).catch(() => {
+                        this.isdone = false;
+                    });
+                    return
+                }
                 GetOverviewTable(data).then((res) => {
                     if (res.code == 200) {
                         this.isdone = false;
@@ -286,11 +327,11 @@
                         })
                         this.tableData = res.data.list;
                         this.total = res.data.total;
-                    }else{
-                         this.isdone=false;
+                    } else {
+                        this.isdone = false;
                     }
-                }).catch(()=>{
-                     this.isdone=false;
+                }).catch(() => {
+                    this.isdone = false;
                 });
             },
             getListFn() {
@@ -301,8 +342,8 @@
                 let hours = getDate.getHours();
                 let minutes = getDate.getMinutes();
                 let seconds = getDate.getSeconds();
-                let monthValYear=new Date(this.monthVal).getFullYear();
-                let monthValMonth=new Date(this.monthVal).getMonth();
+                let monthValYear = new Date(this.monthVal).getFullYear();
+                let monthValMonth = new Date(this.monthVal).getMonth();
                 if (!this.yearVal) {
                     timeVal =
                         `${monthValYear}-${Number(monthValMonth)+1>9?Number(monthValMonth)+1:'0'+(Number(monthValMonth)+1)}-${Number(day)+1>9?Number(day)+1:'0'+(Number(day)+1)} ${hours>9?hours:'0'+hours}:${minutes>9?minutes:'0'+minutes}:${seconds>9?seconds:'0'+seconds}`
@@ -321,9 +362,9 @@
                     this.yearVal = timeVal
                 }
                 if (this.yearVal) {
-                    this.getStatistics('', this.yearVal, this.areaVal,this.page, this.limit)
-                }else{
-                    this.getStatistics(timeVal, '',this.areaVal, this.page, this.limit)
+                    this.getStatistics('', this.yearVal, this.fieldVal, this.areaVal, this.page, this.limit)
+                } else {
+                    this.getStatistics(timeVal, '', this.fieldVal, this.areaVal, this.page, this.limit)
                 }
 
             },
@@ -340,7 +381,7 @@
                 this.limit = 10;
                 let getDate = new Date();
                 this.timeVal = getDate;
-                this.areaVal='';
+                this.areaVal = '';
             },
             searchClick() {
                 this.getListFn()

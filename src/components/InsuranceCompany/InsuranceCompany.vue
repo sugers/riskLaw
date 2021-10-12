@@ -65,153 +65,129 @@
                     <!-- <el-button type="danger" icon="el-icon-delete">删除</el-button> -->
                 </div>
                 <div class="bottomTable">
-                    <el-table ref="filterTable" :data="tableData" style="width: 100%" stripe highlight-current-row lazy
-                        :tree-props="{children: 'children'}" @selection-change="handleSelectionChange"
-                        @expand-change="handledetail" :row-class-name="tableRowClassName"
-                        :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">
+                    <el-table-draggable @drop="companydrop">
+                        <el-table ref="filterTable" :data="tableData" style="width: 100%" stripe highlight-current-row
+                            lazy :tree-props="{children: 'children'}" @selection-change="handleSelectionChange"
+                            @expand-change="handledetail"
+                            :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}">
 
-                        <el-table-column type="selection" width="60">
-                        </el-table-column>
+                            <el-table-column type="selection" width="60">
+                            </el-table-column>
 
-                        <el-table-column type="expand" style="position:relative;">
-                            <template slot-scope="props">
-                                <div class="childTable" style="position:relative;">
-                                    <el-table ref="childTable" :show-header="false" :data="props.row.children"
-                                        style="width: 100%">
-                                        <el-table-column width="60" align='center'>
-                                        </el-table-column>
-                                        <el-table-column width="108" align='center'>
-                                        </el-table-column>
-                                        <el-table-column prop="name" width="220" align='center' show-overflow-tooltip
-                                            class-name="grayColor">
-                                        </el-table-column>
-                                        <el-table-column width="60">
-                                            <template slot-scope="scope">
-                                                <!-- <div :class="scope.row.status ===1?'BoldColor':'diabledColor'">
+                            <el-table-column type="expand" style="position:relative;">
+                                <template slot-scope="props">
+                                    <div class="childTable" style="position:relative;">
+                                        <el-table-draggable @drop="areadrop">
+                                            <el-table ref="childTable" :show-header="false" :data="props.row.children"
+                                                style="width: 100%">
+                                                <el-table-column width="60" align='center'>
+                                                </el-table-column>
+                                                <el-table-column width="108" align='center'>
+                                                </el-table-column>
+                                                <el-table-column prop="name" width="220" align='center'
+                                                    show-overflow-tooltip class-name="grayColor">
+                                                </el-table-column>
+                                                <el-table-column width="60">
+                                                    <template slot-scope="scope">
+                                                        <!-- <div :class="scope.row.status ===1?'BoldColor':'diabledColor'">
                                                     {{scope.row.status ===1?'启用':'禁用'}}</div> -->
-                                                <el-tooltip :content="scope.row.status ===1?'启用':'禁用'" placement="top">
-                                                    <el-switch v-model="scope.row.status" active-color="#13ce66"
-                                                        inactive-color="#ff4949" :active-value="1" :inactive-value="0"
-                                                        @change="changeStatus($event,scope.row)">
-                                                    </el-switch>
-                                                </el-tooltip>
-                                            </template>
-                                        </el-table-column>
-                                        <el-table-column prop="area" width="100" align='center' show-overflow-tooltip
-                                            class-name="grayColor">
-                                        </el-table-column>
-                                        <el-table-column prop="contact" width="140" align='center' show-overflow-tooltip
-                                            class-name="grayColor">
-                                        </el-table-column>
-                                        <el-table-column prop="contact_tel" width="140" align='center'
-                                            show-overflow-tooltip class-name="grayColor">
-                                        </el-table-column>
+                                                        <el-tooltip :content="scope.row.status ===1?'启用':'禁用'"
+                                                            placement="top">
+                                                            <el-switch v-model="scope.row.status" active-color="#13ce66"
+                                                                inactive-color="#ff4949" :active-value="1"
+                                                                :inactive-value="0"
+                                                                @change="changeStatus($event,scope.row)">
+                                                            </el-switch>
+                                                        </el-tooltip>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column prop="area" width="100" align='center'
+                                                    show-overflow-tooltip class-name="grayColor">
+                                                </el-table-column>
+                                                <el-table-column prop="contact" width="140" align='center'
+                                                    show-overflow-tooltip class-name="grayColor">
+                                                </el-table-column>
+                                                <el-table-column prop="contact_tel" width="140" align='center'
+                                                    show-overflow-tooltip class-name="grayColor">
+                                                </el-table-column>
 
-                                        <el-table-column prop="CreatedAt" width="200" align='center'
-                                            show-overflow-tooltip class-name="grayColor">
-                                        </el-table-column>
-                                        <el-table-column fixed="right" label="操作" width="220" align='center'>
-                                            <template slot-scope="scope">
-                                                <div>
-                                                    <!-- <el-button type="primary" size="mini"
+                                                <el-table-column prop="CreatedAt" width="200" align='center'
+                                                    show-overflow-tooltip class-name="grayColor">
+                                                </el-table-column>
+                                                <el-table-column fixed="right" label="操作" width="220" align='center'>
+                                                    <template slot-scope="scope">
+                                                        <div>
+                                                            <!-- <el-button type="primary" size="mini"
                                                         @click="areaClick('编辑',scope.row.ID,scope.row)">
                                                         编辑
                                                     </el-button> -->
 
-                                                    <el-button type="danger" size="mini"
-                                                        @click="areaClick('删除',scope.row.ID)">
-                                                        删除
-                                                    </el-button>
-                                                </div>
-                                            </template>
-                                        </el-table-column>
-                                    </el-table>
-                                    <Spin fix v-show="ischildshow&&props.row.row_index==currentIndex">
-                                        <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
-                                        <div>Loading</div>
-                                    </Spin>
-                                </div>
-                            </template>
+                                                            <el-button type="danger" size="mini"
+                                                                @click="areaClick('删除',scope.row.ID)">
+                                                                删除
+                                                            </el-button>
+                                                        </div>
+                                                    </template>
+                                                </el-table-column>
+                                            </el-table>
+                                        </el-table-draggable>
+                                        <Spin fix v-show="ischildshow&&props.row.row_index==currentIndex">
+                                            <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+                                            <div>Loading</div>
+                                        </Spin>
+                                    </div>
+                                </template>
 
-                        </el-table-column>
-                        <el-table-column label="序号" type="index" :index="indexMethod" width="60" align="center">
-                        </el-table-column>
-                        <el-table-column prop="name" label="公司名称" width="220" align='center' show-overflow-tooltip
-                            class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column width="60">
-                            <template slot="header">
-                                状态
-                            </template>
-                            <template slot-scope="scope">
-                                <div :class="scope.row.status ===1?'BoldColor':'diabledColor'">
-                                    {{scope.row.status ===1?'启用':'禁用'}}</div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="area" label="省份" width="100" align='center' show-overflow-tooltip
-                            class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column prop="contact" label="联系人" width="140" align='center' show-overflow-tooltip
-                            class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column prop="contact_tel" label="联系电话" width="140" align='center'
-                            show-overflow-tooltip class-name="grayColor">
-                        </el-table-column>
+                            </el-table-column>
+                            <el-table-column label="序号" type="index" :index="indexMethod" width="60" align="center">
+                            </el-table-column>
+                            <el-table-column prop="name" label="公司名称" width="220" align='center' show-overflow-tooltip
+                                class-name="grayColor">
+                            </el-table-column>
+                            <el-table-column width="60">
+                                <template slot="header">
+                                    状态
+                                </template>
+                                <template slot-scope="scope">
+                                    <div :class="scope.row.status ===1?'BoldColor':'diabledColor'">
+                                        {{scope.row.status ===1?'启用':'禁用'}}</div>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="area" label="省份" width="100" align='center' show-overflow-tooltip
+                                class-name="grayColor">
+                            </el-table-column>
+                            <el-table-column prop="contact" label="联系人" width="140" align='center' show-overflow-tooltip
+                                class-name="grayColor">
+                            </el-table-column>
+                            <el-table-column prop="contact_tel" label="联系电话" width="140" align='center'
+                                show-overflow-tooltip class-name="grayColor">
+                            </el-table-column>
 
-                        <!-- <el-table-column prop="website" label="官网" width="200" align='center' show-overflow-tooltip
+                            <!-- <el-table-column prop="website" label="官网" width="200" align='center' show-overflow-tooltip
                             class-name="grayColor">
                         </el-table-column> -->
-                        <el-table-column prop="CreatedAt" label="创建时间" width="200" align='center' show-overflow-tooltip
-                            class-name="grayColor">
-                        </el-table-column>
-                        <el-table-column fixed="right" label="操作" width="220" align='center'>
-                            <template slot-scope="scope">
-                                <div>
-                                    <el-button type="primary" size="mini"
-                                        @click="buttonClick('编辑',scope.row.ID,scope.row)">
-                                        编辑
-                                    </el-button>
-                                    <el-button type="primary" size="mini" v-if="currendRole==1001"
-                                        @click="buttonClick('新增区域',scope.row.ID,scope.row)">
-                                        新增区域
-                                    </el-button>
-                                    <el-button type="danger" size="mini" @click="buttonClick('删除',scope.row.ID)">
-                                        删除
-                                    </el-button>
-                                </div>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <!-- <zk-table ref="table" :data="tableData" :columns="columns" :expand-type="isexpand"
-                        :stripe='isstripe' selection-type :show-index='isshowindex'>
-                        <template slot="statuShow" slot-scope="scope">
-                            <div v-if="scope.row.status=='1'">
-                                <el-link type="primary">启用</el-link>
-                            </div>
-                            <div v-else>
-                                <el-link type="danger">禁用</el-link>
-                            </div>
-                        </template>
-                        <template slot="operateBtn" slot-scope="scope">
-                            <div v-for="(item,index) in scope.row.operate" :key="index">
-                                <el-button :type="item.type" @click="buttonClick(item.name)">{{item.name}}</el-button>
-                            </div>
-                        </template>
-                    </zk-table> -->
-                    <!-- <Table ref="selection" :columns="columns" :data="tableData" >
-                         <template slot-scope="scope" slot="status">
-                              <div v-if="scope.row.status=='1'">
-                                  <span style="color:#409EFF;">启用</span>
-                              </div>
-                              <div v-else>
-                                  <span style="color:#F56C6C;">禁用</span>
-                              </div>
-                         </template>
-                          <template slot="operate">
-                            <el-button type="primary" @click="buttonClick('编辑')">编辑</el-button>
-                            <el-button type="danger" @click="buttonClick('删除')">删除</el-button>
-                          </template>
-                    </Table> -->
+                            <el-table-column prop="CreatedAt" label="创建时间" width="200" align='center'
+                                show-overflow-tooltip class-name="grayColor">
+                            </el-table-column>
+                            <el-table-column fixed="right" label="操作" width="220" align='center'>
+                                <template slot-scope="scope">
+                                    <div>
+                                        <el-button type="primary" size="mini"
+                                            @click="buttonClick('编辑',scope.row.ID,scope.row)">
+                                            编辑
+                                        </el-button>
+                                        <el-button type="primary" size="mini" v-if="currendRole==1001"
+                                            @click="buttonClick('新增区域',scope.row.ID,scope.row)">
+                                            新增区域
+                                        </el-button>
+                                        <el-button type="danger" size="mini" @click="buttonClick('删除',scope.row.ID)">
+                                            删除
+                                        </el-button>
+                                    </div>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-table-draggable>
                 </div>
                 <div class="pageDiv">
                     <el-pagination background layout="total,sizes,prev, pager, next" :page-sizes="[10, 20, 30, 40,50]"
@@ -255,6 +231,8 @@
         getDateString
     } from '../../../static/js/timeFormat'
     import {
+        PostinsuranceList,
+        PosinsuranceAreaList,
         GetinsuranceList,
         GetinsuranceAreaList,
         DeleteInsurance,
@@ -262,12 +240,15 @@
         EditArea
     } from '../../api/api.js';
     import provinces from "../../../static/js/pca-code.json"
+    // import Sortable from "sortablejs";
+    import ElTableDraggable from 'element-ui-el-table-draggable';
     export default {
         components: {
             companyEdit,
             increasedCompany,
             increaseArea,
-            editArea
+            editArea,
+            ElTableDraggable
         },
         data() {
             return {
@@ -306,8 +287,40 @@
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID;
             this.getinsurance(this.statuVal, this.keyInput, this.page, this.limit, this.currendRole);
+
         },
         methods: {
+            companydrop(data) {
+                let idArr = [];
+                data.list.map((item) => {
+                    idArr.push(item.ID)
+                })
+                let datas= {
+                    icco_ids: idArr
+                }
+                PostinsuranceList(datas).then((res) => {
+                    if (res.code == 200) {
+                        console.log('公司拖拽完成')
+                    }
+                })
+                console.log(data)
+            },
+            areadrop(data) {
+                let idArr = [];
+                data.list.map((item) => {
+                    idArr.push(item.ID)
+                })
+                let datas = {
+                    icco_id: data.list[0].icco_id,
+                    area_ids:idArr
+                }
+                PosinsuranceAreaList(datas).then((res) => {
+                    if (res.code == 200) {
+                        console.log("地区拖拽完成")
+                    }
+                })
+                console.log(data)
+            },
             indexMethod(index) {
                 return index + 1 + (this.page - 1) * this.limit
             },
@@ -374,9 +387,31 @@
                                     })
                                     item.children.push(childitem)
                                 })
+                                // let childData=res.data.list;
+                                // const table = document.querySelector('.childTable tbody');
+                                // const self = this
+                                // Sortable.create(table, {
+                                //     animation: 60,
+                                //     // onStart: function () {
+                                //     //     console.log(this)
+                                //     //    this.el.classList.add('is-dragging');
+                                //     // },
+                                //     onEnd({
+                                //         newIndex,
+                                //         oldIndex
+                                //     }) {
+                                //         //  this.el.classList.remove('is-dragging');
+                                //         const targetRow = childData.splice(oldIndex, 1)[0]
+                                //         childData.splice(newIndex, 0, targetRow);
+                                //         let newTableData=self.tableData
+                                //         self.tableData=newTableData;
+
+                                //     }
+                                // })
                             })
                         }
                     });
+
                 }
             },
             changeStatus(e, row) {
@@ -423,6 +458,7 @@
                         setTimeout(() => {
                             that.isdone = false;
                             that.tableData = result;
+
                         }, 1000)
                     } else {
                         this.isdone = false;

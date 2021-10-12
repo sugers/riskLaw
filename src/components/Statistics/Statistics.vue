@@ -7,7 +7,7 @@
                     <div class="companySelect onlyClass">
                         <span class="name">保险公司：</span>
                         <div class="selectContent">
-                            <el-select v-model="fieldVal" slot="prepend" placeholder="请选择">
+                            <el-select v-model="fieldVal" slot="prepend" placeholder="请选择" @change="insuranceSelect">
                                 <el-option v-for="(item,index) in insuranceDta" :key="index" :label="item.name"
                                     :value="item.code">
                                 </el-option>
@@ -58,8 +58,7 @@
             <div class="insuranceBottom">
                 <div class="bottomTable usermanagerFix" style="position: relative">
                     <el-table ref="filterTable" show-summary :summary-method="getSummaries" :data="tableData"
-                        style="width: 100%"
-                        stripe highlight-current-row
+                        style="width: 100%" stripe highlight-current-row
                         :header-cell-style="{'background':'#F7F7F7','color':'#2F2E2E','font-size':'14px'}"
                         @selection-change="handleSelectionChange">
                         <el-table-column type="selection" width="60" align="center">
@@ -114,6 +113,7 @@
 </template>
 <script>
     import {
+        GetstaticsPlateForm,
         Getstatics,
         GetinsuranceList,
         GetinsuranceAreaList,
@@ -127,6 +127,7 @@
             return {
                 isdone: false,
                 areaides: false,
+                currendRole: '',
                 timeVal: "",
                 yearVal: '',
                 monthVal: '',
@@ -142,17 +143,15 @@
             };
         },
         mounted() {
-            this.isdone=true;
+            this.isdone = true;
+            let userInfo = JSON.parse(localStorage.getItem('userinfor'));
+            this.currendRole = userInfo.roleID;
             let getDate = new Date();
             this.timeVal = getDate;
             this.monthVal =
                 `${getDate.getFullYear()}-${Number(getDate.getMonth())+1>9?Number(getDate.getMonth())+1:'0'+(Number(getDate.getMonth())+1)}-${Number(getDate.getDay())+1>9?Number(getDate.getDay())+1:'0'+(Number(getDate.getDay())+1)}`
-            // let userinfor = JSON.parse(localStorage.getItem("userinfor"));
+
             this.GetInsurance();
-            // this.insuranceSelect(userinfor.area_id)
-            // if (userinfor.area_id == 0) {
-            //     this.areaides = true;
-            // }
 
         },
         methods: {
@@ -196,18 +195,15 @@
                         })
 
                         setTimeout(() => {
-                            if (res.data.list.length == 1) {
-                                that.fieldVal = that.insuranceDta[0].code;
-                                that.fieldValName = that.insuranceDta[0].name;
-                                that.insuranceSelect(that.insuranceDta[0].code, 1)
-                            }
-
+                            that.fieldVal = that.insuranceDta[0].code;
+                            that.fieldValName = that.insuranceDta[0].name;
+                            that.insuranceSelect(that.insuranceDta[0].code, 1)
                         }, 200)
                     }
 
                 })
             },
-            insuranceSelect(e) {
+            insuranceSelect(e, num) {
                 this.areaidVal = ''
                 this.salesmanDta = [];
                 let data = {
@@ -222,22 +218,33 @@
                     res.data.list.map((childitem) => {
                         provinces.forEach((areaitem) => {
                             if (childitem.adcode == areaitem.code) {
-                                this.salesmanDta.push({
-                                    name: areaitem.name,
-                                    code: childitem.adcode
-                                });
+                                if (this.currendRole == '1001' || this.currendRole == '1002') {
+                                    this.salesmanDta.push({
+                                        name: areaitem.name,
+                                        code: childitem.ID
+                                    });
+                                } else {
+                                    this.salesmanDta.push({
+                                        name: areaitem.name,
+                                        code: childitem.adcode
+                                    });
+                                }
+
                             }
                         })
                     })
 
                 });
                 setTimeout(() => {
-                    // if (this.salesmanDta.length == 1) {
-                    this.areaidVal = this.salesmanDta[0].code;
-                    // }
-                   this.getListFn();
+                    if (this.insuranceDta.length == 1) {
+                        this.areaidVal = this.salesmanDta[0].code;
+                    }
+                    if (num == 1) {
+                        this.getListFn();
+                    }
+
                 }, 500)
-                 
+
             },
             getSummaries(param) {
 
@@ -276,26 +283,49 @@
 
                 return sums;
             },
-            getStatistics(month,year, name, page, limit, adcode) {
+            getStatistics(month, year, name, page, limit, icco_id, adcode) {
                 this.isdone = true;
                 let data = {
                     month: month,
-                    year:year,
+                    year: year,
                     name: name,
                     page: page,
                     limit: limit,
                     adcode: adcode ? adcode : 0
                 };
+                if (this.currendRole == '1001' || this.currendRole == '1002') {
+                    let data = {
+                        month: month,
+                        year: year,
+                        name: name,
+                        page: page,
+                        limit: limit,
+                        icco_id: icco_id,
+                        area_id: adcode
+                    };
+                    GetstaticsPlateForm(data).then((res) => {
+                        if (res.code == 200) {
+                            this.isdone = false;
+                            this.tableData = res.data.list;
+                            this.total = res.data.total;
+                        } else {
+                            this.isdone = false;
+                        }
+                    }).catch(() => {
+                        this.isdone = false;
+                    });
+                    return
+                }
                 Getstatics(data).then((res) => {
                     if (res.code == 200) {
                         this.isdone = false;
                         this.tableData = res.data.list;
                         this.total = res.data.total;
-                    }else{
-                         this.isdone=false;
+                    } else {
+                        this.isdone = false;
                     }
-                }).catch(()=>{
-                    this.isdone=false;
+                }).catch(() => {
+                    this.isdone = false;
                 });
             },
             getListFn() {
@@ -326,9 +356,11 @@
                     this.yearVal = timeVal
                 }
                 if (this.yearVal) {
-                    this.getStatistics('', this.yearVal, this.salesmanVal,this.page, this.limit,this.areaidVal)
+                    this.getStatistics('', this.yearVal, this.salesmanVal, this.page, this.limit, this.fieldVal, this
+                        .areaidVal)
                 } else {
-                    this.getStatistics(timeVal, '',this.salesmanVal, this.page, this.limit,this.areaidVal)
+                    this.getStatistics(timeVal, '', this.salesmanVal, this.page, this.limit, this.fieldVal, this
+                        .areaidVal)
                 }
 
             },
@@ -347,7 +379,7 @@
                 this.monthVal = getDate;
                 this.salesmanVal = "";
                 this.areaidVal = "";
-                this.yearVal=""
+                this.yearVal = ""
             },
             searchClick() {
                 this.getListFn();

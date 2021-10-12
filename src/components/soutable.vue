@@ -1,11 +1,5 @@
 <template>
   <div>
-    <!-- <div class="headedata">
-      <div class="headerboke">
-        <div class="hesde_data">数据看板</div>
-      </div>
-    </div> -->
-
     <div v-if="pingtai">
       <el-row :gutter="12" class="elrow">
         <el-col :span="8">
@@ -47,7 +41,7 @@
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
-                <div class="txt">累积处理保额</div>
+                <div class="txt">本月提交总金额</div>
                 <div class="number baoe" :title="preserv_amount_count">
                   ￥{{ preserv_amount_count | currency }}
                 </div>
@@ -60,7 +54,7 @@
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
-                <div class="txt">累积承保总额</div>
+                <div class="txt">本月评估总金额</div>
                 <div class="number zonge" :title="underwriting_amount_count">
                   ￥{{ underwriting_amount_count | currency }}
                 </div>
@@ -73,7 +67,7 @@
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
-                <div class="txt">累积出单保费总额</div>
+                <div class="txt">本月出单总金额</div>
                 <div class="number chudan">￥{{ amount_count | currency }}</div>
               </div>
               <img src="../../static/img/chudan.png" alt="图标" />
@@ -81,6 +75,73 @@
           </el-card>
         </el-col>
       </el-row>
+      <div style="margin-top: 20px; display: flex">
+        <div style="flex: 1">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div id="echars3" style="width: 85%; height: 400px"></div>
+          </el-card>
+        </div>
+        <div class="admincare">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div>
+              <div class="paiming">
+                <span>本月法务人员排行榜</span>
+              </div>
+              <div class="progress" v-for="(item, index) in backendusertop" :key="index">
+                <span
+                  :class="
+                    index + 1 == 1
+                      ? 'nunberred'
+                      : index + 1 == 2
+                      ? 'nunberorgin'
+                      : index + 1 == 3
+                      ? 'nunbergerrn'
+                      : 'nunber'
+                  "
+                  >{{ index + 1 }}</span
+                >
+                <span class="sumname">{{ item.name }}</span>
+                <div class="gress">
+                  <el-progress
+                    :percentage="item.totalpercent"
+                    :show-text="false"
+                  ></el-progress>
+                </div>
+                <span class="snum">{{ item.total }}</span>
+              </div>
+            </div>
+          </el-card>
+          <el-card style="margin-top:20px;" shadow="hover" :body-style="{ padding: '10px' }">
+            <div>
+              <div class="paiming">
+                <span>本年法务人员排行榜</span>
+              </div>
+              <div class="progress" v-for="(item, index) in backendtopyear" :key="index">
+                <span
+                  :class="
+                    index + 1 == 1
+                      ? 'nunberred'
+                      : index + 1 == 2
+                      ? 'nunberorgin'
+                      : index + 1 == 3
+                      ? 'nunbergerrn'
+                      : 'nunber'
+                  "
+                  >{{ index + 1 }}</span
+                >
+                <span class="sumname">{{ item.name }}</span>
+                <div class="gress">
+                  <el-progress
+                    :percentage="item.totalpercent"
+                    :show-text="false"
+                  ></el-progress>
+                </div>
+                <span class="snum">{{ item.total }}</span>
+              </div>
+            </div>
+          </el-card>
+        </div>
+      </div>
     </div>
 
     <div v-if="baoxingpint">
@@ -198,11 +259,14 @@ export default {
       risk_eval_open_count: "",
       risk_eval_trade_count: "",
 
+      // 平台数据表
+      echars3: null,
+
       // 表1提交量
       chartstable1: {
         textTitle: "提交量",
         nameArray: "",
-        colors: ['#409EFF', '#F4AA43'],
+        colors: ["#409EFF", "#F4AA43"],
         legends: "",
         yaxis: "",
         series: [],
@@ -214,7 +278,7 @@ export default {
       chartstable2: {
         textTitle: "出单量",
         nameArray: "",
-        colors: ['#409EFF'],
+        colors: ["#409EFF"],
         legends: "",
         yaxis: "",
         series: [],
@@ -230,6 +294,8 @@ export default {
       // loading
       isdone: false,
       // 排名
+      backendusertop: "",
+      backendtopyear: "",
       usert: "",
     };
   },
@@ -253,13 +319,12 @@ export default {
     this.chartstable2.series = this.chartsData2;
   },
   methods: {
-    
     // 看板数据api
     dashboardapi() {
       this.isdone = true;
       Commondashboard().then((res) => {
         this.isdone = false;
-        // console.log("看板", res.data.dashboard);
+        console.log("看板", res.data.dashboard);
         this.risk_eval_review_count = res.data.dashboard.risk_eval_review_count;
         this.icco_count = res.data.dashboard.icco_count;
         this.lawyer_count = res.data.dashboard.lawyer_count;
@@ -267,22 +332,84 @@ export default {
         this.underwriting_amount_count =
           res.data.dashboard.underwriting_amount_count;
         this.amount_count = res.data.dashboard.amount_count;
+        // 本月法务
+        this.backendusertop = res.data.dashboard.backend_user_top_10_month;
+        let adminpainum = this.backendusertop[0].total;
+        this.backendusertop.map((item) => {
+          item.totalpercent = (item.total / (adminpainum + 20)) * 100;
+        });
+        // 本年法务
+        this.backendtopyear = res.data.dashboard.backend_user_top_10_year;
+        let admintopyear = this.backendtopyear[0].total;
+        this.backendtopyear.map((item)=>{
+          item.totalpercent = (item.total / (admintopyear + 20)) * 100;
+        })
+        let figurearr = [];
+        figurearr.push(res.data.dashboard.total_count);
+        figurearr.push(res.data.dashboard.success_count);
+        figurearr.push(res.data.dashboard.trade_count);
+
+        this.echars3 = this.$echarts.init(document.getElementById("echars3"));
+        this.echars3.setOption({
+          title: {
+            text: "",
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow",
+            },
+          },
+          color: ["#409EFF", "#67C23A", "#E6A23C"],
+          legend: {},
+          xAxis: {
+            type: "value",
+            minInterval: 1,
+          },
+          yAxis: {
+            type: "category",
+            axisTick: {
+              alignWithLabel: true,
+            },
+            data: ["提交量评估量", "同意承保量", "出单量"],
+          },
+          series: [
+            {
+              name: "数量",
+              barWidth: 30,
+              type: "bar",
+              data: figurearr,
+              label: {
+                normal: {
+                  show: true, //显示数值
+                  position: "right", // 位置设为right
+                  formatter: function (params) {
+                    if (params.value > 0) {
+                      return params.value;
+                    } else {
+                      return "";
+                    }
+                  },
+                },
+                textStyle: {
+                  color: "#000", //设置数值颜色
+                },
+              },
+            },
+          ],
+        });
       });
     },
-
+    homechart() {},
     theinsurer() {
       let sumNum = [];
       this.isdone = true;
       Dashboard().then((res) => {
         this.isdone = false;
-
-        // console.log("看板", res);
-        // this.risk_eval_review_count = res.data.user_count;
-        // this.icco_count = res.data.area_count;
         this.risk_eval_count = res.data.risk_eval_count;
         this.risk_eval_open_count = res.data.risk_eval_open_count;
         this.risk_eval_trade_count = res.data.risk_eval_trade_count;
-        // console.log("22", res.data.risk_eval_submit_data_range);
+
         this.chartstable1.nameArray =
           res.data.risk_eval_submit_data_range.dates;
         this.chartstable1.legends = ["通过量", "拒绝量"];
@@ -299,8 +426,8 @@ export default {
           // barWidth: 20,
           stack: "Ad",
           data: res.data.risk_eval_submit_data_range.success_vals,
-          label:{
-            normal:{
+          label: {
+            normal: {
               show: false,
               position: "top",
               formatter: function (params) {
@@ -310,8 +437,8 @@ export default {
                   return "";
                 }
               },
-            }
-          }
+            },
+          },
         };
         let sun = {
           name: "总数",
@@ -347,8 +474,8 @@ export default {
           // barWidth: 20,
           stack: "Ad",
           data: res.data.risk_eval_submit_data_range.reject_vals,
-          label:{
-            normal:{
+          label: {
+            normal: {
               show: false,
               position: "top",
               formatter: function (params) {
@@ -358,8 +485,8 @@ export default {
                   return "";
                 }
               },
-            }
-          }
+            },
+          },
         };
         this.chartsData1.push(sun);
         this.chartsData1.push(success_vals);
@@ -375,8 +502,8 @@ export default {
           name: "出单量",
           type: "line",
           data: res.data.risk_eval_trade_data_range.counts,
-          label:{
-            normal:{
+          label: {
+            normal: {
               show: true,
               position: "top",
               formatter: function (params) {
@@ -386,8 +513,8 @@ export default {
                   return "";
                 }
               },
-            }
-          }
+            },
+          },
         };
         let amounts = {
           name: "保费金额",
@@ -405,9 +532,9 @@ export default {
         // 排名
         this.usert = res.data.mini_app_user_top10;
         // console.log('pai',this.usert);
-        let painum = this.usert[0].total
+        let painum = this.usert[0].total;
         this.usert.map((item) => {
-          item.totalpercent = (item.total / (painum+20)) * 100;
+          item.totalpercent = (item.total / (painum + 20)) * 100;
         });
       });
     },
@@ -442,6 +569,9 @@ export default {
 }
 .care {
   margin-top: 20px;
+  margin-left: 20px;
+}
+.admincare{
   margin-left: 20px;
 }
 // 排名
@@ -488,7 +618,7 @@ export default {
   }
   .nunberorgin {
     display: flex;
-    background-color: #409EFF;
+    background-color: #409eff;
     align-items: center;
     justify-content: center;
     width: 15px;
@@ -501,7 +631,7 @@ export default {
   }
   .nunbergerrn {
     display: flex;
-    background-color: #E6A23C;
+    background-color: #e6a23c;
     align-items: center;
     justify-content: center;
     width: 15px;
@@ -523,22 +653,7 @@ export default {
     margin-right: 10px;
   }
 }
-.headedata {
-  // border: 1px solid red;
-  .headerboke {
-    // width: 100%;
-    height: 43px;
-    background-color: #d1e2f8;
-    margin-bottom: 29px;
-    .hesde_data {
-      color: #000;
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 43px;
-      padding-left: 20px;
-    }
-  }
-}
+
 .databoard {
   display: flex;
   // width: 300px;

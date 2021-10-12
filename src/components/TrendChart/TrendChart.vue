@@ -300,15 +300,15 @@
                             if (res.data.list.length == 1) {
                                 that.fieldVal = that.insuranceDta[0].code;
                                 that.fieldValName = that.insuranceDta[0].name;
-                                that.insuranceSelect(that.insuranceDta[0].code, 1)
-                            }
 
+                            }
+                            that.insuranceSelect(that.insuranceDta[0].code, 1)
                         }, 200)
                     }
 
                 })
             },
-            insuranceSelect(e) {
+            insuranceSelect(e, num) {
                 this.areaVal = ''
                 this.areaData = [];
                 let data = {
@@ -340,7 +340,9 @@
                         this.areaVal = this.areaData[0].code;
                         this.areaValName = this.areaData[0].name;
                     }
-                    this.getListFn();
+                    if (num == 1) {
+                        this.getListFn();
+                    }
 
                 }, 500)
             },
@@ -396,7 +398,7 @@
                 let sumNum = [];
                 let data = {
                     icco_id: icco_id,
-                    area_id: area_id?area_id:0,
+                    area_id: area_id ? area_id : 0,
                     year: year,
                     month: month,
                     type: type
@@ -577,8 +579,6 @@
                 GetTrendChartOrder(data).then((res) => {
                     if (res.code == 200) {
                         let currentMaxVal = Math.max(...res.data.counts) * 2
-                        // console.log(currentMaxVal)
-                        console.log(res.data.counts)
                         myChart.setOption({
                             yAxis: [{
                                     type: 'value',
@@ -636,7 +636,7 @@
                                         {
                                             type: 'value',
                                             name: '出单保费金额',
-                                            show:true,
+                                            show: true,
                                             min: 0,
                                             max: Math.max(...res.data.amounts) ? Math.max(
                                                 ...res.data.amounts) + 1000 : 1000,

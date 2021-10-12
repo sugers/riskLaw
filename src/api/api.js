@@ -169,6 +169,18 @@ export const GetinsuranceAreaList = data => {
         resolve(get('/api/v1/backend/icco/area', data))
     })
 }
+// 保险公司信息列表排序
+export const PostinsuranceList = data => {
+    return new Promise(function (resolve) {
+        resolve(post('/api/v1/admin/icco/sort', data))
+    })
+}
+//保险公司地区信息列表排序
+export const PosinsuranceAreaList= data => {
+    return new Promise(function (resolve) {
+        resolve(post('/api/v1/admin/icco/area/sort', data))
+    })
+}
 // 删除保险公司
 export const DeleteInsurance = data => {
     return new Promise(function (resolve) {
@@ -274,6 +286,11 @@ export const Getstatics = data => {
       resolve(get('/api/v1/icco/admin/performance', data))
   })
 }
+export const GetstaticsPlateForm = data => {
+    return new Promise(function (resolve) {
+        resolve(get('/api/v1/admin/performance/salesman', data))
+    })
+}
 // 获取业务员的提交量趋势表
 export const GetTrendChart = data => {
     return new Promise(function (resolve) {
@@ -291,6 +308,11 @@ export const GetTrendChartOrder = data => {
 export const GetOverviewTable = data => {
     return new Promise(function (resolve) {
         resolve(get('/api/v1/icco/admin/performance/area', data))
+    })
+}
+export const GetOverviewTablePlateForm = data => {
+    return new Promise(function (resolve) {
+        resolve(get('/api/v1/admin/performance/area', data))
     })
 }
 // 获取法务人员业绩表

@@ -1,3 +1,23 @@
+/* .childTable .el-table tbody tr:hover>td {
+    background-color: #ffffff !important;
+} */
+.childTable .el-table--enable-row-hover .el-table__body tr:hover>td {
+    background-color: #212e3e !important;
+}
+
+.childTable .el-table__body tr:hover>td {
+    background-color: #e1e7f0 !important;
+}
+
+.childTable .el-table__body tr.current-row>td {
+    background-color: #e1e7f0 !important;
+}
+.is-dragging {
+    pointer-events: none;
+}
+/* .childTable .el-table tbody tr:hover .hover-row {
+background-color: #ffffff !important;
+} */
 .InsuranceCompany .el-input__inner,
 .editList .el-input__inner,
 .selectContent .el-input__inner {

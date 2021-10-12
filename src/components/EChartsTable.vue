@@ -91,6 +91,7 @@ export default {
         yAxis: [
           {
             max: yaxis,
+            minInterval: "1",
             type: "value",
           },
         ],
