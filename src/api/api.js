@@ -280,6 +280,12 @@ export const Editlawyer = data => {
         resolve(put('/api/v1/admin/lawyer', data))
     })
 }
+// 删除律师信息
+export const Deletelawyer = data => {
+    return new Promise(function (resolve) {
+        resolve(Delete('/api/v1/admin/lawyer', data))
+    })
+}
 // 获取业务员的业绩表
 export const Getstatics = data => {
   return new Promise(function (resolve) {

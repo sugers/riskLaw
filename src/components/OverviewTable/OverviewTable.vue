@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div class="insuranceBottom">
+            <div class="insuranceBottom statistic">
                 <div class="bottomTable usermanagerFix" style="position: relative">
                     <el-table ref="filterTable" show-summary :summary-method="getSummaries" :data="tableData" stripe
                         highlight-current-row
@@ -92,8 +92,9 @@
                     </el-table>
                 </div>
                 <div class="pageDiv">
-                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="10"
-                        :page-sizes="[10, 20, 30, 40, 50]" @current-change="current_change" @size-change="SizeChange">
+                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="30"
+                        :page-sizes="[30, 40, 50]" @current-change="current_change" @size-change="SizeChange"
+                        :current-page.sync="currentPage">
                     </el-pagination>
                 </div>
                 <Spin fix v-show="isdone">
@@ -133,7 +134,8 @@
                 insuranceDta: [],
                 total: 0,
                 page: 1,
-                limit: 10,
+                currentPage: 1,
+                limit: 30,
             };
         },
         mounted() {
@@ -196,6 +198,7 @@
                 })
             },
             insuranceSelect(e, num) {
+                let that=this;
                 this.areaVal = ''
                 this.areaData = [];
                 let data = {
@@ -207,38 +210,43 @@
                     }
                 })
                 GetinsuranceAreaList(data).then(res => {
-                    res.data.list.map((childitem) => {
-                        provinces.forEach((areaitem) => {
-                            if (childitem.adcode == areaitem.code) {
-                                if (this.currendRole == '1001' || this.currendRole == '1002') {
-                                    this.areaData.push({
-                                        name: areaitem.name,
-                                        code: childitem.ID
-                                    });
-                                } else {
-                                    this.areaData.push({
-                                        name: areaitem.name,
-                                        code: childitem.adcode
-                                    });
+                    if (res.code == 200) {
+                        res.data.list.map((childitem) => {
+                            provinces.forEach((areaitem) => {
+                                if (childitem.adcode == areaitem.code) {
+                                    if (this.currendRole == '1001' || this.currendRole ==
+                                        '1002') {
+                                        this.areaData.push({
+                                            name: areaitem.name,
+                                            code: childitem.ID
+                                        });
+                                    } else {
+                                        this.areaData.push({
+                                            name: areaitem.name,
+                                            code: childitem.adcode
+                                        });
+                                    }
+
+
                                 }
-
-
+                            })
+                        });
+                        setTimeout(() => {
+                            if (that.insuranceDta.length == 1) {
+                                that.areaVal = that.areaData[0].code;
+                                that.areaValName = that.areaData[0].name;
                             }
-                        })
-                    })
+
+                            if (num == 1) {
+                                that.getListFn();
+                            }
+
+                        }, 500)
+                    }
+
 
                 });
-                setTimeout(() => {
-                    if (this.insuranceDta.length == 1) {
-                        this.areaVal = this.areaData[0].code;
-                        this.areaValName = this.areaData[0].name;
-                    }
 
-                    if (num == 1) {
-                        this.getListFn();
-                    }
-
-                }, 500)
             },
             getSummaries(param) {
                 const {
@@ -378,12 +386,14 @@
             },
             refresh() {
                 this.page = 1;
-                this.limit = 10;
+                this.limit = 30;
                 let getDate = new Date();
                 this.timeVal = getDate;
                 this.areaVal = '';
             },
             searchClick() {
+                this.page = 1;
+                this.currentPage = 1;
                 this.getListFn()
             },
             handleSelectionChange() {},

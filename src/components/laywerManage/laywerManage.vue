@@ -89,15 +89,16 @@
                             <template slot-scope="scope">
                                 <el-button type="primary" size="small" @click="buttonClick('编辑',scope.row.ID)">编辑
                                 </el-button>
-                                <!-- <el-button type="danger" size="small" @click="buttonClick('删除',scope.row.ID)">删除
-                                </el-button> -->
+                                <el-button type="danger" size="small" @click="buttonClick('删除',scope.row.ID)">删除
+                                </el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </div>
                 <div class="pageDiv">
-                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="10"
-                        :page-sizes="[10, 20, 30, 40,50]" @size-change="SizeChange" @current-change="current_change">
+                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="30"
+                        :page-sizes="[30, 40,50]" @size-change="SizeChange" @current-change="current_change"
+                        :current-page.sync="currentPage">
                     </el-pagination>
                 </div>
                 <Spin fix v-show="isdone">
@@ -125,7 +126,8 @@
     import laywerExamine from "./laywerExamine/laywerExamine.vue";
     import {
         GetfieldList,
-        GetlawyerList
+        GetlawyerList,
+        Deletelawyer
     } from '../../api/api.js';
     import provinces from "../../../static/js/pca-code.json";
     export default {
@@ -149,7 +151,8 @@
                 fieldData: [],
                 laywerId: '',
                 page: 1,
-                limit: 10,
+                currentPage:1,
+                limit: 30,
                 total: 0
             }
         },
@@ -158,9 +161,9 @@
             this.getlaywer(this.fieldVal, this.keyInput, this.timeVal[0], this.timeVal[1], this.page, this.limit);
         },
         methods: {
-             indexMethod(index) {
-             return index + 1 + (this.page - 1) * this.limit
-             },
+            indexMethod(index) {
+                return index + 1 + (this.page - 1) * this.limit
+            },
             visible(boolean) {
                 if (boolean) {
                     this.$nextTick(() => {
@@ -218,16 +221,16 @@
                                 })
                             })
                         }
-                        setTimeout(() => {
+                        this.$nextTick(() => {
                             this.isdone = false;
                             this.tableData = res.data.list;
                             this.total = res.data.total;
-                        }, 1000)
-                    }else{
-                         this.isdone=false;
+                        })
+                    } else {
+                        this.isdone = false;
                     }
-                }).catch(()=>{
-                     this.isdone=false;
+                }).catch(() => {
+                    this.isdone = false;
                 })
             },
 
@@ -240,12 +243,20 @@
                     case '删除':
                         this.$Modal.confirm({
                             title: '删除',
-                            content: '确定删除此用户？',
+                            content: '确定删除此律师？',
                             onOk: () => {
-                                this.$Message.info('Clicked ok');
+                                let data = {
+                                    ids: [id]
+                                }
+                                Deletelawyer(data).then((res) => {
+                                    if (res.code == 200) {
+                                        this.$Message.success('已删除');
+                                    }
+                                })
+
                             },
                             onCancel: () => {
-                                this.$Message.info('Clicked cancel');
+
                             }
                         });
                         return;
@@ -261,6 +272,8 @@
                 this.limit = 10;
             },
             searchClick() {
+                this.page=1;
+                this.currentPage=1;
                 this.getlaywer(this.fieldVal, this.keyInput, this.timeVal[0], this.timeVal[1], 1, this.limit);
             },
             SizeChange(currentSize) {

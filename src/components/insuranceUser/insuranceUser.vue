@@ -121,8 +121,9 @@
                     </zk-table> -->
                 </div>
                 <div class="pageDiv">
-                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="10"
-                        :page-sizes="[10, 20, 30, 40, 50]" @current-change="current_change" @size-change="SizeChange">
+                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="30"
+                        :page-sizes="[30, 40, 50]" @current-change="current_change" @size-change="SizeChange"
+                        :current-page.sync="currentPage">
                     </el-pagination>
                 </div>
                 <Spin fix v-show="isdone">
@@ -182,7 +183,8 @@
                 insuranceDta: [],
                 areaData: [],
                 page: 1,
-                limit: 10,
+                currentPage:1,
+                limit: 30,
                 total: 0,
             };
         },
@@ -191,7 +193,7 @@
             this.total = this.tableData.length;
             this.GetInsurance();
             setTimeout(() => {
-                this.getUserList("", "", 2, 1, 10, "");
+                this.getUserList("", "", 2, 1, 30, "");
             }, 1000);
             let userInfo = JSON.parse(localStorage.getItem("userinfor"));
             this.currenduserRole = userInfo.roleID;
@@ -266,6 +268,7 @@
                 });
             },
             getUserList(icco_id, role, user_type, page, limit, name, area_id) {
+                let that=this;
                 let currentRole = "";
                 this.isdone = true;
                 if (role == "管理员") {
@@ -298,15 +301,15 @@
                             });
                         });
                         setTimeout(() => {
-                            this.isdone = false;
-                            this.tableData = res.data.accounts;
-                            this.total = res.data.total;
+                            that.isdone = false;
+                            that.tableData = res.data.accounts;
+                            that.total = res.data.total;
                         }, 1000);
-                    }else{
-                        this.isdone=false;
+                    } else {
+                        this.isdone = false;
                     }
-                }).catch(()=>{
-                     this.isdone=false;
+                }).catch(() => {
+                    this.isdone = false;
                 });
             },
             buttonClick(name, text) {
@@ -373,6 +376,8 @@
                 this.statuVal = "全部";
             },
             searchClick() {
+                this.page=1;
+                this.currentPage=1;
                 this.getUserList(
                     this.companyVal,
                     this.statuVal,

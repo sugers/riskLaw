@@ -109,6 +109,7 @@
                 comfirmdval: '',
                 BelongInsurance: '',
                 contactPhonde: '',
+                icoid:0,
                 Text: '',
                 insuranceDta: []
             }
@@ -137,6 +138,7 @@
             saveClick() {
                 let data = {
                     id: this.userID,
+                    icco_id:this.icoid,
                     name: this.fullName,
                     password: this.passwordval,
                     phone: this.contactPhonde,
@@ -158,6 +160,8 @@
         watch: {
             currentText(newVal) {
                 let currentVal = JSON.parse(newVal)
+                console.log(currentVal)
+                this.icoid=currentVal.icco_id;
                 this.userID = currentVal.ID;
                 this.userName = currentVal.username;
                 this.passwordval = '';

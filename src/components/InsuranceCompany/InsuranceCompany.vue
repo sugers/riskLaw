@@ -190,8 +190,9 @@
                     </el-table-draggable>
                 </div>
                 <div class="pageDiv">
-                    <el-pagination background layout="total,sizes,prev, pager, next" :page-sizes="[10, 20, 30, 40,50]"
-                        :page-size="10" :total="total" @current-change="current_change" @size-change="SizeChange">
+                    <el-pagination background layout="total,sizes,prev, pager, next" :page-sizes="[30, 40,50]"
+                        :page-size="30" :total="total" @current-change="current_change" @size-change="SizeChange"
+                        :current-page.sync="currentPage">
                     </el-pagination>
                 </div>
 
@@ -272,7 +273,8 @@
                 isdone: true,
                 ischildshow: true,
                 page: 1,
-                limit: 10,
+                currentPage:1,
+                limit: 30,
                 total: 0,
                 tableData: [],
                 multipleSelection: [],
@@ -303,7 +305,6 @@
                         console.log('公司拖拽完成')
                     }
                 })
-                console.log(data)
             },
             areadrop(data) {
                 let idArr = [];
@@ -337,7 +338,7 @@
                 that.addModel = false;
                 that.editAreaModel = false;
                 this.addCompanyModel = false;
-                that.getinsurance('全部', '', 1, 10, this.currendRole);
+                that.getinsurance('全部', '', 1, 30, this.currendRole);
             },
             tableRowClassName({
                 row,
@@ -387,27 +388,6 @@
                                     })
                                     item.children.push(childitem)
                                 })
-                                // let childData=res.data.list;
-                                // const table = document.querySelector('.childTable tbody');
-                                // const self = this
-                                // Sortable.create(table, {
-                                //     animation: 60,
-                                //     // onStart: function () {
-                                //     //     console.log(this)
-                                //     //    this.el.classList.add('is-dragging');
-                                //     // },
-                                //     onEnd({
-                                //         newIndex,
-                                //         oldIndex
-                                //     }) {
-                                //         //  this.el.classList.remove('is-dragging');
-                                //         const targetRow = childData.splice(oldIndex, 1)[0]
-                                //         childData.splice(newIndex, 0, targetRow);
-                                //         let newTableData=self.tableData
-                                //         self.tableData=newTableData;
-
-                                //     }
-                                // })
                             })
                         }
                     });
@@ -542,13 +522,14 @@
                 console.log(val)
             },
             searchClick() {
-                this.page = 1;
-                this.limit = 10;
-                this.getinsurance(this.statuVal, this.keyInput, 1, 10);
+                this.page=1;
+                this.currentPage=1;
+                this.limit = 30;
+                this.getinsurance(this.statuVal, this.keyInput, 1, 30);
             },
             refresh() {
                 this.page = 1;
-                this.limit = 10;
+                this.limit = 30;
                 this.keyInput = '';
                 this.statuVal = '全部';
             }

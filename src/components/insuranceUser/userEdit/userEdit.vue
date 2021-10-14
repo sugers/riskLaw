@@ -11,7 +11,7 @@
                     <span>用户名：</span>
                 </div>
                 <div class="listRight">
-                    <el-input v-model="userName" placeholder="请输入用户名"></el-input>
+                    <el-input v-model="userName" disabled placeholder="请输入用户名"></el-input>
                 </div>
             </div> -->
             <!-- <div class="editList">
@@ -59,18 +59,29 @@
                 </div>
             </div> -->
 
-            <!-- <div class="editList">
+            <div class="editList">
                 <div class="listLeft">
                     <span>所属保险公司：</span>
                 </div>
                 <div class="listRight">
-                    <el-select v-model="BelongInsurance" slot="prepend" placeholder="请选择">
+                    <el-select v-model="BelongInsurance" slot="prepend" placeholder="请选择" @change="insuranceSelect">
                         <el-option v-for="(item,index) in insuranceDta" :key="index" :label="item.name"
                             :value="item.code">
                         </el-option>
                     </el-select>
                 </div>
-            </div> -->
+            </div>
+            <div class="editList">
+                <div class="listLeft">
+                    <span>省份：</span>
+                </div>
+                <div class="listRight">
+                    <el-select v-model="areaVal" slot="prepend" placeholder="请选择">
+                        <el-option v-for="(item,index) in areaData" :key="index" :label="item.name" :value="item.code">
+                        </el-option>
+                    </el-select>
+                </div>
+            </div>
             <div class="editList">
                 <div class="listLeft">
                     <span>账号状态：</span>
@@ -91,9 +102,10 @@
     </section>
 </template>
 <script>
-    // import provinces from "../../../../static/js/pca-code.json"
+    import provinces from "../../../../static/js/pca-code.json"
     import {
         GetinsuranceList,
+        GetinsuranceAreaList,
         Edituser
     } from '../../../api/api.js';
     export default {
@@ -108,16 +120,19 @@
                 passwordval: '',
                 comfirmdval: '',
                 BelongInsurance: '',
+                areaVal: '',
                 contactPhonde: '',
                 Text: '',
-                insuranceDta: []
+                insuranceDta: [],
+                areaData: []
             }
         },
         mounted() {
-            this.GetInsurance();
+            this.GetInsurance()
         },
         methods: {
             GetInsurance() {
+                let that = this;
                 let data = {
                     status: -1,
                     keyword: '',
@@ -130,23 +145,63 @@
                                 'code': item.ID
                             })
                         })
+                        setTimeout(() => {
+                            if (res.data.list.length == 1) {
+                                that.BelongInsurance = that.insuranceDta[0].code;
+                                that.insuranceSelect(that.insuranceDta[0].code)
+                            }
+                        }, 500)
                     }
 
                 })
             },
+            insuranceSelect(e,areaval) {
+                this.areaVal = ''
+                this.areaData = [];
+                let data = {
+                    icco_id: e
+                }
+                GetinsuranceAreaList(data).then(res => {
+                    if (res.code == 200) {
+                        res.data.list.map((childitem) => {
+                            provinces.forEach((areaitem) => {
+                                if (childitem.adcode == areaitem.code) {
+                                    this.areaData.push({
+                                        name: areaitem.name,
+                                        code: childitem.ID
+                                    });
+
+                                }
+                            })
+                        })
+                    }
+                    
+                    setTimeout(()=>{
+                        if(areaval){
+                            this.areaVal=areaval;
+                        }
+                    },200)
+
+
+                });
+
+            },
             saveClick() {
                 let data = {
                     id: this.userID,
-                    name: this.userName,
+                    name: this.fullName,
+                    icco_id:this.BelongInsurance,
+                    area_id:this.areaVal?this.areaVal:0,
                     password: this.passwordval,
                     phone: this.contactPhonde,
                     status: Number(this.staturadio)
                 }
+                console.log(data)
                 Edituser(data).then((res) => {
                     if (res.code == 200) {
                         this.$Message.success('编辑成功');
                         this.$emit('updateuserData');
-                    }else{
+                    } else {
                         this.$Message.error(res.mag);
                     }
 
@@ -163,9 +218,11 @@
                 this.userName = currentVal.username;
                 this.passwordval = '';
                 this.BelongInsurance = currentVal.icco_id == 0 ? '' : currentVal.icco_id;
+
                 this.staturadio = currentVal.status;
                 this.fullName = currentVal.name;
-                this.contactPhonde = currentVal.phone
+                this.contactPhonde = currentVal.phone;
+                this.insuranceSelect(currentVal.icco_id, currentVal.area_id)
             },
         },
     }

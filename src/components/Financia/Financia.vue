@@ -117,8 +117,9 @@
                     </el-table>
                 </div>
                 <div class="pageDiv">
-                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="10"
-                        :page-sizes="[10, 20, 30, 40,50]" @current-change="current_change" @size-change="SizeChange">
+                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="30"
+                        :page-sizes="[30, 40,50]" @current-change="current_change" @size-change="SizeChange"
+                        :current-page.sync="currentPage">
                     </el-pagination>
                 </div>
                 <Spin fix v-show="isdone">
@@ -163,7 +164,8 @@
                 areaData: [],
                 total: 0,
                 page: 1,
-                limit: 10
+                currentPage:1,
+                limit: 30
             }
         },
         mounted() {
@@ -329,7 +331,7 @@
             },
             refresh() {
                 this.page = 1;
-                this.limit = 10;
+                this.limit = 30;
                 this.fieldVal = '';
                 let getDate = new Date();
                 let time =
@@ -341,6 +343,8 @@
             },
             searchClick() {
                 this.isdone = true;
+                 this.page=1;
+                 this.currentPage=1;
                 this.GetReconcilia(this.timeVal, this.areaVal, this.areaValName, this.fieldValName, this.fieldVal,
                     this.page, this.limit)
             }

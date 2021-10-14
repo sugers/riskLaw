@@ -93,8 +93,9 @@
 
                 </div>
                 <div class="pageDiv">
-                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="10"
-                        :page-sizes="[10, 20, 30, 40,50]" @current-change="current_change" @size-change="SizeChange">
+                    <el-pagination background layout="total,sizes,prev, pager, next" :total="total" :page-size="30"
+                        :page-sizes="[30, 40,50]" @current-change="current_change" @size-change="SizeChange"
+                        :current-page.sync="currentPage">
                     </el-pagination>
                 </div>
                 <Spin fix v-show="isdone">
@@ -150,7 +151,8 @@
                 isdone: false,
                 tableData: [],
                 page: 1,
-                limit: 10,
+                currentPage:1,
+                limit: 30,
                 total: 0,
             }
         },
@@ -160,7 +162,7 @@
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID
             this.radioSatatu = String(userInfo.roleID).substring(0, 1);
-            this.getUserList(0, 0, '', this.currendRole, 1, 10);
+            this.getUserList(0, 0, '', this.currendRole, 1, 30);
         },
         methods: {
             indexMethod(index) {
