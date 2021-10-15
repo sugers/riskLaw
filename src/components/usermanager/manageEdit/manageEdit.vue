@@ -59,7 +59,7 @@
                 </div>
             </div> -->
 
-            <!-- <div class="editList">
+            <div class="editList" v-if="currentroot==2">
                 <div class="listLeft">
                     <span>所属保险公司：</span>
                 </div>
@@ -70,7 +70,18 @@
                         </el-option>
                     </el-select>
                 </div>
-            </div> -->
+            </div>
+            <div class="editList" v-if="currentroot==2">
+                <div class="listLeft">
+                    <span>省份：</span>
+                </div>
+                <div class="listRight">
+                    <el-select v-model="areaVal" slot="prepend" placeholder="请选择">
+                        <el-option v-for="(item,index) in areaData" :key="index" :label="item.name" :value="item.code">
+                        </el-option>
+                    </el-select>
+                </div>
+            </div>
             <div class="editList">
                 <div class="listLeft">
                     <span>账号状态：</span>
@@ -91,8 +102,9 @@
     </section>
 </template>
 <script>
-    // import provinces from "../../../../static/js/pca-code.json"
+    import provinces from "../../../../static/js/pca-code.json"
     import {
+        GetinsuranceAreaList,
         GetinsuranceList,
         Edituser
     } from '../../../api/api.js';
@@ -107,18 +119,25 @@
                 staturadio: 1,
                 passwordval: '',
                 comfirmdval: '',
+                areaVal: '',
                 BelongInsurance: '',
                 contactPhonde: '',
-                icoid:0,
+                icoid: 0,
                 Text: '',
-                insuranceDta: []
+                insuranceDta: [],
+                areaData: [],
+                currentroot:0
             }
         },
         mounted() {
             this.GetInsurance();
+             let userinfo = JSON.parse(localStorage.getItem('userinfor'));
+             let root= String(userinfo.roleID).substring(0, 1)
+             this.currentroot=root
         },
         methods: {
             GetInsurance() {
+                let that = this;
                 let data = {
                     status: -1,
                     keyword: '',
@@ -131,14 +150,52 @@
                                 'code': item.ID
                             })
                         })
+                        setTimeout(() => {
+                            if (res.data.list.length == 1) {
+                                that.BelongInsurance = that.insuranceDta[0].code;
+                                that.insuranceSelect(that.insuranceDta[0].code)
+                            }
+                        }, 500)
                     }
 
                 })
             },
+            insuranceSelect(e, areaval) {
+                this.areaVal = ''
+                this.areaData = [];
+                let data = {
+                    icco_id: e
+                }
+                GetinsuranceAreaList(data).then(res => {
+                    if (res.code == 200) {
+                        res.data.list.map((childitem) => {
+                            provinces.forEach((areaitem) => {
+                                if (childitem.adcode == areaitem.code) {
+                                    this.areaData.push({
+                                        name: areaitem.name,
+                                        code: childitem.ID
+                                    });
+
+                                }
+                            })
+                        })
+                    }
+
+                    setTimeout(() => {
+                        if (areaval) {
+                            this.areaVal = areaval;
+                        }
+                    }, 200)
+
+
+                });
+
+            },
             saveClick() {
                 let data = {
                     id: this.userID,
-                    icco_id:this.icoid,
+                    icco_id: this.icoid,
+                    area_id:this.areaVal?this.areaVal:0,
                     name: this.fullName,
                     password: this.passwordval,
                     phone: this.contactPhonde,
@@ -146,12 +203,16 @@
                 }
                 Edituser(data).then((res) => {
                     if (res.code == 200) {
+                        let userinfo = JSON.parse(localStorage.getItem('userinfor'))
+                        if (userinfo.ID == this.userID) {
+                            userinfo.name = this.fullName;
+                            localStorage.setItem('userinfor', JSON.stringify(userinfo))
+                        }
                         this.$Message.success('编辑成功');
                         this.$emit('updateuserData');
                     }
 
                 })
-                console.log(data)
             },
             cancel() {
                 this.$emit('canceluser')
@@ -161,14 +222,15 @@
             currentText(newVal) {
                 let currentVal = JSON.parse(newVal)
                 console.log(currentVal)
-                this.icoid=currentVal.icco_id;
+                this.icoid = currentVal.icco_id;
                 this.userID = currentVal.ID;
                 this.userName = currentVal.username;
                 this.passwordval = '';
                 this.BelongInsurance = currentVal.icco_id == 0 ? '' : currentVal.icco_id;
                 this.staturadio = currentVal.status;
                 this.fullName = currentVal.name;
-                this.contactPhonde = currentVal.phone
+                this.contactPhonde = currentVal.phone;
+                this.insuranceSelect(currentVal.icco_id, currentVal.area_id)
             },
         },
     }
@@ -228,7 +290,7 @@
     .operatBtn {
         display: flex;
         align-items: center;
-         margin-top: 160px;
+        margin-top: 160px;
     }
 
     .operatBtn button {

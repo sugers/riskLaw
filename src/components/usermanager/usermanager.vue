@@ -162,7 +162,7 @@
             let userInfo = JSON.parse(localStorage.getItem('userinfor'));
             this.currendRole = userInfo.roleID
             this.radioSatatu = String(userInfo.roleID).substring(0, 1);
-            this.getUserList(0, 0, '', this.currendRole, 1, 30);
+            this.getUserList('', '', '', this.currendRole, 1, 30);
         },
         methods: {
             indexMethod(index) {
@@ -177,7 +177,7 @@
             updateuserData() {
                 this.editModel = false;
                 this.increaseModel = false;
-                this.getUserList(0, 0, this.statuVal, this.currendRole, this.page, this.limit);
+                this.getUserList('', '', this.statuVal, this.currendRole, this.page, this.limit);
             },
             canceluser() {
                 this.editModel = false;
@@ -264,7 +264,7 @@
                                 Deleteuser(data).then((res) => {
                                     if (res.code == 200) {
                                         this.$Message.success('已删除');
-                                        this.getUserList(0, 0, this.statuVal, this
+                                        this.getUserList('', '', this.statuVal, this
                                             .currendRole, this
                                             .page, this.limit);
                                     }
@@ -279,18 +279,18 @@
             },
             SizeChange(currentSize) {
                 this.limit = currentSize;
-                this.getUserList(0, 0, this.statuVal, this.currendRole, this.page, currentSize);
+                this.getUserList('', '', this.statuVal, this.currendRole, this.page, currentSize);
             },
             current_change(currentPage) {
                 this.page = currentPage;
-                this.getUserList(0, 0, this.statuVal, this.currendRole, currentPage, this.limit);
+                this.getUserList('', '', this.statuVal, this.currendRole, currentPage, this.limit);
             },
             refresh() {
                 this.companyVal = '';
                 this.statuVal = '全部';
             },
             usermanager() {
-                this.getUserList(0, 0, this.statuVal, this.currendRole, this.page, this.limit, this.keyInput);
+                this.getUserList('', '', this.statuVal, this.currendRole, this.page, this.limit, this.keyInput);
             }
         },
     }

@@ -196,7 +196,6 @@
                     phone: this.contactPhonde,
                     status: Number(this.staturadio)
                 }
-                console.log(data)
                 Edituser(data).then((res) => {
                     if (res.code == 200) {
                         this.$Message.success('编辑成功');
@@ -214,6 +213,7 @@
         watch: {
             currentText(newVal) {
                 let currentVal = JSON.parse(newVal)
+                console.log(currentVal)
                 this.userID = currentVal.ID;
                 this.userName = currentVal.username;
                 this.passwordval = '';
