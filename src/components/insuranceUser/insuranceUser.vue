@@ -287,6 +287,12 @@
                 };
                 Getuser(data).then((res) => {
                     if (res.code == 200) {
+                        if(!res.data.accounts){
+                            that.isdone = false;
+                            that.tableData = [];
+                            that.total = 0;
+                            return;
+                        }
                         res.data.accounts.map((item) => {
                             item.UpdatedAt = getDateString(item.UpdatedAt);
                             if (item.role == 2001) {

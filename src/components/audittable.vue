@@ -229,11 +229,11 @@
         class="paginastyes"
         ref="paginatref"
         background
-        layout="total,prev,sizes, pager, next"
+        layout="total,sizes,prev, pager, next"
         @size-change="handsizetext"
         @current-change="handsizepage"
         :current-page="currentPage"
-        :page-sizes="[10, 20, 30, 40, 50]"
+        :page-sizes="[30, 40, 50]"
         :page-size="pagesize"
         :total="total"
       >
@@ -392,7 +392,7 @@ export default {
       multipleSelection: [],
       radiocyt: "2",
       total: 0, //总条数
-      pagesize: 10, //每页的个数
+      pagesize: 30, //每页的个数
       currentPage: 1, //当前页数
       //弹出框
       titles: "",
@@ -449,7 +449,10 @@ export default {
     let userid = JSON.parse(localStorage.getItem("userinfor"));
     this.userid = userid.roleID;
     this.auditiccorapi();
-    this.radiochange();
+    setTimeout(()=>{
+      this.radiochange();
+    },800)
+    
   },
   methods: {
     // auditbtnout(){
@@ -556,11 +559,11 @@ export default {
             }
           }
         }
-        if (citydata.length == 1) {
+        // if (citydata.length == 1) {
           setTimeout(() => {
             this.auditprovin = citydata[0].id;
           }, 150);
-        }
+        // }
       });
       this.citydata = citydata;
     },
@@ -579,12 +582,12 @@ export default {
           };
           daticcon.push(icco);
         }
-        if (daticcon.length == 1) {
+        // if (daticcon.length == 1) {
           setTimeout(() => {
             this.arrbaosel = daticcon[0].id;
             this.auditbaoclick(this.arrbaosel);
           }, 200);
-        }
+        // }
       });
       // console.log("保险公司",daticcon);
       this.auditarray = daticcon;
@@ -675,6 +678,7 @@ export default {
       this.keyword = "";
       let pagee = 1;
       this.currentPage = pagee;
+
       this.Auditlistapi(pagee);
 
       if (this.radiocyt == 2) {

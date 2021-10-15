@@ -64,11 +64,11 @@
           <template slot="title"
             ><i class="el-icon-s-marketing"></i>统计分析</template
           >
-          <el-menu-item v-if="chusheng" index="/laywerWorkload">法务人员工作量表</el-menu-item>
-          <el-menu-item index="/Statistics">业务人员业绩表</el-menu-item>
-          <el-menu-item index="/TrendChart">业务发展趋势图</el-menu-item>
-          <el-menu-item v-if="chusheng" index="/layweroverTable">业务发展总览表</el-menu-item>
-          <el-menu-item index="/OverviewTable">分公司排名表</el-menu-item>
+          <el-menu-item v-if="chusheng || pingtaishen || pingcaiw" index="/laywerWorkload">法务人员工作量表</el-menu-item>
+          <el-menu-item v-if="baoxtai || chusheng || baocaiw" index="/Statistics">业务人员业绩表</el-menu-item>
+          <el-menu-item v-if="chusheng || pingcaiw" index="/layweroverTable">业务发展总览表</el-menu-item>
+          <el-menu-item v-if="baoxtai || chusheng || baocaiw" index="/OverviewTable">分公司排名表</el-menu-item>
+          <el-menu-item v-if="pingtaishen || baoxtai || chusheng || pingcaiw" index="/TrendChart">业务发展趋势图</el-menu-item>
         </el-submenu>
 
         <!-- <el-submenu index="111" v-if="chusheng"> -->
@@ -120,7 +120,7 @@ export default {
     if (this.roleID == 1001) {
       this.chusheng = true;
     } else if (this.roleID == 1002) {
-      this.pingcaiw == true;
+      this.pingcaiw = true;
     } else if (this.roleID == 1003 || this.roleID == 1004) {
       this.pingtaishen = true;
     } else if (this.roleID == 2001) {

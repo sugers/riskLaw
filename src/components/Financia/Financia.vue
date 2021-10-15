@@ -237,7 +237,8 @@
                             this.total = res.data.total
                             this.tableData = res.data.list
                         } else {
-                            this.tableData = []
+                            this.tableData = [];
+                            this.total = 0
                         }
 
                     }else{

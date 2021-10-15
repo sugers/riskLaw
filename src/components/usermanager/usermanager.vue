@@ -218,6 +218,7 @@
                     this.isdone = false;
                     if (res.code == 200) {
                         if (!res.data.accounts) {
+                            this.tableData =[]
                             this.total = 0;
                             return;
                         }

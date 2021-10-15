@@ -1154,6 +1154,7 @@
                     </el-form-item> -->
                     <el-form-item label="被告姓名：" :required="true">
                       <el-input
+                        @input="mattin"
                         v-model="complaint.fendant"
                         placeholder="请输入内容"
                       ></el-input>
@@ -2284,7 +2285,7 @@ export default {
     // 快速反馈按钮
     through(a) {
       if (a == 1) {
-        if (this.userfilesz != null) {
+        if (this.insured_type == 1) {
           if (this.usernamesfz.name == "") {
             this.$message({
               showClose: true,
@@ -2294,7 +2295,7 @@ export default {
             return;
           }
         }
-        if (this.blicense != null) {
+        if (this.insured_type == 2) {
           if (this.userblicense.company == "") {
             this.$message({
               showClose: true,

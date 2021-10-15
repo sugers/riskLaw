@@ -304,6 +304,11 @@
                     GetOverviewTablePlateForm(data).then((res) => {
                         if (res.code == 200) {
                             this.isdone = false;
+                            if(!res.data.list){
+                                this.tableData =[];
+                                this.total = 0;
+                                return
+                            }
                             res.data.list.map((item) => {
                                 item.month = getDateString(item.month)
                                 provinces.forEach((provinceItem) => {

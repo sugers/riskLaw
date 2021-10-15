@@ -885,7 +885,15 @@
             <div class="martexts">
               <p>出单状态：</p>
               <div class="listchuadn">
-                <el-radio-group v-model="feedcudan" @change="rouderind">
+                <el-radio-group
+                  v-if="UserID != 2001"
+                  v-model="feedcudan"
+                  @change="rouderind"
+                >
+                  <el-radio :label="1">已出单</el-radio>
+                  <el-radio :label="0">未出单</el-radio>
+                </el-radio-group>
+                <el-radio-group v-else v-model="feedcudan" @change="baoxiangs">
                   <el-radio :label="1">已出单</el-radio>
                   <el-radio :label="0">未出单</el-radio>
                 </el-radio-group>
@@ -894,11 +902,21 @@
             <div v-if="feedcudan == 1">
               <div class="martexts">
                 <p>保险金额：</p>
-                <span style="width: 800px">
+                <span style="width: 800px" v-if="UserID != 2001">
                   <el-input
                     style="width: 200px"
                     v-model="usertiduy.baoxianRMB"
                     @blur="inputMoneyss($event, 'baoxianRMB')"
+                    @input="userinputmon"
+                    size="medium"
+                  ></el-input>
+                  元&nbsp;&nbsp;<span style="color: red">{{ usertidrmb }}</span>
+                </span>
+                <span style="width: 800px" v-else>
+                  <el-input
+                    style="width: 200px"
+                    v-model="usertiduy.baoxianRMB"
+                    @blur="inputMoneyedss($event, 'baoxianRMB')"
                     @input="userinputmon"
                     size="medium"
                   ></el-input>
@@ -1017,7 +1035,7 @@
               </div>
             </div>
             <div v-if="feedcudan == 0">
-              <div class="martexts">
+              <div class="martexts" v-if="UserID != 2001">
                 <p>未出单原因：</p>
                 <span>
                   <el-input
@@ -1027,6 +1045,21 @@
                     type="textarea"
                     :rows="3"
                     @blur="singlereason"
+                    placeholder="请输入内容"
+                    show-word-limit
+                  ></el-input>
+                </span>
+              </div>
+              <div class="martexts" v-else>
+                <p>未出单原因：</p>
+                <span>
+                  <el-input
+                    style="width: 550px"
+                    v-model="nosinglereason"
+                    :autosize="{ minRows: 4 }"
+                    type="textarea"
+                    :rows="3"
+                    @blur="singlereasonbaoxian"
                     placeholder="请输入内容"
                     show-word-limit
                   ></el-input>
@@ -1065,13 +1098,6 @@
                 @click.prevent="through(0)"
                 >确定</el-button
               >
-
-              <!-- <el-button
-                type="primary"
-                @click.prevent="through(0)"
-                style="background-color: #bbbbbb"
-                >取消</el-button
-              > -->
             </div>
           </el-col>
         </el-row>
@@ -1312,6 +1338,7 @@ export default {
       // 保单路径
       thepath: [],
       codeid: "",
+      filtesd: [],
     };
   },
   destroyed() {
@@ -1756,6 +1783,8 @@ export default {
             this.complatexts = [];
             this.timonsrc = "";
             this.timonfile = "";
+            this.transrcs = [];
+            this.tranfiles = [];
             this.reviewapi();
             this.$message({
               showClose: true,
@@ -1863,58 +1892,86 @@ export default {
     inputMoneyss(el, name) {
       this.usertiduy[name] = getInputValue(el);
       var dat = {
-          risk_eval_id: this.evalid,
-          trade: this.feedcudan,
-          amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
-          untrade_res: this.nosinglereason,
-        };
-        Modifytrade(dat).then((res) => {
-          // console.log(res);
-          if (res.code == 200) {
-            this.$message({
-              showClose: true,
-              message: "修改成功",
-              type: "sueccss",
-            });
-          }
-        });
+        risk_eval_id: this.evalid,
+        trade: this.feedcudan,
+        amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
+        untrade_res: this.nosinglereason,
+      };
+      Modifytrade(dat).then((res) => {
+        // console.log(res);
+        if (res.code == 200) {
+          this.$message({
+            showClose: true,
+            message: "修改成功",
+            type: "success",
+          });
+        }
+      });
     },
-    singlereason(){
+    inputMoneyedss(el, name) {
+      this.usertiduy[name] = getInputValue(el);
+      // this.evaltradeapi(
+      //   this.evalid,
+      //   this.feedcudan,
+      //   this.filtes,
+      //   Number(moneyDelete(this.usertiduy.baoxianRMB)),
+      //   this.nosinglereason
+      // );
+    },
+    singlereason() {
       var dat = {
-          risk_eval_id: this.evalid,
-          trade: this.feedcudan,
-          amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
-          untrade_res: this.nosinglereason,
-        };
-        Modifytrade(dat).then((res) => {
-          // console.log(res);
-          if (res.code == 200) {
-            this.$message({
-              showClose: true,
-              message: "修改成功",
-              type: "sueccss",
-            });
-          }
-        });
+        risk_eval_id: this.evalid,
+        trade: this.feedcudan,
+        amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
+        untrade_res: this.nosinglereason,
+      };
+      Modifytrade(dat).then((res) => {
+        // console.log(res);
+        if (res.code == 200) {
+          this.$message({
+            showClose: true,
+            message: "修改成功",
+            type: "success",
+          });
+        }
+      });
     },
-    rouderind(){
+    singlereasonbaoxian() {
+      // this.evaltradeapi(
+      //   this.evalid,
+      //   this.feedcudan,
+      //   this.filtes,
+      //   Number(moneyDelete(this.usertiduy.baoxianRMB)),
+      //   this.nosinglereason
+      // );
+    },
+    rouderind() {
       // 修改出单
-        var dat = {
-          risk_eval_id: this.evalid,
-          trade: this.feedcudan,
-          amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
-          untrade_res: this.nosinglereason,
-        };
-        Modifytrade(dat).then((res) => {
-          // console.log(res);
-          if (res.code == 200) {
-            this.$message({
-              showClose: true,
-              message: "修改成功",
-              type: "sueccss",
-            });
-          }
-        });
+      var dat = {
+        risk_eval_id: this.evalid,
+        trade: this.feedcudan,
+        amount: Number(moneyDelete(this.usertiduy.baoxianRMB)),
+        untrade_res: this.nosinglereason,
+      };
+      Modifytrade(dat).then((res) => {
+        // console.log(res);
+        if (res.code == 200) {
+          this.$message({
+            showClose: true,
+            message: "修改成功",
+            type: "success",
+          });
+        }
+      });
+    },
+    baoxiangs() {
+      // this.evaltradeapi(
+      //   this.evalid,
+      //   this.feedcudan,
+      //   this.filtes,
+      //   Number(moneyDelete(this.usertiduy.baoxianRMB)),
+      //   this.nosinglereason
+      // );
     },
     // 快速反馈按钮
     through(a) {
@@ -1928,7 +1985,6 @@ export default {
         };
         Modifytrade(dat).then(() => {
           // console.log(res);
-          
         });
 
         var das = {
@@ -1952,25 +2008,28 @@ export default {
         });
       } else if (a == 0) {
         if (this.feedcudan == 1) {
-          if (this.usertiduy.baoxianRMB && this.transaction) {
-            this.evaltradeapi(
-              this.evalid,
-              this.feedcudan,
-              this.thepath,
-              Number(moneyDelete(this.usertiduy.baoxianRMB)),
-              this.nosinglereason
-            );
-
-            this.$router.push({
-              path: "/usertable/adminfiedlook",
-              query: {
-                data: this.evalid,
-              },
-            });
+          let sumnew = Number(moneyDelete(this.usertiduy.baoxianRMB))
+          if (sumnew != 0) {
+            if (this.filtesd.length != 0) {
+              this.evaltradeapi(
+                this.evalid,
+                this.feedcudan,
+                this.filtesd,
+                Number(moneyDelete(this.usertiduy.baoxianRMB)),
+                this.nosinglereason
+              );
+            }else{
+              this.$message({
+                showClose: true,
+                message: "请上传保单附件",
+                type: "error",
+              });
+            }
+            
           } else {
             this.$message({
               showClose: true,
-              message: "保险金额和保单附件不能为空",
+              message: "请填写保险金额",
               type: "error",
             });
           }
@@ -1979,21 +2038,21 @@ export default {
             this.evaltradeapi(
               this.evalid,
               this.feedcudan,
-              this.thepath,
+              this.filtesd,
               Number(moneyDelete(this.usertiduy.baoxianRMB)),
               this.nosinglereason
             );
 
-            this.$router.push({
-              path: "/usertable/adminfiedlook",
-              query: {
-                data: this.evalid,
-              },
-            });
+            // this.$router.push({
+            //   path: "/usertable/adminfiedlook",
+            //   query: {
+            //     data: this.evalid,
+            //   },
+            // });
           } else {
             this.$message({
               showClose: true,
-              message: "未出单原因不能为空",
+              message: "请填写未出单原因",
               type: "error",
             });
           }
@@ -2021,6 +2080,17 @@ export default {
         this.codeid = res.code;
         if (res.code == 200) {
           this.reviewapi();
+          this.$message({
+            showClose: true,
+            message: "修改成功",
+            type: "success",
+          });
+          this.$router.push({
+            path: "/usertable/adminfiedlook",
+            query: {
+              data: this.evalid,
+            },
+          });
         }
       });
     },
@@ -2069,14 +2139,41 @@ export default {
     },
     // 保险费方保单附件上传
     handlePreview(response) {
-      // console.log(response.data);
-      this.evaltradeapi(
-        this.evalid,
-        this.feedcudan,
-        response.data,
-        Number(moneyDelete(this.usertiduy.baoxianRMB)),
-        this.nosinglereason
-      );
+      this.filtesd = response.data;
+      let filtes = response.data[0];
+      // console.log(this.filtes);
+      let imgname = filtes.substring(filtes.lastIndexOf("/") + 1);
+      let imgsuffix = filtes.substring(filtes.lastIndexOf(".") + 1);
+      // console.log(imgname);
+      // console.log(imgsuffix);
+      let htts = process.env.VUE_APP_API_URL;
+      let filesimg = {
+        file_name: imgname,
+        path: filtes,
+      }
+      if (
+        imgsuffix.toLowerCase() == "jpg" ||
+        imgsuffix.toLowerCase() == "jpeg" ||
+        imgsuffix.toLowerCase() == "png"
+      ) {
+        this.transrcs.push(filesimg)
+        this.tranboolesrc = true;
+        this.tranimggevie.push(htts + "/" + filtes);
+      }else{
+        this.tranfiles.push(filesimg)
+        this.tranboolefile = true;
+      }
+      // let fileimages = {
+      //   name: imgname,
+      //   path:
+      // }
+      // this.evaltradeapi(
+      //   this.evalid,
+      //   this.feedcudan,
+      //   this.filtes,
+      //   Number(moneyDelete(this.usertiduy.baoxianRMB)),
+      //   this.nosinglereason
+      // );
     },
     // 起诉状上传
     // handlePrev(response){

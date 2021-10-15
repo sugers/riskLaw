@@ -6,8 +6,8 @@
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
-                <div class="txt">累计评估总量</div>
-                <div class="number pin">{{ risk_eval_review_count }}</div>
+                <div class="txt">合作保司分公司总数</div>
+                <div class="number pin">{{ icco_count }}</div>
               </div>
               <img src="../../static/img/pin.png" alt="图标" />
             </div>
@@ -17,8 +17,8 @@
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
-                <div class="txt">已合作保险公司总量</div>
-                <div class="number hezuo">{{ icco_count }}</div>
+                <div class="txt">入驻业务人员总数</div>
+                <div class="number hezuo">{{ salesmen_count }}</div>
               </div>
               <img src="../../static/img/hezuo.png" alt="图标" />
             </div>
@@ -36,6 +36,43 @@
           </el-card>
         </el-col>
       </el-row>
+
+      <el-row :gutter="12" class="elrow">
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月提交评估量</div>
+                <div class="number pin">{{ total_count }}</div>
+              </div>
+              <img src="../../static/img/pin.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月评估通过量</div>
+                <div class="number hezuo">{{ success_count }}</div>
+              </div>
+              <img src="../../static/img/hezuo.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月出单量</div>
+                <div class="number lvshi">{{ trade_count }}</div>
+              </div>
+              <img src="../../static/img/lvshi.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+
       <el-row :gutter="12">
         <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
@@ -54,7 +91,7 @@
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
               <div class="datatext">
-                <div class="txt">本月评估总金额</div>
+                <div class="txt">本月通过总金额</div>
                 <div class="number zonge" :title="underwriting_amount_count">
                   ￥{{ underwriting_amount_count | currency }}
                 </div>
@@ -77,17 +114,29 @@
       </el-row>
       <div style="margin-top: 20px; display: flex">
         <div style="flex: 1">
-          <el-card shadow="hover" :body-style="{ padding: '10px' }">
-            <div id="echars3" style="width: 85%; height: 400px"></div>
-          </el-card>
+          <div>
+            <el-card shadow="hover" :body-style="{ padding: '10px' }">
+              <EchartsTable :id="'submit'" :data="submitdatarange" />
+            </el-card>
+          </div>
+          <div style="margin-top: 20px">
+            <el-card shadow="hover" :body-style="{ padding: '10px' }">
+              <div id="echars4" style="width: 89%; height: 400px"></div>
+            </el-card>
+          </div>
         </div>
+
         <div class="admincare">
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div>
               <div class="paiming">
                 <span>本月法务人员排行榜</span>
               </div>
-              <div class="progress" v-for="(item, index) in backendusertop" :key="index">
+              <div
+                class="progress"
+                v-for="(item, index) in backendusertop"
+                :key="index"
+              >
                 <span
                   :class="
                     index + 1 == 1
@@ -111,12 +160,20 @@
               </div>
             </div>
           </el-card>
-          <el-card style="margin-top:20px;" shadow="hover" :body-style="{ padding: '10px' }">
+          <el-card
+            style="margin-top: 20px"
+            shadow="hover"
+            :body-style="{ padding: '10px' }"
+          >
             <div>
               <div class="paiming">
                 <span>本年法务人员排行榜</span>
               </div>
-              <div class="progress" v-for="(item, index) in backendtopyear" :key="index">
+              <div
+                class="progress"
+                v-for="(item, index) in backendtopyear"
+                :key="index"
+              >
                 <span
                   :class="
                     index + 1 == 1
@@ -186,25 +243,59 @@
     <div class="headdata" v-if="baoxingpint">
       <div style="flex: 1">
         <div>
-          <div style="margin-top: 20px">
+          <div>
             <el-card shadow="hover" :body-style="{ padding: '10px' }">
               <EchartsTable :id="'echars1'" :data="chartstable1" />
             </el-card>
           </div>
           <div style="margin-top: 20px">
             <el-card shadow="hover" :body-style="{ padding: '10px' }">
-              <EchartsTable :id="'echars2'" :data="chartstable2" />
+              <div id="echars5" style="width: 89%; height: 400px"></div>
             </el-card>
           </div>
+          <!-- <div style="margin-top: 20px">
+            <el-card shadow="hover" :body-style="{ padding: '10px' }">
+              <EchartsTable :id="'echars2'" :data="chartstable2" />
+            </el-card>
+          </div> -->
         </div>
       </div>
       <div class="care">
         <el-card shadow="hover" :body-style="{ padding: '10px' }">
           <div>
             <div class="paiming">
-              <span>销售业务人员通过量排名</span>
+              <span>本月业务人员业绩排名</span>
             </div>
             <div class="progress" v-for="(item, index) in usert" :key="index">
+              <span
+                :class="
+                  index + 1 == 1
+                    ? 'nunberred'
+                    : index + 1 == 2
+                    ? 'nunberorgin'
+                    : index + 1 == 3
+                    ? 'nunbergerrn'
+                    : 'nunber'
+                "
+                >{{ index + 1 }}</span
+              >
+              <span class="sumname">{{ item.name }}</span>
+              <div class="gress">
+                <el-progress
+                  :percentage="item.totalpercent"
+                  :show-text="false"
+                ></el-progress>
+              </div>
+              <span class="snum">{{ item.total }}</span>
+            </div>
+          </div>
+        </el-card>
+        <el-card style="margin-top: 20px" shadow="hover" :body-style="{ padding: '10px' }">
+          <div>
+            <div class="paiming">
+              <span>本年业务人员业绩排名</span>
+            </div>
+            <div class="progress" v-for="(item, index) in mayusert" :key="index">
               <span
                 :class="
                   index + 1 == 1
@@ -248,19 +339,31 @@ export default {
   },
   data() {
     return {
-      risk_eval_review_count: "",
+      salesmen_count: "",
       icco_count: "",
       lawyer_count: "",
       preserv_amount_count: "",
       underwriting_amount_count: "",
       amount_count: "",
+      total_count: "",
+      success_count: "",
+      trade_count: "",
 
       risk_eval_count: "",
       risk_eval_open_count: "",
       risk_eval_trade_count: "",
 
       // 平台数据表
-      echars3: null,
+      echars4: null,
+      submitdatarange: {
+        textTitle: "提交量",
+        nameArray: "",
+        colors: ["#409EFF", "#F4AA43"],
+        legends: "",
+        yaxis: "",
+        series: [],
+      },
+      submitdata: [],
 
       // 表1提交量
       chartstable1: {
@@ -275,6 +378,7 @@ export default {
       chartsData1: [],
 
       // 表2出单量
+      echars5: null,
       chartstable2: {
         textTitle: "出单量",
         nameArray: "",
@@ -297,6 +401,7 @@ export default {
       backendusertop: "",
       backendtopyear: "",
       usert: "",
+      mayusert: "",
     };
   },
   created() {},
@@ -315,6 +420,9 @@ export default {
       this.baoxingpint = true;
       this.theinsurer();
     }
+    // 平台
+    this.submitdatarange.series = this.submitdata;
+    // 保司
     this.chartstable1.series = this.chartsData1;
     this.chartstable2.series = this.chartsData2;
   },
@@ -322,16 +430,174 @@ export default {
     // 看板数据api
     dashboardapi() {
       this.isdone = true;
+      let sum = [];
       Commondashboard().then((res) => {
         this.isdone = false;
-        console.log("看板", res.data.dashboard);
-        this.risk_eval_review_count = res.data.dashboard.risk_eval_review_count;
+        // console.log("看板", res.data.dashboard);
+        this.salesmen_count = res.data.dashboard.salesmen_count;
         this.icco_count = res.data.dashboard.icco_count;
         this.lawyer_count = res.data.dashboard.lawyer_count;
         this.preserv_amount_count = res.data.dashboard.preserv_amount_count;
         this.underwriting_amount_count =
           res.data.dashboard.underwriting_amount_count;
         this.amount_count = res.data.dashboard.amount_count;
+        this.total_count = res.data.dashboard.total_count;
+        this.success_count = res.data.dashboard.success_count;
+        this.trade_count = res.data.dashboard.trade_count;
+        // 提交量图
+        this.submitdatarange.nameArray =
+          res.data.dashboard.submit_data_range.dates;
+        this.submitdatarange.legends = ["通过量", "拒绝量"];
+        let reject = res.data.dashboard.submit_data_range.reject_vals;
+        let success = res.data.dashboard.submit_data_range.success_vals;
+        reject.map((item, index) => {
+          sum.push(Number(item) + Number(success[index]));
+        });
+        this.submitdatarange.yaxis = Math.max(...sum) * 2;
+        let successvals = {
+          name: "通过量",
+          type: "bar",
+          stack: "Ads",
+          data: res.data.dashboard.submit_data_range.success_vals,
+          label: {
+            normal: {
+              show: false,
+              position: "top",
+              formatter: function (params) {
+                if (params.value > 0) {
+                  return params.value;
+                } else {
+                  return "";
+                }
+              },
+            },
+          },
+        };
+        let rejectvals = {
+          name: "拒绝量",
+          type: "bar",
+          stack: "Ads",
+          data: res.data.dashboard.submit_data_range.reject_vals,
+          label: {
+            normal: {
+              show: false,
+              position: "top",
+              formatter: function (params) {
+                if (params.value > 0) {
+                  return params.value;
+                } else {
+                  return "";
+                }
+              },
+            },
+          },
+        };
+        let sume = {
+          name: "总数",
+          type: "bar",
+          barGap: "-100%",
+          itemStyle: {
+            normal: {
+              borderColor: "transparent",
+              color: "transparent",
+            },
+          },
+          data: sum,
+          label: {
+            normal: {
+              show: true, //显示数值
+              position: "top", // 位置设为top
+              formatter: function (params) {
+                if (params.value > 0) {
+                  return params.value;
+                } else {
+                  return "";
+                }
+              },
+              textStyle: {
+                color: "#000",
+              }, //设置数值颜色
+            },
+          },
+        };
+        this.submitdata.push(sume);
+        this.submitdata.push(successvals);
+        this.submitdata.push(rejectvals);
+        // 出单量图
+        this.echars4 = this.$echarts.init(document.getElementById("echars4"));
+        let currentMaxVal =
+          Math.max(...res.data.dashboard.trade_data_range.counts) * 2;
+        this.echars4.setOption({
+          title: {
+            text: "出单量",
+          },
+          tooltip: {
+            trigger: "axis",
+          },
+          color: ["#F4AA43", "#409EFF"],
+          legend: {
+            data: ["出单量", "出单保费金额"],
+            right: 30,
+          },
+          xAxis: {
+            type: "category",
+            data: res.data.dashboard.trade_data_range.dates,
+          },
+          yAxis: [
+            {
+              type: "value",
+              name: "出单量",
+              min: 0,
+              max: currentMaxVal ? currentMaxVal : 10,
+              minInterval: "1",
+              splitLine: {
+                //网格线
+                show: true,
+              },
+            },
+            {
+              type: "value",
+              name: "出单保费金额",
+              min: 0,
+              max: Math.max(...res.data.dashboard.trade_data_range.amounts)
+                ? Math.max(...res.data.dashboard.trade_data_range.amounts) + 1000
+                : 1000,
+              splitLine: {
+                //网格线
+                show: false,
+              },
+            },
+          ],
+          series: [
+            {
+              name: "出单量",
+              type: "line",
+              data: res.data.dashboard.trade_data_range.counts,
+            },
+            {
+              name: "出单保费金额",
+              type: "bar",
+              yAxisIndex: 1,
+              data: res.data.dashboard.trade_data_range.amounts,
+              label: {
+                normal: {
+                  show: true, //显示数值
+                  position: "top", // 位置设为top
+                  formatter: function (params) {
+                    if (params.value > 0) {
+                      return params.value;
+                    } else {
+                      return "";
+                    }
+                  },
+                  textStyle: {
+                    color: "#000",
+                  }, //设置数值颜色
+                },
+              },
+            },
+          ],
+        });
         // 本月法务
         this.backendusertop = res.data.dashboard.backend_user_top_10_month;
         let adminpainum = this.backendusertop[0].total;
@@ -341,66 +607,12 @@ export default {
         // 本年法务
         this.backendtopyear = res.data.dashboard.backend_user_top_10_year;
         let admintopyear = this.backendtopyear[0].total;
-        this.backendtopyear.map((item)=>{
+        this.backendtopyear.map((item) => {
           item.totalpercent = (item.total / (admintopyear + 20)) * 100;
-        })
-        let figurearr = [];
-        figurearr.push(res.data.dashboard.total_count);
-        figurearr.push(res.data.dashboard.success_count);
-        figurearr.push(res.data.dashboard.trade_count);
-
-        this.echars3 = this.$echarts.init(document.getElementById("echars3"));
-        this.echars3.setOption({
-          title: {
-            text: "",
-          },
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "shadow",
-            },
-          },
-          color: ["#409EFF", "#67C23A", "#E6A23C"],
-          legend: {},
-          xAxis: {
-            type: "value",
-            minInterval: 1,
-          },
-          yAxis: {
-            type: "category",
-            axisTick: {
-              alignWithLabel: true,
-            },
-            data: ["提交量评估量", "同意承保量", "出单量"],
-          },
-          series: [
-            {
-              name: "数量",
-              barWidth: 30,
-              type: "bar",
-              data: figurearr,
-              label: {
-                normal: {
-                  show: true, //显示数值
-                  position: "right", // 位置设为right
-                  formatter: function (params) {
-                    if (params.value > 0) {
-                      return params.value;
-                    } else {
-                      return "";
-                    }
-                  },
-                },
-                textStyle: {
-                  color: "#000", //设置数值颜色
-                },
-              },
-            },
-          ],
         });
+
       });
     },
-    homechart() {},
     theinsurer() {
       let sumNum = [];
       this.isdone = true;
@@ -492,42 +704,116 @@ export default {
         this.chartsData1.push(success_vals);
         this.chartsData1.push(reject_vals);
 
-        this.chartstable2.nameArray = res.data.risk_eval_trade_data_range.dates;
-
-        this.chartstable2.legends = ["出单量"];
-        let countarr = res.data.risk_eval_trade_data_range.counts;
-        // let arrmaxs = this.arrMax(countarr);
-        this.chartstable2.yaxis = Math.max(...countarr) * 2;
-        let counts = {
-          name: "出单量",
-          type: "line",
-          data: res.data.risk_eval_trade_data_range.counts,
-          label: {
-            normal: {
-              show: true,
-              position: "top",
-              formatter: function (params) {
-                if (params.value > 0) {
-                  return params.value;
-                } else {
-                  return "";
-                }
+        this.echars5 = this.$echarts.init(document.getElementById("echars5"));
+        let currentMaxVal =
+          Math.max(...res.data.risk_eval_trade_data_range.counts) * 2;
+        this.echars5.setOption({
+          title: {
+            text: "出单量",
+          },
+          tooltip: {
+            trigger: "axis",
+          },
+          color: ["#F4AA43", "#409EFF"],
+          legend: {
+            data: ["出单量", "出单保费金额"],
+            right: 30,
+          },
+          xAxis: {
+            type: "category",
+            data: res.data.risk_eval_trade_data_range.dates,
+          },
+          yAxis: [
+            {
+              type: "value",
+              name: "出单量",
+              min: 0,
+              max: currentMaxVal ? currentMaxVal : 10,
+              minInterval: "1",
+              splitLine: {
+                //网格线
+                show: true,
               },
             },
-          },
-        };
-        let amounts = {
-          name: "保费金额",
-          type: "line",
-          itemStyle: {
-            borderColor: "transparent",
-            color: "transparent",
-          },
-          data: res.data.risk_eval_trade_data_range.amounts,
-        };
+            {
+              type: "value",
+              name: "出单保费金额",
+              min: 0,
+              max: Math.max(...res.data.risk_eval_trade_data_range.amounts)
+                ? Math.max(...res.data.risk_eval_trade_data_range.amounts) + 1000
+                : 1000,
+              splitLine: {
+                //网格线
+                show: false,
+              },
+            },
+          ],
+          series: [
+            {
+              name: "出单量",
+              type: "line",
+              data: res.data.risk_eval_trade_data_range.counts,
+            },
+            {
+              name: "出单保费金额",
+              type: "bar",
+              yAxisIndex: 1,
+              data: res.data.risk_eval_trade_data_range.amounts,
+              label: {
+                normal: {
+                  show: true, //显示数值
+                  position: "top", // 位置设为top
+                  formatter: function (params) {
+                    if (params.value > 0) {
+                      return params.value;
+                    } else {
+                      return "";
+                    }
+                  },
+                  textStyle: {
+                    color: "#000",
+                  }, //设置数值颜色
+                },
+              },
+            },
+          ],
+        });
+        // this.chartstable2.nameArray = res.data.risk_eval_trade_data_range.dates;
 
-        this.chartsData2.push(counts);
-        this.chartsData2.push(amounts);
+        // this.chartstable2.legends = ["出单量"];
+        // let countarr = res.data.risk_eval_trade_data_range.counts;
+        // let arrmaxs = this.arrMax(countarr);
+        // this.chartstable2.yaxis = Math.max(...countarr) * 2;
+        // let counts = {
+        //   name: "出单量",
+        //   type: "line",
+        //   data: res.data.risk_eval_trade_data_range.counts,
+        //   label: {
+        //     normal: {
+        //       show: true,
+        //       position: "top",
+        //       formatter: function (params) {
+        //         if (params.value > 0) {
+        //           return params.value;
+        //         } else {
+        //           return "";
+        //         }
+        //       },
+        //     },
+        //   },
+        // };
+        // let amounts = {
+        //   name: "保费金额",
+        //   type: "line",
+        //   itemStyle: {
+        //     borderColor: "transparent",
+        //     color: "transparent",
+        //   },
+        //   data: res.data.risk_eval_trade_data_range.amounts,
+        // };
+
+        // this.chartsData2.push(counts);
+        // this.chartsData2.push(amounts);
 
         // 排名
         this.usert = res.data.mini_app_user_top10;
@@ -536,6 +822,12 @@ export default {
         this.usert.map((item) => {
           item.totalpercent = (item.total / (painum + 20)) * 100;
         });
+
+        this.mayusert = res.data.mini_app_user_top10_year;
+        let postds = this.mayusert[0].total;
+        this.mayusert.map((item)=>{
+          item.totalpercent = (item.total / (postds + 20)) * 100;
+        })
       });
     },
   },
@@ -568,11 +860,10 @@ export default {
   display: flex;
 }
 .care {
-  margin-top: 20px;
-  margin-left: 20px;
+  margin-left: 12px;
 }
-.admincare{
-  margin-left: 20px;
+.admincare {
+  margin-left: 12px;
 }
 // 排名
 .paiming {

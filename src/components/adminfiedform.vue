@@ -1449,6 +1449,7 @@ export default {
       }
       Insuredtype(dats).then((res)=>{
         if(res.code == 200){
+          this.reviewapi()
           this.$message({
               showClose: true,
               dangerouslyUseHTMLString: true,
@@ -1488,6 +1489,7 @@ export default {
       this.cty = dat.case_type;
       this.insured_type = dat.insured_type;
       this.insuredtypeid = dat.insured_type;
+      // console.log('2222',dat.insured_type);
 
       if (dat.preserv_amount) {
         this.from.input = dat.preserv_amount;

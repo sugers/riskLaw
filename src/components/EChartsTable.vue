@@ -11,9 +11,9 @@ export default {
       Myechart: null,
     };
   },
-  beforeDestroy() {
-    this.drawLinde.dispose();
-  },
+  // beforeDestroy() {
+  //   this.drawLinde.dispose();
+  // },
   watch: {
     data: {
       handler(value) {
@@ -41,7 +41,7 @@ export default {
       let Myechart = this.$echarts.init(document.getElementById(this.id));
       
       // Myechart.clear();
-      if (this.id == "echars1") {
+      if (this.id == "echars1" || this.id == 'submit') {
         Myechart.off("legendselectchanged");
         // 图例开关的行为只会触发 legendselectchanged 事件
         Myechart.on("legendselectchanged", function (params) {

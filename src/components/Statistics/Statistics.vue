@@ -313,6 +313,12 @@
                     };
                     GetstaticsPlateForm(data).then((res) => {
                         if (res.code == 200) {
+                            if(!res.data.list){
+                                this.isdone = false;
+                                this.tableData = [];
+                                this.total = 0;
+                                return;
+                            }
                             this.isdone = false;
                             this.tableData = res.data.list;
                             this.total = res.data.total;

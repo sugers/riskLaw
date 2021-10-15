@@ -196,6 +196,12 @@
                 };
                 GetlaywerWork(data).then((res) => {
                     if (res.code == 200) {
+                        if( !res.data.list){
+                            this.tableData = [];
+                            this.total = 0;
+                            this.isdone = false;
+                            return
+                        }
                         this.tableData = res.data.list;
                         this.total = res.data.total;
                         this.isdone = false

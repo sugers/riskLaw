@@ -205,7 +205,12 @@
                 }
                 GetlawyerList(data).then((res) => {
                     if (res.code == 200) {
-
+                        if(!res.data.list){
+                            this.isdone = false;
+                            this.tableData = [];
+                            this.total =0;
+                            return
+                        }
                         if (res.data.list) {
                             res.data.list.forEach((item) => {
                                 provinces.map((provinItem) => {

@@ -134,12 +134,13 @@
           name="file"
           :show-file-list="false"
           :on-success="batchsheetxlxsfile"
+          :before-upload="beforeUpload"
+          :on-error="onerror"
           action="https://wx.haobofalv.com/api/v1/admin/review/case/batch_modify_trade"
           :headers="access"
           class="andfinance"
         >
           <el-button
-            
             type="primary"
             icon="el-icon-upload"
             >批量出单</el-button
@@ -318,12 +319,12 @@
           class="paginastyes"
           ref="paginatref"
           background
-          layout="total,prev,sizes, pager, next"
+          layout="total,sizes,prev,pager, next"
           @size-change="handsizetext"
           @current-change="handsizepage"
           :current-page="currentPage"
-          :page-sizes="[10, 20, 30, 40, 50]"
           :page-size="pagesize"
+          :page-sizes="[30, 40, 50]"
           :total="total"
         >
         </el-pagination>
@@ -390,7 +391,7 @@ export default {
       multipleSelection: [],
       radiocyt: "1",
       total: null,
-      pagesize: 10, //每页的个数
+      pagesize: 30, //每页的个数
       currentPage: 1, //当前页数
 
       riskevalid: "",
@@ -428,8 +429,7 @@ export default {
     // 权限
     var userinfor = JSON.parse(localStorage.getItem("userinfor"));
     this.roleID = userinfor.roleID;
-
-    this.radiochange();
+    
     this.casetypess();
     this.$root.$on("radio", this.radiochange);
 
@@ -447,6 +447,9 @@ export default {
   },
   mounted() {
     this.admniccorapi();
+    setTimeout(()=>{
+      this.usertableapi(this.currentPage,this.suosuo,this.provincesid);
+    },800)
     // this.$nextTick(function () {
     //   this.tableheight =
     //     window.innerHeight -
@@ -636,6 +639,32 @@ export default {
     // 批量出单
     batchsheetxlxsfile(response){
       console.log('批量出单',response);
+      if (response.code == 200) {
+        this.$message({
+          type: "success",
+          message: "修改成功",
+        })
+      }
+    },
+    beforeUpload(file){
+      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const extension = testmsg === "xlsx";
+      if (!extension ) {
+        this.$message({
+          message: "上传文件只能是.xlsx格式！",
+          type: "warning",
+        });
+      }
+      return extension;
+    },
+    onerror(err){
+      // console.log('222',err);
+      if (err) {
+        this.$message({
+          message: "批量修改出单失败;xlsx模版格式不正确",
+          type: "error",
+        });
+      }
     },
     // 查找保险公司
     admniccorapi() {
@@ -800,18 +829,18 @@ export default {
     },
     radiochange() {
       this.userreivws = "";
-      if (this.currendRole != 2001) {
-        this.suosuo = "";
-        this.provincesid = "";
-      }
+      // if (this.currendRole != 2001) {
+      //   this.suosuo = "";
+      //   this.provincesid = "";
+      // }
       // this.currentPage = 1
       this.radclick = true;
       let page = 1;
       this.currentPage = page;
-      this.usertableapi(page);
+      this.usertableapi(page,this.suosuo,this.provincesid);
     },
     // 表格数据api
-    usertableapi(ind) {
+    usertableapi(ind,suosuo,provincesid) {
       this.isdone = true;
       var data = {
         status:
@@ -822,8 +851,8 @@ export default {
         is_add_data: this.radiocyt == 4 ? 1 : "",
         is_law_opinion: this.radiocyt == 3 ? 1 : "",
         reviewer: this.userreivws,
-        icco_id: this.suosuo,
-        area_id: this.provincesid,
+        icco_id: suosuo? suosuo : this.suosuo,
+        area_id: provincesid ? provincesid : this.provincesid,
         created_at: this.userDateTime[0],
         ended_at: this.userDateTime[1],
         limit: this.pagesize,

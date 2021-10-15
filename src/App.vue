@@ -19,20 +19,20 @@ export default {
     return{
       websoce: null,
       // reconnectTime:'',
-
+      // ping: 0,
       lockReconnect: false, // 建立连接
-      timeout: 40000, // 30秒心跳一次
+      timeout:30000, // 30秒心跳一次
       timeoutobj: null, // 心跳倒计时
       serverTimeroutobj: null, // 
       timeoutunm: null, // 重链
     }
     
   },
-  beforeDestory(){
-    this.websoce.close();
-    clearTimeout(this.timeoutobj);
-    clearTimeout(this.serverTimeroutobj);
-  },
+  // beforeDestory(){
+  //   this.websoce.close();
+  //   clearTimeout(this.timeoutobj);
+  //   clearTimeout(this.serverTimeroutobj);
+  // },
   created() {
     var access_token = window.localStorage.getItem("access_token");
     if(access_token){
@@ -80,8 +80,8 @@ export default {
       //   this.reconnectTime = 0;
       // }
     },
-    websocketonerror(e) {
-      console.log('出现错误',e);
+    websocketonerror() {
+      // console.log('出现错误',e);
       // 开启链接
       this.reconnect();
       // this.wsHeartflag = false;
@@ -95,10 +95,10 @@ export default {
       // }
     },
     websocketonmessage(a) {
-      var received_msg = a && JSON.parse(a.data);
       // console.log('111', a);
+      var received_msg = a.data && JSON.parse(a.data);
       if(received_msg.code === 200){
-        
+        // console.log('有订单');
         this.$message({
           showClose: true,
           message: "您有新的订单，请查收！",
@@ -116,10 +116,16 @@ export default {
         this.websoce.close();
       }
       // this.reset();
-      
+      // if (received_msg != 'pong') {
+      //   this.ping++;
+      //   if (this.ping == 3) {
+      //     this.reset()
+      //   }
+      // }
+      // console.log('ping',this.ping);
     },
     websocketclose() {
-      // console.log('关闭了');
+      // console.log('关闭了',a);
       this.reconnect();
       // this.wsHeartflag = false;
       // this.websoce && this.websoce.close && this.websoce.close();
@@ -133,9 +139,11 @@ export default {
     // 重新连接
     reconnect(){
       let _that = this
+      // console.log('来了',_that.lockReconnect);
       if (_that.lockReconnect) {
         return
       }
+      
       _that.lockReconnect = true;
       // 延迟链接
       _that.timeoutunm && clearTimeout(_that.timeoutunm);
@@ -152,20 +160,16 @@ export default {
         // 这里发送一个心跳，后端收到返回一个心跳
         if (that.websoce.readyState === that.websoce.OPEN) {
           
-          that.websoce.send(JSON.stringify({
-            data:{
-              messageType: 'heartchean'
-            }
-          }))
+          that.websoce.send("ping")
           // console.log('发送成功');
           
         }else{
           that.reconnect()
         }
-        that.serverTimeroutobj = setTimeout(function(){
-          // 超时关闭
-          that .websoce.close();
-        },that.timeout)
+        // that.serverTimeroutobj = setTimeout(function(){
+        //   // 超时关闭
+        //   that .websoce.close();
+        // },that.timeout)
       },that.timeout)
       
     },
@@ -187,14 +191,9 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  /* background-color: #f8f8f8; */
 }
 #app {
-  /* width: 100%;s */
-  /* font-family: SourceHanSansSC-regular; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  /* color: #2c3e50; */
 }
 </style>

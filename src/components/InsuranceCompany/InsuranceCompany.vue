@@ -273,7 +273,7 @@
                 isdone: true,
                 ischildshow: true,
                 page: 1,
-                currentPage:1,
+                currentPage: 1,
                 limit: 30,
                 total: 0,
                 tableData: [],
@@ -297,7 +297,7 @@
                 data.list.map((item) => {
                     idArr.push(item.ID)
                 })
-                let datas= {
+                let datas = {
                     icco_ids: idArr
                 }
                 PostinsuranceList(datas).then((res) => {
@@ -313,7 +313,7 @@
                 })
                 let datas = {
                     icco_id: data.list[0].icco_id,
-                    area_ids:idArr
+                    area_ids: idArr
                 }
                 PosinsuranceAreaList(datas).then((res) => {
                     if (res.code == 200) {
@@ -429,6 +429,12 @@
                 that.isdone = true;
                 GetinsuranceList(data).then((res) => {
                     if (res.code == 200) {
+                        if (!res.data.list) {
+                            this.total = 0;
+                            that.isdone = false;
+                            that.tableData = [];
+                            return;
+                        }
                         let result = res.data.list
                         this.total = res.data.total
                         result.map((item) => {
@@ -522,8 +528,8 @@
                 console.log(val)
             },
             searchClick() {
-                this.page=1;
-                this.currentPage=1;
+                this.page = 1;
+                this.currentPage = 1;
                 this.limit = 30;
                 this.getinsurance(this.statuVal, this.keyInput, 1, 30);
             },
