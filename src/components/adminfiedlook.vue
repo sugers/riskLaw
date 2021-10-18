@@ -78,7 +78,7 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <div style="padding-left: 50px">
+            <div style="padding-left: 50px" class="attachmentDiv">
               <div class="policy">
                 <span>投保人附件:</span>
                 <!-- <span class="policy_btn">
@@ -270,7 +270,7 @@
                 </div>
               </el-image>
             </div> -->
-            <div style="padding-left: 50px">
+            <div style="padding-left: 50px" class="attachmentDiv">
               <div class="policy">
                 <span>投保人附件:</span>
                 <!-- <span class="policy_btn">
@@ -451,7 +451,7 @@
                 </div>
               </el-image>
             </div> -->
-            <div style="padding-left: 50px">
+            <div style="padding-left: 50px" class="attachmentDiv">
               <div class="policy">
                 <span>起诉状附件:</span>
                 <span class="policy_btn" v-if="plaintifftf">
@@ -600,7 +600,7 @@
                 </div>
               </el-image>
             </div> -->
-            <div style="padding-left: 50px">
+            <div style="padding-left: 50px" class="attachmentDiv">
               <div class="policy">
                 <span>保全申请书附件:</span>
                 <span class="policy_btn" v-if="preservationtf">

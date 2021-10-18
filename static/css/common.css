@@ -12,9 +12,11 @@
 .childTable .el-table__body tr.current-row>td {
     background-color: #e1e7f0 !important;
 }
+
 .is-dragging {
     pointer-events: none;
 }
+
 /* .childTable .el-table tbody tr:hover .hover-row {
 background-color: #ffffff !important;
 } */
@@ -66,9 +68,11 @@ background-color: #ffffff !important;
     margin: 0 4px;
     width: 6%;
 }
-.el-table__empty-block{
-    width: 100% !important  ;
+
+.el-table__empty-block {
+    width: 100% !important;
 }
+
 .grayColor {
     font-size: 14px;
     color: #555555;
@@ -387,8 +391,274 @@ background-color: #ffffff !important;
     }
 }
 
+.navmask {
+    position: static;
+}
+
 .demo-spin-col {
     height: 100px;
     position: relative;
     border: 1px solid #eee;
+}
+
+.sideNav {
+    position: static;
+    z-index: inherit;
+}
+
+.aunif .el-row {
+    display: block;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 1200px) {
+    .admin-login .login .gin-from {
+        justify-content: center !important;
+    }
+
+    .sideNav {
+        position: fixed;
+        z-index: 99;
+    }
+
+    .navmask {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 98;
+    }
+
+    /* .el-aside {
+        display: none;
+    } */
+
+    .menuSwitch {
+        display: block !important;
+        font-size: 24px;
+        flex: 1;
+    }
+
+    .menuSwitch i {
+        padding: 10px;
+    }
+
+    .user_data span,
+    .user_data .radios_sapn,
+    .user_data input,
+    .user_data button,
+    .user_data_btn .user_btnes button,
+    .cell {
+        font-size: 12px !important;
+    }
+
+    .usertable .paginat {
+        left: 0 !important;
+        right: 0 !important;
+    }
+}
+
+@media screen and (max-width: 1075px) {
+    .aunif .el-row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .attachmentDiv {
+        padding-left: 0 !important;
+        padding-top: 50px;
+    }
+}
+
+@media screen and (max-width: 790px) {
+    .usersteps {
+        min-width: 80px;
+    }
+
+    .uesestepa .uesrone,
+    .steps .steps_txt,
+    .uesestepa .uesrone .usenumber {
+        font-size: 12px
+    }
+
+    .steps .steps_border {
+        width: 80px;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .logo {
+        display: none !important;
+    }
+
+
+}
+
+@media screen and (max-width: 625px) {
+    .usersteps {
+        min-width: 30px;
+    }
+
+    .uesestepa .uesrone,
+    .steps .steps_txt,
+    .uesestepa .uesrone .usenumber {
+        font-size: 12px
+    }
+
+    .steps .steps_border {
+        width: 30px;
+    }
+
+    .steps_box {
+        padding-right: 0;
+    }
+
+    .aunif .fromrevie .grid-content {
+        font-size: 14px !important;
+    }
+
+    .aunif .admreviewerss .martexts p {
+        width: inherit;
+        min-width: 120px !important;
+        font-size: 14px !important;
+    }
+
+    .aunif .admreviewerss .martexts span {
+        width: 230px !important;
+        font-size: 15px !important;
+    }
+
+
+}
+
+@media screen and (max-width: 550px) {
+
+    /* .user_data .el-input__inner {
+            width: 190px !important;
+        }
+        .usertable .radios .el-select{
+             width: 190px !important;
+        } */
+    .el-radio-button__inner {
+        padding: 8px 12px !important;
+    }
+
+    .user_data span,
+    .user_data .radios_sapn,
+    .user_data input,
+    .user_data button,
+    .cell {
+        font-size: 10px !important;
+    }
+
+    .usertable .radios {
+        margin: 0 0 20px 0px !important;
+    }
+
+    .usertable .radios .radios_sapn {
+        width: 75px !important;
+    }
+
+    .el-radio-button :last-child .el-radio-button__inner {
+        border-left: 1px solid #DCDFE6;
+    }
+
+    .sideNav {
+        width: 200px !important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .el-radio-button__inner {
+        padding: 8px 8px !important;
+    }
+
+    .user_data .el-input__inner {
+        width: 215px !important;
+    }
+
+    .usertable .radios .el-select {
+        width: 215px !important;
+    }
+
+    .user_data .iniconstatur .el-input__inner {
+        padding: 0 !important;
+        width: 215px !important;
+    }
+
+    .usertable .radios .boxxinput .el-input__inner {
+        width: 215px !important
+    }
+
+    .el-radio-button :last-child .el-radio-button__inner {
+        border-left: 1px solid #DCDFE6;
+    }
+
+    .aunif .fromrevie .grid-content {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .martexts p {
+        width: inherit;
+        min-width: 120px !important;
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .martexts span {
+        width: 220px !important;
+        font-size: 13px !important;
+    }
+        .attachmentDiv span,
+        .attachmentDiv p,
+        .attachmentDiv a {
+            font-size: 12px;
+        }
+
+        .aunif .admreviewerss .tyetext .textwen .btntext .shan {
+            font-size: 12px;
+        }
+
+        .aunif .admreviewerss .tyetext .textwen .ptextlei,
+        .aunif .admreviewerss .tyetext .textwen .ptextleis {
+            max-width: 200px !important;
+        }
+
+        .policy .policy_btn .policy_bton {
+            font-size: 12px !important;
+            padding: 5px 8px !important;
+        }
+
+}
+
+@media screen and (max-width: 330px) {
+    .el-radio-button__inner {
+        padding: 8px 3px !important;
+    }
+
+    .usertable .paginat .paginastyes .el-pagination__sizes .el-select .el-input .el-input__inner {
+        width: 80px !important;
+    }
+
+    .el-pagination.is-background .btn-next,
+    .el-pagination.is-background .btn-prev,
+    .el-pagination.is-background .el-pager li {
+        margin: 0 2px !important;
+    }
+
+    .aunif .fromrevie .grid-content {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .martexts p {
+        width: inherit;
+        min-width: 120px !important;
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .martexts span {
+        width: 170px !important;
+        font-size: 13px !important;
+    }
 }

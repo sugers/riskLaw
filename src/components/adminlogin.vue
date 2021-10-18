@@ -206,7 +206,7 @@ export default {
     width: 54.26rem;
     height: 37.5rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     .logo {
       width: 22.25rem;
@@ -331,4 +331,6 @@ export default {
     }
   }
 }
+
+
 </style>
