@@ -100,22 +100,7 @@
             noresize: Boolean,
         },
         created() {
-            var ua = window.navigator.userAgent,
-                agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPod', 'iPad'],
-                isPC = true;
-            for (var i = 0, len = agents.length; i < len; i++) {
-                if (ua.indexOf(agents[i]) > 0) {
-                    isPC = false;
-                    break;
-                }
-            }
-            if (!isPC) {
-                this.isphone = true;
-                document.body.style.overflow='scroll';
-            }else{
-                document.body.style.overflow='';
-                document.body.style.overflowX='hidden';
-            }
+
 
             var userinfor = JSON.parse(localStorage.getItem("userinfor"));
 
@@ -138,6 +123,24 @@
             });
         },
         methods: {},
+        mounted() {
+            var ua = window.navigator.userAgent,
+                agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPod', 'iPad'],
+                isPC = true;
+            for (var i = 0, len = agents.length; i < len; i++) {
+                if (ua.indexOf(agents[i]) > 0) {
+                    isPC = false;
+                    break;
+                }
+            }
+            if (!isPC) {
+                this.isphone = true;
+                document.body.style.overflow = 'scroll';
+            } else {
+                document.body.style.overflow = '';
+                document.body.style.overflowX = 'hidden';
+            }
+        }
 
     };
 </script>

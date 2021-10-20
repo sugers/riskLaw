@@ -126,7 +126,55 @@
                 <el-table-column prop="review_time" label="当前处理时间" min-width="150" align="center">
                 </el-table-column>
 
-                <el-table-column fixed="right" prop="stage" label="操作" min-width="160">
+                <el-table-column v-if="!isphone" fixed="right" prop="stage" label="操作" min-width="160">
+                    <template slot-scope="scope">
+                        <el-button @click.prevent="deleteRowadmin(scope.row)" type="text" size="small" class="btnstab"
+                            style="background-color: rgb(64, 137, 229)">
+                            详情
+                        </el-button>
+                        <!-- 1.快速反馈 2.填写详细信息 3.上级复审 4.出单确认 -->
+                        <el-button v-if="
+                scope.row.stage == 1 &&
+                scope.row.review_result != 3 &&
+                (roleID == 1001 || roleID == 1003 || roleID == 1004)
+              " @click.prevent="operation(scope.row)" type="text" size="small" class="btnstab"
+                            style="background-color: rgb(244, 181, 13)">
+                            快速反馈
+                        </el-button>
+                        <el-button v-if="
+                scope.row.stage == 2 &&
+                scope.row.review_result != 3 &&
+                (roleID == 1001 || roleID == 1003 || roleID == 1004)
+              " @click.prevent="operation(scope.row)" type="text" size="small" class="btnstab"
+                            style="background-color: rgb(221, 24, 24)">
+                            填写信息
+                        </el-button>
+                        <el-button v-if="
+                scope.row.stage == 3 &&
+                scope.row.review_result != 3 &&
+                (roleID == 1001 || roleID == 1004)
+              " @click.prevent="operation(scope.row)" type="text" size="small" class="btnstab"
+                            style="background-color: rgb(96, 96, 236)">
+                            上级复审
+                        </el-button>
+                        <el-button v-if="
+                scope.row.stage == 4 &&
+                scope.row.review_result != 3 &&
+                scope.row.review_result != 2 &&
+                (roleID == 1001 || roleID == 1004)
+              " @click.prevent="operation(scope.row)" type="text" size="small" class="btnstab"
+                            style="background-color: rgb(52, 199, 88)">
+                            出单确认
+                        </el-button>
+                        <el-button v-if="
+                scope.row.stage == 4 && roleID == 2001 && scope.row.state != 3
+              " @click.prevent="operation(scope.row)" type="text" size="small" class="btnstab"
+                            style="background-color: rgb(52, 199, 88)">
+                            出单确认
+                        </el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column v-else prop="stage" label="操作" min-width="160">
                     <template slot-scope="scope">
                         <el-button @click.prevent="deleteRowadmin(scope.row)" type="text" size="small" class="btnstab"
                             style="background-color: rgb(64, 137, 229)">
@@ -202,7 +250,9 @@
     // 引入json
     import provinces from "../../static/js/pca-code.json";
     import "../../static/css/autdiodialog.less";
-    import { resizes} from '../../static/js/resize.js'
+    import {
+        resizes
+    } from '../../static/js/resize.js'
     import {
         Caselist,
         // Reviewcase,
@@ -274,7 +324,8 @@
                 userdownload: false,
                 currendRole: "",
                 chulir: false,
-                isshowtest:false
+                isshowtest: false,
+                isphone: false
             };
         },
         created() {
@@ -299,6 +350,18 @@
         },
         mounted() {
             resizes();
+            var ua = window.navigator.userAgent,
+                agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPod', 'iPad'],
+                isPC = true;
+            for (var i = 0, len = agents.length; i < len; i++) {
+                if (ua.indexOf(agents[i]) > 0) {
+                    isPC = false;
+                    break;
+                }
+            }
+            if (!isPC) {
+                this.isphone = true;
+            }
             this.$root.$emit('changeNav');
             this.admniccorapi();
             setTimeout(() => {
@@ -704,8 +767,7 @@
                 this.isdone = true;
                 var data = {
                     status: this.radiocyt == 1 || this.radiocyt == 4 || this.radiocyt == 3 ?
-                        "" :
-                        this.radiocyt,
+                        "" : this.radiocyt,
                     review_stage: this.radiocyt == 1 ? this.radiocyt : "",
                     is_add_data: this.radiocyt == 4 ? 1 : "",
                     is_law_opinion: this.radiocyt == 3 ? 1 : "",

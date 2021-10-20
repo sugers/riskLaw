@@ -2,13 +2,15 @@
     background-color: #ffffff !important;
 } */
 * {
-    touch-action:auto;
+    touch-action: auto;
 }
+
 body {
     -webkit-overflow-scrolling: touch;
-    
-    
+
+
 }
+
 .childTable .el-table--enable-row-hover .el-table__body tr:hover>td {
     background-color: #212e3e !important;
 }
@@ -440,14 +442,17 @@ background-color: #ffffff !important;
 .flexphoneshow .el-image {
     width: 400px !important;
 }
+
 .stepxy {
     width: 1200px !important;
     margin: 0 auto !important;
 }
+
 .user_data_btn .user_btnes .andfinance {
     margin-top: 0px !important;
     margin-left: 20px !important;
 }
+
 @media screen and (max-width: 1200px) {
     .admin-login .login .gin-from {
         justify-content: center !important;
@@ -518,11 +523,18 @@ background-color: #ffffff !important;
     }
 }
 
+@media screen and (max-width: 960px) {
+    .shendialog .el-dialog__body .headestpage .rows .instaheades .headeditList .headlistRight .inputpass {
+        width: 200px !important;
+    }
+}
+
 @media screen and (max-width: 790px) {
-    .stepxy{
+    .stepxy {
         width: 800px !important;
         margin: 0 !important;
     }
+
     .usersteps {
         /* min-width: 160px; */
     }
@@ -540,22 +552,31 @@ background-color: #ffffff !important;
 }
 
 @media screen and (max-width: 720px) {
-     .stepxy {
-         width: 800px !important;
-         margin: 0 !important;
-     }
+    .stepxy {
+        width: 800px !important;
+        margin: 0 !important;
+    }
+
     .logo {
         display: none !important;
     }
 
+    .shendialog .el-dialog__body .headestpage .rows .instaheades .headeditList .headlistRight .inputpass {
+        width: 200px !important;
+    }
+
+    .shendialog .el-dialog__body .headestpage .rows .instaheades .headeditList .headlistLeft {
+        width: 60px !important;
+    }
 
 }
 
 @media screen and (max-width: 680px) {
-     .stepxy {
-         width: 700px !important;
-         margin: 0 !important;
-     }
+    .stepxy {
+        width: 700px !important;
+        margin: 0 !important;
+    }
+
     .logo {
         display: none !important;
     }
@@ -567,13 +588,25 @@ background-color: #ffffff !important;
         width: 440px !important;
     }
 
+    .shendialog .el-dialog {
+        width: 45% !important;
+    }
+
+    .auditmartexts .el-button {
+        font-size: 14px !;
+    }
 }
 
 @media screen and (max-width: 625px) {
-     .stepxy {
-         width: 630px !important;
-         margin: 0 !important;
-     }
+    .shendialog .el-dialog__body .headestpage .rows .instaheades .headeditList .headlistRight .inputpass {
+        width: 160px !important;
+    }
+
+    .stepxy {
+        width: 630px !important;
+        margin: 0 !important;
+    }
+
     .usersteps {
         /* min-width: 30px; */
     }
@@ -634,10 +667,15 @@ background-color: #ffffff !important;
 }
 
 @media screen and (max-width: 550px) {
-     .stepxy {
-         width: 600px !important;
-         margin: 0 !important;
-     }
+    .shendialog .el-dialog {
+        width: 80% !important;
+    }
+
+    .stepxy {
+        width: 600px !important;
+        margin: 0 !important;
+    }
+
     .el-date-range-picker {
         width: 400px !important;
     }
@@ -761,17 +799,27 @@ background-color: #ffffff !important;
 
 
 }
-@media screen and (max-width: 430px){
-.user_data_btn .user_btnes .andfinance{
-    margin-top: 20px !important;
-    margin-left: 0 !important;
+
+@media screen and (max-width: 430px) {
+    .user_data_btn .user_btnes .andfinance {
+        margin-top: 20px !important;
+        margin-left: 0 !important;
+    }
+
+    .aunif .admreviewerss .tyetext .textwen .ptextlei {
+        max-width: 200px !important;
+    }
+    .aunif .admreviewerss .marwers .listqishu .imgs .ad_imgs_txt{
+        max-width:160px !important;
+    }
 }
-}
+
 @media screen and (max-width: 400px) {
-     .stepxy {
-         width: 400px !important;
-         margin: 0 !important;
-     }
+    .stepxy {
+        width: 400px !important;
+        margin: 0 !important;
+    }
+
     .el-date-range-picker {
         width: 375px !important;
     }
@@ -822,13 +870,17 @@ background-color: #ffffff !important;
         font-size: 12px;
     }
 
+    .aunif .admreviewerss .tyetext .textwen .btntext {
+        width: 120px !important;
+    }
+
     .aunif .admreviewerss .tyetext .textwen .btntext .shan {
         font-size: 12px;
     }
 
     .aunif .admreviewerss .tyetext .textwen .ptextlei,
     .aunif .admreviewerss .tyetext .textwen .ptextleis {
-        max-width: 200px !important;
+        max-width: 160px !important;
     }
 
     .aunif .admreviewerss .tyetext .textwen .ptextleis {
@@ -983,27 +1035,31 @@ background-color: #ffffff !important;
     .aunif .admreviewerss .tyetext .textwen .btntext .shan {
         font-size: 12px !important;
     }
-    .el-notification{
+
+    .el-notification {
         width: 230px !important;
     }
+
     .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-6613e827]:link,
     .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-6613e827]:visited,
     .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-6613e827]:hover,
-    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-6613e827]:active{
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-6613e827]:active {
         font-size: 12px !important;
     }
+
     .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-6613e827]:link,
     .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-6613e827]:visited,
     .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-6613e827]:hover,
-    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-6613e827]:active{
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-6613e827]:active {
         font-size: 12px !important;
     }
 }
 
 @media screen and (max-width: 340px) {
-    .admin-login .login .gin-from .loging{
+    .admin-login .login .gin-from .loging {
         width: 19.08rem !important;
     }
+
     .el-radio-button__inner {
         padding: 8px 3px !important;
     }
@@ -1041,6 +1097,7 @@ background-color: #ffffff !important;
     .aunif .admreviewerss .marwers .listqishu .imgs {
         width: 220px !important;
     }
+
     .aunif .admreviewerss .el-form,
     .aunif .ttadminiewrss .el-form {
         width: 320px !important;

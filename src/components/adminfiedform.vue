@@ -1,10 +1,10 @@
 <template>
-  <!-- <el-scrollbar
+  <el-scrollbar
     style="height: 100vh"
     :native="false"
     :noresize="false"
     ref="myscrollbar"
-  > -->
+  >
     <div class="aunif">
       <div></div>
       <usersteps :csteps="csteps" :cstext="cstext" :number="number" />
@@ -1193,7 +1193,7 @@
         </div>
       </el-dialog>
     </div>
-  <!-- </el-scrollbar> -->
+  </el-scrollbar>
 </template>
 
 <script>
