@@ -1,8 +1,8 @@
 <template>
     <div class="hello">
         <el-container style="height: 100vh">
-            <div v-if="isshowNav" class="navmask" @click="maskClick"></div>
-            <el-aside class="sideNav" v-if="isshowNav" width="230px" style="background-color: rgb(25, 26, 35)">
+            <div class="navmask" @click="maskClick"></div>
+            <el-aside class="sideNav" width="230px" style="background-color: rgb(25, 26, 35)">
                 <navtab></navtab>
             </el-aside>
 
@@ -17,7 +17,7 @@
                         <el-col :span="24">
                             <div class="index_tab_tou">
                                 <div class="menuSwitch">
-                                    <i class="el-icon-s-operation" @click="showNav"></i>
+                                    <i class="el-icon-s-operation iconclick" @click="showNav"></i>
                                 </div>
                                 <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
                                 <el-dropdown size="medium" :hide-timeout="800">
@@ -97,6 +97,8 @@
     // import "element-ui/lib/theme-chalk/display.css";
     // 引入less
     import "../../static/css/index.less";
+    import $ from 'jquery'
+    
     export default {
         components: {
             navtab,
@@ -104,35 +106,41 @@
         },
         data() {
             return {
-                isshowNav: false,
+                isshowicon: false,
+                isshowNavmask: false,
                 drawer: false,
                 username: "",
                 dialogheades: false,
                 // sectiom: 600
                 oldpassword: "",
                 newpassword: "",
-                screenWidth: document.body.clientWidth
             };
         },
-        created() {
-            var userinfor = JSON.parse(localStorage.getItem("userinfor"));
-            this.username = userinfor.name;
-        },
         mounted() {
-            const that = this
-            window.onresize = () => {
-                return (() => {
-                    window.screenWidth = document.body.clientWidth
-                    that.screenWidth = window.screenWidth
-                })()
+            let screenWidth = document.body.clientWidth;
+            $('.navmask').hide();
+            if (screenWidth > 1200) {
+                $('.sideNav').show()
+            } else {
+                $('.sideNav').hide()
             }
+
         },
         methods: {
             maskClick() {
-                this.isshowNav = false;
+                $('.navmask').hide();
+                $('.sideNav').hide()
             },
             showNav() {
-                this.isshowNav = !this.isshowNav;
+                $('.navmask').show();
+                let cssStype = $('.sideNav').css('display')
+                console.log(cssStype)
+                if (cssStype == 'none') {
+                    $('.sideNav').show()
+                } else {
+                    $('.sideNav').hide()
+                }
+
             },
             refusingto() {
                 if (this.oldpassword != "" && this.newpassword != "") {
@@ -183,15 +191,6 @@
                 }
             },
         },
-        watch: {
-            screenWidth(val) {
-                if(Number(val)<1200){
-                    this.isshowNav=false;
-                }else{
-                    this.isshowNav=true;
-                }
-            }
-        }
     };
 </script>
 

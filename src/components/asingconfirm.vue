@@ -18,29 +18,29 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>标题：</p>
-              <span>{{ tltle.title }}</span>
+              <span class="flexphonespan">{{ tltle.title }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>申请人：</p>
-              <span>{{ tltle.salesman ? tltle.salesman : "" }}</span>
+              <span class="flexphonespan">{{ tltle.salesman ? tltle.salesman : "" }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>联系电话：</p>
-              <span>{{ tltle.phone ? tltle.phone : "" }}</span>
+              <span class="flexphonespan">{{ tltle.phone ? tltle.phone : "" }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>案由类型：</p>
-              <span>{{ case_type }}</span>
+              <span class="flexphonespan">{{ case_type }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>保险总公司：</p>
-              <span>{{ tltle.icco_name }}</span>
+              <span class="flexphonespan">{{ tltle.icco_name }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>意向费率：</p>
-              <span>{{ tltle.intent_rate + "‰" }}</span>
+              <span class="flexphonespan">{{ tltle.intent_rate + "‰" }}</span>
             </div>
           </el-col>
         </el-row>
@@ -57,28 +57,28 @@
       <div class="admreviewerss" v-if="this.insured_type == 1">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>姓名：</p>
-              <span>{{ usernamesfz.name }}</span>
+              <span class="flexphonespan">{{ usernamesfz.name }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>性别：</p>
-              <span>{{ usernamesfz.sex }}</span>
+              <span class="flexphonespan">{{ usernamesfz.sex }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>出生日期：</p>
-              <span>{{ usernamesfz.csdate }}</span>
+              <span class="flexphonespan">{{ usernamesfz.csdate }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>身份证号码：</p>
-              <span>
-                <span>{{ usernamesfz.idcard }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ usernamesfz.idcard }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>住址：</p>
-              <span>
-                <span>{{ usernamesfz.address }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ usernamesfz.address }}</span>
               </span>
             </div>
           </el-col>
@@ -195,82 +195,82 @@
       <div class="admreviewerss" v-if="this.insured_type == 2">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>单位名称:</p>
-              <span>{{ userblicense.company }}</span>
+              <span class="flexphonespan">{{ userblicense.company }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>地址:</p>
-              <span>{{ userblicense.adress }}</span>
+              <span class="flexphonespan">{{ userblicense.adress }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>实收资本:</p>
-              <span>{{ userblicense.paidup }}</span>
+              <span class="flexphonespan">{{ userblicense.paidup }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>成立日期:</p>
-              <span>
-                <span>{{ userblicense.blishment }}</span>
+              <span class="flexphonespan" >
+                <span class="flexphonespan">{{ userblicense.blishment }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>有效期:</p>
-              <span>
-                <span>{{ userblicense.validity }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ userblicense.validity }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>法人:</p>
-              <span>
-                <span>{{ userblicense.legal }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ userblicense.legal }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>注册资本:</p>
-              <span>
-                <span>{{ userblicense.register }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ userblicense.register }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>登记机关:</p>
-              <span>
-                <span>{{ userblicense.authority }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ userblicense.authority }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>社会信用代码:</p>
-              <span>
-                <span>{{ userblicense.credit }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ userblicense.credit }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>税务登记号:</p>
-              <span>
-                <span>{{ userblicense.taxregis }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ userblicense.taxregis }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>类型:</p>
-              <span>
-                <span>{{ userblicense.deltype }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ userblicense.deltype }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>组成形式:</p>
-              <span>
-                <span>{{ userblicense.sistion }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ userblicense.sistion }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>经营范围:</p>
-              <span class="textsollc">
-                <span>{{ userblicense.business }}</span>
+              <span class="textsollc flexphonespan">
+                <span class="flexphonespan">{{ userblicense.business }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>证件编号:</p>
-              <span>
-                <span>{{ userblicense.ficate }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ userblicense.ficate }}</span>
               </span>
             </div>
           </el-col>
@@ -393,47 +393,47 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>原告姓名:</p>
-              <span>{{ complaint.plaintiff }}</span>
+              <span class="flexphonespan">{{ complaint.plaintiff }}</span>
             </div>
-            <!-- <div class="martexts">
+            <!-- <div class="martexts flexphone">
               <p>原告联系电话:</p>
               <span>{{ complaint.iffphone }}</span>
             </div> -->
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>被告姓名:</p>
-              <span>{{ complaint.fendant }}</span>
+              <span class="flexphonespan">{{ complaint.fendant }}</span>
             </div>
-            <!-- <div class="martexts">
+            <!-- <div class="martexts flexphone">
               <p>被告联系电话:</p>
               <span>{{ complaint.fendphone }}</span>
             </div> -->
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>案由类型:</p>
-              <span>{{ complaint.casetype }}</span>
+              <span class="flexphonespan">{{ complaint.casetype }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>诉讼请求:</p>
-              <span>{{ complaint.claims }}</span>
+              <span class="flexphonespan">{{ complaint.claims }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>请求金额:</p>
-              <span>{{ complaint.amount }}</span>
+              <span class="flexphonespan">{{ complaint.amount }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>事实简要陈述:</p>
-              <span>{{ complaint.ocrevidence }}</span>
+              <span class="flexphonespan">{{ complaint.ocrevidence }}</span>
             </div>
-            <!-- <div class="martexts">
+            <!-- <div class="martexts flexphone">
               <p>事实与理由:</p>
               <span>{{ complaint.reason }}</span>
             </div> -->
-            <!-- <div class="martexts">
+            <!-- <div class="martexts flexphone">
               <p>诉讼法院:</p>
               <span>{{ complaint.court }}</span>
             </div> -->
-            <!-- <div class="martexts">
+            <!-- <div class="martexts flexphone">
               <p>起诉日期:</p>
               <span>{{ complaint.suetime }}</span>
             </div> -->
@@ -562,27 +562,27 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>保全申请人:</p>
-              <span>{{ preserveForm.preservename }}</span>
+              <span class="flexphonespan">{{ preserveForm.preservename }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>保全被申请人:</p>
-              <span>{{ preserveForm.preservebei }}</span>
+              <span class="flexphonespan">{{ preserveForm.preservebei }}</span>
             </div>
-            <!-- <div class="martexts">
+            <!-- <div class="martexts flexphone">
               <p>请求事项:</p>
               <span>{{ preserveForm.presitems }}</span>
             </div> -->
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>保全金额:</p>
 
-              <span>{{ preserveForm.pramount }}</span>
+              <span class="flexphonespan">{{ preserveForm.pramount }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>保全标的:</p>
 
-              <span>{{ preserveForm.presmark }}</span>
+              <span class="flexphonespan">{{ preserveForm.presmark }}</span>
             </div>
           </el-col>
           <el-col :span="12">
@@ -837,33 +837,33 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>案件证据:</p>
-              <span>{{ internalForm.evidence }}</span>
+              <span class="flexphonespan">{{ internalForm.evidence }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>同意承保法律依据:</p>
-              <span>{{ internalForm.basis }}</span>
+              <span class="flexphonespan">{{ internalForm.basis }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>备注:</p>
-              <span>
-                <span>{{ internalForm.notes }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ internalForm.notes }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>保险保额:</p>
-              <span>
-                <span>{{ internalForm.coverage | currency }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ internalForm.coverage | currency }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>拒绝承保原因:</p>
-              <span>
-                <span>{{ internalForm.process }}</span>
+              <span class="flexphonespan">
+                <span class="flexphonespan">{{ internalForm.process }}</span>
               </span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>附件：</p>
               <el-button type="primary" @click.prevent="falbooks"
                 >查看法律意见书</el-button
@@ -882,7 +882,7 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>出单状态：</p>
               <div class="listchuadn">
                 <el-radio-group
@@ -900,7 +900,7 @@
               </div>
             </div>
             <div v-if="feedcudan == 1">
-              <div class="martexts">
+              <div class="martexts flexphone">
                 <p>保险金额：</p>
                 <span style="width: 800px" v-if="UserID != 2001">
                   <el-input
@@ -1035,7 +1035,7 @@
               </div>
             </div>
             <div v-if="feedcudan == 0">
-              <div class="martexts" v-if="UserID != 2001">
+              <div class="martexts flexphone" v-if="UserID != 2001">
                 <p>未出单原因：</p>
                 <span>
                   <el-input
@@ -1050,7 +1050,7 @@
                   ></el-input>
                 </span>
               </div>
-              <div class="martexts" v-else>
+              <div class="martexts flexphone" v-else>
                 <p>未出单原因：</p>
                 <span>
                   <el-input
@@ -1070,7 +1070,7 @@
               <el-tab-pane label="流程操作" name="first">
                 <div class="tabpane">
                   <div>
-                    <div style="margin-bottom: 10px">出单情况核实</div>
+                    <div style="margin-bottom: 10px" class="comfirmTitle">出单情况核实</div>
                     <div>
                       <el-radio-group v-model="feedback">
                         <el-radio :label="1">已核实</el-radio>
@@ -2244,7 +2244,7 @@ export default {
       display: flex;
       justify-content: flex-end;
     }
-    .martexts {
+    .martexts flexphone {
       display: flex;
       p {
         min-height: 25px;

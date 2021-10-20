@@ -1,6 +1,14 @@
 /* .childTable .el-table tbody tr:hover>td {
     background-color: #ffffff !important;
 } */
+* {
+    touch-action:auto;
+}
+body {
+    -webkit-overflow-scrolling: touch;
+    
+    
+}
 .childTable .el-table--enable-row-hover .el-table__body tr:hover>td {
     background-color: #212e3e !important;
 }
@@ -411,6 +419,35 @@ background-color: #ffffff !important;
     flex-direction: column;
 }
 
+.recommonedBottom .el-textarea {
+    width: 550px !important;
+}
+
+.recommonedBottom .el-input--medium {
+    width: 200px !important;
+}
+
+.aunif .recommonedBottom .el-form .el-input__inner {
+    width: 200px !important;
+}
+
+.flexphoneshow .el-tabs,
+.flexphoneshow .carouselDiv,
+.flexphoneshow .el-carousel {
+    width: 570px !important;
+}
+
+.flexphoneshow .el-image {
+    width: 400px !important;
+}
+.stepxy {
+    width: 1200px !important;
+    margin: 0 auto !important;
+}
+.user_data_btn .user_btnes .andfinance {
+    margin-top: 0px !important;
+    margin-left: 20px !important;
+}
 @media screen and (max-width: 1200px) {
     .admin-login .login .gin-from {
         justify-content: center !important;
@@ -458,6 +495,15 @@ background-color: #ffffff !important;
         left: 0 !important;
         right: 0 !important;
     }
+
+    .el-range-editor .el-range-input {
+        line-height: inherit !important;
+    }
+
+    .flexphoneshow {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 @media screen and (max-width: 1075px) {
@@ -473,8 +519,12 @@ background-color: #ffffff !important;
 }
 
 @media screen and (max-width: 790px) {
+    .stepxy{
+        width: 800px !important;
+        margin: 0 !important;
+    }
     .usersteps {
-        min-width: 80px;
+        /* min-width: 160px; */
     }
 
     .uesestepa .uesrone,
@@ -483,12 +533,17 @@ background-color: #ffffff !important;
         font-size: 12px
     }
 
-    .steps .steps_border {
-        width: 80px;
+    .steps .steps_border,
+    .steps .steps_der {
+        /* width: 60px; */
     }
 }
 
 @media screen and (max-width: 720px) {
+     .stepxy {
+         width: 800px !important;
+         margin: 0 !important;
+     }
     .logo {
         display: none !important;
     }
@@ -496,9 +551,31 @@ background-color: #ffffff !important;
 
 }
 
+@media screen and (max-width: 680px) {
+     .stepxy {
+         width: 700px !important;
+         margin: 0 !important;
+     }
+    .logo {
+        display: none !important;
+    }
+
+    .flexphoneshow .el-tabs,
+    .flexphoneshow .carouselDiv,
+    .flexphoneshow .el-carousel,
+    .flexphoneshow .el-image {
+        width: 440px !important;
+    }
+
+}
+
 @media screen and (max-width: 625px) {
+     .stepxy {
+         width: 630px !important;
+         margin: 0 !important;
+     }
     .usersteps {
-        min-width: 30px;
+        /* min-width: 30px; */
     }
 
     .uesestepa .uesrone,
@@ -507,8 +584,9 @@ background-color: #ffffff !important;
         font-size: 12px
     }
 
-    .steps .steps_border {
-        width: 30px;
+    .steps .steps_border,
+    .steps .steps_der {
+        /* width: 30px; */
     }
 
     .steps_box {
@@ -519,21 +597,60 @@ background-color: #ffffff !important;
         font-size: 14px !important;
     }
 
-    .aunif .admreviewerss .martexts p {
+    .aunif .admreviewerss .flexphone p {
         width: inherit;
         min-width: 120px !important;
         font-size: 14px !important;
     }
 
-    .aunif .admreviewerss .martexts span {
+    .aunif .admreviewerss .flexphone .flexphonespan {
         width: 230px !important;
-        font-size: 15px !important;
+        font-size: 13px !important;
     }
 
+    .aunif .admreviewerss .flexphone .el-radio__label {
+        font-size: 14px !important;
+    }
 
+    .aunif .admreviewerss .martexts .tianbtn {
+        margin-left: 120px !important;
+    }
+
+    .hisupervisorInput .el-input--medium .el-input__inner {
+        font-size: 13px !important;
+    }
+
+    .hisupervisorInput .el-input--medium {
+        font-size: 13px !important;
+    }
+
+    .hisupervisorInput .admreviewerss .martexts .tianbtn {
+        margin-left: 160px !important;
+    }
+
+    .flextextarea .el-textarea {
+        width: 270px !important;
+    }
 }
 
 @media screen and (max-width: 550px) {
+     .stepxy {
+         width: 600px !important;
+         margin: 0 !important;
+     }
+    .el-date-range-picker {
+        width: 400px !important;
+    }
+
+    .el-date-range-picker .el-picker-panel__body {
+        min-width: inherit !important;
+    }
+
+    .el-date-range-picker__header div {
+        font-size: 12px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
 
     /* .user_data .el-input__inner {
             width: 190px !important;
@@ -568,9 +685,97 @@ background-color: #ffffff !important;
     .sideNav {
         width: 200px !important;
     }
-}
 
+    .aunif .admreviewerss .marwers .marwers_p {
+        width: 70px !important;
+    }
+
+    .aunif .admreviewerss .marwers .listqishu .imgs .ad_imgs_txts {
+        font-size: 12px;
+        max-width: 180px !important;
+    }
+
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-8bbe4aa0]:link,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-8bbe4aa0]:visited,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-8bbe4aa0]:hover,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-8bbe4aa0]:active {
+        font-size: 12px;
+    }
+
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext .shan {
+        font-size: 12px;
+    }
+
+    .aunif .admreviewerss .el-form,
+    .aunif .ttadminiewrss .el-form {
+        width: 390px !important;
+    }
+
+    .aunif .admreviewerss .el-form .el-input__inner,
+    .aunif .admreviewerss .el-form .el-textarea__inner {
+        font-size: 13px !important;
+    }
+
+    .el-form .el-form-item .el-form-item__label {
+        font-size: 14px !important;
+    }
+
+    .el-form .el-form-item .el-form-item__content {
+        margin-left: 96px !important;
+    }
+
+    .admreviewerss .textinput .el-textarea {
+        width: 370px !important;
+    }
+
+    .flexphoneshow .el-tabs,
+    .flexphoneshow .carouselDiv,
+    .flexphoneshow .el-carousel,
+    .flexphoneshow .el-image {
+        width: 340px !important;
+    }
+
+    .flexphoneshow .el-form {
+        width: 330px !important;
+    }
+
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-a5f2ab40]:link,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-a5f2ab40]:visited,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-a5f2ab40]:hover,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-a5f2ab40]:active {
+        font-size: 12px !important;
+    }
+
+    .hisupervisorInput .flexInput .el-input--medium {
+        width: 300px !important;
+    }
+
+    .hisupervisorInput .admreviewerss .martexts .tianbtn {
+        margin-left: 98px !important;
+    }
+
+    .aunif .admreviewerss .tyetext .textwen .ptextleis {
+        max-width: 200px !important;
+        font-size: 12px !important;
+    }
+
+
+}
+@media screen and (max-width: 430px){
+.user_data_btn .user_btnes .andfinance{
+    margin-top: 20px !important;
+    margin-left: 0 !important;
+}
+}
 @media screen and (max-width: 400px) {
+     .stepxy {
+         width: 400px !important;
+         margin: 0 !important;
+     }
+    .el-date-range-picker {
+        width: 375px !important;
+    }
+
     .el-radio-button__inner {
         padding: 8px 8px !important;
     }
@@ -600,39 +805,205 @@ background-color: #ffffff !important;
         font-size: 12px !important;
     }
 
-    .aunif .admreviewerss .martexts p {
+    .aunif .admreviewerss .flexphone p {
         width: inherit;
         min-width: 120px !important;
         font-size: 12px !important;
     }
 
-    .aunif .admreviewerss .martexts span {
+    .aunif .admreviewerss .flexphone .flexphonespan {
         width: 220px !important;
         font-size: 13px !important;
     }
-        .attachmentDiv span,
-        .attachmentDiv p,
-        .attachmentDiv a {
-            font-size: 12px;
-        }
 
-        .aunif .admreviewerss .tyetext .textwen .btntext .shan {
-            font-size: 12px;
-        }
+    .attachmentDiv span,
+    .attachmentDiv p,
+    .attachmentDiv a {
+        font-size: 12px;
+    }
 
-        .aunif .admreviewerss .tyetext .textwen .ptextlei,
-        .aunif .admreviewerss .tyetext .textwen .ptextleis {
-            max-width: 200px !important;
-        }
+    .aunif .admreviewerss .tyetext .textwen .btntext .shan {
+        font-size: 12px;
+    }
 
-        .policy .policy_btn .policy_bton {
-            font-size: 12px !important;
-            padding: 5px 8px !important;
-        }
+    .aunif .admreviewerss .tyetext .textwen .ptextlei,
+    .aunif .admreviewerss .tyetext .textwen .ptextleis {
+        max-width: 200px !important;
+    }
 
+    .aunif .admreviewerss .tyetext .textwen .ptextleis {
+        max-width: 170px !important;
+        font-size: 12px !important;
+    }
+
+    .policy .policy_btn .policy_bton {
+        font-size: 12px !important;
+        padding: 5px 8px !important;
+    }
+
+    .aunif .admreviewerss .marwers .marwers_p {
+        width: 70px !important;
+    }
+
+    .flexphone .el-button {
+        font-size: 12px !important;
+        padding: 5px 8px !important;
+    }
+
+    .el-form .el-form-item .el-form-item__label {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .el-form,
+    .aunif .ttadminiewrss .el-form {
+        width: 320px !important;
+    }
+
+    .policy span {
+        font-size: 12px;
+    }
+
+    .policy .upload_btn .elupload .elupload_bton {
+        font-size: 12px !important;
+        padding: 5px 8px !important;
+    }
+
+    .aunif .admreviewerss .marwers .marwers_p {
+        font-size: 13px !important;
+    }
+
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-50148655]:link,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-50148655]:visited,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-50148655]:hover,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-50148655]:active {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .marwers .listqishu .imgs .ad_imgs_txt {
+        font-size: 12px !important;
+        max-width: 140px !important;
+    }
+
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-50148655]:link,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-50148655]:visited,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-50148655]:hover,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-50148655]:active {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .marwers .listqishu .imgs .ad_imgs_txts {
+        max-width: 150px !important;
+    }
+
+    .admreviewerss .textinput .el-textarea {
+        width: 300px !important;
+    }
+
+    .tabpane .el-radio__label {
+        font-size: 12px !important;
+    }
+
+    .el-tabs__item,
+    .nextBtn {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .el-row .shenhe .el-button {
+        font-size: 12px !important;
+        padding: 5px 8px !important;
+    }
+
+    .admreviewerss .textinput div {
+
+        font-size: 12px !important;
+    }
+
+    .flexphoneshow .el-tabs,
+    .flexphoneshow .carouselDiv,
+    .flexphoneshow .el-carousel,
+    .flexphoneshow .el-image {
+        width: 300px !important;
+    }
+
+    .flexphoneshow .el-form {
+        width: 280px !important;
+    }
+
+    .flexphoneshow .el-form .el-input__inner,
+    .flexphoneshow .el-textarea__inner {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .marwers_a .marwers_b {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .marwers_a .listqishu .el-button--mini,
+    .aunif .admreviewerss .marwers_a .listqishu .el-button--small {
+        padding: 5px 8px !important;
+    }
+
+    .comfirmTitle {
+        font-size: 12px !important;
+    }
+
+    .hisupervisorInput .flexInput .el-input--medium {
+        width: 200px !important;
+    }
+
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-40fb328e]:link,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-40fb328e]:visited,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-40fb328e]:hover,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-40fb328e]:active {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .tyetext .textwen .btntext .shan {
+        font-size: 12px !important;
+    }
+
+    .flextextarea .el-textarea {
+        width: 215px !important;
+    }
+
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-40fb328e]:link,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-40fb328e]:visited,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-40fb328e]:hover,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-40fb328e]:active {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-40fb328e]:link,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-40fb328e]:visited,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-40fb328e]:hover,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-40fb328e]:active {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .tyetext .textwen .btntext .shan {
+        font-size: 12px !important;
+    }
+    .el-notification{
+        width: 230px !important;
+    }
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-6613e827]:link,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-6613e827]:visited,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-6613e827]:hover,
+    .aunif .admreviewerss .tyetext .textwen .btntext a[data-v-6613e827]:active{
+        font-size: 12px !important;
+    }
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-6613e827]:link,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-6613e827]:visited,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-6613e827]:hover,
+    .aunif .admreviewerss .marwers .listqishu .imgs .btntext a[data-v-6613e827]:active{
+        font-size: 12px !important;
+    }
 }
 
-@media screen and (max-width: 330px) {
+@media screen and (max-width: 340px) {
+    .admin-login .login .gin-from .loging{
+        width: 19.08rem !important;
+    }
     .el-radio-button__inner {
         padding: 8px 3px !important;
     }
@@ -651,14 +1022,73 @@ background-color: #ffffff !important;
         font-size: 12px !important;
     }
 
-    .aunif .admreviewerss .martexts p {
+    .aunif .admreviewerss .flexphone p {
         width: inherit;
         min-width: 120px !important;
         font-size: 12px !important;
     }
 
-    .aunif .admreviewerss .martexts span {
+    .aunif .admreviewerss .flexphone .flexphonespan {
         width: 170px !important;
         font-size: 13px !important;
+    }
+
+    .aunif .admreviewerss .tyetext .textwen .ptextlei,
+    .aunif .admreviewerss .tyetext .textwen .ptextleis {
+        max-width: 160px !important;
+    }
+
+    .aunif .admreviewerss .marwers .listqishu .imgs {
+        width: 220px !important;
+    }
+    .aunif .admreviewerss .el-form,
+    .aunif .ttadminiewrss .el-form {
+        width: 320px !important;
+    }
+
+    .aunif .admreviewerss .tyetext .textwen .btntext {
+        width: 90px !important;
+    }
+
+    .aunif .admreviewerss .flexphone .el-radio__label {
+        font-size: 12px !important;
+    }
+
+    .aunif .admreviewerss .martexts .tianbtn {
+        margin-left: 122px !important;
+    }
+
+    .aunif .admreviewerss .el-form,
+    .aunif .ttadminiewrss .el-form {
+        width: 292px !important;
+    }
+
+
+
+    .recommonedBottom .textinput .el-textarea {
+        width: 230px !important;
+    }
+
+    .aunif .recommonedBottom .el-form .el-input__inner {
+        width: 180px !important;
+    }
+
+    .recommonedBottom .el-input--medium {
+        width: 180px !important;
+    }
+
+    .flexphoneshow .el-tabs,
+    .flexphoneshow .carouselDiv,
+    .flexphoneshow .el-carousel,
+    .flexphoneshow .el-image {
+        width: 250px !important;
+    }
+
+    .flexphoneshow .el-form {
+        width: 240px !important;
+    }
+
+    .hisupervisorInput .flexInput .el-input--medium {
+        width: 160px !important;
     }
 }

@@ -1,5 +1,4 @@
 <template>
-    <!-- <el-scrollbar style="height:81px;width:1200px"> -->
     <div class="stepxy">
         <div class="uesestepa">
             <div class="uesrone">
@@ -39,7 +38,6 @@
             </template>
         </div>
     </div>
-    <!-- </el-scrollbar> -->
 </template>
 
 <script>

@@ -1,10 +1,10 @@
 <template>
-  <el-scrollbar
+  <!-- <el-scrollbar
     style="height: 100vh"
     :native="false"
     :noresize="false"
     ref="myscrollbar"
-  >
+  > -->
     <div class="aunif">
       <div></div>
       <usersteps :csteps="csteps" :cstext="cstext" :number="number" />
@@ -18,29 +18,29 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>标题：</p>
-              <span>{{ tltle.title }}</span>
+              <span class="flexphonespan">{{ tltle.title }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>申请人：</p>
-              <span>{{ tltle.salesman ? tltle.salesman : "" }}</span>
+              <span class="flexphonespan">{{ tltle.salesman ? tltle.salesman : "" }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>联系电话：</p>
-              <span>{{ tltle.phone ? tltle.phone : "" }}</span>
+              <span class="flexphonespan">{{ tltle.phone ? tltle.phone : "" }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>案由类型：</p>
-              <span>{{ case_type }}</span>
+              <span class="flexphonespan">{{ case_type }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>保险总公司：</p>
-              <span>{{ tltle.icco_name }}</span>
+              <span class="flexphonespan">{{ tltle.icco_name }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>意向费率：</p>
-              <span>{{ tltle.intent_rate + "‰" }}</span>
+              <span class="flexphonespan">{{ tltle.intent_rate + "‰" }}</span>
             </div>
           </el-col>
         </el-row>
@@ -56,7 +56,7 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <!-- 1.自然人 2.企业 -->
               <p>类型：</p>
               <div class="listchuadn">
@@ -74,7 +74,7 @@
       <div class="admreviewerss" v-show="this.insuredtypeid == 1">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <el-button
                 class="tianbtn"
                 type="primary"
@@ -233,7 +233,7 @@
       <div class="admreviewerss" v-show="this.insuredtypeid == 2">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <el-button
                 class="tianbtn"
                 type="primary"
@@ -869,7 +869,7 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <el-form
                 ref="userblicense"
                 :model="userblicense"
@@ -896,7 +896,7 @@
           </el-col>
         </el-row>
       </div>
-      <div class="admreviewerss">
+      <div class="admreviewerss recommonedBottom">
         <el-row>
           <el-col :span="24">
             <el-tabs v-model="activeName">
@@ -970,7 +970,7 @@
           </el-row>
         </div>
         <div class="admreviewerss" v-if="filesauth">
-          <el-row>
+          <el-row class="flexphoneshow">
             <el-col :span="14">
               <el-tabs
                 style="width: 587px; margin: 0 auto"
@@ -984,6 +984,7 @@
                   >
                     <el-carousel-item>
                       <div
+                      class="carouselDiv"
                         style="width: 470px"
                         v-for="(item, inx) in indeusername"
                         :key="inx"
@@ -1051,7 +1052,7 @@
         </div>
 
         <div class="admreviewerss" v-if="filescate">
-          <el-row>
+          <el-row class="flexphoneshow">
             <el-col :span="14">
               <el-tabs
                 style="width: 587px; margin: 0 auto"
@@ -1065,6 +1066,7 @@
                   >
                     <el-carousel-item>
                       <div
+                      class="carouselDiv"
                         style="width: 470px"
                         v-for="(item, ind) in indeuserblic"
                         :key="ind"
@@ -1078,7 +1080,7 @@
                 <el-tab-pane label="图片" name="paneimg">
                   <el-carousel :autoplay="false" style="margin: 0 auto">
                     <el-carousel-item>
-                      <div style="width: 470px">
+                      <div style="width: 470px" class="carouselDiv">
                         <el-image
                           :src="srcs"
                           :preview-src-list="srcLists"
@@ -1191,7 +1193,7 @@
         </div>
       </el-dialog>
     </div>
-  </el-scrollbar>
+  <!-- </el-scrollbar> -->
 </template>
 
 <script>

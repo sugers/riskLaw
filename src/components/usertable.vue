@@ -202,7 +202,7 @@
     // 引入json
     import provinces from "../../static/js/pca-code.json";
     import "../../static/css/autdiodialog.less";
-
+    import { resizes} from '../../static/js/resize.js'
     import {
         Caselist,
         // Reviewcase,
@@ -218,7 +218,6 @@
         LawOpinions,
     } from "../api/api";
     export default {
-        components: {},
         data() {
             return {
                 access: "",
@@ -275,6 +274,7 @@
                 userdownload: false,
                 currendRole: "",
                 chulir: false,
+                isshowtest:false
             };
         },
         created() {
@@ -298,7 +298,8 @@
             },
         },
         mounted() {
-
+            resizes();
+            this.$root.$emit('changeNav');
             this.admniccorapi();
             setTimeout(() => {
                 this.usertableapi(this.currentPage, this.suosuo, this.provincesid);

@@ -5,7 +5,7 @@
     :noresize="false"
     ref="myscrollbar"
   >
-    <div class="aunif">
+    <div class="aunif hisupervisorInput">
       <usersteps :csteps="csteps" :cstext="cstext" :number="number" />
       <div class="fromrevie">
         <el-row>
@@ -17,7 +17,7 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
-            <div class="martexts">
+            <div class="martexts flexphone flexInput">
               <p>标题：</p>
               <el-input
                 style="width: 400px"
@@ -26,25 +26,25 @@
                 placeholder="请输入内容"
               ></el-input>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>申请人：</p>
-              <span>{{ tltle.salesman ? tltle.salesman : "" }}</span>
+              <span class="flexphonespan">{{ tltle.salesman ? tltle.salesman : "" }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>联系电话：</p>
-              <span>{{ tltle.phone ? tltle.phone : "" }}</span>
+              <span class="flexphonespan">{{ tltle.phone ? tltle.phone : "" }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>案由类型：</p>
-              <span>{{ case_type }}</span>
+              <span class="flexphonespan">{{ case_type }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>保险总公司：</p>
-              <span>{{ tltle.icco_name }}</span>
+              <span class="flexphonespan">{{ tltle.icco_name }}</span>
             </div>
-            <div class="martexts">
+            <div class="martexts flexphone">
               <p>意向费率：</p>
-              <span>{{ tltle.intent_rate + "‰" }}</span>
+              <span class="flexphonespan">{{ tltle.intent_rate + "‰" }}</span>
             </div>
           </el-col>
         </el-row>
@@ -61,7 +61,7 @@
       <div class="admreviewerss" v-if="this.insured_type == 1">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <el-button
                 class="tianbtn"
                 type="primary"
@@ -215,7 +215,7 @@
       <div class="admreviewerss" v-if="this.insured_type == 2">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <el-button
                 class="tianbtn"
                 type="primary"
@@ -428,10 +428,10 @@
           </el-col>
         </el-row>
       </div>
-      <div class="admreviewerss">
+      <div class="admreviewerss ">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <el-button
                 class="tianbtn"
                 type="primary"
@@ -508,7 +508,7 @@
                 ></el-input>
                 元&nbsp;&nbsp;<span style="color: red">{{ plaintrmb }}</span>
               </el-form-item>
-              <el-form-item label="事实简要陈述：" :required="true">
+              <el-form-item class="flextextarea" label="事实简要陈述：" :required="true">
                 <el-input
                   type="textarea"
                   style="width: 400px"
@@ -655,7 +655,7 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="12">
-            <div class="martexts">
+            <div class="martexts flexphone">
               <el-button
                 class="tianbtn"
                 type="primary"
@@ -969,7 +969,7 @@
           </el-col>
         </el-row>
       </div>
-      <div class="admreviewerss">
+      <div class="admreviewerss hisuperForm">
         <el-row>
           <el-col :span="24">
             <el-form
@@ -1036,7 +1036,7 @@
               <el-tab-pane label="流程操作" name="first">
                 <div class="tabpane">
                   <div>
-                    <div style="margin-bottom: 10px">选择下一步</div>
+                    <div style="margin-bottom: 10px" class="nextBtn">选择下一步</div>
                     <div>
                       <el-radio-group v-model="feedback" @change="userediochan">
                         <el-radio v-if="radioff" :label="1"
@@ -1094,7 +1094,7 @@
             </el-row>
           </div>
           <div class="admreviewerss" v-show="filesocruse">
-            <el-row>
+            <el-row class="flexphoneshow">
               <el-col :span="14">
                 <el-tabs
                   style="width: 587px; margin: 0 auto"
@@ -1107,7 +1107,7 @@
                       style="margin: 0 auto"
                     >
                       <el-carousel-item v-for="item in jpgocr" :key="item.id">
-                        <div style="width: 470px" v-html="item"></div>
+                        <div style="width: 470px" class="carouselDiv" v-html="item"></div>
                       </el-carousel-item>
                     </el-carousel>
                   </el-tab-pane>
@@ -1120,6 +1120,7 @@
                     >
                       <el-carousel-item>
                         <div
+                        class="carouselDiv"
                           style="width: 470px"
                           v-for="(item, ind) in lasrcs"
                           :key="ind"
@@ -1235,7 +1236,7 @@
           </div>
 
           <div class="admreviewerss" v-show="filesparese">
-            <el-row>
+            <el-row class="flexphoneshow">
               <el-col :span="14">
                 <el-tabs
                   style="width: 587px; margin: 0 auto"
@@ -1251,7 +1252,7 @@
                         v-for="(item, ind) in ocrprease"
                         :key="ind"
                       >
-                        <div v-html="item"></div>
+                        <div v-html="item" class="carouselDiv"></div>
                       </el-carousel-item>
                     </el-carousel>
                   </el-tab-pane>
@@ -1263,7 +1264,7 @@
                       style="margin: 0 auto"
                     >
                       <el-carousel-item>
-                        <div v-for="(item, index) in baosrcs" :key="index">
+                        <div class="carouselDiv" v-for="(item, index) in baosrcs" :key="index">
                           <el-image :src="item"></el-image>
                         </div>
                       </el-carousel-item>
@@ -1323,13 +1324,14 @@
           </div>
           <!-- 身份证 -->
           <div class="admreviewerss" v-show="filesusers">
-            <el-row>
+            <el-row class="flexphoneshow">
               <el-col :span="14">
                 <el-tabs style="margin: 0 auto" v-model="activepane">
                   <el-tab-pane label="文本信息" name="textocr">
                     <el-carousel :autoplay="false" height="360px">
                       <el-carousel-item>
                         <div
+                        class="carouselDiv"
                           style="width: 470px"
                           v-for="(item, inx) in usernamesfz"
                           :key="inx"
@@ -1395,7 +1397,7 @@
           </div>
           <!-- 营业执照 -->
           <div class="admreviewerss" v-show="filesstore">
-            <el-row>
+            <el-row class="flexphoneshow">
               <el-col :span="14">
                 <el-tabs style="margin: 0 auto" v-model="activepane">
                   <el-tab-pane label="文本信息" name="textocr">
@@ -1406,6 +1408,7 @@
                     >
                       <el-carousel-item>
                         <div
+                        class="carouselDiv"
                           style="width: 470px"
                           fit="contain"
                           v-for="(item, ind) in indeuserblic"
@@ -2598,7 +2601,7 @@ export default {
       justify-content: center;
     }
 
-    .martexts {
+    .martexts flexphone {
       display: flex;
       p {
         min-height: 25px;
