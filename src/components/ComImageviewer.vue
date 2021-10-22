@@ -76,21 +76,21 @@
             },
             // 禁止页面滚动
             stopMove() {
-                let m = function (e) {
-                    e.preventDefault();
-                };
+                // let m = function (e) {
+                //     e.preventDefault();
+                // };
                 document.body.style.overflow = "hidden";
                 // document.body.style.overflowY = "scroll";
-                document.body.addEventListener("touchmove", m);
+                // document.body.addEventListener("touchmove", m);
             },
             // 开启页面滚动
             move() {
-                let m = function (e) {
-                    e.preventDefault();
-                };
+                // let m = function (e) {
+                //     e.preventDefault();
+                // };
                 document.body.style.overflow = "auto";
                 // document.body.style.overflowY = "scroll";
-                document.body.removeEventListener("touchmove", m);
+                // document.body.removeEventListener("touchmove", m);
             },
             // 监听遮罩层
             handleCliskMask(e) {

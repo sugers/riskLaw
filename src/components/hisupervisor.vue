@@ -161,7 +161,7 @@
                       :title="item.file_name"
                       @click="onopensfz(indt)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -169,7 +169,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -192,7 +192,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -200,7 +200,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -371,7 +371,7 @@
                       :title="item.file_name"
                       @click="onPreview(index)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -379,7 +379,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -402,7 +402,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -410,7 +410,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -595,7 +595,7 @@
                       :title="item.file_name"
                       @click="qisuopenViewer(ind)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -603,7 +603,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -626,7 +626,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -634,7 +634,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -772,7 +772,7 @@
                       :title="item.file_name"
                       @click="bqopenViewer(index)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -780,7 +780,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -803,7 +803,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -811,7 +811,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -909,7 +909,7 @@
                       :title="item.file_name"
                       @click="zjopenmony(ins)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -917,7 +917,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -942,7 +942,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -950,7 +950,7 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div class="shan" @click="deletes(item.id, item.path)">
+                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
                         删除
                       </div>
                     </div>
@@ -1133,7 +1133,7 @@
                 </el-tabs>
               </el-col>
               <el-col :span="10">
-                <div class="ttadminiewrss">
+                <div class="adminiewrss">
                   <el-form
                     ref="complaint"
                     :model="complaint"
@@ -1273,7 +1273,7 @@
                 </el-tabs>
               </el-col>
               <el-col :span="10">
-                <div class="ttadminiewrss">
+                <div class="adminiewrss">
                   <el-form
                     ref="preserveForm"
                     :model="preserveForm"
@@ -1756,6 +1756,7 @@ export default {
       zjloading: false,
       // 角色id
       roleID: "",
+      shancu: false,
 
       plaintifftf: false,
       preservationtf: false,
@@ -1784,6 +1785,9 @@ export default {
       this.beforeClosepage(e);
     });
     this.caserepeatapi();
+    if (this.roleID == 1001) {
+      this.shancu = true;
+    }
   },
   methods: {
     // 相同案件提示
@@ -2381,7 +2385,7 @@ export default {
                 // 出单核实
                 if (this.roleID != 1003) {
                   this.$router.push({
-                    path: "/usertable/asingconfirm",
+                    path: "/usertable/adminfiedlook",
                     query: {
                       data: this.evalid,
                     },
@@ -2568,7 +2572,7 @@ export default {
       overflow-y: scroll;
       overflow-x: hidden;
     }
-    .ttadminiewrss {
+    .adminiewrss {
       display: flex;
       justify-content: center;
       // align-items: center;
@@ -2601,7 +2605,7 @@ export default {
       justify-content: center;
     }
 
-    .martexts flexphone {
+    .martexts {
       display: flex;
       p {
         min-height: 25px;

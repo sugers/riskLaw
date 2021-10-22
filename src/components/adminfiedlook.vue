@@ -116,7 +116,7 @@
                       :title="item.file_name"
                       @click="onopensfz(ind)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -151,7 +151,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -309,7 +309,7 @@
                       :title="item.file_name"
                       @click="onPreview(inde)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -344,7 +344,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -493,7 +493,7 @@
                       :title="item.file_name"
                       @click="qisuopenViewer(inst)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -528,7 +528,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -562,11 +562,11 @@
         <el-row>
           <el-col :span="12">
             <div class="martexts flexphone">
-              <p>保全申请书:</p>
+              <p>保全申请人:</p>
               <span class="flexphonespan">{{ preserveForm.preservename }}</span>
             </div>
             <div class="martexts flexphone">
-              <p>保全被申请书:</p>
+              <p>保全被申请人:</p>
               <span class="flexphonespan">{{ preserveForm.preservebei }}</span>
             </div>
             <!-- <div class="martexts flexphone">
@@ -642,7 +642,7 @@
                       :title="item.file_name"
                       @click="bqopenViewer(inds)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -677,7 +677,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -757,7 +757,7 @@
                       :title="item.file_name"
                       @click="zjopenmony(dome)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -794,7 +794,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -894,7 +894,7 @@
             </div>
             <div v-if="feedcudan == 1">
               <div class="martexts flexphone">
-                <p>保险金额：</p>
+                <p>保费：</p>
                 <span class="flexphonespan">
                   <span class="flexphonespan">{{ usertiduy.baoxianRMB | currency }}</span>
                 </span>
@@ -916,7 +916,7 @@
                       :title="item.file_name"
                       @click="cdtransrcopen(insrc)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -948,7 +948,7 @@
                       "
                       @click="btnclicks(item.path)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -1150,7 +1150,7 @@ export default {
       https: "",
       // 出单情况
       feedtrade: null,
-      shancu: true,
+      shancu: false,
       // 法律意见书
       law_opinion_path: "",
       // 出单情况
@@ -1183,8 +1183,8 @@ export default {
       this.beforeClosepage(e);
     });
     var userinfor = JSON.parse(localStorage.getItem("userinfor"));
-    if (userinfor.roleID == 2001) {
-      this.shancu = false;
+    if (userinfor.roleID == 1001) {
+      this.shancu = true;
     }
     if (
       userinfor.roleID == 1001 ||
@@ -1717,7 +1717,7 @@ export default {
         }
       }
     }
-    .martexts flexphone {
+    .martexts {
       display: flex;
       p {
         min-height: 25px;

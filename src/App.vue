@@ -105,7 +105,7 @@ export default {
           type: "success",
         });
         this.$root.$emit('radio');
-        var evt = document.createEvent("Event");
+        let evt = document.createEvent("Event");
         evt.initEvent("click", true, true);
         document.getElementById("audio").dispatchEvent(evt);
 
@@ -150,7 +150,7 @@ export default {
       _that.timeoutunm = setTimeout(function(){
         _that.initwebsocket(); // 新链接
         _that.lockReconnect = false;
-      },5000)
+      },3000)
     },
     // 开启心跳
     stateout(){

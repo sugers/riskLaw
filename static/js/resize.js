@@ -2,6 +2,7 @@ import $ from 'jquery'
 function resizes () {
 
     let screenWidth = document.body.clientWidth;
+    
     $('.navmask').hide();
     if (screenWidth > 1200) {
         $('.sideNav').show()
@@ -12,6 +13,7 @@ function resizes () {
     window.onresize = () => {
         return (() => {
             screenWidth = document.body.clientWidth;
+            console.log(screenWidth)
             $('.navmask').hide();
             if (screenWidth > 1200) {
                 $('.sideNav').show();

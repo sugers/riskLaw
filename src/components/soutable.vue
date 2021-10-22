@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="pingtai">
+    <div v-if="pingtai" class="soutableDiv">
       <el-row :gutter="12" class="elrow">
         <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
@@ -79,7 +79,7 @@
             <div class="databoard">
               <div class="datatext">
                 <div class="txt">本月提交总金额</div>
-                <div class="number baoe" :title="preserv_amount_count">
+                <div class="number baoe">
                   ￥{{ preserv_amount_count | currency }}
                 </div>
               </div>
@@ -92,7 +92,7 @@
             <div class="databoard">
               <div class="datatext">
                 <div class="txt">本月通过总金额</div>
-                <div class="number zonge" :title="underwriting_amount_count">
+                <div class="number zonge">
                   ￥{{ underwriting_amount_count | currency }}
                 </div>
               </div>
@@ -329,6 +329,9 @@
 </template>
 
 <script>
+import {
+        toThousandFilterZero
+    } from '../../static/js/formatAmount'
 import { Commondashboard, Dashboard } from "../api/api";
 import EchartsTable from "./EChartsTable.vue";
 
@@ -437,10 +440,10 @@ export default {
         this.salesmen_count = res.data.dashboard.salesmen_count;
         this.icco_count = res.data.dashboard.icco_count;
         this.lawyer_count = res.data.dashboard.lawyer_count;
-        this.preserv_amount_count = res.data.dashboard.preserv_amount_count;
+        this.preserv_amount_count = parseInt(res.data.dashboard.preserv_amount_count);
         this.underwriting_amount_count =
-          res.data.dashboard.underwriting_amount_count;
-        this.amount_count = res.data.dashboard.amount_count;
+          parseInt(res.data.dashboard.underwriting_amount_count);
+        this.amount_count = parseInt(res.data.dashboard.amount_count);
         this.total_count = res.data.dashboard.total_count;
         this.success_count = res.data.dashboard.success_count;
         this.trade_count = res.data.dashboard.trade_count;
@@ -523,6 +526,9 @@ export default {
         this.submitdata.push(sume);
         this.submitdata.push(successvals);
         this.submitdata.push(rejectvals);
+        let amounts = res.data.dashboard.trade_data_range.amounts.map((i)=>{
+          return parseInt(i)
+        });
         // 出单量图
         this.echars4 = this.$echarts.init(document.getElementById("echars4"));
         let currentMaxVal =
@@ -578,14 +584,14 @@ export default {
               name: "出单保费金额",
               type: "bar",
               yAxisIndex: 1,
-              data: res.data.dashboard.trade_data_range.amounts,
+              data: amounts,
               label: {
                 normal: {
                   show: true, //显示数值
                   position: "top", // 位置设为top
                   formatter: function (params) {
                     if (params.value > 0) {
-                      return params.value;
+                      return toThousandFilterZero(params.value);
                     } else {
                       return "";
                     }
@@ -704,6 +710,9 @@ export default {
         this.chartsData1.push(success_vals);
         this.chartsData1.push(reject_vals);
 
+        let amountss = res.data.risk_eval_trade_data_range.amounts.map((i)=>{
+          return parseInt(i);
+        })
         this.echars5 = this.$echarts.init(document.getElementById("echars5"));
         let currentMaxVal =
           Math.max(...res.data.risk_eval_trade_data_range.counts) * 2;
@@ -758,14 +767,14 @@ export default {
               name: "出单保费金额",
               type: "bar",
               yAxisIndex: 1,
-              data: res.data.risk_eval_trade_data_range.amounts,
+              data: amountss,
               label: {
                 normal: {
                   show: true, //显示数值
                   position: "top", // 位置设为top
                   formatter: function (params) {
                     if (params.value > 0) {
-                      return params.value;
+                      return toThousandFilterZero(params.value);
                     } else {
                       return "";
                     }
@@ -778,42 +787,6 @@ export default {
             },
           ],
         });
-        // this.chartstable2.nameArray = res.data.risk_eval_trade_data_range.dates;
-
-        // this.chartstable2.legends = ["出单量"];
-        // let countarr = res.data.risk_eval_trade_data_range.counts;
-        // let arrmaxs = this.arrMax(countarr);
-        // this.chartstable2.yaxis = Math.max(...countarr) * 2;
-        // let counts = {
-        //   name: "出单量",
-        //   type: "line",
-        //   data: res.data.risk_eval_trade_data_range.counts,
-        //   label: {
-        //     normal: {
-        //       show: true,
-        //       position: "top",
-        //       formatter: function (params) {
-        //         if (params.value > 0) {
-        //           return params.value;
-        //         } else {
-        //           return "";
-        //         }
-        //       },
-        //     },
-        //   },
-        // };
-        // let amounts = {
-        //   name: "保费金额",
-        //   type: "line",
-        //   itemStyle: {
-        //     borderColor: "transparent",
-        //     color: "transparent",
-        //   },
-        //   data: res.data.risk_eval_trade_data_range.amounts,
-        // };
-
-        // this.chartsData2.push(counts);
-        // this.chartsData2.push(amounts);
 
         // 排名
         this.usert = res.data.mini_app_user_top10;
@@ -842,16 +815,16 @@ export default {
   color: #34c758;
 }
 .lvshi {
-  color: #5756d7;
+  color: #F56C6C;
 }
 .baoe {
-  color: #ff3a30;
+  color: #007aff;
 }
 .zonge {
-  color: #ff9502;
+  color: #34c758;
 }
 .chudan {
-  color: #34c758;
+  color: #F56C6C;
 }
 .elrow {
   margin: 0 0 20px 0;

@@ -395,3 +395,10 @@ export const Evaltrade = data => {
       resolve(put('/api/v1/icco/eval/trade', data))
   })
 }
+
+// 修改风险评估案由类型（管理员、初审、复审权限）
+export const Casecasetype = data => {
+  return new Promise(function (resolve) {
+      resolve(put('/api/v1/admin/review/case/case_type', data))
+  })
+}

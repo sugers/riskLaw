@@ -11,7 +11,6 @@ import VueCurrencyFilter from 'vue-currency-filter'
 // 引入公共样式以及js
 import '../static/css/common.css';
 import getIp from '../static/js/common.js';
-
 Vue.prototype.$ip = getIp;
 // 引入拦截器
 import './api/axios'

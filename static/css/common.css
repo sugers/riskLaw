@@ -7,10 +7,51 @@
 
 body {
     -webkit-overflow-scrolling: touch;
-
-
+    background-color: #F0F3F5;
+}
+/* #app,.hello,.el-container {
+    height: 100% !important;
+} */
+/* 页面背景色start*/
+.soutableDiv{
+    padding: 20px;
+}
+.aunif{
+    background-color: #fff;
+    border-radius: 4px;
+}
+.user_data,
+.headeraudio,
+.insuranceTop {
+    background-color: #fff;
+    padding-top: 20px;
+    border-bottom:1px solid #e8eaec !important;
+    box-sizing: border-box;
+}
+.user_data_btn,
+.asiostable,
+.insuranceBottom {
+    margin: 20px;
+    padding: 20px !important;
+    /* padding-top: 20px;
+    margin-top: 20px; */
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
 }
 
+.el-main {
+    padding:  0;
+    box-sizing: border-box;
+}
+.usertable{
+    margin-top: 20px;
+}
+.InsuranceCompany,
+.insuranceUser {
+    margin-top: 20px;
+}
+/* 页面背景色end*/
 .childTable .el-table--enable-row-hover .el-table__body tr:hover>td {
     background-color: #212e3e !important;
 }
@@ -140,7 +181,7 @@ background-color: #ffffff !important;
 .bottomTable {
     position: relative;
     min-height: 229px;
-    padding-bottom: 80px;
+    padding-bottom: 20px;
 }
 
 .bottomTable button {
@@ -454,6 +495,9 @@ background-color: #ffffff !important;
 }
 
 @media screen and (max-width: 1200px) {
+    .user_data{
+        padding: 20px !important;
+    }
     .admin-login .login .gin-from {
         justify-content: center !important;
     }
@@ -809,8 +853,9 @@ background-color: #ffffff !important;
     .aunif .admreviewerss .tyetext .textwen .ptextlei {
         max-width: 200px !important;
     }
-    .aunif .admreviewerss .marwers .listqishu .imgs .ad_imgs_txt{
-        max-width:160px !important;
+
+    .aunif .admreviewerss .marwers .listqishu .imgs .ad_imgs_txt {
+        max-width: 160px !important;
     }
 }
 

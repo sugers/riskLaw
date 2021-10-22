@@ -124,19 +124,12 @@
         },
         methods: {},
         mounted() {
-            var ua = window.navigator.userAgent,
-                agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPod', 'iPad'],
-                isPC = true;
-            for (var i = 0, len = agents.length; i < len; i++) {
-                if (ua.indexOf(agents[i]) > 0) {
-                    isPC = false;
-                    break;
-                }
-            }
-            if (!isPC) {
+            let screenWidth = document.body.clientWidth;
+            if (screenWidth < 1200) {
                 this.isphone = true;
                 document.body.style.overflow = 'scroll';
             } else {
+                this.isphone = false;
                 document.body.style.overflow = '';
                 document.body.style.overflowX = 'hidden';
             }

@@ -133,7 +133,7 @@
                       :title="item.file_name"
                       @click="onopensfz(ind)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -168,7 +168,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -325,7 +325,7 @@
                       :title="item.file_name"
                       @click="onPreview(inde)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -360,7 +360,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -494,7 +494,7 @@
                       :title="item.file_name"
                       @click="qisuopenViewer(inst)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -529,7 +529,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -642,7 +642,7 @@
                       :title="item.file_name"
                       @click="bqopenViewer(inds)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -677,7 +677,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -766,7 +766,7 @@
                       :title="item.file_name"
                       @click="zjopenmony(dome)"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -803,7 +803,7 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{ item.file_name }}
+                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -901,7 +901,7 @@
             </div>
             <div v-if="feedcudan == 1">
               <div class="martexts flexphone">
-                <p>保险金额：</p>
+                <p>保费：</p>
                 <span style="width: 800px" v-if="UserID != 2001">
                   <el-input
                     style="width: 200px"
@@ -976,7 +976,7 @@
                         :title="item.file_name"
                         @click="cdtransrcopen(insrc)"
                       >
-                        {{ item.file_name }}
+                        {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                       </p>
                       <div class="btntext">
                         <a
@@ -1013,7 +1013,7 @@
                         "
                         @click="btnclicks(item.path)"
                       >
-                        {{ item.file_name }}
+                        {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
                       </p>
                       <div class="btntext">
                         <a
@@ -1334,7 +1334,7 @@ export default {
       testimonytf: false,
       // 未出单原因
       nosinglereason: "",
-      shancu: true,
+      shancu: false,
       // 保单路径
       thepath: [],
       codeid: "",
@@ -1360,8 +1360,8 @@ export default {
     });
     var userinfor = JSON.parse(localStorage.getItem("userinfor"));
     this.UserID = userinfor.roleID;
-    if (userinfor.roleID == 2001) {
-      this.shancu = false;
+    if (userinfor.roleID == 1001) {
+      this.shancu = true;
     }
     if (
       userinfor.roleID == 1001 ||
@@ -2244,7 +2244,7 @@ export default {
       display: flex;
       justify-content: flex-end;
     }
-    .martexts flexphone {
+    .martexts {
       display: flex;
       p {
         min-height: 25px;
