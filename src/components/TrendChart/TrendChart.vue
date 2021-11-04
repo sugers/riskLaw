@@ -251,7 +251,7 @@
                                 position: 'top', // 位置设为top
                                 formatter: function (params) {
                                     if (params.value > 0) {
-                                        return parseInt(params.value);
+                                        return parseInt(params.value).toLocaleString();
                                     } else {
                                         return '';
                                     }
