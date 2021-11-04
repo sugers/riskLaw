@@ -86,11 +86,23 @@ export const Reviewcase = data => {
   })
 }
 // 获取案由类型列表(分页) (管理员权限)
-// export const Admincasetype = data => {
-//   return new Promise(function (resolve) {
-//     resolve(get('/api/v1/admin/case_type', data))
-//   })
-// }
+export const Admincasetypes = data => {
+  return new Promise(function (resolve) {
+    resolve(get("/api/v1/admin/case_type", data))
+  })
+}
+// 修改案由类型 (管理员权限)
+export const Admintypeput = data => {
+  return new Promise(function (resolve) {
+    resolve(put('/api/v1/admin/case_type', data))
+  })
+}
+// 创建案由类型 (管理员权限)
+export const Admincasetypepost = data => {
+  return new Promise(function (resolve) {
+    resolve(post('/api/v1/admin/case_type', data))
+  })
+}
 // 快速反馈（管理员、初审、复审权限）
 export const Feedback = data => {
   return new Promise(function (resolve) {
@@ -400,5 +412,12 @@ export const Evaltrade = data => {
 export const Casecasetype = data => {
   return new Promise(function (resolve) {
       resolve(put('/api/v1/admin/review/case/case_type', data))
+  })
+}
+
+// 断开websocket连接
+export const wslogout = data =>{
+  return new Promise(function (resolve){
+    resolve(get('/api/v1/backend/auth/ws/logout',data))
   })
 }

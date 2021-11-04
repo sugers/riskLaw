@@ -110,7 +110,7 @@ export default {
   
 <style lang="less">
 .ecthrts {
-  width: 89%;
+  width: 100%;
   height: 25rem;
 }
 </style>

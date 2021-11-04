@@ -69,6 +69,9 @@
         GetTrendChartOrder
     } from '../../api/api';
     import provinces from "../../../static/js/pca-code.json";
+    // import {
+    //     toThousandFilterZero
+    // } from '../../../static/js/formatAmount'
     export default {
         data() {
             return {
@@ -105,9 +108,9 @@
                 tooltip: {
                     trigger: 'axis',
                 },
-                color: ['#409EFF', '#F4AA43'],
+                color: ['#F56C6C', '#409EFF', '#F4AA43', ],
                 legend: {
-                    data: ['拒绝量', '通过量'],
+                    data: ['拒绝量', '通过量', '未补充'],
                     right: 30
                 },
                 xAxis: {
@@ -147,6 +150,13 @@
                             }
                         },
                     },
+
+                    {
+                        name: '拒绝量',
+                        type: 'bar',
+                        data: [],
+                        stack: 'submit',
+                    },
                     {
                         name: '通过量',
                         type: 'bar',
@@ -155,7 +165,7 @@
 
                     },
                     {
-                        name: '拒绝量',
+                        name: '未补充',
                         type: 'bar',
                         data: [],
                         stack: 'submit',
@@ -241,7 +251,7 @@
                                 position: 'top', // 位置设为top
                                 formatter: function (params) {
                                     if (params.value > 0) {
-                                        return params.value;
+                                        return parseInt(params.value);
                                     } else {
                                         return '';
                                     }
@@ -407,7 +417,9 @@
                     if (res.code == 200) {
 
                         res.data.reject_vals.map((item, index) => {
-                            sumNum.push(Number(item) + Number(res.data.success_vals[index]))
+                            sumNum.push(Number(item) + Number(res.data.success_vals[
+                                    index]) +
+                                Number(res.data.is_add_data_vals[index]))
                         })
                         myChart.setOption({
                             xAxis: {
@@ -422,6 +434,10 @@
                                     data: res.data.success_vals
                                 },
                                 {
+                                    name: '未补充',
+                                    data: res.data.is_add_data_vals
+                                },
+                                {
                                     name: '总数',
                                     data: sumNum
                                 }
@@ -432,7 +448,15 @@
 
                             let rejectStatu = params.selected['拒绝量'];
                             let paddStatu = params.selected['通过量'];
-                            if (rejectStatu && paddStatu) {
+                            let addStatu = params.selected['未补充'];
+                            if (rejectStatu && paddStatu && addStatu) {
+                                sumNum = []
+                                res.data.reject_vals.map((item, index) => {
+                                    sumNum.push(Number(item) + Number(res.data.success_vals[
+                                            index]) +
+                                        Number(res.data.is_add_data_vals[index]))
+                                })
+
                                 myChart.setOption({
                                     series: [{
                                             name: '拒绝量',
@@ -447,6 +471,16 @@
                                         {
                                             name: '通过量',
                                             data: res.data.success_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '未补充',
+                                            data: res.data.is_add_data_vals,
                                             label: {
                                                 normal: {
                                                     show: false, //显示数值
@@ -479,7 +513,11 @@
                                         }
                                     ]
                                 });
-                            } else if (rejectStatu && !paddStatu) {
+                            } else if (rejectStatu && !addStatu && !paddStatu) {
+                                sumNum = [];
+                                res.data.reject_vals.map((item) => {
+                                    sumNum.push(Number(item))
+                                })
                                 myChart.setOption({
                                     series: [{
                                             name: '拒绝量',
@@ -510,6 +548,16 @@
                                             },
                                         },
                                         {
+                                            name: '未补充',
+                                            data: res.data.is_add_data_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
                                             name: '总数',
                                             data: sumNum,
                                             label: {
@@ -520,7 +568,11 @@
                                         }
                                     ]
                                 });
-                            } else if (!rejectStatu && paddStatu) {
+                            } else if (!rejectStatu && !addStatu && paddStatu) {
+                                sumNum = [];
+                                res.data.success_vals.map((item) => {
+                                    sumNum.push(Number(item))
+                                })
                                 myChart.setOption({
                                     series: [{
                                             name: '拒绝量',
@@ -549,11 +601,238 @@
                                             },
                                         },
                                         {
+                                            name: '未补充',
+                                            data: res.data.is_add_data_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
                                             name: '总数',
                                             data: sumNum,
                                             label: {
                                                 normal: {
                                                     show: false, //显示数值
+                                                }
+                                            },
+                                        }
+                                    ]
+                                });
+                            } else if (!rejectStatu && addStatu && !paddStatu) {
+                                sumNum = []
+                                res.data.is_add_data_vals.map((item) => {
+                                    sumNum.push(Number(item))
+                                })
+                                myChart.setOption({
+                                    series: [{
+                                            name: '拒绝量',
+                                            data: res.data.reject_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '通过量',
+                                            data: res.data.success_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '未补充',
+                                            data: res.data.is_add_data_vals,
+                                            label: {
+                                                normal: {
+                                                    show: true, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                    formatter: function (params) {
+                                                        if (params.value > 0) {
+                                                            return params.value;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    },
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '总数',
+                                            data: sumNum,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                }
+                                            },
+                                        }
+                                    ]
+                                });
+                            } else if (rejectStatu && addStatu && !paddStatu) {
+                                sumNum = []
+                                res.data.reject_vals.map((item, index) => {
+                                    sumNum.push(Number(item) + Number(res.data.is_add_data_vals[
+                                        index]))
+                                })
+                                myChart.setOption({
+                                    series: [{
+                                            name: '拒绝量',
+                                            data: res.data.reject_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '通过量',
+                                            data: res.data.success_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '未补充',
+                                            data: res.data.is_add_data_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '总数',
+                                            data: sumNum,
+                                            label: {
+                                                normal: {
+                                                    show: true, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                    formatter: function (params) {
+                                                        if (params.value > 0) {
+                                                            return params.value;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    },
+                                                }
+                                            },
+                                        }
+                                    ]
+                                });
+                            } else if (!rejectStatu && addStatu && paddStatu) {
+                                sumNum = []
+                                res.data.success_vals.map((item, index) => {
+                                    sumNum.push(Number(item) + Number(res.data.is_add_data_vals[
+                                        index]))
+                                })
+                                myChart.setOption({
+                                    series: [{
+                                            name: '拒绝量',
+                                            data: res.data.reject_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '通过量',
+                                            data: res.data.success_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '未补充',
+                                            data: res.data.is_add_data_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '总数',
+                                            data: sumNum,
+                                            label: {
+                                                normal: {
+                                                    show: true, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                    formatter: function (params) {
+                                                        if (params.value > 0) {
+                                                            return params.value;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    },
+                                                }
+                                            },
+                                        }
+                                    ]
+                                });
+                            } else if (rejectStatu && !addStatu && paddStatu) {
+                                sumNum = []
+                                res.data.reject_vals.map((item, index) => {
+                                    sumNum.push(Number(item) + Number(res.data.success_vals[
+                                        index]))
+                                })
+                                myChart.setOption({
+                                    series: [{
+                                            name: '拒绝量',
+                                            data: res.data.reject_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '通过量',
+                                            data: res.data.success_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '未补充',
+                                            data: res.data.is_add_data_vals,
+                                            label: {
+                                                normal: {
+                                                    show: false, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                }
+                                            },
+                                        },
+                                        {
+                                            name: '总数',
+                                            data: sumNum,
+                                            label: {
+                                                normal: {
+                                                    show: true, //显示数值
+                                                    position: 'top', // 位置设为top
+                                                    formatter: function (params) {
+                                                        if (params.value > 0) {
+                                                            return params.value;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    },
                                                 }
                                             },
                                         }
@@ -578,6 +857,9 @@
                 }
                 GetTrendChartOrder(data).then((res) => {
                     if (res.code == 200) {
+                        let amounts = res.data.amounts.map((i) => {
+                            return parseInt(i)
+                        });
                         let currentMaxVal = Math.max(...res.data.counts) * 2
                         myChart.setOption({
                             yAxis: [{
@@ -593,13 +875,14 @@
                                     type: 'value',
                                     name: '出单保费金额',
                                     min: 0,
-                                    max: Math.max(...res.data.amounts) ? Math.max(
-                                        ...res.data.amounts) + 1000 : 1000,
+                                    max: Math.max(...amounts) ? Math.max(
+                                        ...amounts) +1000 : 1000,
                                     splitLine: { //网格线
                                         show: false
                                     }
 
                                 }
+                                
                             ],
                             xAxis: {
                                 type: 'category',
@@ -613,14 +896,13 @@
                                 name: '出单保费金额',
                                 type: 'bar',
                                 yAxisIndex: 1,
-                                data: res.data.amounts
+                                data: amounts
                             }, ]
                         });
                         myChart.off('legendselectchanged');
                         myChart.on('legendselectchanged', function (params) {
                             let rejectStatu = params.selected['出单量'];
                             let paddStatu = params.selected['出单保费金额'];
-                            console.log(rejectStatu, paddStatu)
                             if (rejectStatu && paddStatu) {
                                 myChart.setOption({
                                     yAxis: [{
@@ -638,10 +920,10 @@
                                             name: '出单保费金额',
                                             show: true,
                                             min: 0,
-                                            max: Math.max(...res.data.amounts) ? Math.max(
-                                                ...res.data.amounts) + 1000 : 1000,
+                                            max: Math.max(...amounts) ? Math.max(
+                                                amounts) + 1000 : 1000,
                                             splitLine: { //网格线
-                                                show: false
+                                                show: true
                                             }
 
                                         }
@@ -658,7 +940,7 @@
                                         name: '出单保费金额',
                                         type: 'bar',
                                         yAxisIndex: 1,
-                                        data: res.data.amounts
+                                        data: amounts
                                     }, ]
                                 });
                             } else if (!rejectStatu && paddStatu) {
@@ -677,8 +959,8 @@
                                             type: 'value',
                                             name: '出单保费金额',
                                             min: 0,
-                                            max: Math.max(...res.data.amounts) ? Math.max(
-                                                ...res.data.amounts) + 1000 : 1000,
+                                            max: Math.max(...amounts) ? Math.max(
+                                                ...amounts) + 1000 : 1000,
                                             splitLine: { //网格线
                                                 show: true
                                             }
@@ -696,7 +978,7 @@
                                         name: '出单保费金额',
                                         type: 'bar',
                                         yAxisIndex: 1,
-                                        data: res.data.amounts
+                                        data: amounts
                                     }, ]
                                 });
                             } else if (rejectStatu && !paddStatu) {
@@ -716,8 +998,8 @@
                                             name: '出单保费金额',
                                             show: false,
                                             min: 0,
-                                            max: Math.max(...res.data.amounts) ? Math.max(
-                                                ...res.data.amounts) + 1000 : 1000,
+                                            max: Math.max(...amounts) ? Math.max(
+                                                ...amounts) + 1000 : 1000,
                                             splitLine: { //网格线
                                                 show: false
                                             }
@@ -735,7 +1017,7 @@
                                         name: '出单保费金额',
                                         type: 'bar',
                                         yAxisIndex: 1,
-                                        data: res.data.amounts
+                                        data: amounts
                                     }, ]
                                 });
                             }

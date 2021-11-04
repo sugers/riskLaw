@@ -6,7 +6,6 @@
     ref="myscrollbar"
   >
     <div class="aunif">
-      <div></div>
       <usersteps :csteps="csteps" :cstext="cstext" :number="number" />
       <div class="fromrevie">
         <el-row>
@@ -24,11 +23,15 @@
             </div>
             <div class="martexts flexphone">
               <p>申请人：</p>
-              <span class="flexphonespan">{{ tltle.salesman ? tltle.salesman : "" }}</span>
+              <span class="flexphonespan">{{
+                tltle.salesman ? tltle.salesman : ""
+              }}</span>
             </div>
             <div class="martexts flexphone">
               <p>联系电话：</p>
-              <span class="flexphonespan">{{ tltle.phone ? tltle.phone : "" }}</span>
+              <span class="flexphonespan">{{
+                tltle.phone ? tltle.phone : ""
+              }}</span>
             </div>
             <div class="martexts flexphone">
               <p>案由类型：</p>
@@ -71,6 +74,28 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
+            <div class="martexts flexphone" v-show="this.insuredtypeid == 1">
+              <el-button
+                class="tianbtn"
+                type="primary"
+                @click.prevent="anniu(1)"
+                >填写核实</el-button
+              >
+            </div>
+            <div class="martexts flexphone" v-show="this.insuredtypeid == 2">
+              <el-button
+                class="tianbtn"
+                type="primary"
+                @click.prevent="anniu(2)"
+                >填写核实</el-button
+              >
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="admreviewerss">
+        <el-row>
+          <el-col :span="24">
             <div class="martexts flexphone">
               <!-- 1.自然人 2.企业 -->
               <p>类型：</p>
@@ -89,25 +114,25 @@
       <div class="admreviewerss" v-show="this.insuredtypeid == 1">
         <el-row>
           <el-col :span="12">
-            <div class="martexts flexphone">
+            <!-- <div class="martexts flexphone">
               <el-button
                 class="tianbtn"
                 type="primary"
                 @click.prevent="anniu(1)"
                 >填写核实</el-button
               >
-            </div>
+            </div> -->
             <el-form
               ref="cardForm"
               :model="usernamesfz"
-              
               style="width: 540px"
               size="medium"
             >
               <el-form-item label="姓名：" :required="true">
                 <el-input
+                  @blur="clickselect"
                   v-model="usernamesfz.name"
-                  placeholder="请输入内容"
+                  placeholder="请输入姓名"
                 ></el-input>
               </el-form-item>
               <el-form-item label="性别：">
@@ -195,7 +220,11 @@
                       :title="item.file_name"
                       @click="onopensfz(ind)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -203,7 +232,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -225,7 +258,11 @@
                       :title="item.file_name"
                       @click="btnclicks(item.path)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -233,7 +270,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path, 1)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path, 1)"
+                      >
                         删除
                       </div>
                     </div>
@@ -248,26 +289,26 @@
       <div class="admreviewerss" v-show="this.insuredtypeid == 2">
         <el-row>
           <el-col :span="12">
-            <div class="martexts flexphone">
+            <!-- <div class="martexts flexphone">
               <el-button
                 class="tianbtn"
                 type="primary"
                 @click.prevent="anniu(2)"
                 >填写核实</el-button
               >
-            </div>
+            </div> -->
 
             <el-form
               ref="userblicense"
               :model="userblicense"
-              
               style="width: 540px"
               size="medium"
             >
               <el-form-item label="单位名称:" :required="true">
                 <el-input
+                  @blur="clickselect"
                   v-model="userblicense.company"
-                  placeholder="请输入内容"
+                  placeholder="请输入单位名称"
                 ></el-input>
               </el-form-item>
               <el-form-item label="地址:">
@@ -408,7 +449,11 @@
                       :title="item.file_name"
                       @click="onPreview(ind)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -416,7 +461,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -438,7 +487,11 @@
                       :title="item.file_name"
                       @click="btnclicks(item.path)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -446,7 +499,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -548,7 +605,11 @@
                         :title="item.file_name"
                         @click="qisuopenViewer(ind)"
                       >
-                        {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                        {{
+                          `【${item.file_name.substring(
+                            item.file_name.lastIndexOf(".") + 1
+                          )}】`
+                        }}{{ item.file_name }}
                       </p>
                       <div class="btntext">
                         <a
@@ -556,7 +617,11 @@
                           :download="item.file_name"
                           >下载</a
                         >
-                        <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
+                        <div
+                          v-if="shancu"
+                          class="shan"
+                          @click="deletes(item.id, item.path)"
+                        >
                           删除
                         </div>
                       </div>
@@ -579,7 +644,11 @@
                         :title="item.file_name"
                         @click="btnclicks(item.path)"
                       >
-                        {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                        {{
+                          `【${item.file_name.substring(
+                            item.file_name.lastIndexOf(".") + 1
+                          )}】`
+                        }}{{ item.file_name }}
                       </p>
                       <div class="btntext">
                         <a
@@ -587,7 +656,11 @@
                           :download="item.file_name"
                           >下载</a
                         >
-                        <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
+                        <div
+                          v-if="shancu"
+                          class="shan"
+                          @click="deletes(item.id, item.path)"
+                        >
                           删除
                         </div>
                       </div>
@@ -685,7 +758,11 @@
                         :title="item.file_name"
                         @click="bqopenViewer(ind)"
                       >
-                        {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                        {{
+                          `【${item.file_name.substring(
+                            item.file_name.lastIndexOf(".") + 1
+                          )}】`
+                        }}{{ item.file_name }}
                       </p>
                       <div class="btntext">
                         <a
@@ -693,7 +770,11 @@
                           :download="item.file_name"
                           >下载</a
                         >
-                        <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
+                        <div
+                          v-if="shancu"
+                          class="shan"
+                          @click="deletes(item.id, item.path)"
+                        >
                           删除
                         </div>
                       </div>
@@ -715,7 +796,11 @@
                         :title="item.file_name"
                         @click="btnclicks(item.path)"
                       >
-                        {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                        {{
+                          `【${item.file_name.substring(
+                            item.file_name.lastIndexOf(".") + 1
+                          )}】`
+                        }}{{ item.file_name }}
                       </p>
                       <div class="btntext">
                         <a
@@ -723,7 +808,11 @@
                           :download="item.file_name"
                           >下载</a
                         >
-                        <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
+                        <div
+                          v-if="shancu"
+                          class="shan"
+                          @click="deletes(item.id, item.path)"
+                        >
                           删除
                         </div>
                       </div>
@@ -746,6 +835,10 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
+            <div class="martexts flexphone" v-if="remarknote">
+              <p>备注：</p>
+              <span class="flexphonespan">{{ remarknote }}</span>
+            </div>
             <div class="marwers">
               <p class="marwers_p">证据材料：</p>
               <div>
@@ -816,12 +909,17 @@
                     :url="testmonyurl"
                   ></Comimageviewer>
                   <span class="imgs" v-for="(item, ins) in timonsrc" :key="ins">
+                    <input type="checkbox" id="test">
                     <p
                       class="ad_imgs_txts"
                       :title="item.file_name"
                       @click="zjopenmony(ins)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -829,7 +927,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -842,6 +944,7 @@
                     v-for="(item, inf) in timonfile"
                     :key="inf"
                   >
+                    <input type="checkbox" id="test">
                     <p
                       class="ad_imgs_txt"
                       :style="
@@ -854,7 +957,11 @@
                       :title="item.file_name"
                       @click="btnclicks(item.path)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -862,7 +969,11 @@
                         :download="item.file_name"
                         >下载</a
                       >
-                      <div v-if="shancu" class="shan" @click="deletes(item.id, item.path)">
+                      <div
+                        v-if="shancu"
+                        class="shan"
+                        @click="deletes(item.id, item.path)"
+                      >
                         删除
                       </div>
                     </div>
@@ -888,7 +999,6 @@
               <el-form
                 ref="userblicense"
                 :model="userblicense"
-                
                 style="width: 800px"
                 size="medium"
               >
@@ -951,7 +1061,7 @@
             </el-tabs>
             <!-- 审核按钮 -->
             <div class="shenhe">
-              <el-button type="primary" @click.prevent="through(1)"
+              <el-button type="primary" :loading="buttonquick" @click.prevent="through(1)"
                 >确定</el-button
               >
             </div>
@@ -987,12 +1097,12 @@
                 <el-tab-pane label="文本信息" name="textocr">
                   <el-carousel
                     :autoplay="false"
-                    height="460px"
+                    height="600px"
                     style="margin: 0 auto"
                   >
                     <el-carousel-item>
                       <div
-                      class="carouselDiv"
+                        class="carouselDiv"
                         style="width: 470px"
                         v-for="(item, inx) in indeusername"
                         :key="inx"
@@ -1017,14 +1127,14 @@
                 <el-form
                   ref="cardForm"
                   :model="usernamesfz"
-                  
                   style="width: 400px"
                   size="medium"
                 >
                   <el-form-item label="姓名：" :required="true">
                     <el-input
+                      @blur="clickselect"
                       v-model="usernamesfz.name"
-                      placeholder="请输入内容"
+                      placeholder="请输入姓名"
                     ></el-input>
                   </el-form-item>
                   <el-form-item label="性别：">
@@ -1069,12 +1179,12 @@
                 <el-tab-pane label="文本信息" name="textocr">
                   <el-carousel
                     :autoplay="false"
-                    height="460px"
+                    height="600px"
                     style="margin: 0 auto"
                   >
                     <el-carousel-item>
                       <div
-                      class="carouselDiv"
+                        class="carouselDiv"
                         style="width: 470px"
                         v-for="(item, ind) in indeuserblic"
                         :key="ind"
@@ -1104,83 +1214,83 @@
                 <el-form
                   ref="userblicense"
                   :model="userblicense"
-                  
                   style="width: 400px"
                   size="medium"
                 >
                   <el-form-item label="单位名称:" :required="true">
                     <el-input
+                      @blur="clickselect"
                       v-model="userblicense.company"
-                      placeholder="请输入内容"
+                      placeholder="请输入单位名称"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="地址:" :required="true">
+                  <el-form-item label="地址:">
                     <el-input
                       v-model="userblicense.adress"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="实收资本:" :required="true">
+                  <el-form-item label="实收资本:">
                     <el-input
                       v-model="userblicense.paidup"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="成立日期:" :required="true">
+                  <el-form-item label="成立日期:">
                     <el-input
                       v-model="userblicense.blishment"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="有效期:" :required="true">
+                  <el-form-item label="有效期:">
                     <el-input
                       v-model="userblicense.validity"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="法人:" :required="true">
+                  <el-form-item label="法人:">
                     <el-input
                       v-model="userblicense.legal"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="注册资本:" :required="true">
+                  <el-form-item label="注册资本:">
                     <el-input
                       v-model="userblicense.register"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="登记机关:" :required="true">
+                  <el-form-item label="登记机关:">
                     <el-input
                       v-model="userblicense.authority"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="社会信用代码:" :required="true">
+                  <el-form-item label="社会信用代码:">
                     <el-input
                       v-model="userblicense.credit"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="税务登记号:" :required="true">
+                  <el-form-item label="税务登记号:">
                     <el-input
                       v-model="userblicense.taxregis"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="类型:" :required="true">
+                  <el-form-item label="类型:">
                     <el-input
                       v-model="userblicense.deltype"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="组成形式:" :required="true">
+                  <el-form-item label="组成形式:">
                     <el-input
                       v-model="userblicense.sistion"
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="经营范围:" :required="true">
+                  <el-form-item label="经营范围:">
                     <el-input
                       type="textarea"
                       :autosize="{ minRows: 3 }"
@@ -1188,7 +1298,7 @@
                       placeholder="请输入内容"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="证件编号:" :required="true">
+                  <el-form-item label="证件编号:">
                     <el-input
                       v-model="userblicense.ficate"
                       placeholder="请输入内容"
@@ -1378,6 +1488,7 @@ export default {
       qisloading: false,
       sqloading: false,
       zjloading: false,
+      buttonquick: false,
 
       // upzjloading: false,
       shancu: false,
@@ -1389,6 +1500,8 @@ export default {
       testimonytf: false,
       arrat: [],
       insuredt: "",
+      // 补充材料备注
+      remarknote: "",
     };
   },
   destroyed() {
@@ -1420,13 +1533,30 @@ export default {
     beforeClosepage() {
       window.opener.postData();
     },
-    clickselect(a) {
+    clickselect() {
+      if (this.insuredtypeid == 1 && this.usernamesfz.name) {
+        this.casecaseApi(this.usernamesfz.name);
+      } else if (this.insuredtypeid == 2 && this.userblicense.company) {
+        this.casecaseApi(this.userblicense.company);
+      } else {
+        this.$message({
+          showClose: true,
+          message: "请检查投保人名称",
+          type: "error",
+        });
+      }
+    },
+    casecaseApi(a) {
       let data = {
         risk_eval_id: this.evalid,
-        case_type: a,
+        case_type: this.selecttype,
+        insured: a,
       };
+      // console.log('dd',data);
       Casecasetype(data).then((res) => {
         if (res.code == 200) {
+          this.reviewapi();
+          this.caserepeatapi();
           this.$message({
             showClose: true,
             message: "修改成功",
@@ -1436,60 +1566,57 @@ export default {
       });
     },
     // 相同案件提示
-    caserepeatapi(){
+    caserepeatapi() {
       let data = {
-        risk_eval_id: this.$route.query.data
-      }
-      Caserepeat(data).then(res=>{
+        risk_eval_id: this.$route.query.data,
+      };
+      Caserepeat(data).then((res) => {
         if (res.data != null) {
           // const h = this.$createElement;
-          let tmp = ''
-          res.data.forEach(element => {
-            tmp+=`<span><a href='/admin/index.html#/usertable/adminfiedlook?data=`+element.id+`' target='_blank'>`+element.number+`</a></span><br>`
-            // tmp = h('div',{},[
-            //   h('span',{
-            //     on:{
-            //       click:this.tocreate
-            //     }
-            //   },`案件编号:`+element.number+``)
-            // ])
+          let tmp = "";
+          res.data.forEach((element) => {
+            tmp +=
+              `<span><a href='/admin/index.html#/usertable/adminfiedlook?data=` +
+              element.id +
+              `' target='_blank'>` +
+              element.number +
+              `</a></span><br>`;
           });
           this.$notify.close();
-          
+
           this.$notify({
-              title: '案件相同提醒',
-              dangerouslyUseHTMLString: true,
-              message: tmp,
-              duration: 0,
-              offset: 100,
-              type: 'warning'
-          })
-          
+            title: "案件相同提醒",
+            dangerouslyUseHTMLString: true,
+            message: tmp,
+            duration: 0,
+            offset: 100,
+            type: "warning",
+          });
         }
-      })
+      });
     },
 
-    insuredid(){
+    insuredid() {
       let dats = {
         insured_type: this.insuredtypeid,
         risk_eval_id: this.evalid,
-      }
-      if(this.insuredtypeid == 1){
+      };
+      if (this.insuredtypeid == 1) {
         this.insuredt = `<span>已修改至自然人</span>`;
-      }else if(this.insuredtypeid == 2){
+      } else if (this.insuredtypeid == 2) {
         this.insuredt = `<span>已修改至企业</span>`;
       }
-      Insuredtype(dats).then((res)=>{
-        if(res.code == 200){
-          this.reviewapi()
+      Insuredtype(dats).then((res) => {
+        if (res.code == 200) {
+          this.reviewapi();
           this.$message({
-              showClose: true,
-              dangerouslyUseHTMLString: true,
-              message: this.insuredt,
-              type: "success",
-            });
+            showClose: true,
+            dangerouslyUseHTMLString: true,
+            message: this.insuredt,
+            type: "success",
+          });
         }
-      })
+      });
     },
     // 任务查看api
     reviewapi() {
@@ -1522,7 +1649,8 @@ export default {
       this.selecttype = dat.case_type;
       this.insured_type = dat.insured_type;
       this.insuredtypeid = dat.insured_type;
-      // console.log('2222',dat.insured_type);
+      console.log("数据", dat);
+      this.remarknote = dat.remark;
 
       if (dat.preserv_amount) {
         this.from.input = dat.preserv_amount;
@@ -1534,7 +1662,19 @@ export default {
       this.tltle = dat;
       // 身份证
       this.userfilesz = dat.files.id_card;
+
+      if (this.insuredtypeid == 1) {
+        if (dat.insured && this.userfilesz[0].ocr.words_result.姓名.words == "") {
+          this.usernamesfz.name = dat.insured;
+        } else {
+          this.usernamesfz.name = this.userfilesz[0].ocr.words_result.姓名.words;
+        }
+      }
+      
       if (this.userfilesz != null) {
+        this.userfilesz.map((i) => {
+          i.path = encodeURIComponent(i.path);
+        });
         let caidfile = [];
         let caidsrcs = [];
         for (var t = 0; t < this.userfilesz.length; t++) {
@@ -1566,7 +1706,6 @@ export default {
           this.usersrces = false;
         }
 
-        this.usernamesfz.name = this.userfilesz[0].ocr.words_result.姓名.words;
         this.usernamesfz.sex = this.userfilesz[0].ocr.words_result.性别.words;
         this.usernamesfz.csdate = csdatesr(
           this.userfilesz[0].ocr.words_result.出生.words
@@ -1581,7 +1720,20 @@ export default {
       }
       // 营业执照
       this.blicense = dat.files.business_license;
+
+      if (this.insuredtypeid == 2) {
+        if (dat.insured && this.blicense[0].ocr.words_result.单位名称.words == "") {
+          this.userblicense.company = dat.insured;
+        } else {
+          this.userblicense.company =
+            this.blicense[0].ocr.words_result.单位名称.words;
+        }
+      }
+      
       if (this.blicense != null) {
+        this.blicense.map((item) => {
+          item.path = encodeURIComponent(item.path);
+        });
         let blidocx = [];
         let blisrcs = [];
         for (var h = 0; h < this.blicense.length; h++) {
@@ -1618,8 +1770,6 @@ export default {
         // 登记机关: 社会信用代码: 税务登记号: 类型: 组成形式:
         // 经营范围: 证件编号:
 
-        this.userblicense.company =
-          this.blicense[0].ocr.words_result.单位名称.words;
         this.userblicense.adress = this.blicense[0].ocr.words_result.地址.words;
         this.userblicense.paidup =
           this.blicense[0].ocr.words_result.实收资本.words;
@@ -1650,7 +1800,12 @@ export default {
       }
       // 起诉状图片
       this.plaintiff = dat.files.indictment;
+      // console.log(encodeURIComponent(this.plaintiff[0].path));
+
       if (this.plaintiff != null) {
+        this.plaintiff.map((i) => {
+          i.path = encodeURIComponent(i.path);
+        });
         this.plaintifftf = true;
         var k = [];
         var z = [];
@@ -1687,7 +1842,11 @@ export default {
       }
 
       this.preservation = dat.files.preservation;
+
       if (this.preservation != null) {
+        this.preservation.map((i) => {
+          i.path = encodeURIComponent(i.path);
+        });
         this.preservationtf = true;
         var bo = [];
         var u = [];
@@ -1719,7 +1878,11 @@ export default {
       }
       // 证据材料
       this.testimony = dat.files.testimony;
+
       if (this.testimony != null) {
+        this.testimony.map((i) => {
+          i.path = encodeURIComponent(i.path);
+        });
         this.testimonytf = true;
         var tiomonimg = [];
         var tiomonfile = [];
@@ -1915,8 +2078,10 @@ export default {
           if (this.usernamesfz.name != "") {
             if (this.feedback == 1 || this.feedback == 2) {
               if (!this.from.input || this.from.input != 0) {
+                this.buttonquick = true;
                 this.apidiledfrom();
               } else {
+                this.buttonquick = false;
                 this.$message({
                   showClose: true,
                   message: "保险金额不能为空或者0",
@@ -1924,9 +2089,11 @@ export default {
                 });
               }
             } else if (this.feedback == 3) {
+              this.buttonquick = true;
               this.apidiledfrom();
             }
           } else {
+            this.buttonquick = false;
             this.$message({
               showClose: true,
               message: "请检查投保人姓名",
@@ -1937,8 +2104,10 @@ export default {
           if (this.userblicense.company != "") {
             if (this.feedback == 1 || this.feedback == 2) {
               if (this.from.input) {
+                this.buttonquick = true;
                 this.apidiledfrom();
               } else {
+                this.buttonquick = false;
                 this.$message({
                   showClose: true,
                   message: "保险金额不能为空",
@@ -1946,9 +2115,11 @@ export default {
                 });
               }
             } else if (this.feedback == 3) {
+              this.buttonquick = true;
               this.apidiledfrom();
             }
           } else {
+            this.buttonquick = false;
             this.$message({
               showClose: true,
               message: "请检查投保人单位名称",
@@ -1992,9 +2163,15 @@ export default {
         })
         .then((res) => {
           if (res.status == 200) {
-            this.qisloading = false;
-            this.sqloading = false;
-            this.zjloading = false;
+            if (dat == 3) {
+              this.qisloading = false;
+            }
+            if (dat == 4) {
+              this.sqloading = false;
+            }
+            if (dat == 5) {
+              this.zjloading = false;
+            }
           }
           let url = window.URL.createObjectURL(
             new Blob([res.data], { type: "application/zip" })
@@ -2010,9 +2187,15 @@ export default {
           files.click();
         })
         .catch(() => {
-          this.qisloading = false;
-          this.sqloading = false;
-          this.zjloading = false;
+          if (dat == 3) {
+            this.qisloading = false;
+          }
+          if (dat == 4) {
+            this.sqloading = false;
+          }
+          if (dat == 5) {
+            this.zjloading = false;
+          }
         });
     },
 
@@ -2028,7 +2211,7 @@ export default {
       } else {
         this.fus = "";
       }
-      
+
       var das = {
         usernamesfz: this.usernamesfz,
         userblicense: this.userblicense,
@@ -2046,6 +2229,7 @@ export default {
       Feedback(data)
         .then((res) => {
           if (res.code == 200) {
+            this.buttonquick = false;
             this.$message({
               showClose: true,
               message: "提交成功",
@@ -2139,7 +2323,6 @@ export default {
           padding: 9px 20px;
         }
       }
-      
     }
     .martexts {
       display: flex;
@@ -2201,7 +2384,7 @@ export default {
         margin-left: 160px;
         padding: 9px 15px;
       }
-      .listchuadn{
+      .listchuadn {
         display: flex;
         align-items: center;
       }
@@ -2340,17 +2523,7 @@ export default {
         }
       }
     }
-    // .el-carousel {
-    //   width: 500px;
-    //   height: 630px !important;
-    //   .el-carousel__container {
-    //     height: 630px !important;
-    //     .el-carousel__item,
-    //     .el-carousel__mask {
-    //       height: initial;
-    //     }
-    //   }
-    // }
+
     .adminiewrss {
       display: flex;
       justify-content: center;

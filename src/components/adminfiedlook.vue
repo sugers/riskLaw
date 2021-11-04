@@ -19,11 +19,15 @@
           <el-col :span="24">
             <div class="martexts flexphone">
               <p>申请人：</p>
-              <span class="flexphonespan">{{ tltle.salesman ? tltle.salesman : "" }}</span>
+              <span class="flexphonespan">{{
+                tltle.salesman ? tltle.salesman : ""
+              }}</span>
             </div>
             <div class="martexts flexphone">
               <p>联系电话：</p>
-              <span class="flexphonespan">{{ tltle.phone ? tltle.phone : "" }}</span>
+              <span class="flexphonespan">{{
+                tltle.phone ? tltle.phone : ""
+              }}</span>
             </div>
             <div class="martexts flexphone">
               <p>案由类型：</p>
@@ -116,7 +120,11 @@
                       :title="item.file_name"
                       @click="onopensfz(ind)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -151,7 +159,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -309,7 +321,11 @@
                       :title="item.file_name"
                       @click="onPreview(inde)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -344,7 +360,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -410,7 +430,9 @@
             <div class="martexts flexphone">
               <p>请求金额:</p>
               <span class="flexphonespan">
-                <span class="flexphonespan">{{ complaint.amount }}</span>
+                <span class="flexphonespan">{{
+                  complaint.amount | currency
+                }}</span>
               </span>
             </div>
             <div class="martexts flexphone">
@@ -458,6 +480,7 @@
                   <el-button
                     class="policy_bton"
                     type="primary"
+                    :loading="qisloading"
                     @click.prevent="alldown(3)"
                     >全部下载</el-button
                   >
@@ -493,7 +516,11 @@
                       :title="item.file_name"
                       @click="qisuopenViewer(inst)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -528,7 +555,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -607,6 +638,7 @@
                   <el-button
                     class="policy_bton"
                     type="primary"
+                    :loading="sqloading"
                     @click.prevent="alldown(4)"
                     >全部下载</el-button
                   >
@@ -642,7 +674,11 @@
                       :title="item.file_name"
                       @click="bqopenViewer(inds)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -677,7 +713,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -711,6 +751,10 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
+            <div class="martexts flexphone" v-if="remarknote">
+              <p>备注：</p>
+              <span class="flexphonespan">{{ remarknote }}</span>
+            </div>
             <div class="marwers">
               <p class="marwers_p">证据材料：</p>
               <div>
@@ -719,6 +763,7 @@
                     <el-button
                       class="policy_bton"
                       type="primary"
+                      :loading="zjloading"
                       @click.prevent="alldown(5)"
                       >全部下载</el-button
                     >
@@ -757,7 +802,11 @@
                       :title="item.file_name"
                       @click="zjopenmony(dome)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -794,7 +843,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -828,7 +881,7 @@
       <div class="admreviewerss">
         <el-row>
           <el-col :span="24">
-            <div class="martexts flexphone ">
+            <div class="martexts flexphone">
               <p>案件证据:</p>
               <span class="flexphonespan">{{ internalForm.evidence }}</span>
             </div>
@@ -845,16 +898,18 @@
             <div class="martexts flexphone">
               <p>保险保额:</p>
               <span class="flexphonespan">
-                <span class="flexphonespan">{{ internalForm.coverage | currency }}</span>
+                <span class="flexphonespan">{{
+                  internalForm.coverage | currency
+                }}</span>
               </span>
             </div>
-            <div class="martexts flexphone">
+            <!-- <div class="martexts flexphone">
               <p>拒绝承保原因:</p>
               <span class="flexphonespan">
                 <span class="flexphonespan">{{ internalForm.process }}</span>
               </span>
-            </div>
-            <div class="martexts flexphone" v-if="law_opinion_path != ''">
+            </div> -->
+            <div class="martexts flexphone" v-if="feedtrade == 4">
               <p>附件：</p>
               <el-button type="primary" @click.prevent="falbookes"
                 >查看法律意见书</el-button
@@ -896,7 +951,9 @@
               <div class="martexts flexphone">
                 <p>保费：</p>
                 <span class="flexphonespan">
-                  <span class="flexphonespan">{{ usertiduy.baoxianRMB | currency }}</span>
+                  <span class="flexphonespan">{{
+                    usertiduy.baoxianRMB | currency
+                  }}</span>
                 </span>
               </div>
               <div class="marwers">
@@ -916,7 +973,11 @@
                       :title="item.file_name"
                       @click="cdtransrcopen(insrc)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -948,7 +1009,11 @@
                       "
                       @click="btnclicks(item.path)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -963,6 +1028,43 @@
                   </span>
                 </div>
               </div>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="fromrevie">
+        <el-row>
+          <el-col :span="24">
+            <div class="grid-content">流程日志</div>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="admreviewerss">
+        <el-row>
+          <el-col :span="24">
+            <div class="elstable">
+              <el-table :data="csteps" height="250" border style="width: 100%">
+                <el-table-column
+                  prop="created_at"
+                  label="时间"
+                  fixed
+                  width="140"
+                >
+                </el-table-column>
+                <el-table-column prop="stage" label="节点名称" width="180">
+                </el-table-column>
+                <el-table-column prop="operation" label="操作" width="180">
+                </el-table-column>
+                <el-table-column prop="username" label="操作者" width="180">
+                </el-table-column>
+                <el-table-column
+                  prop="remark"
+                  show-overflow-tooltip
+                  min-width="450"
+                  label="备注说明"
+                >
+                </el-table-column>
+              </el-table>
             </div>
           </el-col>
         </el-row>
@@ -1076,7 +1178,7 @@ export default {
         basis: "",
         notes: "",
         coverage: "",
-        process: "",
+        // process: "",
       },
       dialogff: false,
       // 身份证
@@ -1165,6 +1267,13 @@ export default {
       plaintifftf: false,
       preservationtf: false,
       testimonytf: false,
+
+      // loadimg
+      qisloading: false,
+      sqloading: false,
+      zjloading: false,
+      // 补充材料备注
+      remarknote: "",
     };
   },
   destroyed() {
@@ -1176,12 +1285,13 @@ export default {
     this.$nextTick(() => {
       this.$refs["myscrollbar"].wrap.scrollTop = document.body.scrollTop = 0;
     });
-    this.reviewapi();
+    
   },
   mounted() {
     window.addEventListener("beforeunload", (e) => {
       this.beforeClosepage(e);
     });
+    this.reviewapi();
     var userinfor = JSON.parse(localStorage.getItem("userinfor"));
     if (userinfor.roleID == 1001) {
       this.shancu = true;
@@ -1257,7 +1367,7 @@ export default {
       });
     },
     taskview(dat) {
-      // console.log('dat',dat);
+      console.log("dat", dat);
       this.feedcudan = dat.trade;
       // 风险评估id
       this.evalid = dat.id;
@@ -1267,6 +1377,7 @@ export default {
       this.insured_type = dat.insured_type;
       this.usertiduy.baoxianRMB = dat.amount;
       this.untrade_res = dat.untrade_res;
+      this.remarknote = dat.remark;
       // console.log("dat", dat);
 
       this.law_opinion_path = dat.law_opinion_path;
@@ -1279,8 +1390,17 @@ export default {
       this.tltle = dat;
       // 身份证
       this.userfilesz = dat.files.id_card;
+      
+      if (dat.insured) {
+        this.usernamesfz.name = dat.insured;
+      } else {
+        this.usernamesfz.name = this.userfilesz[0].ocr.words_result.姓名.words;
+      }
       // usernamesfz
       if (this.userfilesz != null) {
+        this.userfilesz.map(i=>{
+          i.path = encodeURIComponent(i.path)
+        })
         let caidfile = [];
         let caidsrcs = [];
         for (var t = 0; t < this.userfilesz.length; t++) {
@@ -1312,7 +1432,6 @@ export default {
           this.usersrces = false;
         }
 
-        this.usernamesfz.name = this.userfilesz[0].ocr.words_result.姓名.words;
         this.usernamesfz.sex = this.userfilesz[0].ocr.words_result.性别.words;
         this.usernamesfz.csdate = csdatesr(
           this.userfilesz[0].ocr.words_result.出生.words
@@ -1324,7 +1443,17 @@ export default {
       }
       // 营业执照
       this.blicense = dat.files.business_license;
+      
+      if (dat.insured) {
+        this.userblicense.company = dat.insured;
+      } else {
+        this.userblicense.company =
+          this.blicense[0].ocr.words_result.单位名称.words;
+      }
       if (this.blicense != null) {
+        this.blicense.map(item=>{
+          item.path = encodeURIComponent(item.path)
+        })
         let blidocx = [];
         let blisrcs = [];
         for (var h = 0; h < this.blicense.length; h++) {
@@ -1357,8 +1486,6 @@ export default {
         // 登记机关: 社会信用代码: 税务登记号: 类型: 组成形式:
         // 经营范围: 证件编号:
 
-        this.userblicense.company =
-          this.blicense[0].ocr.words_result.单位名称.words;
         this.userblicense.adress = this.blicense[0].ocr.words_result.地址.words;
         this.userblicense.paidup =
           this.blicense[0].ocr.words_result.实收资本.words;
@@ -1389,7 +1516,11 @@ export default {
         this.plaintiff = dat.files.indictment;
         this.plaintifftf = true;
       }
+      
       if (this.plaintiff != null) {
+        this.plaintiff.map(i=>{
+          i.path = encodeURIComponent(i.path)
+        })
         var k = [];
         var z = [];
         for (let p = 0; p < this.plaintiff.length; p++) {
@@ -1423,7 +1554,11 @@ export default {
         this.preservation = dat.files.preservation;
         this.preservationtf = true;
       }
+      
       if (this.preservation != null) {
+        this.preservation.map(i=>{
+          i.path = encodeURIComponent(i.path)
+        })
         var bo = [];
         var u = [];
         for (let e = 0; e < this.preservation.length; e++) {
@@ -1457,7 +1592,11 @@ export default {
         this.testimony = dat.files.testimony;
         this.testimonytf = true;
       }
+      
       if (this.testimony != null) {
+        this.testimony.map(i=>{
+          i.path = encodeURIComponent(i.path)
+        })
         var tiomonimg = [];
         var tiomonfile = [];
         for (let f = 0; f < this.testimony.length; f++) {
@@ -1490,7 +1629,11 @@ export default {
       }
 
       this.transaction = dat.files.transaction;
+      
       if (this.transaction != null) {
+        this.transaction.map(i=>{
+          i.path = encodeURIComponent(i.path)
+        })
         let trantimg = [];
         let trantfile = [];
         for (let r = 0; r < this.transaction.length; r++) {
@@ -1524,12 +1667,12 @@ export default {
       }
       // 上一步得数据
       let valinfo = dat.eval_info_json;
-      if (valinfo.usernamesfz) {
-        this.usernamesfz = valinfo.usernamesfz;
-      }
-      if (valinfo.userblicense) {
-        this.userblicense = valinfo.userblicense;
-      }
+      // if (valinfo.usernamesfz) {
+      //   this.usernamesfz = valinfo.usernamesfz;
+      // }
+      // if (valinfo.userblicense) {
+      //   this.userblicense = valinfo.userblicense;
+      // }
       if (valinfo.preserveForm) {
         this.preserveForm = valinfo.preserveForm;
       }
@@ -1538,6 +1681,9 @@ export default {
       }
       if (valinfo.internalForm) {
         this.internalForm = valinfo.internalForm;
+        if (dat.law_opinion.remark) {
+          this.internalForm.notes = dat.law_opinion.remark;
+        }
       }
     },
     // 出单查看法律意见书
@@ -1650,6 +1796,15 @@ export default {
     },
 
     alldown(dat) {
+      if (dat == 3) {
+        this.qisloading = true;
+      }
+      if (dat == 4) {
+        this.sqloading = true;
+      }
+      if (dat == 5) {
+        this.zjloading = true;
+      }
       // console.log('data',data);
       // 3.起诉状；4.保全申请书；5.证据材料
       let url = this.https + "/api/v1/admin/review/case/download";
@@ -1660,19 +1815,42 @@ export default {
       axios(url, {
         params: { ...data },
         responseType: "blob",
-      }).then((res) => {
-        // console.log(res);
-        let url = URL.createObjectURL(new Blob([res.data]));
-        let filename = window.decodeURI(
-          res.headers["content-disposition"].split("=")[1],
-          "UTF-8"
-        );
-        let filenames = filename.replace('"', "").replace('"', "");
-        let files = document.createElement("a");
-        files.href = url;
-        files.download = filenames;
-        files.click();
-      });
+      })
+        .then((res) => {
+          // console.log(res);
+          if (res.status == 200) {
+            if (dat == 3) {
+              this.qisloading = false;
+            }
+            if (dat == 4) {
+              this.sqloading = false;
+            }
+            if (dat == 5) {
+              this.zjloading = false;
+            }
+          }
+          let url = URL.createObjectURL(new Blob([res.data]));
+          let filename = window.decodeURI(
+            res.headers["content-disposition"].split("=")[1],
+            "UTF-8"
+          );
+          let filenames = filename.replace('"', "").replace('"', "");
+          let files = document.createElement("a");
+          files.href = url;
+          files.download = filenames;
+          files.click();
+        })
+        .catch(() => {
+          if (dat == 3) {
+            this.qisloading = false;
+          }
+          if (dat == 4) {
+            this.sqloading = false;
+          }
+          if (dat == 5) {
+            this.zjloading = false;
+          }
+        });
     },
     btnclicks(dat) {
       var tempwindow = window.open("_blank"); // 先打开页面

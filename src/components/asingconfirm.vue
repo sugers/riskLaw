@@ -24,11 +24,15 @@
             </div>
             <div class="martexts flexphone">
               <p>申请人：</p>
-              <span class="flexphonespan">{{ tltle.salesman ? tltle.salesman : "" }}</span>
+              <span class="flexphonespan">{{
+                tltle.salesman ? tltle.salesman : ""
+              }}</span>
             </div>
             <div class="martexts flexphone">
               <p>联系电话：</p>
-              <span class="flexphonespan">{{ tltle.phone ? tltle.phone : "" }}</span>
+              <span class="flexphonespan">{{
+                tltle.phone ? tltle.phone : ""
+              }}</span>
             </div>
             <div class="martexts flexphone">
               <p>案由类型：</p>
@@ -133,7 +137,11 @@
                       :title="item.file_name"
                       @click="onopensfz(ind)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -168,7 +176,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -209,7 +221,7 @@
             </div>
             <div class="martexts flexphone">
               <p>成立日期:</p>
-              <span class="flexphonespan" >
+              <span class="flexphonespan">
                 <span class="flexphonespan">{{ userblicense.blishment }}</span>
               </span>
             </div>
@@ -325,7 +337,11 @@
                       :title="item.file_name"
                       @click="onPreview(inde)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -360,7 +376,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -419,7 +439,9 @@
             </div>
             <div class="martexts flexphone">
               <p>请求金额:</p>
-              <span class="flexphonespan">{{ complaint.amount }}</span>
+              <span class="flexphonespan">{{
+                complaint.amount | currency
+              }}</span>
             </div>
             <div class="martexts flexphone">
               <p>事实简要陈述:</p>
@@ -494,7 +516,11 @@
                       :title="item.file_name"
                       @click="qisuopenViewer(inst)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -529,7 +555,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -577,7 +607,9 @@
             <div class="martexts flexphone">
               <p>保全金额:</p>
 
-              <span class="flexphonespan">{{ preserveForm.pramount }}</span>
+              <span class="flexphonespan">{{
+                preserveForm.pramount | currency
+              }}</span>
             </div>
             <div class="martexts flexphone">
               <p>保全标的:</p>
@@ -642,7 +674,11 @@
                       :title="item.file_name"
                       @click="bqopenViewer(inds)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -677,7 +713,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -766,7 +806,11 @@
                       :title="item.file_name"
                       @click="zjopenmony(dome)"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -803,7 +847,11 @@
                       @click="btnclicks(item.path)"
                       :title="item.file_name"
                     >
-                      {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                      {{
+                        `【${item.file_name.substring(
+                          item.file_name.lastIndexOf(".") + 1
+                        )}】`
+                      }}{{ item.file_name }}
                     </p>
                     <div class="btntext">
                       <a
@@ -854,15 +902,17 @@
             <div class="martexts flexphone">
               <p>保险保额:</p>
               <span class="flexphonespan">
-                <span class="flexphonespan">{{ internalForm.coverage | currency }}</span>
+                <span class="flexphonespan">{{
+                  internalForm.coverage | currency
+                }}</span>
               </span>
             </div>
-            <div class="martexts flexphone">
+            <!-- <div class="martexts flexphone">
               <p>拒绝承保原因:</p>
               <span class="flexphonespan">
                 <span class="flexphonespan">{{ internalForm.process }}</span>
               </span>
-            </div>
+            </div> -->
             <div class="martexts flexphone">
               <p>附件：</p>
               <el-button type="primary" @click.prevent="falbooks"
@@ -976,7 +1026,11 @@
                         :title="item.file_name"
                         @click="cdtransrcopen(insrc)"
                       >
-                        {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                        {{
+                          `【${item.file_name.substring(
+                            item.file_name.lastIndexOf(".") + 1
+                          )}】`
+                        }}{{ item.file_name }}
                       </p>
                       <div class="btntext">
                         <a
@@ -1013,7 +1067,11 @@
                         "
                         @click="btnclicks(item.path)"
                       >
-                        {{`【${item.file_name.substring(item.file_name.lastIndexOf(".") + 1)}】`}}{{ item.file_name }}
+                        {{
+                          `【${item.file_name.substring(
+                            item.file_name.lastIndexOf(".") + 1
+                          )}】`
+                        }}{{ item.file_name }}
                       </p>
                       <div class="btntext">
                         <a
@@ -1070,7 +1128,9 @@
               <el-tab-pane label="流程操作" name="first">
                 <div class="tabpane">
                   <div>
-                    <div style="margin-bottom: 10px" class="comfirmTitle">出单情况核实</div>
+                    <div style="margin-bottom: 10px" class="comfirmTitle">
+                      出单情况核实
+                    </div>
                     <div>
                       <el-radio-group v-model="feedback">
                         <el-radio :label="1">已核实</el-radio>
@@ -1079,15 +1139,44 @@
                   </div>
                 </div>
               </el-tab-pane>
-              <!-- <el-tab-pane label="流程日志" name="second"
-                >暂无</el-tab-pane
-              > -->
+              <el-tab-pane label="流程日志" name="second">
+                <div class="elstable">
+                  <el-table
+                    :data="csteps"
+                    height="250"
+                    border
+                    style="width: 100%"
+                  >
+                    <el-table-column
+                      prop="created_at"
+                      label="时间"
+                      fixed
+                      width="140"
+                    >
+                    </el-table-column>
+                    <el-table-column prop="stage" label="节点名称" width="180">
+                    </el-table-column>
+                    <el-table-column prop="operation" label="操作" width="180">
+                    </el-table-column>
+                    <el-table-column prop="username" label="操作者" width="180">
+                    </el-table-column>
+                    <el-table-column
+                      prop="remark"
+                      show-overflow-tooltip
+                      min-width="450"
+                      label="备注说明"
+                    >
+                    </el-table-column>
+                  </el-table>
+                </div>
+              </el-tab-pane>
             </el-tabs>
             <!-- 审核按钮 -->
             <div class="shenhe">
               <el-button
                 v-if="UserID != 2001"
                 type="primary"
+                :loading="buttonverify"
                 @click.prevent="through(1)"
                 >确定</el-button
               >
@@ -1095,6 +1184,7 @@
                 class="shenhebton"
                 v-else
                 type="primary"
+                :loading="buttonverify"
                 @click.prevent="through(0)"
                 >确定</el-button
               >
@@ -1241,7 +1331,7 @@ export default {
         basis: "",
         notes: "",
         coverage: "",
-        process: "",
+        // process: "",
       },
       revname: "",
       dialogff: false,
@@ -1328,6 +1418,7 @@ export default {
       qisloading: false,
       sqloading: false,
       zjloading: false,
+      buttonverify: false,
 
       plaintifftf: false,
       preservationtf: false,
@@ -1453,7 +1544,16 @@ export default {
       this.tltle = dat;
       // 身份证
       this.userfilesz = dat.files.id_card;
+
+      if (dat.insured) {
+        this.usernamesfz.name = dat.insured;
+      } else {
+        this.usernamesfz.name = this.userfilesz[0].ocr.words_result.姓名.words;
+      }
       if (this.userfilesz != null) {
+        this.userfilesz.map((i) => {
+          i.path = encodeURIComponent(i.path);
+        });
         let caidfile = [];
         let caidsrcs = [];
         for (var t = 0; t < this.userfilesz.length; t++) {
@@ -1485,7 +1585,6 @@ export default {
           this.usersrces = false;
         }
 
-        this.usernamesfz.name = this.userfilesz[0].ocr.words_result.姓名.words;
         this.usernamesfz.sex = this.userfilesz[0].ocr.words_result.性别.words;
         this.usernamesfz.csdate = csdatesr(
           this.userfilesz[0].ocr.words_result.出生.words
@@ -1497,7 +1596,17 @@ export default {
       }
       // 营业执照
       this.blicense = dat.files.business_license;
+
+      if (dat.insured) {
+        this.userblicense.company = dat.insured;
+      } else {
+        this.userblicense.company =
+          this.blicense[0].ocr.words_result.单位名称.words;
+      }
       if (this.blicense != null) {
+        this.blicense.map((item) => {
+          item.path = encodeURIComponent(item.path);
+        });
         let blidocx = [];
         let blisrcs = [];
         for (var h = 0; h < this.blicense.length; h++) {
@@ -1530,8 +1639,6 @@ export default {
         // 登记机关: 社会信用代码: 税务登记号: 类型: 组成形式:
         // 经营范围: 证件编号:
 
-        this.userblicense.company =
-          this.blicense[0].ocr.words_result.单位名称.words;
         this.userblicense.adress = this.blicense[0].ocr.words_result.地址.words;
         this.userblicense.paidup =
           this.blicense[0].ocr.words_result.实收资本.words;
@@ -1559,7 +1666,11 @@ export default {
       }
       // 起诉状
       this.plaintiff = dat.files.indictment;
+
       if (this.plaintiff != null) {
+        this.plaintiff.map((i) => {
+          i.path = encodeURIComponent(i.path);
+        });
         this.plaintifftf = true;
 
         var k = [];
@@ -1593,7 +1704,11 @@ export default {
       }
       // if(this.plaintiff){}
       this.preservation = dat.files.preservation;
+
       if (this.preservation != null) {
+        this.preservation.map((i) => {
+          i.path = encodeURIComponent(i.path);
+        });
         this.preservationtf = true;
 
         var bo = [];
@@ -1629,7 +1744,11 @@ export default {
       }
 
       this.testimony = dat.files.testimony;
+
       if (this.testimony != null) {
+        this.testimony.map((i) => {
+          i.path = encodeURIComponent(i.path);
+        });
         this.testimonytf = true;
         var tiomonimg = [];
         var tiomonfile = [];
@@ -1662,7 +1781,11 @@ export default {
       }
 
       this.transaction = dat.files.transaction;
+
       if (this.transaction != null) {
+        this.transaction.map((i) => {
+          i.path = encodeURIComponent(i.path);
+        });
         this.thepath.push(dat.files.transaction[0].path);
         let trantimg = [];
         let trantfile = [];
@@ -1713,6 +1836,9 @@ export default {
       }
       if (valinfo.internalForm) {
         this.internalForm = valinfo.internalForm;
+        if (dat.law_opinion.remark) {
+          this.internalForm.notes = dat.law_opinion.remark;
+        }
       }
     },
 
@@ -1850,9 +1976,15 @@ export default {
         .then((res) => {
           // console.log(res);
           if (res.status == 200) {
-            this.qisloading = false;
-            this.sqloading = false;
-            this.zjloading = false;
+            if (dat == 3) {
+              this.qisloading = false;
+            }
+            if (dat == 4) {
+              this.sqloading = false;
+            }
+            if (dat == 5) {
+              this.zjloading = false;
+            }
           }
           let url = URL.createObjectURL(new Blob([res.data]));
           let filename = window.decodeURI(
@@ -1866,9 +1998,15 @@ export default {
           files.click();
         })
         .catch(() => {
-          this.qisloading = false;
-          this.sqloading = false;
-          this.zjloading = false;
+          if (dat == 3) {
+            this.qisloading = false;
+          }
+          if (dat == 4) {
+            this.sqloading = false;
+          }
+          if (dat == 5) {
+            this.zjloading = false;
+          }
         });
     },
     // 金额大写
@@ -1976,6 +2114,7 @@ export default {
     // 快速反馈按钮
     through(a) {
       if (a == 1) {
+        this.buttonverify = true;
         // 修改出单
         var dat = {
           risk_eval_id: this.evalid,
@@ -1998,6 +2137,7 @@ export default {
               message: "已核实",
               type: "success",
             });
+            this.buttonverify = false;
             this.$router.push({
               path: "/usertable/adminfiedlook",
               query: {
@@ -2007,8 +2147,9 @@ export default {
           }
         });
       } else if (a == 0) {
+        this.buttonverify = true;
         if (this.feedcudan == 1) {
-          let sumnew = Number(moneyDelete(this.usertiduy.baoxianRMB))
+          let sumnew = Number(moneyDelete(this.usertiduy.baoxianRMB));
           if (sumnew != 0) {
             if (this.filtesd.length != 0) {
               this.evaltradeapi(
@@ -2018,15 +2159,16 @@ export default {
                 Number(moneyDelete(this.usertiduy.baoxianRMB)),
                 this.nosinglereason
               );
-            }else{
+            } else {
+              this.buttonverify = false;
               this.$message({
                 showClose: true,
                 message: "请上传保单附件",
                 type: "error",
               });
             }
-            
           } else {
+            this.buttonverify = false;
             this.$message({
               showClose: true,
               message: "请填写保险金额",
@@ -2050,6 +2192,7 @@ export default {
             //   },
             // });
           } else {
+            this.buttonverify = false;
             this.$message({
               showClose: true,
               message: "请填写未出单原因",
@@ -2085,6 +2228,7 @@ export default {
             message: "修改成功",
             type: "success",
           });
+          this.buttonverify = false;
           this.$router.push({
             path: "/usertable/adminfiedlook",
             query: {
@@ -2150,17 +2294,17 @@ export default {
       let filesimg = {
         file_name: imgname,
         path: filtes,
-      }
+      };
       if (
         imgsuffix.toLowerCase() == "jpg" ||
         imgsuffix.toLowerCase() == "jpeg" ||
         imgsuffix.toLowerCase() == "png"
       ) {
-        this.transrcs.push(filesimg)
+        this.transrcs.push(filesimg);
         this.tranboolesrc = true;
         this.tranimggevie.push(htts + "/" + filtes);
-      }else{
-        this.tranfiles.push(filesimg)
+      } else {
+        this.tranfiles.push(filesimg);
         this.tranboolefile = true;
       }
       // let fileimages = {
@@ -2239,10 +2383,6 @@ export default {
           padding: 9px 20px;
         }
       }
-    }
-    .adminiewrss {
-      display: flex;
-      justify-content: flex-end;
     }
     .martexts {
       display: flex;

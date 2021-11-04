@@ -43,7 +43,7 @@ if (process.env.NODE_ENV == 'development') {
 }
 
 // 请求超时
-axios.defaults.timeout = 120000;
+axios.defaults.timeout = 220000;
 axios.defaults.headers.Authorization = ''
 
 // 默认post请求tou

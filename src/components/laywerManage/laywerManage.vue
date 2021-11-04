@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <!-- 筛选按钮 -->
-                    <div class="screenBtn">
+                    <div class="screenBtn" style="display: flex;">
                         <el-button type="info" icon="el-icon-refresh" @click="refresh">重置</el-button>
                         <el-button type="primary" icon="el-icon-search" @click="searchClick">搜索
                         </el-button>
@@ -319,7 +319,7 @@
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
-        width: 860px;
+        /* width: 860px; */
         justify-content: flex-start;
     }
 

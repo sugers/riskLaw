@@ -25,6 +25,7 @@ import OverviewTable from '../components/OverviewTable/OverviewTable.vue'
 import laywerChart from '../components/laywerStatistics/laywerChart/laywerChart.vue'
 import layweroverTable from '../components/laywerStatistics/layweroverTable/layweroverTable.vue'
 import laywerWorkload from '../components/laywerStatistics/laywerWorkload/laywerWorkload.vue'
+import CasetypeAdmin from '../components/CasetypeAdmin.vue'
 // import Layout from '../layout'
 import store from '../store/store/index'
 const originalPush = VueRouter.prototype.push
@@ -175,6 +176,15 @@ const routes = [
                 component: notics,
                 meta: {
                     requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                },
+            },
+            // 案由类型管理
+            {
+                path: '/CasetypeAdmin',
+                name: 'CasetypeAdmin',
+                component: CasetypeAdmin,
+                meta: {
+                    requireAuth: true
                 },
             },
             {

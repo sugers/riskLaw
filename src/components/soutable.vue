@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="pingtai" class="soutableDiv">
-      <el-row :gutter="12" class="elrow">
+      <el-row :gutter="12">
         <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
@@ -73,7 +73,7 @@
         </el-col>
       </el-row>
 
-      <el-row :gutter="12">
+      <el-row :gutter="12" class="elrow">
         <el-col :span="8">
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div class="databoard">
@@ -112,21 +112,21 @@
           </el-card>
         </el-col>
       </el-row>
-      <div style="margin-top: 20px; display: flex">
-        <div style="flex: 1">
+      <div style="margin-top: 12px; display: flex">
+        <div style="flex: 1; width: 78%;margin-right:12px;">
           <div>
             <el-card shadow="hover" :body-style="{ padding: '10px' }">
               <EchartsTable :id="'submit'" :data="submitdatarange" />
             </el-card>
           </div>
-          <div style="margin-top: 20px">
+          <div style="margin-top: 12px">
             <el-card shadow="hover" :body-style="{ padding: '10px' }">
-              <div id="echars4" style="width: 89%; height: 400px"></div>
+              <div id="echars4" style="width: 100%; height: 400px"></div>
             </el-card>
           </div>
         </div>
 
-        <div class="admincare">
+        <div class="admincare" style="width: 20%">
           <el-card shadow="hover" :body-style="{ padding: '10px' }">
             <div>
               <div class="paiming">
@@ -161,7 +161,7 @@
             </div>
           </el-card>
           <el-card
-            style="margin-top: 20px"
+            style="margin-top: 12px"
             shadow="hover"
             :body-style="{ padding: '10px' }"
           >
@@ -239,28 +239,62 @@
           </el-card>
         </el-col>
       </el-row>
+      <el-row :gutter="12" class="elrow">
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月提交总金额</div>
+                <div class="number baoe">
+                  ￥{{ risk_preserv_amount_count | currency }}
+                </div>
+              </div>
+              <img src="../../static/img/baoe.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月通过总金额</div>
+                <div class="number zonge">
+                  ￥{{ risk_underwriting_amount_count | currency }}
+                </div>
+              </div>
+              <img src="../../static/img/zonge.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover" :body-style="{ padding: '10px' }">
+            <div class="databoard">
+              <div class="datatext">
+                <div class="txt">本月出单总金额</div>
+                <div class="number chudan">￥{{ risk_amount_count | currency }}</div>
+              </div>
+              <img src="../../static/img/chudan.png" alt="图标" />
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
     </div>
     <div class="headdata" v-if="baoxingpint">
-      <div style="flex: 1">
+      <div style="flex: 1; width: 78%; margin-right:12px;">
         <div>
           <div>
             <el-card shadow="hover" :body-style="{ padding: '10px' }">
               <EchartsTable :id="'echars1'" :data="chartstable1" />
             </el-card>
           </div>
-          <div style="margin-top: 20px">
+          <div style="margin-top: 12px">
             <el-card shadow="hover" :body-style="{ padding: '10px' }">
-              <div id="echars5" style="width: 89%; height: 400px"></div>
+              <div id="echars5" style="width: 100%; height: 400px"></div>
             </el-card>
           </div>
-          <!-- <div style="margin-top: 20px">
-            <el-card shadow="hover" :body-style="{ padding: '10px' }">
-              <EchartsTable :id="'echars2'" :data="chartstable2" />
-            </el-card>
-          </div> -->
         </div>
       </div>
-      <div class="care">
+      <div class="care" style="width: 20%">
         <el-card shadow="hover" :body-style="{ padding: '10px' }">
           <div>
             <div class="paiming">
@@ -290,7 +324,7 @@
             </div>
           </div>
         </el-card>
-        <el-card style="margin-top: 20px" shadow="hover" :body-style="{ padding: '10px' }">
+        <el-card style="margin-top: 12px" shadow="hover" :body-style="{ padding: '10px' }">
           <div>
             <div class="paiming">
               <span>本年业务人员业绩排名</span>
@@ -329,9 +363,7 @@
 </template>
 
 <script>
-import {
-        toThousandFilterZero
-    } from '../../static/js/formatAmount'
+import {toThousandFilterZero} from '../../static/js/formatAmount';
 import { Commondashboard, Dashboard } from "../api/api";
 import EchartsTable from "./EChartsTable.vue";
 
@@ -355,6 +387,9 @@ export default {
       risk_eval_count: "",
       risk_eval_open_count: "",
       risk_eval_trade_count: "",
+      risk_preserv_amount_count: "",
+      risk_underwriting_amount_count: "",
+      risk_amount_count: "",
 
       // 平台数据表
       echars4: null,
@@ -623,10 +658,14 @@ export default {
       let sumNum = [];
       this.isdone = true;
       Dashboard().then((res) => {
+        console.log('rr',res);
         this.isdone = false;
         this.risk_eval_count = res.data.risk_eval_count;
         this.risk_eval_open_count = res.data.risk_eval_open_count;
         this.risk_eval_trade_count = res.data.risk_eval_trade_count;
+        this.risk_preserv_amount_count = parseInt(res.data.preserv_amount_count);
+        this.risk_underwriting_amount_count = parseInt(res.data.underwriting_amount_count);
+        this.risk_amount_count = parseInt(res.data.amount_count);
 
         this.chartstable1.nameArray =
           res.data.risk_eval_submit_data_range.dates;
@@ -827,16 +866,18 @@ export default {
   color: #F56C6C;
 }
 .elrow {
-  margin: 0 0 20px 0;
+  margin: 12px 0 0 0;
 }
 .headdata {
   display: flex;
+  margin-top: 12px;
 }
 .care {
   margin-left: 12px;
 }
 .admincare {
-  margin-left: 12px;
+  // width: 10%;
+  // margin-left: 12px;
 }
 // 排名
 .paiming {

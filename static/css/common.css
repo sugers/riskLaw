@@ -14,7 +14,7 @@ body {
 } */
 /* 页面背景色start*/
 .soutableDiv{
-    padding: 20px;
+    padding: 12px;
 }
 .aunif{
     background-color: #fff;
@@ -31,7 +31,7 @@ body {
 .user_data_btn,
 .asiostable,
 .insuranceBottom {
-    margin: 20px;
+    margin: 12px;
     padding: 20px !important;
     /* padding-top: 20px;
     margin-top: 20px; */
@@ -45,11 +45,11 @@ body {
     box-sizing: border-box;
 }
 .usertable{
-    margin-top: 20px;
+    margin-top: 12px;
 }
 .InsuranceCompany,
 .insuranceUser {
-    margin-top: 20px;
+    margin-top: 12px;
 }
 /* 页面背景色end*/
 .childTable .el-table--enable-row-hover .el-table__body tr:hover>td {
@@ -153,7 +153,7 @@ background-color: #ffffff !important;
     align-items: flex-start;
     flex-direction: inherit;
     flex-wrap: wrap;
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
     border-bottom: 1px solid #BBBBBB;
     position: relative;
 }
@@ -578,6 +578,10 @@ background-color: #ffffff !important;
         width: 800px !important;
         margin: 0 !important;
     }
+    .elstable{
+        width: 800px !important;
+        overflow-x: scroll;
+    }
 
     .usersteps {
         /* min-width: 160px; */
@@ -600,6 +604,10 @@ background-color: #ffffff !important;
         width: 800px !important;
         margin: 0 !important;
     }
+    .elstable{
+        width: 800px !important;
+        overflow-x: scroll;
+    }
 
     .logo {
         display: none !important;
@@ -619,6 +627,10 @@ background-color: #ffffff !important;
     .stepxy {
         width: 700px !important;
         margin: 0 !important;
+    }
+    .elstable{
+        width: 700px !important;
+        overflow-x: scroll;
     }
 
     .logo {
@@ -649,6 +661,10 @@ background-color: #ffffff !important;
     .stepxy {
         width: 630px !important;
         margin: 0 !important;
+    }
+    .elstable{
+        width: 630px !important;
+        overflow-x: scroll;
     }
 
     .usersteps {
@@ -718,6 +734,10 @@ background-color: #ffffff !important;
     .stepxy {
         width: 480px !important;
         margin: 0 !important;
+    }
+    .elstable{
+        width: 480px !important;
+        overflow-x: scroll;
     }
 
     .el-date-range-picker {
@@ -863,6 +883,10 @@ background-color: #ffffff !important;
     .stepxy {
         width: 400px !important;
         margin: 0 !important;
+    }
+    .elstable{
+        width: 400px !important;
+        overflow-x: scroll;
     }
 
     .el-date-range-picker {

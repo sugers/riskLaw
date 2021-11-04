@@ -869,7 +869,7 @@ export default {
 }
 .headeraudio {
   border-bottom: 1px solid #bbbbbb;
-  padding-bottom: 20px;
+  // padding-bottom: 20px;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
