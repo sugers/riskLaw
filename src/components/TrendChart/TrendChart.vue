@@ -139,7 +139,7 @@
                                 position: 'top', // 位置设为top
                                 formatter: function (params) {
                                     if (params.value > 0) {
-                                        return params.value;
+                                        return parseInt(params.value).toLocaleString();
                                     } else {
                                         return '';
                                     }
@@ -503,7 +503,7 @@
                                                     show: true, //显示数值
                                                     formatter: function (params) {
                                                         if (params.value > 0) {
-                                                            return params.value;
+                                                            return parseInt(params.value).toLocaleString();
                                                         } else {
                                                             return '';
                                                         }
@@ -528,7 +528,7 @@
                                                     position: 'top', // 位置设为top
                                                     formatter: function (params) {
                                                         if (params.value > 0) {
-                                                            return params.value;
+                                                            return parseInt(params.value).toLocaleString();
                                                         } else {
                                                             return '';
                                                         }
@@ -592,7 +592,7 @@
                                                     position: 'top', // 位置设为top
                                                     formatter: function (params) {
                                                         if (params.value > 0) {
-                                                            return params.value;
+                                                            return parseInt(params.value).toLocaleString();
                                                         } else {
                                                             return '';
                                                         }
@@ -654,7 +654,7 @@
                                                     position: 'top', // 位置设为top
                                                     formatter: function (params) {
                                                         if (params.value > 0) {
-                                                            return params.value;
+                                                            return parseInt(params.value).toLocaleString();
                                                         } else {
                                                             return '';
                                                         }
@@ -718,7 +718,7 @@
                                                     position: 'top', // 位置设为top
                                                     formatter: function (params) {
                                                         if (params.value > 0) {
-                                                            return params.value;
+                                                            return parseInt(params.value).toLocaleString();
                                                         } else {
                                                             return '';
                                                         }
@@ -773,7 +773,7 @@
                                                     position: 'top', // 位置设为top
                                                     formatter: function (params) {
                                                         if (params.value > 0) {
-                                                            return params.value;
+                                                            return parseInt(params.value).toLocaleString();
                                                         } else {
                                                             return '';
                                                         }
@@ -828,7 +828,7 @@
                                                     position: 'top', // 位置设为top
                                                     formatter: function (params) {
                                                         if (params.value > 0) {
-                                                            return params.value;
+                                                            return parseInt(params.value).toLocaleString();
                                                         } else {
                                                             return '';
                                                         }
